@@ -23,7 +23,7 @@ class MainScaffold extends StatelessWidget {
         SizedBox(
           width: 5,
         ),
-        Text("小刻食堂 - 列表"),
+        Text("小刻食堂 alpha"),
       ],
     ),
   );

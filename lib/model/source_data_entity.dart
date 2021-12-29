@@ -4,23 +4,23 @@ import 'package:dun_cookie_flutter/generated/json/source_data_entity.g.dart';
 
 @JsonSerializable()
 class SourceDataEntity {
+  late String dataSource;
+  late String id;
+  late int timeForSort;
+  String? timeForDisplay;
+  String? content;
+  String? coverImage;
+  String? jumpUrl;
+  List<String>? imageList;
+  List<String>? imageHttpList;
+  String? componentData;
+  SourceDataRetweeted? retweeted;
+  SourceDataSourceInfo? sourceInfo;
 
-	late String dataSource;
-	late String id;
-	late int timeForSort;
-	late String timeForDisplay;
-	late String content;
-	late String jumpUrl;
-	late List<String> imageList;
-	late List<String> imageHttpList;
-	late String coverImage;
-	late bool isTop;
-	late SourceDataComponentData componentData;
-	late SourceDataRetweeted retweeted;
-  
   SourceDataEntity();
 
-  factory SourceDataEntity.fromJson(Map<String, dynamic> json) => $SourceDataEntityFromJson(json);
+  factory SourceDataEntity.fromJson(Map<String, dynamic> json) =>
+      $SourceDataEntityFromJson(json);
 
   Map<String, dynamic> toJson() => $SourceDataEntityToJson(this);
 
@@ -31,15 +31,16 @@ class SourceDataEntity {
 }
 
 @JsonSerializable()
-class SourceDataComponentData {
+class SourceDataRetweeted {
+  String? name;
+  String? content;
 
+  SourceDataRetweeted();
 
-  
-  SourceDataComponentData();
+  factory SourceDataRetweeted.fromJson(Map<String, dynamic> json) =>
+      $SourceDataRetweetedFromJson(json);
 
-  factory SourceDataComponentData.fromJson(Map<String, dynamic> json) => $SourceDataComponentDataFromJson(json);
-
-  Map<String, dynamic> toJson() => $SourceDataComponentDataToJson(this);
+  Map<String, dynamic> toJson() => $SourceDataRetweetedToJson(this);
 
   @override
   String toString() {
@@ -48,16 +49,21 @@ class SourceDataComponentData {
 }
 
 @JsonSerializable()
-class SourceDataRetweeted {
+class SourceDataSourceInfo {
+  String? icon;
+  String? dataName;
+  String? title;
+  String? dataUrl;
+  String? url;
+  int? priority;
+  int? uid;
 
-	late String name;
-	late String content;
-  
-  SourceDataRetweeted();
+  SourceDataSourceInfo();
 
-  factory SourceDataRetweeted.fromJson(Map<String, dynamic> json) => $SourceDataRetweetedFromJson(json);
+  factory SourceDataSourceInfo.fromJson(Map<String, dynamic> json) =>
+      $SourceDataSourceInfoFromJson(json);
 
-  Map<String, dynamic> toJson() => $SourceDataRetweetedToJson(this);
+  Map<String, dynamic> toJson() => $SourceDataSourceInfoToJson(this);
 
   @override
   String toString() {

@@ -23,6 +23,10 @@ SourceDataEntity $SourceDataEntityFromJson(Map<String, dynamic> json) {
 	if (content != null) {
 		sourceDataEntity.content = content;
 	}
+	final String? coverImage = jsonConvert.convert<String>(json['coverImage']);
+	if (coverImage != null) {
+		sourceDataEntity.coverImage = coverImage;
+	}
 	final String? jumpUrl = jsonConvert.convert<String>(json['jumpUrl']);
 	if (jumpUrl != null) {
 		sourceDataEntity.jumpUrl = jumpUrl;
@@ -35,21 +39,17 @@ SourceDataEntity $SourceDataEntityFromJson(Map<String, dynamic> json) {
 	if (imageHttpList != null) {
 		sourceDataEntity.imageHttpList = imageHttpList;
 	}
-	final String? coverImage = jsonConvert.convert<String>(json['coverImage']);
-	if (coverImage != null) {
-		sourceDataEntity.coverImage = coverImage;
-	}
-	final bool? isTop = jsonConvert.convert<bool>(json['isTop']);
-	if (isTop != null) {
-		sourceDataEntity.isTop = isTop;
-	}
-	final SourceDataComponentData? componentData = jsonConvert.convert<SourceDataComponentData>(json['componentData']);
+	final String? componentData = jsonConvert.convert<String>(json['componentData']);
 	if (componentData != null) {
 		sourceDataEntity.componentData = componentData;
 	}
 	final SourceDataRetweeted? retweeted = jsonConvert.convert<SourceDataRetweeted>(json['retweeted']);
 	if (retweeted != null) {
 		sourceDataEntity.retweeted = retweeted;
+	}
+	final SourceDataSourceInfo? sourceInfo = jsonConvert.convert<SourceDataSourceInfo>(json['sourceInfo']);
+	if (sourceInfo != null) {
+		sourceDataEntity.sourceInfo = sourceInfo;
 	}
 	return sourceDataEntity;
 }
@@ -61,23 +61,13 @@ Map<String, dynamic> $SourceDataEntityToJson(SourceDataEntity entity) {
 	data['timeForSort'] = entity.timeForSort;
 	data['timeForDisplay'] = entity.timeForDisplay;
 	data['content'] = entity.content;
+	data['coverImage'] = entity.coverImage;
 	data['jumpUrl'] = entity.jumpUrl;
 	data['imageList'] =  entity.imageList;
 	data['imageHttpList'] =  entity.imageHttpList;
-	data['coverImage'] = entity.coverImage;
-	data['isTop'] = entity.isTop;
-	data['componentData'] = entity.componentData.toJson();
-	data['retweeted'] = entity.retweeted.toJson();
-	return data;
-}
-
-SourceDataComponentData $SourceDataComponentDataFromJson(Map<String, dynamic> json) {
-	final SourceDataComponentData sourceDataComponentData = SourceDataComponentData();
-	return sourceDataComponentData;
-}
-
-Map<String, dynamic> $SourceDataComponentDataToJson(SourceDataComponentData entity) {
-	final Map<String, dynamic> data = <String, dynamic>{};
+	data['componentData'] = entity.componentData;
+	data['retweeted'] = entity.retweeted?.toJson();
+	data['sourceInfo'] = entity.sourceInfo?.toJson();
 	return data;
 }
 
@@ -98,5 +88,50 @@ Map<String, dynamic> $SourceDataRetweetedToJson(SourceDataRetweeted entity) {
 	final Map<String, dynamic> data = <String, dynamic>{};
 	data['name'] = entity.name;
 	data['content'] = entity.content;
+	return data;
+}
+
+SourceDataSourceInfo $SourceDataSourceInfoFromJson(Map<String, dynamic> json) {
+	final SourceDataSourceInfo sourceDataSourceInfo = SourceDataSourceInfo();
+	final String? icon = jsonConvert.convert<String>(json['icon']);
+	if (icon != null) {
+		sourceDataSourceInfo.icon = icon;
+	}
+	final String? dataName = jsonConvert.convert<String>(json['dataName']);
+	if (dataName != null) {
+		sourceDataSourceInfo.dataName = dataName;
+	}
+	final String? title = jsonConvert.convert<String>(json['title']);
+	if (title != null) {
+		sourceDataSourceInfo.title = title;
+	}
+	final String? dataUrl = jsonConvert.convert<String>(json['dataUrl']);
+	if (dataUrl != null) {
+		sourceDataSourceInfo.dataUrl = dataUrl;
+	}
+	final String? url = jsonConvert.convert<String>(json['url']);
+	if (url != null) {
+		sourceDataSourceInfo.url = url;
+	}
+	final int? priority = jsonConvert.convert<int>(json['priority']);
+	if (priority != null) {
+		sourceDataSourceInfo.priority = priority;
+	}
+	final int? uid = jsonConvert.convert<int>(json['uid']);
+	if (uid != null) {
+		sourceDataSourceInfo.uid = uid;
+	}
+	return sourceDataSourceInfo;
+}
+
+Map<String, dynamic> $SourceDataSourceInfoToJson(SourceDataSourceInfo entity) {
+	final Map<String, dynamic> data = <String, dynamic>{};
+	data['icon'] = entity.icon;
+	data['dataName'] = entity.dataName;
+	data['title'] = entity.title;
+	data['dataUrl'] = entity.dataUrl;
+	data['url'] = entity.url;
+	data['priority'] = entity.priority;
+	data['uid'] = entity.uid;
 	return data;
 }

@@ -78,11 +78,11 @@ class JsonConvert {
 		if(type == (SourceDataEntity).toString()){
 			return SourceDataEntity.fromJson(json) as M;
 		}
-		if(type == (SourceDataComponentData).toString()){
-			return SourceDataComponentData.fromJson(json) as M;
-		}
 		if(type == (SourceDataRetweeted).toString()){
 			return SourceDataRetweeted.fromJson(json) as M;
+		}
+		if(type == (SourceDataSourceInfo).toString()){
+			return SourceDataSourceInfo.fromJson(json) as M;
 		}
 
 		print("$type not found");
@@ -95,11 +95,11 @@ class JsonConvert {
 		if(<SourceDataEntity>[] is M){
 			return data.map<SourceDataEntity>((e) => SourceDataEntity.fromJson(e)).toList() as M;
 		}
-		if(<SourceDataComponentData>[] is M){
-			return data.map<SourceDataComponentData>((e) => SourceDataComponentData.fromJson(e)).toList() as M;
-		}
 		if(<SourceDataRetweeted>[] is M){
 			return data.map<SourceDataRetweeted>((e) => SourceDataRetweeted.fromJson(e)).toList() as M;
+		}
+		if(<SourceDataSourceInfo>[] is M){
+			return data.map<SourceDataSourceInfo>((e) => SourceDataSourceInfo.fromJson(e)).toList() as M;
 		}
 
 		print("${M.toString()} not found");

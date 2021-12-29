@@ -9,7 +9,7 @@ class HttpClass {
     responseType: ResponseType.json,
   );
 
-  static final Dio dio = Dio();
+  static final Dio dio = Dio(_baseOptions);
 
   static Future _request(
     String url, {
@@ -49,20 +49,10 @@ class HttpClass {
   }
 
   static Future get(String url) {
-    return dio.get(url);
+    return _request(url);
   }
 
   static Future post(String url, {Map<String, dynamic>? params}) {
     return _request(url, method: "post", params: params);
-  }
-
-  static void test(String url, {Map<String, dynamic>? params}) async {
-    //todo application/json;charset:utf-8
-    print("进入方法");
-    Dio dio2 = Dio(BaseOptions(contentType: 'application/json'));
-    print("初始化");
-    Response response;
-    response= await dio2.get(url);
-    print(response.data.toString());
   }
 }
