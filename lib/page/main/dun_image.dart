@@ -26,7 +26,7 @@ class _CardImageState extends State<CardImage> {
   /// 一张图
   ClipRRect _oneImage() {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(8),
+      borderRadius: BorderRadius.circular(4),
       child: _kazeFadeImage(widget.info.coverImage!),
     );
   }
@@ -50,12 +50,15 @@ class _CardImageState extends State<CardImage> {
   }
 
   /// 图片渐变
-  FadeInImage _kazeFadeImage(netSrc) {
-    return FadeInImage(
-      height: 200,
-      fit: BoxFit.cover,
-      placeholder: const AssetImage("assets/logo/logo.png"),
-      image: NetworkImage(netSrc),
+  ClipRRect _kazeFadeImage(netSrc) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(4),
+      child: FadeInImage(
+        height: 200,
+        fit: BoxFit.cover,
+        placeholder: const AssetImage("assets/logo/logo.png"),
+        image: NetworkImage(netSrc),
+      ),
     );
   }
 }
