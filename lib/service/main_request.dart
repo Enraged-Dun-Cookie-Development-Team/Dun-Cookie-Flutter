@@ -1,8 +1,5 @@
-import 'dart:convert';
-import 'dart:ffi';
-
-import 'package:dun_cookie_flutter/model/source_data_entity.dart';
-import 'package:dun_cookie_flutter/model/source_list.dart';
+import 'package:dun_cookie_flutter/model/source_data.dart';
+import 'package:dun_cookie_flutter/model/source_info.dart';
 
 import 'main.dart';
 
@@ -15,12 +12,10 @@ class MainRequest {
   }
 
   static Future canteenCardListInType(List<int> typeList) async {
-    List<SourceDataEntity> data = await MainRequest.canteenCardListAll();
-    List<SourceDataEntity> resultInType = [];
-    typeList.forEach((element) {
-      resultInType
-          .addAll(data.where((x) => x.sourceInfo?.priority == 0).toList());
-    });
+    List<SourceData> data = await MainRequest.canteenCardListAll();
+    List<SourceData> resultInType = [];
+    typeList.forEach((element) => resultInType
+        .addAll(data.where((x) => x.sourceInfo.priority == 0).toList()));
     return resultInType;
   }
 
@@ -33,10 +28,9 @@ class MainRequest {
       info.forEach((e) => e["sourceInfo"] = sourceList["data"]);
       resultJson.addAll(info);
     });
-    List<SourceDataEntity> resultAll = [];
-    resultJson.forEach((element) {
-      resultAll.add(SourceDataEntity.fromJson(element));
-    });
+    List<SourceData> resultAll = [];
+    resultJson
+        .forEach((element) => resultAll.add(SourceData.fromJson(element)));
     resultAll.sort((x, y) => y.timeForSort.compareTo(x.timeForSort));
     return resultAll;
   }
