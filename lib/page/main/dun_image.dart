@@ -1,4 +1,5 @@
 import 'package:dun_cookie_flutter/model/source_data.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
 class CardImage extends StatefulWidget {
@@ -10,7 +11,22 @@ class CardImage extends StatefulWidget {
   _CardImageState createState() => _CardImageState();
 }
 
-class _CardImageState extends State<CardImage> {
+class _CardImageState extends State<CardImage>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+  late Animation _opacity;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _controller =
+        AnimationController(vsync: this, duration: const Duration(seconds: 1));
+    _animation = CurvedAnimation(parent: _controller, curve: Curves.linear);
+    _opacity = Tween(begin: 0.0, end: 1.0).animate(_animation);
+  }
+
   @override
   Widget build(BuildContext context) {
     if (widget.info.coverImage != null || widget.info.imageList!.isNotEmpty) {
@@ -24,9 +40,9 @@ class _CardImageState extends State<CardImage> {
   }
 
   /// 一张图
-  ClipRRect _oneImage() {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(4),
+  Container _oneImage() {
+    return Container(
+      alignment: Alignment.topLeft,
       child: _kazeFadeImage(widget.info.coverImage!),
     );
   }
@@ -51,13 +67,54 @@ class _CardImageState extends State<CardImage> {
 
   /// 图片渐变
   ClipRRect _kazeFadeImage(netSrc) {
+    var _cumulativeBytesLoaded = 0;
+    var _expectedTotalBytes = 0;
     return ClipRRect(
       borderRadius: BorderRadius.circular(4),
-      child: FadeInImage(
-        height: 200,
-        fit: BoxFit.cover,
-        placeholder: const AssetImage("assets/logo/logo.png"),
-        image: NetworkImage(netSrc),
+      child: ExtendedImage.network(
+        netSrc,
+        fit:BoxFit.cover,
+        handleLoadingProgress: true,
+        clearMemoryCacheIfFailed: true,
+        clearMemoryCacheWhenDispose: true,
+        mode: ExtendedImageMode.gesture,
+        cache: true,
+        loadStateChanged: (ExtendedImageState state) {
+          if (state.extendedImageLoadState == LoadState.loading) {
+            final loadingProgress = state.loadingProgress;
+            _cumulativeBytesLoaded =
+                loadingProgress?.cumulativeBytesLoaded ?? 0;
+            _expectedTotalBytes = loadingProgress?.expectedTotalBytes ?? 0;
+            final progress = _expectedTotalBytes != 0
+                ? _cumulativeBytesLoaded / _expectedTotalBytes
+                : null;
+            return Stack(
+              alignment: Alignment.center,
+              children: [
+                const Image(image: AssetImage("assets/logo/logo.png")),
+                Positioned(
+                  right: 0,
+                  bottom: 0,
+                  child: Container(
+                    padding: EdgeInsets.all(4),
+                    color: Color.fromARGB(255, 255, 255, 255),
+                    child: Text(
+                      "${((progress ?? 0.0) * 100).toInt()}%",
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Color.fromARGB(255, 35, 173, 229),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            );
+          }
+          // else if (state.extendedImageLoadState == LoadState.completed) {
+          //   return Text("加载完成");
+          // }
+          return null;
+        },
       ),
     );
   }
