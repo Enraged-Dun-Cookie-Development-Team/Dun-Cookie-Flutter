@@ -10,8 +10,8 @@ class DunMain extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: MainScaffold()
+    return const MaterialApp(
+      home:  MainScaffold()
     );
   }
 }
