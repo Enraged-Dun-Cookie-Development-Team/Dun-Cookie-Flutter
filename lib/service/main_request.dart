@@ -15,7 +15,7 @@ class MainRequest {
           fontSize: 16.0);
       return ;
     }else{
-      var data = request['data'];
+      var data = request['data']['data'];
       return data;
     }
   }
