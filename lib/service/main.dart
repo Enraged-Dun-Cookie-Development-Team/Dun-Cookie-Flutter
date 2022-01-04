@@ -26,7 +26,7 @@ class HttpClass {
       dio.interceptors.add(_dInter());
       return response.data;
     } catch (e) {
-      return Future.error(e);
+      return {"error": true,"data":[]};
     }
   }
 

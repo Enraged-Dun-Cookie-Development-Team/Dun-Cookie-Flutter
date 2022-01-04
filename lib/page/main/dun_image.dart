@@ -1,11 +1,19 @@
 import 'package:dun_cookie_flutter/model/source_data.dart';
+import 'package:dun_cookie_flutter/page/common/view_image_main.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
 class CardImage extends StatefulWidget {
-  CardImage(this.info, {Key? key}) : super(key: key);
+  CardImage(this.info, {Key? key})
+      : hasImage = info.coverImage != null || info.imageList!.isNotEmpty,
+        isMultiImage =
+            (info.coverImage != null || info.imageList!.isNotEmpty) &&
+                info.imageList!.length > 1,
+        super(key: key);
 
   SourceData info;
+  bool hasImage = false;
+  bool isMultiImage = false;
 
   @override
   _CardImageState createState() => _CardImageState();
@@ -29,9 +37,9 @@ class _CardImageState extends State<CardImage>
 
   @override
   Widget build(BuildContext context) {
-    if (widget.info.coverImage != null || widget.info.imageList!.isNotEmpty) {
+    if (widget.hasImage) {
       return Container(
-        child: widget.info.imageList!.length > 1 ? _multiImage() : _oneImage(),
+        child: widget.isMultiImage ? _multiImage() : _oneImage(),
         padding: const EdgeInsets.all(10),
       );
     } else {
@@ -40,10 +48,9 @@ class _CardImageState extends State<CardImage>
   }
 
   /// 一张图
-  Container _oneImage() {
-    return Container(
-      alignment: Alignment.topLeft,
-      child: _kazeFadeImage(widget.info.coverImage!),
+  ClipRRect _oneImage() {
+    return _kazeFadeImage(
+      widget.info.coverImage!,
     );
   }
 
@@ -60,23 +67,31 @@ class _CardImageState extends State<CardImage>
       shrinkWrap: true,
       children: List.generate(
         widget.info.imageList!.length,
-        (index) => _kazeFadeImage(widget.info.imageList![index]),
+        (index) {
+          return _kazeFadeImage(
+            widget.info.imageList![index],
+            index: index,
+          );
+        },
       ),
     );
   }
 
+  ///
   /// 图片渐变
-  ClipRRect _kazeFadeImage(netSrc) {
+  /// index 当前图片如果是多图的话 就是被那个图片的index 如果是单图 就是0
+  ///
+  ClipRRect _kazeFadeImage(netSrc, {index = 0}) {
     var _cumulativeBytesLoaded = 0;
     var _expectedTotalBytes = 0;
     return ClipRRect(
       borderRadius: BorderRadius.circular(4),
       child: ExtendedImage.network(
         netSrc,
-        fit:BoxFit.cover,
+        fit: BoxFit.cover,
         handleLoadingProgress: true,
         clearMemoryCacheIfFailed: true,
-        clearMemoryCacheWhenDispose: true,
+        clearMemoryCacheWhenDispose: false,
         mode: ExtendedImageMode.gesture,
         cache: true,
         loadStateChanged: (ExtendedImageState state) {
@@ -109,10 +124,36 @@ class _CardImageState extends State<CardImage>
                 )
               ],
             );
+          } else if (state.extendedImageLoadState == LoadState.completed) {
+            return GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (ctx, anim1, anim2) {
+                      return FadeTransition(
+                        opacity: anim1,
+                        child: ViewImageExtendedImage(
+                          info: widget.info,
+                          currentIndex: index,
+                          isMultiImage: widget.isMultiImage,
+                        ),
+                      );
+                    },
+                  ),
+                );
+              },
+              child: Hero(
+                tag: widget.isMultiImage
+                    ? widget.info.imageList![index]
+                    : widget.info.coverImage!,
+                child: ExtendedRawImage(
+                  height: 300,
+                  image: state.extendedImageInfo?.image,
+                ),
+              ),
+            );
           }
-          // else if (state.extendedImageLoadState == LoadState.completed) {
-          //   return Text("加载完成");
-          // }
           return null;
         },
       ),

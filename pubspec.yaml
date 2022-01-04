@@ -38,6 +38,7 @@ dependencies:
   provider: ^6.0.1
   event_bus: ^2.0.0
   extended_image: ^6.0.1
+  fluttertoast: ^8.0.8
 
 dev_dependencies:
   flutter_test:

@@ -1,5 +1,6 @@
 import 'package:dun_cookie_flutter/model/source_data.dart';
 import 'package:dun_cookie_flutter/model/source_info.dart';
+import 'package:dun_cookie_flutter/page/common/view_image_main.dart';
 import 'package:dun_cookie_flutter/page/main/dun_image.dart';
 import 'package:dun_cookie_flutter/service/main_request.dart';
 import 'package:flutter/material.dart';
