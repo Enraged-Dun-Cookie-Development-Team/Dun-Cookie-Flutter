@@ -39,6 +39,7 @@ dependencies:
   event_bus: ^2.0.0
   extended_image: ^6.0.1
   fluttertoast: ^8.0.8
+  webview_flutter: ^3.0.0
 
 dev_dependencies:
   flutter_test:

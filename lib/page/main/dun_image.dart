@@ -39,6 +39,7 @@ class _CardImageState extends State<CardImage>
   Widget build(BuildContext context) {
     if (widget.hasImage) {
       return Container(
+        alignment: Alignment.center,
         child: widget.isMultiImage ? _multiImage() : _oneImage(),
         padding: const EdgeInsets.all(10),
       );
@@ -48,14 +49,14 @@ class _CardImageState extends State<CardImage>
   }
 
   /// 一张图
-  ClipRRect _oneImage() {
+  _oneImage() {
     return _kazeFadeImage(
       widget.info.coverImage!,
     );
   }
 
   /// 多张图
-  GridView _multiImage() {
+  _multiImage() {
     return GridView(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
@@ -81,82 +82,84 @@ class _CardImageState extends State<CardImage>
   /// 图片渐变
   /// index 当前图片如果是多图的话 就是被那个图片的index 如果是单图 就是0
   ///
-  ClipRRect _kazeFadeImage(netSrc, {index = 0}) {
+  _kazeFadeImage(netSrc, {index = 0}) {
     var _cumulativeBytesLoaded = 0;
     var _expectedTotalBytes = 0;
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(4),
-      child: ExtendedImage.network(
-        netSrc,
-        fit: BoxFit.cover,
-        handleLoadingProgress: true,
-        clearMemoryCacheIfFailed: true,
-        clearMemoryCacheWhenDispose: false,
-        mode: ExtendedImageMode.gesture,
-        cache: true,
-        loadStateChanged: (ExtendedImageState state) {
-          if (state.extendedImageLoadState == LoadState.loading) {
-            final loadingProgress = state.loadingProgress;
-            _cumulativeBytesLoaded =
-                loadingProgress?.cumulativeBytesLoaded ?? 0;
-            _expectedTotalBytes = loadingProgress?.expectedTotalBytes ?? 0;
-            final progress = _expectedTotalBytes != 0
-                ? _cumulativeBytesLoaded / _expectedTotalBytes
-                : null;
-            return Stack(
-              alignment: Alignment.center,
-              children: [
-                const Image(image: AssetImage("assets/logo/logo.png")),
-                Positioned(
-                  right: 0,
-                  bottom: 0,
-                  child: Container(
-                    padding: EdgeInsets.all(4),
-                    color: Color.fromARGB(255, 255, 255, 255),
-                    child: Text(
-                      "${((progress ?? 0.0) * 100).toInt()}%",
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: Color.fromARGB(255, 35, 173, 229),
-                      ),
+    return ExtendedImage.network(
+      netSrc,
+      fit: BoxFit.cover,
+      handleLoadingProgress: true,
+      clearMemoryCacheIfFailed: true,
+      clearMemoryCacheWhenDispose: false,
+      mode: ExtendedImageMode.gesture,
+      cache: true,
+      loadStateChanged: (ExtendedImageState state) {
+        if (state.extendedImageLoadState == LoadState.loading) {
+          final loadingProgress = state.loadingProgress;
+          _cumulativeBytesLoaded = loadingProgress?.cumulativeBytesLoaded ?? 0;
+          _expectedTotalBytes = loadingProgress?.expectedTotalBytes ?? 0;
+          final progress = _expectedTotalBytes != 0
+              ? _cumulativeBytesLoaded / _expectedTotalBytes
+              : null;
+          return Stack(
+            alignment: Alignment.center,
+            children: [
+              const Image(image: AssetImage("assets/logo/logo.png")),
+              Positioned(
+                right: 0,
+                bottom: 0,
+                child: Container(
+                  padding: EdgeInsets.all(4),
+                  color: Color.fromARGB(255, 255, 255, 255),
+                  child: Text(
+                    "${((progress ?? 0.0) * 100).toInt()}%",
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Color.fromARGB(255, 35, 173, 229),
                     ),
                   ),
-                )
-              ],
-            );
-          } else if (state.extendedImageLoadState == LoadState.completed) {
-            return GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (ctx, anim1, anim2) {
-                      return FadeTransition(
-                        opacity: anim1,
-                        child: ViewImageExtendedImage(
-                          info: widget.info,
-                          currentIndex: index,
-                          isMultiImage: widget.isMultiImage,
-                        ),
-                      );
-                    },
-                  ),
-                );
-              },
-              child: Hero(
-                tag: widget.isMultiImage
-                    ? widget.info.imageList![index]
-                    : widget.info.coverImage!,
+                ),
+              )
+            ],
+          );
+        } else if (state.extendedImageLoadState == LoadState.completed) {
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (ctx, anim1, anim2) {
+                    return FadeTransition(
+                      opacity: anim1,
+                      child: ViewImageExtendedImage(
+                        info: widget.info,
+                        currentIndex: index,
+                        isMultiImage: widget.isMultiImage,
+                      ),
+                    );
+                  },
+                ),
+              );
+            },
+            child: Hero(
+              tag: widget.isMultiImage
+                  ? widget.info.imageList![index]
+                  : widget.info.coverImage!,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(4),
                 child: ExtendedRawImage(
                   height: 300,
+                  width: double.infinity,
+                  alignment: Alignment.topCenter,
+                  fit: BoxFit.cover,
                   image: state.extendedImageInfo?.image,
                 ),
               ),
-            );
-          }
-          return null;
-        },
-      ),
+            ),
+          );
+        }
+        return null;
+      },
     );
   }
 }
