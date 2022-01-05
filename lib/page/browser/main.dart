@@ -5,23 +5,28 @@ import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class DunWebView extends StatelessWidget {
-  DunWebView(url, {Key? key}) : super(key: key);
-
-  late String url;
+  static String routeName = "/webView";
 
   @override
   Widget build(BuildContext context) {
+    final String url = ModalRoute.of(context)!.settings.arguments as String;
     return ChangeNotifierProvider(
       create: (context) => ViewWebPageProvider(),
-      child: DunWebViewMain(url),
+      child: WillPopScope(
+          // 当返回为true时,可以自动返回(flutter帮助我们执行返回操作)
+          // 当返回为false时, 自行写返回代码
+          onWillPop: () {
+            return Future.value(true);
+          },
+          child: DunWebViewMain(url)),
     );
   }
 }
 
 class DunWebViewMain extends StatefulWidget {
-  DunWebViewMain(url, {Key? key}) : super(key: key);
+  DunWebViewMain(this.url, {Key? key}) : super(key: key);
 
-  late String url;
+  String url;
 
   @override
   State<DunWebViewMain> createState() => _DunWebViewMainState();
@@ -46,6 +51,10 @@ class _DunWebViewMainState extends State<DunWebViewMain> {
             builder: (ctx, data, child) {
               return Text(data.title);
             },
+          ),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () => Navigator.of(context).pop(),
           ),
         ),
         body: Consumer<ViewWebPageProvider>(

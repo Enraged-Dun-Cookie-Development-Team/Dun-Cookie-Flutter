@@ -3,8 +3,8 @@ import 'package:dun_cookie_flutter/page/common/view_image_main.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
-class CardImage extends StatefulWidget {
-  CardImage(this.info, {Key? key})
+class DunImage extends StatefulWidget {
+  DunImage(this.info, {Key? key})
       : hasImage = info.coverImage != null || info.imageList!.isNotEmpty,
         isMultiImage =
             (info.coverImage != null || info.imageList!.isNotEmpty) &&
@@ -16,10 +16,10 @@ class CardImage extends StatefulWidget {
   bool isMultiImage = false;
 
   @override
-  _CardImageState createState() => _CardImageState();
+  _DunImageState createState() => _DunImageState();
 }
 
-class _CardImageState extends State<CardImage>
+class _DunImageState extends State<DunImage>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
