@@ -93,8 +93,8 @@ class _DunWidgetToImageState extends State<DunWidgetToImage> {
           right: 10,
           top: 10,
           child: SizedBox(
-            width: 120,
-            height: 120,
+            width: 110,
+            height: 110,
             child: QrImage(
               data: sourceData.jumpUrl!,
               version: QrVersions.auto,
