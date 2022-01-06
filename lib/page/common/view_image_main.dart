@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ViewImageExtendedImage extends StatefulWidget {
-  ViewImageExtendedImage({Key? key,
+  ViewImageExtendedImage({
+    Key? key,
     required this.imageList,
     this.text = "",
     this.currentIndex = 0,
@@ -13,8 +14,10 @@ class ViewImageExtendedImage extends StatefulWidget {
 
 //  图片地址数组
   List<String>? imageList;
+
 //  当前看的第几章
   int currentIndex;
+
 //  图片文字
   String text;
 
@@ -22,7 +25,24 @@ class ViewImageExtendedImage extends StatefulWidget {
   _ViewImageExtendedImageState createState() => _ViewImageExtendedImageState();
 }
 
-class _ViewImageExtendedImageState extends State<ViewImageExtendedImage> {
+class _ViewImageExtendedImageState extends State<ViewImageExtendedImage>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+        duration: const Duration(milliseconds: 100), vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -58,6 +78,30 @@ class _ViewImageExtendedImageState extends State<ViewImageExtendedImage> {
           item,
           fit: BoxFit.contain,
           mode: ExtendedImageMode.gesture,
+          onDoubleTap: (state) {
+            double? begin = 0.0;
+            double end = 0.0;
+            if (state.gestureDetails?.totalScale == 1.0) {
+              begin = 1.0;
+              end = 2.0;
+            } else {
+              begin = state.gestureDetails?.totalScale;
+              end = 1.0;
+            }
+            try {
+              _animationController.reset();
+              _animation = Tween<double>(begin: begin, end: end)
+                  .animate(_animationController);
+              _animation.addListener(() {
+                state.handleDoubleTap(
+                    scale: _animation.value,
+                    doubleTapPosition: state.pointerDownPosition);
+              });
+              _animationController.forward();
+            } catch (e) {
+              print('放大错误');
+            }
+          },
         );
         image = Container(
           child: image,
@@ -79,11 +123,11 @@ class _ViewImageExtendedImageState extends State<ViewImageExtendedImage> {
 
   _bottomInfo(data) {
     return Positioned(
-      bottom: 0,
       left: 0,
       right: 0,
       child: Container(
         color: Colors.black26,
+        padding: const EdgeInsets.only(left: 10, right: 10),
         height: 20,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

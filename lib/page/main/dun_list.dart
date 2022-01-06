@@ -1,10 +1,9 @@
 import 'package:dun_cookie_flutter/model/source_data.dart';
-import 'package:dun_cookie_flutter/model/source_info.dart';
-import 'package:dun_cookie_flutter/page/common/view_image_main.dart';
 import 'package:dun_cookie_flutter/page/main/dun_content.dart';
 import 'package:dun_cookie_flutter/page/main/dun_headren.dart';
 import 'package:dun_cookie_flutter/page/main/dun_image.dart';
 import 'package:dun_cookie_flutter/service/main_request.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
 class MainList extends StatefulWidget {
@@ -21,6 +20,8 @@ class _MainListState extends State<MainList> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    // 清除30天前的图片缓存
+    clearDiskCachedImages(duration: const Duration(days: 30));
     _getDate();
   }
 
