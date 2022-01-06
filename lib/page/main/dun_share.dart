@@ -90,11 +90,10 @@ class _DunWidgetToImageState extends State<DunWidgetToImage> {
       children: [
         // 二维码
         Positioned(
-          right: 10,
-          top: 10,
+          right: 5,
+          top: 5,
           child: SizedBox(
-            width: 110,
-            height: 110,
+            height: 120,
             child: QrImage(
               data: sourceData.jumpUrl!,
               version: QrVersions.auto,
