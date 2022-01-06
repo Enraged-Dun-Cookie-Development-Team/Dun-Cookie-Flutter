@@ -1,4 +1,5 @@
 import 'package:dun_cookie_flutter/model/source_data.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
 class DunPrintImage extends StatelessWidget {
@@ -33,11 +34,11 @@ class DunPrintImage extends StatelessWidget {
                   children: List.generate(
                     data.imageList!.length,
                     (index) {
-                      return Image.network(data.imageList![index]);
+                      return ExtendedImage.network(data.imageList![index],fit: BoxFit.cover,alignment: Alignment.topCenter,);
                     },
                   ),
                 )
-              : Image.network(
+              : ExtendedImage.network(
                   data.coverImage!,
                   width: double.infinity,
                 ),

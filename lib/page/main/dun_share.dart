@@ -49,32 +49,28 @@ class _DunWidgetToImageState extends State<DunWidgetToImage> {
                 color: Colors.white,
                 width: size.width,
                 padding: EdgeInsets.all(20),
-                child: Column(
-                  children: [
-                    Card(
-                      elevation: 15.0,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                child: Card(
+                  elevation: 15.0,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                  ),
+                  clipBehavior: Clip.antiAlias,
+                  semanticContainer: false,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // 卡片头
+                      SizedBox(
+                        height: 131,
+                        width: size.width,
+                        child: _stackHear(sourceData),
                       ),
-                      clipBehavior: Clip.antiAlias,
-                      semanticContainer: false,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          // 卡片头
-                          SizedBox(
-                            height: 131,
-                            width: size.width,
-                            child: _stackHear(sourceData),
-                          ),
-                          // 卡片中部
-                          DunContent(sourceData),
-                          // 卡片图片
-                          DunPrintImage(data: sourceData)
-                        ],
-                      ),
-                    ),
-                  ],
+                      // 卡片中部
+                      DunContent(sourceData),
+                      // 卡片图片
+                      DunPrintImage(data: sourceData)
+                    ],
+                  ),
                 ),
               ),
             ),
