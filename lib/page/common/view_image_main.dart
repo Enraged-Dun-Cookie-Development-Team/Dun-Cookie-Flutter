@@ -78,6 +78,11 @@ class _ViewImageExtendedImageState extends State<ViewImageExtendedImage>
           item,
           fit: BoxFit.contain,
           mode: ExtendedImageMode.gesture,
+          initGestureConfigHandler: (state) {
+            return GestureConfig(
+              inPageView: true,
+            );
+          },
           onDoubleTap: (state) {
             double? begin = 0.0;
             double end = 0.0;
