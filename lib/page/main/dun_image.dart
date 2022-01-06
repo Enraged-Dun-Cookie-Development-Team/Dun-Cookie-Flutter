@@ -132,10 +132,11 @@ class _DunImageState extends State<DunImage>
                     return FadeTransition(
                       opacity: anim1,
                       child: ViewImageExtendedImage(
-                        info: widget.info,
-                        currentIndex: index,
-                        isMultiImage: widget.isMultiImage,
-                      ),
+                          text: widget.info.content!,
+                          imageList: widget.isMultiImage
+                              ? widget.info.imageList
+                              : [widget.info.coverImage!],
+                          currentIndex: index),
                     );
                   },
                 ),

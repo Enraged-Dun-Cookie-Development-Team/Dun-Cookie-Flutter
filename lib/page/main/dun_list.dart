@@ -1,6 +1,7 @@
 import 'package:dun_cookie_flutter/model/source_data.dart';
 import 'package:dun_cookie_flutter/model/source_info.dart';
 import 'package:dun_cookie_flutter/page/common/view_image_main.dart';
+import 'package:dun_cookie_flutter/page/main/dun_content.dart';
 import 'package:dun_cookie_flutter/page/main/dun_headren.dart';
 import 'package:dun_cookie_flutter/page/main/dun_image.dart';
 import 'package:dun_cookie_flutter/service/main_request.dart';
@@ -38,8 +39,8 @@ class _MainListState extends State<MainList> {
                 child: Container(
                   child: Column(
                     children: [
-                      DunHeadren(info),
-                      _kazeContent(info),
+                      DunHead(info),
+                      DunContent(info),
                       DunImage(info),
                       Container(
                         width: double.infinity,
@@ -58,73 +59,7 @@ class _MainListState extends State<MainList> {
     );
   }
 
-  /**
-   * 头部
-   */
-  Container _kazeTitle(SourceData info) {
-    SourceInfo source = info.sourceInfo;
-    return Container(
-      padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Row(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Image.asset(
-                  source.icon!,
-                  width: 40,
-                  height: 40,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    source.title!,
-                    style: const TextStyle(fontSize: 18),
-                  ),
-                  const SizedBox(
-                    height: 2,
-                  ),
-                  Text(
-                    info.timeForDisplay,
-                    style: const TextStyle(fontSize: 14, color: Colors.black45),
-                  ),
-                ],
-              )
-            ],
-          ),
-          Row(
-            children: [
-              IconButton(
-                iconSize: 18,
-                icon: const Icon(Icons.share),
-                onPressed: () {
-                },
-              )
-            ],
-          )
-        ],
-      ),
-    );
-  }
-
-  Container _kazeContent(SourceData info) {
-    return Container(
-      width: double.infinity,
-      child: Text(info.content.toString()),
-      padding: EdgeInsets.all(10),
-    );
-  }
-
-//  浏览器打开
+  // 浏览器打开
   void _goSource(url) {
     Navigator.pushNamed(context, "/webView", arguments: url);
   }

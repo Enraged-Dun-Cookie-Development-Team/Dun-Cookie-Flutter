@@ -1,15 +1,22 @@
 import 'package:dun_cookie_flutter/model/source_data.dart';
 import 'package:dun_cookie_flutter/model/source_info.dart';
 import 'package:flutter/material.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
-class DunHeadren extends StatelessWidget {
-  DunHeadren(this.info, {Key? key})
+class DunHead extends StatefulWidget {
+  DunHead(this.info, {Key? key, this.isShowQR = false})
       : source = info.sourceInfo,
         super(key: key);
 
   SourceData info;
-  late SourceInfo source;
+  SourceInfo source;
+  final bool isShowQR;
 
+  @override
+  State<DunHead> createState() => _DunHeadState();
+}
+
+class _DunHeadState extends State<DunHead> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,10 +30,11 @@ class DunHeadren extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(8),
                 child: Image.asset(
-                  source.icon!,
+                  widget.source.icon!,
                   width: 40,
                   height: 40,
                   fit: BoxFit.cover,
+                  alignment: Alignment.topLeft,
                 ),
               ),
               const SizedBox(
@@ -36,14 +44,14 @@ class DunHeadren extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    source.title!,
+                    widget.source.title!,
                     style: const TextStyle(fontSize: 18),
                   ),
                   const SizedBox(
                     height: 2,
                   ),
                   Text(
-                    info.timeForDisplay,
+                    widget.info.timeForDisplay,
                     style: const TextStyle(fontSize: 14, color: Colors.black45),
                   ),
                 ],
@@ -52,15 +60,24 @@ class DunHeadren extends StatelessWidget {
           ),
           Row(
             children: [
-              IconButton(
-                iconSize: 18,
-                icon: const Icon(Icons.share),
-                onPressed: () {},
-              )
+              widget.isShowQR
+                  ? Container()
+                  : IconButton(
+                      iconSize: 18,
+                      icon: const Icon(Icons.share),
+                      onPressed: () {
+                        _goShare(widget.info);
+                      },
+                    ),
             ],
           )
         ],
       ),
     );
+  }
+
+  // 浏览器打开
+  void _goShare(info) {
+    Navigator.pushNamed(context, "/widgetToImage", arguments: info);
   }
 }

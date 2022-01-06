@@ -5,42 +5,44 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ViewImageExtendedImage extends StatefulWidget {
-  ViewImageExtendedImage({
-    Key? key,
-    required this.isMultiImage,
-    required this.info,
+  ViewImageExtendedImage({Key? key,
+    required this.imageList,
+    this.text = "",
     this.currentIndex = 0,
-  }) : imageList = isMultiImage ? info.imageList : [info.coverImage!];
+  }) : super(key: key);
 
+//  图片地址数组
   List<String>? imageList;
+//  当前看的第几章
   int currentIndex;
-  bool isMultiImage = false;
-  SourceData info;
+//  图片文字
+  String text;
 
   @override
   _ViewImageExtendedImageState createState() => _ViewImageExtendedImageState();
 }
 
 class _ViewImageExtendedImageState extends State<ViewImageExtendedImage> {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.black,
-        body: GestureDetector(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: ChangeNotifierProvider(
-            create: (context) =>
-                ViewImageCurrentIndexProvider(widget.currentIndex),
-            child: Consumer<ViewImageCurrentIndexProvider>(
-              builder: (ctx, data, child) {
-                return Stack(
-                  children: [_imageView(data), _bottomInfo(data)],
-                );
-              },
+        body: SafeArea(
+          child: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: ChangeNotifierProvider(
+              create: (context) =>
+                  ViewImageCurrentIndexProvider(widget.currentIndex),
+              child: Consumer<ViewImageCurrentIndexProvider>(
+                builder: (ctx, data, child) {
+                  return Stack(
+                    children: [_imageView(data), _bottomInfo(data)],
+                  );
+                },
+              ),
             ),
           ),
         ),
@@ -88,7 +90,7 @@ class _ViewImageExtendedImageState extends State<ViewImageExtendedImage> {
           children: [
             Expanded(
               flex: 1,
-              child: _imageInfoText("${widget.info.content}"),
+              child: _imageInfoText(widget.text),
             ),
             const SizedBox(
               width: 10,
