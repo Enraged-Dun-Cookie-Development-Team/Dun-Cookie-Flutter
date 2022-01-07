@@ -1,5 +1,5 @@
 import 'package:dun_cookie_flutter/model/source_info.dart';
-import 'package:dun_cookie_flutter/provider/list_source_info_check_provider.dart';
+import 'package:dun_cookie_flutter/provider/list_source_info_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -32,7 +32,7 @@ class DunDrawer extends StatelessWidget {
             child: MediaQuery.removePadding(
               context: context,
               removeTop: true,
-              child: Consumer<ListSourceInfoCheckProvider>(
+              child: Consumer<ListSourceInfoProvider>(
                 builder: (ctx, data, child) {
                   return ListView.builder(
                     itemCount: DunDrawer._sourceList.length,
@@ -58,7 +58,7 @@ class SourceListTile extends StatefulWidget {
 
   final int index;
   final SourceInfo info;
-  final ListSourceInfoCheckProvider data;
+  final ListSourceInfoProvider data;
 
   @override
   _SourceListTileState createState() => _SourceListTileState();

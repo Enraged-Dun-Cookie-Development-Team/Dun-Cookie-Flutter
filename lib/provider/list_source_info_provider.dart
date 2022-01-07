@@ -2,8 +2,8 @@ import 'package:dun_cookie_flutter/common/persistence/main.dart';
 import 'package:dun_cookie_flutter/model/source_info.dart';
 import 'package:flutter/material.dart';
 
-class ListSourceInfoCheckProvider with ChangeNotifier {
-  ListSourceInfoCheckProvider();
+class ListSourceInfoProvider with ChangeNotifier {
+  ListSourceInfoProvider();
 
   List<String> checkSource = [];
 

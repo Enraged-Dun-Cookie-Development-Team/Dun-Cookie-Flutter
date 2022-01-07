@@ -1,7 +1,7 @@
 import 'package:dun_cookie_flutter/model/source_info.dart';
 import 'package:dun_cookie_flutter/page/main/dun_drawer.dart';
 import 'package:dun_cookie_flutter/page/main/dun_list.dart';
-import 'package:dun_cookie_flutter/provider/list_source_info_check_provider.dart';
+import 'package:dun_cookie_flutter/provider/list_source_info_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -12,8 +12,8 @@ class MainScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<ListSourceInfoCheckProvider>(
-            create: (_) => ListSourceInfoCheckProvider()),
+        ChangeNotifierProvider<ListSourceInfoProvider>(
+            create: (_) => ListSourceInfoProvider()),
       ],
       child: Scaffold(
         appBar: _appBar,
