@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
+
 import 'source_info.dart';
 
 /// dataSource : "一拾山微博"
@@ -20,7 +22,7 @@ SourceData SourceDataFromJson(String str) =>
 
 String SourceDataToJson(SourceData data) => json.encode(data.toJson());
 
-class SourceData {
+class SourceData with ChangeNotifier {
   SourceData({
     required this.dataSource,
     required this.id,

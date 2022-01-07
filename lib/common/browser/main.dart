@@ -37,7 +37,6 @@ class _DunWebViewMainState extends State<DunWebViewMain> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     if (Platform.isAndroid) WebView.platform = AndroidWebView();
   }

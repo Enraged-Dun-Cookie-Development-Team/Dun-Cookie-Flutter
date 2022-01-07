@@ -30,7 +30,7 @@ class _DunHeadState extends State<DunHead> {
               ClipRRect(
                 borderRadius: BorderRadius.circular(8),
                 child: Image.asset(
-                  widget.source.icon!,
+                  widget.source.icon,
                   width: 40,
                   height: 40,
                   fit: BoxFit.cover,
@@ -44,7 +44,7 @@ class _DunHeadState extends State<DunHead> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.source.title!,
+                    widget.source.title,
                     style: const TextStyle(fontSize: 18),
                   ),
                   const SizedBox(

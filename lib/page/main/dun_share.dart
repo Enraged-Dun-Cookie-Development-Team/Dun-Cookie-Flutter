@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'dart:math';
 import 'dart:typed_data';
+import 'package:dun_cookie_flutter/common/pubilc.dart';
 import 'package:dun_cookie_flutter/model/source_data.dart';
 import 'package:dun_cookie_flutter/page/main/dun_content.dart';
 import 'package:dun_cookie_flutter/page/main/dun_headren.dart';
@@ -26,7 +26,6 @@ class _DunWidgetToImageState extends State<DunWidgetToImage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -106,7 +105,7 @@ class _DunWidgetToImageState extends State<DunWidgetToImage> {
             width: 200,
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [Color.fromARGB(255, 35, 173, 229), Colors.white],
+                colors: [DunColors.biliBiliBlue, Colors.white],
               ),
             ),
           ),
@@ -130,7 +129,7 @@ class _DunWidgetToImageState extends State<DunWidgetToImage> {
                   const Text(
                     "小刻食堂",
                     style: TextStyle(
-                        fontSize: 28, color: Color.fromARGB(255, 35, 173, 229)),
+                        fontSize: 28, color: DunColors.biliBiliBlue),
                   )
                 ],
               ),

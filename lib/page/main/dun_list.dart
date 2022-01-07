@@ -18,10 +18,10 @@ class _MainListState extends State<MainList> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     // 清除30天前的图片缓存
     clearDiskCachedImages(duration: const Duration(days: 30));
+
     _getDate();
   }
 
@@ -46,7 +46,7 @@ class _MainListState extends State<MainList> {
                       Container(
                         width: double.infinity,
                         height: 6,
-                        color: Color.fromARGB(25, 0, 0, 0),
+                        color: Colors.black12,
                       )
                     ],
                   ),

@@ -33,7 +33,7 @@ class MainRequest {
     var sourceLists = SourceList.getSourceList();
     var resultJson = [];
     sourceLists.forEach((sourceList) {
-      var info = data[sourceList["data"]["dataName"]];
+      var info = data[sourceList["data"].dataName];
       info.forEach((e) => e["sourceInfo"] = sourceList["data"]);
       resultJson.addAll(info);
     });

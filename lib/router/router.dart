@@ -1,5 +1,5 @@
+import 'package:dun_cookie_flutter/common/browser/main.dart';
 import 'package:dun_cookie_flutter/page/Error/main.dart';
-import 'package:dun_cookie_flutter/page/browser/main.dart';
 import 'package:dun_cookie_flutter/page/main/dun_main.dart';
 import 'package:dun_cookie_flutter/page/setting/main.dart';
 import 'package:dun_cookie_flutter/page/main/dun_share.dart';
@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 
 class DunRouter {
   static final Map<String, WidgetBuilder> routes = {
-    "/": (context) => const MainScaffold(),
-    "/mbgf": (context) => const MainScaffold(),
-    "/setting": (context) => const Setting(),
+    "/": (context) =>  MainScaffold(),
+    // "/mbgf": (context) =>  MainScaffold(),
+    // "/setting": (context) => const Setting(),
     DunWidgetToImage.routeName: (context) => DunWidgetToImage(),
     DunWebView.routeName: (context) => DunWebView(),
   };

@@ -1,5 +1,6 @@
+import 'package:dun_cookie_flutter/common/pubilc.dart';
 import 'package:dun_cookie_flutter/model/source_data.dart';
-import 'package:dun_cookie_flutter/page/common/view_image_main.dart';
+import 'package:dun_cookie_flutter/common/tool/view_image_main.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +28,6 @@ class _DunImageState extends State<DunImage>
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _controller =
         AnimationController(vsync: this, duration: const Duration(seconds: 1));
@@ -110,12 +110,12 @@ class _DunImageState extends State<DunImage>
                 bottom: 0,
                 child: Container(
                   padding: EdgeInsets.all(4),
-                  color: Color.fromARGB(255, 255, 255, 255),
+                  color: Colors.white,
                   child: Text(
                     "${((progress ?? 0.0) * 100).toInt()}%",
                     style: const TextStyle(
                       fontSize: 16,
-                      color: Color.fromARGB(255, 35, 173, 229),
+                      color: DunColors.biliBiliBlue,
                     ),
                   ),
                 ),

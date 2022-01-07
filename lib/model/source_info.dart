@@ -1,8 +1,7 @@
 import 'dart:convert';
 
 class SourceList {
-  static List<Map<String, dynamic>> _sourceList = [];
-
+  static List<dynamic> _sourceList = [];
   static getSourceList() {
     _sourceList = [];
     _sourceList.add(SourceInfo.getMap("bili.ico", "官方B站动态", "哔哩哔哩", 0,
@@ -47,9 +46,9 @@ String sourceInfoToJson(SourceInfo data) => json.encode(data.toJson());
 
 class SourceInfo {
   SourceInfo({
-    this.icon,
-    this.dataName,
-    this.title,
+    required this.icon,
+    required this.dataName,
+    required this.title,
     this.dataUrl,
     this.url,
     this.priority,
@@ -57,18 +56,18 @@ class SourceInfo {
   });
 
   SourceInfo.fromJson(dynamic json) {
-    icon = json['icon'];
-    dataName = json['dataName'];
-    title = json['title'];
-    dataUrl = json['dataUrl'];
-    url = json['url'];
-    priority = json['priority'];
-    uid = json['uid'];
+    icon = json.icon;
+    dataName = json.dataName;
+    title = json.title;
+    dataUrl = json.dataUrl;
+    url = json.url;
+    priority = json.priority;
+    uid = json.uid;
   }
 
-  String? icon;
-  String? dataName;
-  String? title;
+  late String icon;
+  late String dataName;
+  late String title;
   String? dataUrl;
   String? url;
   int? priority;
@@ -105,14 +104,7 @@ class SourceInfo {
     sourceItem.icon = "assets/sources_logo/$icon";
     return {
       "priority": sourceItem.priority,
-      "data": {
-        "icon": sourceItem.icon,
-        "dataName": sourceItem.dataName,
-        "title": sourceItem.title,
-        "dataUrl": sourceItem.dataUrl,
-        "priority": sourceItem.priority,
-        "uid": sourceItem.uid
-      }
+      "data": sourceItem
     };
   }
 

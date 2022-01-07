@@ -1,20 +1,30 @@
+import 'package:dun_cookie_flutter/model/source_info.dart';
+import 'package:dun_cookie_flutter/page/main/dun_drawer.dart';
 import 'package:dun_cookie_flutter/page/main/dun_list.dart';
+import 'package:dun_cookie_flutter/provider/list_source_info_check_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MainScaffold extends StatelessWidget {
-  const MainScaffold({Key? key}) : super(key: key);
+  MainScaffold({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _appBar,
-      body: MainList(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<ListSourceInfoCheckProvider>(
+            create: (_) => ListSourceInfoCheckProvider()),
+      ],
+      child: Scaffold(
+        appBar: _appBar,
+        body: const MainList(),
+        drawer: const DunDrawer(),
+      ),
     );
   }
 
-  static final PreferredSizeWidget _appBar = AppBar(
+  final _appBar = AppBar(
     title: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
       children: const [
         Image(
           image: AssetImage("assets/logo/logo.png"),
