@@ -3,24 +3,12 @@ import 'package:dun_cookie_flutter/provider/list_source_info_check_provider.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class DunDrawer extends StatefulWidget {
+class DunDrawer extends StatelessWidget {
   const DunDrawer({Key? key}) : super(key: key);
-
   static final _sourceList = SourceList.getSourceList();
 
   @override
-  State<DunDrawer> createState() => _DunDrawerState();
-}
-
-class _DunDrawerState extends State<DunDrawer> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    Provider.of<ListSourceInfoCheckProvider>(context).getCheckListInPriority();
     return Drawer(
       child: Column(
         children: [
@@ -94,6 +82,14 @@ class _SourceListTileState extends State<SourceListTile>
         .animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
     _opacityAnimate = Tween<double>(begin: 0.3, end: 1.0)
         .animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+
+    widget.data.getCheckListInPriority().then((_) {
+      if (widget.data.checkSource.any((x) => x == widget.index.toString())) {
+        _controller.forward();
+      } else {
+        _controller.reverse();
+      }
+    });
   }
 
   @override
@@ -104,11 +100,6 @@ class _SourceListTileState extends State<SourceListTile>
 
   @override
   Widget build(BuildContext context) {
-    if (widget.data.checkSource.any((x) => x == widget.index.toString())) {
-      _controller.forward();
-    } else {
-      _controller.reverse();
-    }
     return ListTile(
       leading: ClipRRect(
         borderRadius: BorderRadius.circular(8),

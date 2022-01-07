@@ -7,12 +7,11 @@ class ListSourceInfoCheckProvider with ChangeNotifier {
 
   List<String> checkSource = [];
 
-  void getCheckListInPriority() {
-    DunPreferences().getStringList(key: "listCheckSource").then((_listCheckSource) {
-        checkSource = _listCheckSource;
-        notifyListeners();
-      },
-    );
+  Future getCheckListInPriority() async {
+    var _listCheckSource =
+        await DunPreferences().getStringList(key: "listCheckSource");
+    checkSource = _listCheckSource;
+    notifyListeners();
   }
 
   void setCheckListInPriority(priority, isAdd) async {
