@@ -4,68 +4,6 @@ import 'package:dun_cookie_flutter/provider/common_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-// class DunBottomNavigationBar extends StatefulWidget {
-//   DunBottomNavigationBar({Key? key, required this.commonProvider})
-//       : super(key: key);
-//
-//   CommonProvider commonProvider;
-//
-//   @override
-//   _DunBottomNavigationBarState createState() => _DunBottomNavigationBarState();
-// }
-//
-// class _DunBottomNavigationBarState extends State<DunBottomNavigationBar> {
-//   final List<BottomNavigationBarItem> bottomNavItems = [
-//     const BottomNavigationBarItem(
-//         backgroundColor: DunColors.BakeryColor,
-//         icon: Image(
-//           image: AssetImage("assets/logo/logo_mb@noactive.png"),
-//           width: 20,
-//         ),
-//         activeIcon: Image(
-//           image: AssetImage("assets/logo/logo_mb.png"),
-//           width: 20,
-//         ),
-//         label: "蜜饼工坊"),
-//     const BottomNavigationBarItem(
-//         backgroundColor: DunColors.DunColor,
-//         icon: Image(
-//           image: AssetImage("assets/logo/logo@noactive.png"),
-//           width: 20,
-//         ),
-//         activeIcon: Image(
-//           image: AssetImage("assets/logo/logo.png"),
-//           width: 20,
-//         ),
-//         label: "小刻食堂"),
-//
-//     const BottomNavigationBarItem(
-//         backgroundColor: DunColors.DunColor,
-//         icon: Icon(Icons.build, color: Colors.white),
-//         activeIcon: Icon(Icons.build, color: Colors.white),
-//         label: "快捷工具"),
-//     // const BottomNavigationBarItem(
-//     //   backgroundColor: Colors.red,
-//     //   icon: Icon(Icons.settings),
-//     //   label: "设置",
-//     // ),
-//   ];
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return BottomNavigationBar(
-//       items: bottomNavItems,
-//       currentIndex: widget.commonProvider.routerIndex,
-//       type: BottomNavigationBarType.shifting,
-//       iconSize: 20.0,
-//       onTap: (index) {
-//         if (index != widget.commonProvider.routerIndex) {
-//           widget.commonProvider.setRouterIndex(index);
-//         }
-//       },
-//     );
-//   }
-// }
 
 class DunBottomNavigationBar extends StatefulWidget {
   DunBottomNavigationBar({

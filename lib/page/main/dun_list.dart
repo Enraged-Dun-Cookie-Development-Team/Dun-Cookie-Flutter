@@ -1,7 +1,5 @@
 import 'package:dun_cookie_flutter/model/source_data.dart';
-import 'package:dun_cookie_flutter/page/main/dun_content.dart';
-import 'package:dun_cookie_flutter/page/main/dun_headren.dart';
-import 'package:dun_cookie_flutter/page/main/dun_image.dart';
+import 'package:dun_cookie_flutter/page/main/dun_card_item.dart';
 import 'package:dun_cookie_flutter/service/main_request.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
@@ -36,22 +34,9 @@ class _DunListState extends State<DunList> {
             itemCount: list.length,
             itemBuilder: (ctx, index) {
               var info = list[index];
-              return GestureDetector(
-                onTap: () => _goSource(info.jumpUrl),
-                child: Container(
-                  child: Column(
-                    children: [
-                      DunHead(info),
-                      DunContent(info),
-                      DunImage(info),
-                      Container(
-                        width: double.infinity,
-                        height: 6,
-                        color: Colors.black12,
-                      )
-                    ],
-                  ),
-                ),
+              return DunCardItem(
+                info: info,
+                index: index,
               );
             },
           ),
@@ -59,11 +44,6 @@ class _DunListState extends State<DunList> {
         const TestText()
       ],
     );
-  }
-
-  // 浏览器打开
-  void _goSource(url) {
-    Navigator.pushNamed(context, "/webView", arguments: url);
   }
 
   //  获取数据
