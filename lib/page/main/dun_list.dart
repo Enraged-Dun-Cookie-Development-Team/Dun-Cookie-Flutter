@@ -6,14 +6,15 @@ import 'package:dun_cookie_flutter/service/main_request.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
-class MainList extends StatefulWidget {
-  const MainList({Key? key}) : super(key: key);
+class DunList extends StatefulWidget {
+  const DunList({Key? key}) : super(key: key);
+  static String routeName = "/dunList";
 
   @override
-  State<MainList> createState() => _MainListState();
+  State<DunList> createState() => _DunListState();
 }
 
-class _MainListState extends State<MainList> {
+class _DunListState extends State<DunList> {
   List<SourceData> list = [];
 
   @override

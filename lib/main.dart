@@ -12,9 +12,11 @@ class DunMain extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        routes: DunRouter.routes,
-        onUnknownRoute: (settings) =>
-            MaterialPageRoute(builder: (context) => DunError(error: "404")),
-        initialRoute: "/");
+      routes: DunRouter.routes,
+      onUnknownRoute: (settings) =>
+          MaterialPageRoute(builder: (context) => DunError(error: "404")),
+      initialRoute: "/",
+    );
   }
 }
+

@@ -115,7 +115,7 @@ class _DunImageState extends State<DunImage>
                     "${((progress ?? 0.0) * 100).toInt()}%",
                     style: const TextStyle(
                       fontSize: 16,
-                      color: DunColors.biliBiliBlue,
+                      color: DunColors.DunColor,
                     ),
                   ),
                 ),

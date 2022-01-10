@@ -1,18 +1,23 @@
 import 'package:dun_cookie_flutter/common/browser/main.dart';
 import 'package:dun_cookie_flutter/page/Error/main.dart';
-import 'package:dun_cookie_flutter/page/main/dun_main.dart';
-import 'package:dun_cookie_flutter/page/setting/main.dart';
+import 'package:dun_cookie_flutter/page/bakery/main.dart';
+import 'package:dun_cookie_flutter/page/home/main.dart';
+import 'package:dun_cookie_flutter/page/main/dun_list.dart';
+import 'package:dun_cookie_flutter/page/tool/main.dart';
 import 'package:dun_cookie_flutter/page/main/dun_share.dart';
 import 'package:flutter/material.dart';
 
 class DunRouter {
   static final Map<String, WidgetBuilder> routes = {
-    "/": (context) =>  MainScaffold(),
-    // "/mbgf": (context) =>  MainScaffold(),
-    // "/setting": (context) => const Setting(),
+    "/": (context) => MainScaffold(),
+    Bakery.routeName: (context) => Bakery(),
+    DunList.routeName: (context) => DunList(),
     DunWidgetToImage.routeName: (context) => DunWidgetToImage(),
     DunWebView.routeName: (context) => DunWebView(),
+    DunTool.routeName: (context) => DunTool(),
   };
+
+  static final pages = [DunList(), const Bakery(), DunTool()];
 
   /// 添加页面后记得在上面加上 不然就会直接跳转到404
   static Route routeGenerator(RouteSettings settings) {

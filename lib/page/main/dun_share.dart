@@ -105,7 +105,7 @@ class _DunWidgetToImageState extends State<DunWidgetToImage> {
             width: 200,
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [DunColors.biliBiliBlue, Colors.white],
+                colors: [DunColors.DunColor, Colors.white],
               ),
             ),
           ),
@@ -129,7 +129,7 @@ class _DunWidgetToImageState extends State<DunWidgetToImage> {
                   const Text(
                     "小刻食堂",
                     style: TextStyle(
-                        fontSize: 28, color: DunColors.biliBiliBlue),
+                        fontSize: 28, color: DunColors.DunColor),
                   )
                 ],
               ),
