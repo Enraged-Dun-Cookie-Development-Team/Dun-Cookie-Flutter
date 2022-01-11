@@ -27,7 +27,7 @@ class _DunCardItemState extends State<DunCardItem>
     );
     _opacityAnimate = Tween<double>(begin: 0.0, end: 1.0)
         .animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
-    _translateAnimate = Tween<double>(begin: 50, end: 0)
+    _translateAnimate = Tween<double>(begin: 100, end: 0)
         .animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
     _controller.forward();
 
@@ -49,7 +49,7 @@ class _DunCardItemState extends State<DunCardItem>
           animation: Listenable.merge([_opacityAnimate, _translateAnimate]),
           builder: (context, child) {
             return Transform.translate(
-              offset: Offset(_translateAnimate.value, _translateAnimate.value),
+              offset: Offset(0, _translateAnimate.value),
               child: Opacity(
                 opacity: _opacityAnimate.value,
                 child: Column(

@@ -17,7 +17,8 @@ class DunRouter {
     DunTool.routeName: (context) => DunTool(),
   };
 
-  static final pages = [DunList(), const Bakery(), DunTool()];
+  static const pageTitles = ["小刻食堂 alpha", "蜜饼工坊 alpha", "常用工具 alpha"];
+  static const pages = [DunList(), Bakery(), DunTool()];
 
   /// 添加页面后记得在上面加上 不然就会直接跳转到404
   static Route routeGenerator(RouteSettings settings) {

@@ -4,7 +4,6 @@ import 'package:dun_cookie_flutter/provider/common_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
 class DunBottomNavigationBar extends StatefulWidget {
   DunBottomNavigationBar({
     Key? key,
@@ -26,19 +25,13 @@ class _DunBottomNavigationBarState extends State<DunBottomNavigationBar> {
           children: [
             ButtonItem(
                 index: 1,
-                content: const Image(
-                  image: AssetImage("assets/logo/logo_mb@noactive.png"),
-                  width: 30,
-                ),
-                activeContent: const Image(
-                  image: AssetImage("assets/logo/logo_mb.png"),
-                  width: 30,
-                ),
+                content: "assets/logo/logo_mb@noactive.png",
+                activeContent: "assets/logo/logo_mb.png",
                 label: "蜜饼工坊"),
             ButtonItem(
                 index: 2,
-                content: const Icon(Icons.settings),
-                activeContent: const Icon(Icons.settings,color: DunColors.DunColor,),
+                content: "assets/image/tool@noactive.png",
+                activeContent: "assets/image/tool.png",
                 label: "常用工具"),
           ],
         ),
@@ -57,8 +50,8 @@ class ButtonItem extends StatefulWidget {
       : super(key: key);
 
   int index;
-  Widget content;
-  Widget activeContent;
+  String content;
+  String activeContent;
   String label;
 
   @override
@@ -68,6 +61,9 @@ class ButtonItem extends StatefulWidget {
 class _ButtonItemState extends State<ButtonItem>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
+  late final Animation<double> _logoSizeAnimate;
+  late final Animation<double> _textSizeAnimate;
+  late final Animation<Colors> _colorsAnimate;
 
   @override
   void initState() {
@@ -84,33 +80,21 @@ class _ButtonItemState extends State<ButtonItem>
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Consumer<CommonProvider>(builder: (ctx, data, child) {
-        return GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: () => _onTap(widget.index, data),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Visibility(
-                child: widget.content,
-                visible: data.routerIndex != widget.index,
-              ),
-              Visibility(
-                child: widget.activeContent,
-                visible: data.routerIndex == widget.index,
-              ),
-              Visibility(
-                child: Text(widget.label),
-                visible: data.routerIndex != widget.index,
-              ),
-              Visibility(
-                child: Text(widget.label,style: TextStyle(color: DunColors.DunColor),),
-                visible: data.routerIndex == widget.index,
-              ),
-            ],
-          ),
-        );
-      }),
+      child: Consumer<CommonProvider>(
+        builder: (ctx, data, child) {
+          return GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () => _onTap(widget.index, data),
+            child: Image.asset(
+              data.routerIndex != widget.index
+                  ? widget.content
+                  : widget.activeContent,
+              gaplessPlayback: true,
+              height: 30,
+            ),
+          );
+        },
+      ),
     );
   }
 

@@ -1,3 +1,4 @@
+import 'package:dun_cookie_flutter/common/pubilc.dart';
 import 'package:dun_cookie_flutter/page/home/dun_buttom_navigation_bar.dart';
 import 'package:dun_cookie_flutter/provider/common_provider.dart';
 import 'package:dun_cookie_flutter/provider/list_source_info_provider.dart';
@@ -8,8 +9,11 @@ import 'package:provider/provider.dart';
 class MainScaffold extends StatelessWidget {
   MainScaffold({Key? key}) : super(key: key);
 
+  late BuildContext _context;
+
   @override
   Widget build(BuildContext context) {
+    _context = context;
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<ListSourceInfoProvider>(
@@ -18,25 +22,29 @@ class MainScaffold extends StatelessWidget {
       ],
       child: Consumer<CommonProvider>(
         builder: (ctx, data, child) {
-          return Scaffold(
-            appBar: _appBar,
-            body: DunRouter.pages[data.routerIndex],
-            bottomNavigationBar: DunBottomNavigationBar(),
-            floatingActionButton: data.routerIndex == 0
-                ? _floatingActionButton("assets/logo/logo.png", data)
-                : _floatingActionButton("assets/logo/logo@noactive.png", data),
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerDocked,
-
-            // drawer: const DunDrawer(),
+          return Theme(
+            data: _theme(data),
+            child: Scaffold(
+              appBar: _appBar(data),
+              body: DunRouter.pages[data.routerIndex],
+              bottomNavigationBar: DunBottomNavigationBar(),
+              floatingActionButton: data.routerIndex == 0
+                  ? _floatingActionButton("assets/logo/logo.png", data, true)
+                  : _floatingActionButton(
+                      "assets/logo/logo@noactive.png", data, false),
+              floatingActionButtonLocation:
+                  FloatingActionButtonLocation.centerDocked,
+              // drawer: const DunDrawer(),
+            ),
           );
         },
       ),
     );
   }
 
-  _floatingActionButton(url, data) {
+  _floatingActionButton(url, CommonProvider data, isActive) {
     return FloatingActionButton(
+      backgroundColor: isActive ? DunColors.DunColor : Colors.white,
       onPressed: () {
         if (data.routerIndex != 0) {
           data.setRouterIndex(0);
@@ -49,11 +57,9 @@ class MainScaffold extends StatelessWidget {
     );
   }
 
-  final _appBar = AppBar(
-    title: Row(
-      children: const [
-        Text("小刻食堂 alpha"),
-      ],
-    ),
-  );
+  _appBar(CommonProvider data) => AppBar(
+        title: Text(DunRouter.pageTitles[data.routerIndex]),
+      );
+
+  _theme(CommonProvider data) => DunTheme.themeList[data.themeIndex];
 }
