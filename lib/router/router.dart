@@ -5,6 +5,7 @@ import 'package:dun_cookie_flutter/page/home/main.dart';
 import 'package:dun_cookie_flutter/page/main/dun_list.dart';
 import 'package:dun_cookie_flutter/page/tool/main.dart';
 import 'package:dun_cookie_flutter/page/main/dun_share.dart';
+import 'package:dun_cookie_flutter/page/update_dialog/main.dart';
 import 'package:flutter/material.dart';
 
 class DunRouter {

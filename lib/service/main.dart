@@ -15,8 +15,14 @@ class HttpClass {
     String url, {
     String method = "get",
     Map<String, dynamic>? params,
+    bool isNoBaseUrl = false,
   }) async {
     final options = Options(method: method);
+    if (isNoBaseUrl) {
+      dio.options.baseUrl = "";
+    } else {
+      dio.options.baseUrl = HttpConfig.baseUrl;
+    }
     try {
       Response response = await dio.request(
         url,
@@ -24,9 +30,9 @@ class HttpClass {
         options: options,
       );
       dio.interceptors.add(_dInter());
-      return {"error": false,"data":response.data};
+      return {"error": false, "data": response.data};
     } catch (e) {
-      return {"error": true,"data":[]};
+      return {"error": true, "data": []};
     }
   }
 
@@ -50,6 +56,10 @@ class HttpClass {
 
   static Future get(String url) {
     return _request(url);
+  }
+
+  static Future tempGet(String url) {
+    return _request(url, isNoBaseUrl: true);
   }
 
   static Future post(String url, {Map<String, dynamic>? params}) {

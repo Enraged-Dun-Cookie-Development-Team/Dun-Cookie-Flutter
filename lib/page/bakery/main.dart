@@ -13,16 +13,14 @@ class Bakery extends StatelessWidget {
         .size;
     return Swiper(
       itemBuilder: (BuildContext context, int index) {
-        return Card(
+        return const Card(
+          margin: EdgeInsets.all(20),
           elevation: 15.0,
           child: BakeryCard(),
         );
       },
-      itemCount: 3,
       loop: false,
-      // itemWidth: size.width,
-      // itemHeight: size.height,
-      // layout: SwiperLayout.TINDER,
+      itemCount: 3,
       // pagination: SwiperPagination(),
       // control: SwiperControl(),
     );

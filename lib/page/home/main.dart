@@ -1,19 +1,18 @@
 import 'package:dun_cookie_flutter/common/pubilc.dart';
 import 'package:dun_cookie_flutter/page/home/dun_buttom_navigation_bar.dart';
+import 'package:dun_cookie_flutter/page/update_dialog/main.dart';
 import 'package:dun_cookie_flutter/provider/common_provider.dart';
 import 'package:dun_cookie_flutter/provider/list_source_info_provider.dart';
 import 'package:dun_cookie_flutter/router/router.dart';
+import 'package:dun_cookie_flutter/service/info_request.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class MainScaffold extends StatelessWidget {
   MainScaffold({Key? key}) : super(key: key);
 
-  late BuildContext _context;
-
   @override
   Widget build(BuildContext context) {
-    _context = context;
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<ListSourceInfoProvider>(
@@ -62,4 +61,15 @@ class MainScaffold extends StatelessWidget {
       );
 
   _theme(CommonProvider data) => DunTheme.themeList[data.themeIndex];
+
+  _updateDialog(BuildContext context) {
+    Future.delayed(Duration(seconds: 1), () async {
+      var result = await showUpdateDialog(context);
+      if (result == null) {
+        print("取消删除");
+      } else {
+        print("已确认删除");
+      }
+    });
+  }
 }
