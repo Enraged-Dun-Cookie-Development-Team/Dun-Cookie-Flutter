@@ -13,33 +13,42 @@ class DunList extends StatefulWidget {
 }
 
 class _DunListState extends State<DunList> {
-  List<SourceData> list = [];
-
   @override
   void initState() {
     super.initState();
     // 清除30天前的图片缓存
     clearDiskCachedImages(duration: const Duration(days: 30));
-
-    _getDate();
   }
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        RefreshIndicator(
-          onRefresh: () => _onRefresh(),
-          child: ListView.builder(
-            itemCount: list.length,
-            itemBuilder: (ctx, index) {
-              var info = list[index];
-              return DunCardItem(
-                info: info,
-                index: index,
+        FutureBuilder<List<SourceData>>(
+          future: MainRequest.canteenCardListAll(),
+          builder: (ctx, snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(
+                child: CircularProgressIndicator(),
               );
-            },
-          ),
+            }
+            if (snapshot.data != null) {
+              final list = snapshot.data!;
+              return ListView.builder(
+                itemCount: list.length,
+                itemBuilder: (ctx, index) {
+                  var info = list[index];
+                  return DunCardItem(
+                    info: info,
+                    index: index,
+                  );
+                },
+              );
+            }
+            return const Center(
+              child: Text("报错了"),
+            );
+          },
         ),
         const TestText()
       ],
@@ -47,19 +56,19 @@ class _DunListState extends State<DunList> {
   }
 
   //  获取数据
-  _getDate() {
-    MainRequest.canteenCardListAll().then((value) {
-      setState(() {
-        list = value;
-      });
-      return true;
-    });
-  }
+  // _getDate() {
+  //   MainRequest.canteenCardListAll().then((value) {
+  //     setState(() {
+  //       list = value;
+  //     });
+  //     return true;
+  //   });
+  // }
 
   // 下拉刷新
   Future<void> _onRefresh() async {
     // 持续两秒 先不需要等待
-    await _getDate();
+    // await _getDate();
     // await Future.delayed(Duration(milliseconds: 2000), () {});
   }
 }

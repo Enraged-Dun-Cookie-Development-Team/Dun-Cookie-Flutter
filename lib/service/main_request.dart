@@ -28,7 +28,7 @@ class MainRequest {
     return resultInType;
   }
 
-  static Future canteenCardListAll() async {
+  static Future<List<SourceData>> canteenCardListAll() async {
     var data = await MainRequest._canteenOriginalCardList();
     var sourceLists = SourceList.getSourceList();
     var resultJson = [];
