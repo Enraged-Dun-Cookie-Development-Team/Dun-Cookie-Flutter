@@ -1,10 +1,19 @@
 import 'package:dun_cookie_flutter/common/pubilc.dart';
+import 'package:dun_cookie_flutter/model/ceobecanteen_info.dart';
+import 'package:dun_cookie_flutter/page/tool/tool_video.dart';
 import 'package:flutter/material.dart';
 
 class ToolSourceAndTool extends StatelessWidget {
-  ToolSourceAndTool(this.title, {Key? key}) : super(key: key);
+  ToolSourceAndTool(
+    this.title, {
+    Key? key,
+    this.type = 0,
+    this.videoInfo,
+  }) : super(key: key);
 
   String title;
+  int type; //0 为链接  1为视频
+  List<BtnList>? videoInfo;
 
   @override
   Widget build(BuildContext context) {
@@ -19,17 +28,19 @@ class ToolSourceAndTool extends StatelessWidget {
           child: GridView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: 9,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 5,
+            itemCount: type == 0 ? 5 : videoInfo!.length,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: type == 0 ? 5 : 2,
               mainAxisSpacing: 2,
               crossAxisSpacing: 2,
             ),
             itemBuilder: (ctx, index) {
               return Card(
-                child: Center(
-                  child: Text(index.toString()),
-                ),
+                child: type == 0
+                    ? Center(
+                        child: Text(index.toString()),
+                      )
+                    : ToolVideo(videoInfo![index]),
               );
             },
           ),

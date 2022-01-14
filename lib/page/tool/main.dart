@@ -55,7 +55,7 @@ class _DunToolState extends State<DunTool> {
                       ToolSourceAndTool("快捷工具"),
                     //推荐视频
                     if (ceobecanteenInfo.btnList != null)
-                      ToolSourceAndTool("快捷链接")
+                      ToolSourceAndTool("视频推荐",type: 1,videoInfo:ceobecanteenInfo.btnList)
                   ],
                 );
               }

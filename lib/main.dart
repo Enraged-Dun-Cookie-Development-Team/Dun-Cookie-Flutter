@@ -14,6 +14,9 @@ class DunMain extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: DunRouter.routes,
+      theme: ThemeData(
+          brightness:Brightness.dark
+      ),
       onUnknownRoute: (settings) =>
           MaterialPageRoute(builder: (context) => DunError(error: "404")),
       initialRoute: "/",

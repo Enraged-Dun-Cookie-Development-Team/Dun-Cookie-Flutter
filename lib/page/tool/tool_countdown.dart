@@ -9,7 +9,6 @@ class ToolCountdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(countDown.length);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
