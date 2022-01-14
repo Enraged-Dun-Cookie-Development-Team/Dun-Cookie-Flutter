@@ -5,16 +5,19 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'main.dart';
 
 class MainRequest {
+  static Initialized() async {
+    var data = await MainRequest.canteenCardListAll();
+    return data;
+  }
+
   static _canteenOriginalCardList() async {
     const url = "/canteen/cardList";
     var request = await HttpClass.get(url);
-    if(request["error"]){
+    if (request["error"]) {
       // todo 临时添加 后期统一封装
-      Fluttertoast.showToast(
-          msg: "服务器连接出错",
-          fontSize: 16.0);
-      return ;
-    }else{
+      Fluttertoast.showToast(msg: "服务器连接出错", fontSize: 16.0);
+      return;
+    } else {
       var data = request['data']['data'];
       return data;
     }
@@ -24,7 +27,7 @@ class MainRequest {
     List<SourceData> data = await MainRequest.canteenCardListAll();
     List<SourceData> resultInType = [];
     typeList.forEach((element) => resultInType
-        .addAll(data.where((x) => x.sourceInfo.priority == 0).toList()));
+        .addAll(data.where((x) => x.sourceInfo!.priority == 0).toList()));
     return resultInType;
   }
 
@@ -40,7 +43,7 @@ class MainRequest {
     List<SourceData> resultAll = [];
     resultJson
         .forEach((element) => resultAll.add(SourceData.fromJson(element)));
-    resultAll.sort((x, y) => y.timeForSort.compareTo(x.timeForSort));
+    resultAll.sort((x, y) => y.timeForSort!.compareTo(x.timeForSort!));
     return resultAll;
   }
 }

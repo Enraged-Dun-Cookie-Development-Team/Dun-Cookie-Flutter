@@ -3,7 +3,7 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
 class DunPrintImage extends StatelessWidget {
-  DunPrintImage({Key? key, required this.data})
+   DunPrintImage({Key? key, required this.data})
       : hasImage = (data.coverImage != null || data.imageList!.isNotEmpty),
         isMultiImage =
             (data.coverImage != null || data.imageList!.isNotEmpty) &&

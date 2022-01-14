@@ -1,4 +1,6 @@
 import 'package:dun_cookie_flutter/common/pubilc.dart';
+import 'package:dun_cookie_flutter/model/ceobecanteen_info.dart';
+import 'package:dun_cookie_flutter/model/source_data.dart';
 import 'package:dun_cookie_flutter/page/home/dun_buttom_navigation_bar.dart';
 import 'package:dun_cookie_flutter/page/update_dialog/main.dart';
 import 'package:dun_cookie_flutter/provider/common_provider.dart';
@@ -18,19 +20,30 @@ class MainScaffold extends StatelessWidget {
         ChangeNotifierProvider<ListSourceInfoProvider>(
             create: (_) => ListSourceInfoProvider()),
         ChangeNotifierProvider<CommonProvider>(create: (_) => CommonProvider()),
+        ChangeNotifierProvider<CeobecanteenInfo>(
+            create: (_) => CeobecanteenInfo()),
+        ChangeNotifierProvider<SourceData>(create: (_) => SourceData()),
       ],
-      child: Consumer<CommonProvider>(
+      child: Selector<CommonProvider, Map<String, int>>(
+        selector: (ctx, commonProvider) {
+          return {
+            "routerIndex": commonProvider.routerIndex,
+            "themeIndex": commonProvider.themeIndex
+          };
+        },
+        shouldRebuild: (prev, next) => prev != next,
         builder: (ctx, data, child) {
           return Theme(
-            data: _theme(data),
+            data: _theme(data["themeIndex"]),
             child: Scaffold(
-              appBar: _appBar(data),
-              body: DunRouter.pages[data.routerIndex],
+              appBar: _appBar(data["routerIndex"]),
+              body: DunRouter.pages[data["routerIndex"]!],
               bottomNavigationBar: DunBottomNavigationBar(),
-              floatingActionButton: data.routerIndex == 0
-                  ? _floatingActionButton("assets/logo/logo.png", data, true)
-                  : _floatingActionButton(
-                      "assets/logo/logo@noactive.png", data, false),
+              floatingActionButton: data["routerIndex"] == 0
+                  ? _floatingActionButton(
+                      "assets/logo/logo.png", ctx, data["routerIndex"], true)
+                  : _floatingActionButton("assets/logo/logo@noactive.png", ctx,
+                      data["routerIndex"], false),
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.centerDocked,
               // drawer: const DunDrawer(),
@@ -41,12 +54,12 @@ class MainScaffold extends StatelessWidget {
     );
   }
 
-  _floatingActionButton(url, CommonProvider data, isActive) {
+  _floatingActionButton(url, BuildContext ctx, routerIndex, isActive) {
     return FloatingActionButton(
       backgroundColor: isActive ? DunColors.DunColor : Colors.white,
       onPressed: () {
-        if (data.routerIndex != 0) {
-          data.setRouterIndex(0);
+        if (routerIndex != 0) {
+          Provider.of<CommonProvider>(ctx, listen: false).setRouterIndex(0);
         }
       },
       child: Image.asset(
@@ -56,11 +69,11 @@ class MainScaffold extends StatelessWidget {
     );
   }
 
-  _appBar(CommonProvider data) => AppBar(
-        title: Text(DunRouter.pageTitles[data.routerIndex]),
+  _appBar(routerIndex) => AppBar(
+        title: Text(DunRouter.pageTitles[routerIndex]),
       );
 
-  _theme(CommonProvider data) => DunTheme.themeList[data.themeIndex];
+  _theme(themeIndex) => DunTheme.themeList[themeIndex];
 
   _updateDialog(BuildContext context) {
     Future.delayed(Duration(seconds: 1), () async {

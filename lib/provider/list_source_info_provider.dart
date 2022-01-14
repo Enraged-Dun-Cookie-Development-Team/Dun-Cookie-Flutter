@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class ListSourceInfoProvider with ChangeNotifier {
   ListSourceInfoProvider();
 
+  // 选中的来源
   List<String> checkSource = [];
 
   Future getCheckListInPriority() async {

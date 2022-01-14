@@ -6,22 +6,29 @@ class CommonProvider with ChangeNotifier {
   CommonProvider();
 
   // 路由初始化页面
-  int routerIndex = 1;
+  int _routerIndex = 2;
 
-  int themeIndex = 0;
+  int get routerIndex {
+    return _routerIndex;
+  }
+
+  int _themeIndex = 0;
+
+  int get themeIndex {
+    return _themeIndex;
+  }
 
   setRouterIndex(index) {
-    routerIndex = index;
+    _routerIndex = index;
     setThemeIndex(index);
-    notifyListeners();
   }
 
   setThemeIndex(index) {
-    themeIndex = index;
+    _themeIndex = index;
     if (themeIndex > DunTheme.themeList.length - 1) {
-      themeIndex = 0;
+      _themeIndex = 0;
     }
-    DunPreferences().saveInt(key: "themeName", value: index);
+    DunPreferences().saveInt(key: "themeName", value: _themeIndex);
     notifyListeners();
   }
 }

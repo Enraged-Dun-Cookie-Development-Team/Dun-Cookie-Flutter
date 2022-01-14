@@ -1,3 +1,4 @@
+import 'package:dun_cookie_flutter/common/browser/main.dart';
 import 'package:dun_cookie_flutter/model/source_data.dart';
 import 'package:dun_cookie_flutter/page/main/dun_content.dart';
 import 'package:dun_cookie_flutter/page/main/dun_headren.dart';
@@ -5,9 +6,10 @@ import 'package:dun_cookie_flutter/page/main/dun_image.dart';
 import 'package:flutter/material.dart';
 
 class DunCardItem extends StatefulWidget {
-  DunCardItem({Key? key, required this.info,required this.index}) : super(key: key);
+  DunCardItem({Key? key, required this.info, required this.index})
+      : super(key: key);
   SourceData info;
-  int index;// 列表的第几个
+  int index; // 列表的第几个
   @override
   _DunCardItemState createState() => _DunCardItemState();
 }
@@ -72,6 +74,6 @@ class _DunCardItemState extends State<DunCardItem>
 
   // 浏览器打开
   void _goSource(url) {
-    Navigator.pushNamed(context, "/webView", arguments: url);
+    Navigator.pushNamed(context, DunWebView.routeName, arguments: url);
   }
 }

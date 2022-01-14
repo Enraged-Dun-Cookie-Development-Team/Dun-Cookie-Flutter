@@ -1,22 +1,18 @@
 import 'package:dun_cookie_flutter/model/source_data.dart';
 import 'package:dun_cookie_flutter/model/source_info.dart';
+import 'package:dun_cookie_flutter/page/main/dun_share.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-class DunHead extends StatefulWidget {
+class DunHead extends StatelessWidget {
   DunHead(this.info, {Key? key, this.isShowQR = false})
-      : source = info.sourceInfo,
+      : source = info.sourceInfo!,
         super(key: key);
 
   SourceData info;
   SourceInfo source;
   final bool isShowQR;
 
-  @override
-  State<DunHead> createState() => _DunHeadState();
-}
-
-class _DunHeadState extends State<DunHead> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,7 +26,7 @@ class _DunHeadState extends State<DunHead> {
               ClipRRect(
                 borderRadius: BorderRadius.circular(8),
                 child: Image.asset(
-                  widget.source.icon,
+                  source.icon,
                   width: 40,
                   height: 40,
                   fit: BoxFit.cover,
@@ -44,14 +40,14 @@ class _DunHeadState extends State<DunHead> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.source.title,
+                    source.title,
                     style: const TextStyle(fontSize: 18),
                   ),
                   const SizedBox(
                     height: 2,
                   ),
                   Text(
-                    widget.info.timeForDisplay,
+                    info.timeForDisplay!,
                     style: const TextStyle(fontSize: 14, color: Colors.black45),
                   ),
                 ],
@@ -60,13 +56,14 @@ class _DunHeadState extends State<DunHead> {
           ),
           Row(
             children: [
-              widget.isShowQR
+              isShowQR
                   ? Container()
                   : IconButton(
                       iconSize: 18,
                       icon: const Icon(Icons.share),
                       onPressed: () {
-                        _goShare(widget.info);
+                        Navigator.pushNamed(context, DunWidgetToImage.routeName,
+                            arguments: info.jumpUrl);
                       },
                     ),
             ],
@@ -74,10 +71,5 @@ class _DunHeadState extends State<DunHead> {
         ],
       ),
     );
-  }
-
-  // 浏览器打开
-  void _goShare(info) {
-    Navigator.pushNamed(context, "/widgetToImage", arguments: info);
   }
 }

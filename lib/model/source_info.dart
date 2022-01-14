@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
+
 class SourceList {
   static List<dynamic> _sourceList = [];
   static getSourceList() {
@@ -44,7 +46,7 @@ SourceInfo sourceInfoFromJson(String str) =>
 
 String sourceInfoToJson(SourceInfo data) => json.encode(data.toJson());
 
-class SourceInfo {
+class SourceInfo with ChangeNotifier {
   SourceInfo({
     required this.icon,
     required this.dataName,

@@ -24,10 +24,10 @@ String SourceDataToJson(SourceData data) => json.encode(data.toJson());
 
 class SourceData with ChangeNotifier {
   SourceData({
-    required this.dataSource,
-    required this.id,
-    required this.timeForSort,
-    required this.timeForDisplay,
+    this.dataSource,
+    this.id,
+    this.timeForSort,
+    this.timeForDisplay,
     this.content,
     this.jumpUrl,
     this.coverImage,
@@ -36,8 +36,19 @@ class SourceData with ChangeNotifier {
     this.isTop,
     this.retweeted,
     this.componentData,
-    required this.sourceInfo,
+    this.sourceInfo,
   });
+
+  SourceData? _data;
+
+  setSourceData(SourceData data) {
+    _data = data;
+    notifyListeners();
+  }
+
+  SourceData? get sourceData {
+    return _data;
+  }
 
   SourceData.fromJson(dynamic json) {
     dataSource = json['dataSource'];
@@ -62,10 +73,10 @@ class SourceData with ChangeNotifier {
         : null)!;
   }
 
-  late String dataSource;
-  late String id;
-  late int timeForSort;
-  late String timeForDisplay;
+  String? dataSource;
+  String? id;
+  int? timeForSort;
+  String? timeForDisplay;
   String? content;
   String? jumpUrl;
   String? coverImage;
@@ -74,7 +85,7 @@ class SourceData with ChangeNotifier {
   bool? isTop;
   Retweeted? retweeted;
   Map<String, dynamic>? componentData;
-  late SourceInfo sourceInfo;
+  SourceInfo? sourceInfo;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -93,7 +104,7 @@ class SourceData with ChangeNotifier {
     }
     map['componentData'] = componentData;
     if (sourceInfo != null) {
-      map['sourceInfo'] = sourceInfo.toJson();
+      map['sourceInfo'] = sourceInfo!.toJson();
     }
     return map;
   }
