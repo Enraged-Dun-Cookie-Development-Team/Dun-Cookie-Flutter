@@ -1,4 +1,4 @@
-import 'package:dun_cookie_flutter/common/pubilc.dart';
+import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/model/source_data.dart';
 import 'package:dun_cookie_flutter/common/tool/view_image_main.dart';
 import 'package:extended_image/extended_image.dart';

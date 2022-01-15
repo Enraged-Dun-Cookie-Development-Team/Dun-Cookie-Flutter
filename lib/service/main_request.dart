@@ -1,3 +1,4 @@
+import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
 import 'package:dun_cookie_flutter/model/source_data.dart';
 import 'package:dun_cookie_flutter/model/source_info.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -14,8 +15,7 @@ class MainRequest {
     const url = "/canteen/cardList";
     var request = await HttpClass.get(url);
     if (request["error"]) {
-      // todo 临时添加 后期统一封装
-      Fluttertoast.showToast(msg: "服务器连接出错", fontSize: 16.0);
+      DunToast.showError("服务器连接出错");
       return;
     } else {
       var data = request['data']['data'];
@@ -33,7 +33,7 @@ class MainRequest {
 
   static Future<List<SourceData>> canteenCardListAll() async {
     var data = await MainRequest._canteenOriginalCardList();
-    var sourceLists = SourceList.getSourceList();
+    var sourceLists = SourceList.sourcePriorityList;
     var resultJson = [];
     sourceLists.forEach((sourceList) {
       var info = data[sourceList["data"].dataName];

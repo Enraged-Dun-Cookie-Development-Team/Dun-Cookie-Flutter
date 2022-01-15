@@ -1,5 +1,5 @@
 //底部栏
-import 'package:dun_cookie_flutter/common/pubilc.dart';
+import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/provider/common_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

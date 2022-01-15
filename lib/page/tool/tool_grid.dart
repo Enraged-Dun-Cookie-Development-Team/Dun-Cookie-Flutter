@@ -1,10 +1,10 @@
-import 'package:dun_cookie_flutter/common/pubilc.dart';
+import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_info.dart';
 import 'package:dun_cookie_flutter/page/tool/tool_video.dart';
 import 'package:flutter/material.dart';
 
-class ToolSourceAndTool extends StatelessWidget {
-  ToolSourceAndTool(
+class ToolGrid extends StatelessWidget {
+  ToolGrid(
     this.title, {
     Key? key,
     this.type = 0,

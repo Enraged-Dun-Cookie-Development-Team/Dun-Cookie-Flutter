@@ -48,6 +48,7 @@ dependencies:
   pull_to_refresh: ^2.0.0
   card_swiper : ^2.0.1
   flutter_html: ^3.0.0-alpha.2
+  url_launcher: ^6.0.18
 
 dev_dependencies:
   flutter_test:

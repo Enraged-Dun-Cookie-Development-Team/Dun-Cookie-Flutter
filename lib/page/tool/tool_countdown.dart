@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:dun_cookie_flutter/common/pubilc.dart';
+import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/time_unit.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_info.dart';
 import 'package:flutter/material.dart';
@@ -78,7 +78,6 @@ class _TimeDiffTextState extends State<TimeDiffText> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     setState(() {
       _timeText = TimeUnit.timeDiff(starTime: widget.stopTime);

@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 class DunDrawer extends StatelessWidget {
   const DunDrawer({Key? key}) : super(key: key);
-  static final _sourceList = SourceList.getSourceList();
+  static final _sourceList = SourceList.sourcePriorityList;
 
   @override
   Widget build(BuildContext context) {

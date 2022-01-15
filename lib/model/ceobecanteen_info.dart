@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dun_cookie_flutter/model/source_info.dart';
 import 'package:flutter/cupertino.dart';
 
 /// list : [{"html":"<div class='online-area'> <img class='online-title-img radius' src='https://ak.hycdn.cn/announce/images/20220107/77147ef49ee9d0d0822e0267a4ecd001.jpg'> <div> <div><span class='online-blue'>《明日方舟》2022年春节前瞻特辑</span></div> <div>将于<span class='online-blue'>01月15日20:00</span>进行直播</div> <div>将介绍<span class='online-yellow'>春节相关活动</span>，<span class='online-yellow'>全新SideStory</span></div> <div>以及<span class='online-yellow'>后续版本计划</span>等内容为主</div> 点击 <a class='webOpen' href='https://live.bilibili.com/5555734'><span class='online-red'>这里</span></a> 快速跳转直播界面</div> </div> </div>","starTime":"2022-01-11 04:00:00","overTime":"2022-01-14 03:59:59","notice":false},{"html":"<div class='online-area'> <img class='online-title-img radius' src='https://ak.hycdn.cn/announce/images/20220107/77147ef49ee9d0d0822e0267a4ecd001.jpg'> <div> <div><span class='online-blue'>《明日方舟》2022年春节前瞻特辑</span></div> <div>将于<span class='online-blue'>01月15日20:00</span>进行直播</div> <div>将介绍<span class='online-yellow'>春节相关活动</span>，<span class='online-yellow'>全新SideStory</span></div> <div>以及<span class='online-yellow'>后续版本计划</span>等内容为主</div> 点击 <a class='webOpen' href='https://live.bilibili.com/5555734'><span class='online-red'>这里</span></a> 快速跳转直播界面</div> </div> </div>","starTime":"2022-01-14 04:00:00","overTime":"2022-01-15 20:59:59","notice":true},{"html":"<div class='online-area'> <img class='online-title-img radius' src='https://ak.hycdn.cn/announce/images/20211207/9c3fc9ff9987949dedcf1f0658b6e020.png'> <div> <div><span class='online-blue'>SideStory「画中人」复刻</span>将于<span class='online-blue'>1月10号</span>开启</div> <div>开启时间为<span class='online-red'>周一16:00</span></div> <div>本次活动掉落<span class='online-red'> 炽合金、聚酸酯组、固源岩组</span></div> <div>活动开启时，<span class='online-yellow'>快捷链接</span>更新<span class='online-blue'>作业视频</span> </div> <div>或者点击 <span class='online-blue'><drawer>这里</drawer></span> 快速跳转</div> </div> </div>","starTime":"2022-01-03 04:00:00","overTime":"2022-01-10 15:59:59","notice":false},{"html":"<div class='online-area'> <img class='online-title-img radius' src='https://ak.hycdn.cn/announce/images/20211207/9c3fc9ff9987949dedcf1f0658b6e020.png'> <div> <div><span class='online-blue'>>SideStory「画中人」复刻</span>将于<span class='online-blue'>1月20号</span>结束</div> <div>本次活动掉落<span class='online-red'> 炽合金、聚酸酯组、固源岩组</span></div> <div>博士们尽情刷材料吧</div> <div>活动开启时，<span class='online-yellow'>快捷链接</span>更新<span class='online-blue'>作业视频</span> </div> <div>或者点击 <span class='online-blue'><drawer>这里</drawer></span> 快速跳转</div> </div> </div>","starTime":"2022-01-10 16:00:00","overTime":"2022-01-20 03:59:59","notice":false},{"html":"<div class='online-area'> <img class='online-title-img radius' src='https://i0.hdslb.com/bfs/album/c65bbe252a3e751664573da3865b0763623b9972.jpg'> <div> <div><span class='online-blue'>方舟拜年纪「流光启明」</span>将于<span class='online-blue'>1月23号晚上18:30</span>开始直播</div> <div>正片放送时间为<span class='online-blue'>当晚23:00</span></div> <div><span class='online-red'>感谢所有二创作者们的付出</span></div> <div>也相信这次流光启明拜年纪会给全体博士带来一个美好的回忆！！！</div> <div>点击 <a class='webOpen online-red' href='https://www.bilibili.com/blackboard/activity-4FXc3HQ2KF.html'><span class='online-red'>这里</span></a> 快速跳转预约界面</div> </div> </div>","starTime":"2022-01-03 16:00:00","overTime":"2022-01-23 22:59:59","notice":false},{"html":"<div class='online-area'> <a class='webOpen' href='http://www.ceobecanteen.top/'><img class='online-title-img' src='/assets/image/icon_NewYear.png'></a> <div> <div>博士，谢谢你使用蹲饼。</div> <div>如果觉得好用的话，希望能去<a class='webOpen' href='https://github.com/Enraged-Dun-Cookie-Development-Team/Dun-Cookie-Vue'>GitHub</a>上点个<span class='online-red'>Star</span>或者</div> <div>去<a class='webOpen' href='https://chrome.google.com/webstore/detail/%E8%B9%B2%E9%A5%BC-%E6%98%8E%E6%97%A5%E6%96%B9%E8%88%9F%E8%B9%B2%E9%A5%BC%E5%99%A8-arknights-cook/gblmdllhbodefkmimbcjpflhjneagkkd?hl=zh-CN'>Chrome商店</a>，<a class='webOpen' href='https://microsoftedge.microsoft.com/addons/detail/%E5%B0%8F%E5%88%BB%E9%A3%9F%E5%A0%82-%E6%98%8E%E6%97%A5%E6%96%B9%E8%88%9F%E8%B9%B2%E9%A5%BC%E5%99%A8-arknight/jimmfliacfpeabcifcghmdankmdnmfmn?hl=zh-CN'>Edge商店</a>或<a class='webOpen' href='https://addons.mozilla.org/zh-CN/firefox/addon/%E5%B0%8F%E5%88%BB%E9%A3%9F%E5%A0%82-%E6%98%8E%E6%97%A5%E6%96%B9%E8%88%9F%E8%B9%B2%E9%A5%BC%E5%99%A8-arknights-cookies/'>Firefox商店</a>里面给个<span class='online-red'>好评</span></div> <div>也可以去<a class='webOpen' href='https://arknightscommunity.drblack-system.com/15386.html'>泰拉通讯枢纽</a>里面<span class='online-red'>回复我们</span>，或者去<a class='webOpen' href='https://www.bilibili.com/video/BV1jv411P7bR/'>b站视频</a>给个<span class='online-red'>三连</span></div> <div>欢迎加群 <a class='webOpen' href='https://jq.qq.com/?_wv=1027&k=Vod1uO13'>【蹲饼测试群】</a> 一起聊天，蹲饼！</div> </div> </div>","starTime":"2021-5-01 12:00:00","overTime":"2099-12-31 04:00:00","notice":false}]
@@ -33,6 +34,8 @@ class CeobecanteenInfo with ChangeNotifier {
   CeobecanteenInfo? _data;
 
   setCeobecanteenInfo(CeobecanteenInfo data) {
+    data.quickJump = QuickJumpList.quickJump;
+    data.sourceInfo = SourceList.sourceList;
     _data = data;
     notifyListeners();
   }
@@ -66,6 +69,8 @@ class CeobecanteenInfo with ChangeNotifier {
 
   List<AnnouncementList>? list;
   List<BtnList>? btnList;
+  List<QuickJump>? quickJump;
+  List<SourceInfo>? sourceInfo;
   DayInfo? dayInfo;
   String? logo;
   Upgrade? upgrade;
@@ -363,5 +368,38 @@ class AnnouncementList {
     map['overTime'] = overTime;
     map['notice'] = notice;
     return map;
+  }
+}
+
+class QuickJump {
+  late String url;
+  late String name;
+  late String img;
+
+  QuickJump(this.url, this.name, this.img);
+}
+
+class QuickJumpList {
+  static List<QuickJump> _quickJump = [];
+  static get quickJump {
+    _quickJump.add(QuickJump("https://mapcn.ark-nights.com", "PRTS.Wiki",
+        "/assets/image/link/akwiki.png"));
+    _quickJump.add(QuickJump("https://mapcn.ark-nights.com", "PRTS.Map",
+        "/assets/image/link/akmap.ico"));
+    _quickJump.add(QuickJump("https://penguin-stats.cn/", "企鹅物流",
+        "/assets/image/link/penguin_stats_logo.webp"));
+    _quickJump.add(QuickJump("https://arkn.lolicon.app/", "明日方舟工具箱",
+        "/assets/image/link/arktools.png"));
+    _quickJump.add(QuickJump(
+        "https://opssr.net/", "源石作战室", "/assets/image/link/yszzs.png"));
+    _quickJump.add(QuickJump(
+        "https://kokodayo.fun/", "Kokodayo", "/assets/image/link/kkdy.png"));
+    _quickJump.add(QuickJump(
+        "https://aog.wiki/", "刷素材一图流", "/assets/image/link/akgraph.ico"));
+    _quickJump.add(QuickJump("https://viktorlab.cn/akdata/", "Arknight DPS",
+        "/assets/image/link/dps.ico"));
+    _quickJump.add(QuickJump("https://arknightscommunity.drblack-system.com/",
+        "泰拉通讯枢纽", "/assets/image/link/tltxsn.png"));
+    return _quickJump;
   }
 }

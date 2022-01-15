@@ -11,7 +11,6 @@ class _BakeryCardState extends State<BakeryCard> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     // Future.delayed(Duration(seconds: 1), (){
     //   Navigator.of(context).pop();

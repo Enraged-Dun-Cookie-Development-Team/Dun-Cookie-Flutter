@@ -3,7 +3,7 @@ import 'package:dun_cookie_flutter/cache/setting_cache.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_info.dart';
 import 'package:dun_cookie_flutter/page/tool/tool_announcement.dart';
 import 'package:dun_cookie_flutter/page/tool/tool_countdown.dart';
-import 'package:dun_cookie_flutter/page/tool/tool_source_and_tool_and_video.dart';
+import 'package:dun_cookie_flutter/page/tool/tool_grid.dart';
 import 'package:dun_cookie_flutter/service/info_request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -22,7 +22,6 @@ class _DunToolState extends State<DunTool> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     InfoRequest.getCeobecanteenInfo().then((value) =>
         Provider.of<CeobecanteenInfo>(context, listen: false)
@@ -41,7 +40,6 @@ class _DunToolState extends State<DunTool> {
             builder: (context, data, child) {
               if (data.ceobecanteenInfo != null) {
                 CeobecanteenInfo ceobecanteenInfo = data.ceobecanteenInfo!;
-                print(ceobecanteenInfo.dayInfo!.countdown!.length);
                 return ListView(
                   children: [
                     // 倒计时
@@ -49,13 +47,13 @@ class _DunToolState extends State<DunTool> {
                         ceobecanteenInfo.dayInfo!.countdown != null)
                       ToolCountdown(ceobecanteenInfo.dayInfo!.countdown!),
                     // 官方源
-                    ToolSourceAndTool("饼的发源地"),
+                    if (ceobecanteenInfo.sourceInfo != null) ToolGrid("饼的发源地"),
                     // 快捷工具
-                    if (ceobecanteenInfo.dayInfo != null)
-                      ToolSourceAndTool("快捷工具"),
+                    if (ceobecanteenInfo.quickJump != null)
+                      ToolGrid("在线第三方工具"),
                     //推荐视频
                     if (ceobecanteenInfo.btnList != null)
-                      ToolSourceAndTool("视频推荐",type: 1,videoInfo:ceobecanteenInfo.btnList)
+                      ToolGrid("视频推荐",type: 1,videoInfo:ceobecanteenInfo.btnList)
                   ],
                 );
               }
