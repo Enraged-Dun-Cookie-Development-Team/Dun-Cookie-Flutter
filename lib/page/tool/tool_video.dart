@@ -34,22 +34,22 @@ class ToolVideo extends StatelessWidget {
         ],
       ),
       onTap: () {
-        var infoList = videoInfo.url!.split("video/");
-        if (infoList.isNotEmpty && infoList.length >= 1) {
-          _openUrl("bilibili://video/${infoList[1]}");
-        } else {
-          _openUrl(videoInfo.url!);
-        }
+        _openBilibili(videoInfo.url!);
       },
     );
   }
 
-  _openUrl(url) async {
-    if (await canLaunch(url)) {
-      DunToast.showSuccess("正在唤起APP");
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
+  _openBilibili(url) async {
+    var infoList = url!.split("video/");
+    if (infoList.isNotEmpty && infoList.length >= 1) {
+      String tempUrl = "bilibili://video/${infoList[1]}";
+      if (await canLaunch(tempUrl)) {
+        DunToast.showSuccess("正在唤起APP");
+        await launch(tempUrl);
+      } else {
+        DunToast.showSuccess("没有检测到APP，正在打开网页");
+        await launch(url);
+      }
     }
   }
 }

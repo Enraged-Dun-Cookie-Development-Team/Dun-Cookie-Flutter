@@ -47,13 +47,21 @@ class _DunToolState extends State<DunTool> {
                         ceobecanteenInfo.dayInfo!.countdown != null)
                       ToolCountdown(ceobecanteenInfo.dayInfo!.countdown!),
                     // 官方源
-                    if (ceobecanteenInfo.sourceInfo != null) ToolGrid("饼的发源地"),
+                    if (ceobecanteenInfo.sourceInfo != null)
+                      ToolGrid(
+                        "饼的发源地",
+                        linkInfo: ceobecanteenInfo.sourceInfo,
+                      ),
                     // 快捷工具
                     if (ceobecanteenInfo.quickJump != null)
-                      ToolGrid("在线第三方工具"),
+                      ToolGrid(
+                        "在线第三方工具",
+                        linkInfo: ceobecanteenInfo.quickJump,
+                      ),
                     //推荐视频
                     if (ceobecanteenInfo.btnList != null)
-                      ToolGrid("视频推荐",type: 1,videoInfo:ceobecanteenInfo.btnList)
+                      ToolGrid("视频推荐",
+                          type: 1, videoInfo: ceobecanteenInfo.btnList)
                   ],
                 );
               }

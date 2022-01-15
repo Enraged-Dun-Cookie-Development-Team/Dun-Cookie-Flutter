@@ -17,6 +17,7 @@ class ToolAnnouncement extends StatelessWidget {
             ),
           );
         },
+        autoplay: true,
         itemCount: 6,
         pagination: const SwiperPagination(),
       ),
