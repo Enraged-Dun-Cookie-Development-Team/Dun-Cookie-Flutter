@@ -25,18 +25,18 @@ class SourceList {
         type: "weibo", uid: 6441489862));
     _sourceList.add(SourceInfo.getModel("ys3Weibo.jpg", "一拾山微博", "一拾山", 4,
         type: "weibo", uid: 7506039414));
-    _sourceList.add(SourceInfo.getModel('sr.png', '塞壬唱片官网', '通讯组', 5,
+    _sourceList.add(SourceInfo.getModel('sr.png', '塞壬唱片官网', '塞壬唱片官网', 5,
         dataUrl: 'https://monster-siren.hypergryph.com/api/news',
         jumpUrl: "https://monster-siren.hypergryph.com/"));
     _sourceList.add(SourceInfo.getModel("tlWeibo.jpg", "泰拉记事社微博", "泰拉记事社微博", 6,
         type: "weibo", uid: 7499841383));
-    _sourceList.add(SourceInfo.getModel('mrfz.ico', '官网', '通讯组', 7,
+    _sourceList.add(SourceInfo.getModel('mrfz.ico', '官网', '明日方舟官网', 7,
         dataUrl: 'https://ak.hypergryph.com/',
         jumpUrl: 'https://ak.hypergryph.com/'));
     _sourceList.add(SourceInfo.getModel('tl.jpg', '泰拉记事社官网', '泰拉记事社官网', 8,
         dataUrl: 'https://terra-historicus.hypergryph.com/api/comic',
         jumpUrl: "https://terra-historicus.hypergryph.com/"));
-    _sourceList.add(SourceInfo.getModel('sr.png', '塞壬唱片网易云音乐', '网易云音乐', 9,
+    _sourceList.add(SourceInfo.getModel('wyyyy.ico', '塞壬唱片网易云音乐', '网易云音乐', 9,
         dataUrl: 'http://music.163.com/api/artist/albums/32540734',
         jumpUrl: "https://music.163.com/#/artist?id=32540734",
         jumpApp: "orpheus://artist/32540734"));
