@@ -1,5 +1,6 @@
 import 'package:dun_cookie_flutter/common/browser/main.dart';
 import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
+import 'package:dun_cookie_flutter/common/tool/open_app_or_browser.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_info.dart';
 import 'package:dun_cookie_flutter/model/source_info.dart';
 import 'package:flutter/material.dart';
@@ -56,15 +57,6 @@ class ToolLink extends StatelessWidget {
   }
 
   _openApp({url, jumpApp}) async {
-    if (jumpApp != null && await canLaunch(jumpApp)) {
-      DunToast.showSuccess("正在唤起APP");
-      await launch(jumpApp);
-    } else {
-      _goSource(url);
-    }
-  }
-
-  _goSource(url) {
-    Navigator.pushNamed(_context!, DunWebView.routeName, arguments: url);
+    OpenAppOrBrowser.openUrl(url, _context!, appUrlScheme: jumpApp);
   }
 }

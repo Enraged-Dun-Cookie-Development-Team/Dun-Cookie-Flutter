@@ -74,6 +74,22 @@ class _DunCardItemState extends State<DunCardItem>
 
   // 浏览器打开
   void _goSource(url) {
+    int priority = widget.info.sourceInfo!.priority!;
+    late String appUrl;
+    if (priority == 0) {
+      // bilibili
+      appUrl = url.split('/').last;
+    } else if (priority == 1 ||
+        priority == 3 ||
+        priority == 4 ||
+        priority == 6 ||
+        priority == 10) {
+      // weibo
+      appUrl = url.split('/').last;
+    } else if (priority == 9) {
+      // 网易云音乐
+      appUrl = url.split('/').last.split('=').last.toString();
+    }
     Navigator.pushNamed(context, DunWebView.routeName, arguments: url);
   }
 }
