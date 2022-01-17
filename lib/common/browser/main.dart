@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/provider/view_webpage_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -43,44 +44,42 @@ class _DunWebViewMainState extends State<DunWebViewMain> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Consumer<ViewWebPageProvider>(
-            builder: (ctx, data, child) {
-              return Text(data.title);
-            },
-          ),
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-        ),
-        body: Consumer<ViewWebPageProvider>(
+    return Scaffold(
+      appBar: AppBar(
+        title: Consumer<ViewWebPageProvider>(
           builder: (ctx, data, child) {
-            return WebView(
-              initialUrl: widget.url,
-              javascriptMode: JavascriptMode.unrestricted,
-              onPageStarted: (url) {
-                data.setUrl(url);
-              },
-              onProgress: (progress) {
-                data.setTitle("小刻努力奔跑中……${progress.toString()}%");
-              },
-              onWebViewCreated: (controller) {
-                _controller = controller;
-              },
-              onPageFinished: (url) {
-                data.setSuccess(true);
-                _controller.runJavascriptReturningResult("document.title").then(
-                  (result) {
-                    data.setTitle(result.replaceAll("\"", ""));
-                  },
-                );
-              },
-            );
+            return Text(data.title);
           },
         ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ),
+      body: Consumer<ViewWebPageProvider>(
+        builder: (ctx, data, child) {
+          return WebView(
+            initialUrl: widget.url,
+            javascriptMode: JavascriptMode.unrestricted,
+            onPageStarted: (url) {
+              data.setUrl(url);
+            },
+            onProgress: (progress) {
+              data.setTitle("小刻努力奔跑中……${progress.toString()}%");
+            },
+            onWebViewCreated: (controller) {
+              _controller = controller;
+            },
+            onPageFinished: (url) {
+              data.setSuccess(true);
+              _controller.runJavascriptReturningResult("document.title").then(
+                (result) {
+                  data.setTitle(result.replaceAll("\"", ""));
+                },
+              );
+            },
+          );
+        },
       ),
     );
   }

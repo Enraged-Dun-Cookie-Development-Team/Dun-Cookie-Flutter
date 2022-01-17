@@ -8,15 +8,12 @@ class DunSetting extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: DunTheme.themeList[0],
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("设置"),
-        ),
-        body: Center(
-          child: Text("设置"),
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("设置"),
+      ),
+      body: Center(
+        child: Text("设置"),
       ),
     );
   }
