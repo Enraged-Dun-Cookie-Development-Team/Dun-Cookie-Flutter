@@ -383,22 +383,25 @@ class QuickJumpList {
   static List<QuickJump> _quickJump = [];
 
   static get quickJump {
-    _quickJump.add(QuickJump("https://mapcn.ark-nights.com", "PRTS.Wiki",
-        "assets/link/akwiki.png"));
+
+    _quickJump = [];
+
+    _quickJump.add(QuickJump(
+        "https://mapcn.ark-nights.com", "PRTS.Wiki", "assets/link/akwiki.png"));
     _quickJump.add(QuickJump(
         "https://mapcn.ark-nights.com", "PRTS.Map", "assets/link/akmap.ico"));
     _quickJump.add(QuickJump("https://penguin-stats.cn/", "企鹅物流",
         "assets/link/penguin_stats_logo.webp"));
     _quickJump.add(QuickJump(
         "https://arkn.lolicon.app/", "明日方舟工具箱", "assets/link/arktools.png"));
+    _quickJump
+        .add(QuickJump("https://opssr.net/", "源石作战室", "assets/link/yszzs.png"));
     _quickJump.add(
-        QuickJump("https://opssr.net/", "源石作战室", "assets/link/yszzs.png"));
-    _quickJump.add(QuickJump(
-        "https://kokodayo.fun/", "Kokodayo", "assets/link/kkdy.png"));
+        QuickJump("https://kokodayo.fun/", "Kokodayo", "assets/link/kkdy.png"));
     _quickJump.add(
         QuickJump("https://aog.wiki/", "刷素材一图流", "assets/link/akgraph.ico"));
-    _quickJump.add(QuickJump("https://viktorlab.cn/akdata/", "Arknight DPS",
-        "assets/link/dps.ico"));
+    _quickJump.add(QuickJump(
+        "https://viktorlab.cn/akdata/", "Arknight DPS", "assets/link/dps.ico"));
     _quickJump.add(QuickJump("https://arknightscommunity.drblack-system.com/",
         "泰拉通讯枢纽", "assets/link/tltxsn.png"));
     return _quickJump;

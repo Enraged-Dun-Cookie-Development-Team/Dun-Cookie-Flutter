@@ -6,9 +6,14 @@ import 'package:dun_cookie_flutter/model/ceobecanteen_info.dart';
 import 'package:flutter/material.dart';
 
 class ToolCountdown extends StatelessWidget {
-  ToolCountdown(this.countDown, {Key? key}) : super(key: key);
+  ToolCountdown(List<Countdown> countDown, {Key? key}) {
+    _countDown = countDown.where((timeDM) {
+      return TimeUnit.isTimeRange(
+          DateTime.now(), timeDM.starTime, timeDM.overTime);
+    }).toList();
+  }
 
-  final List<Countdown> countDown;
+  List<Countdown> _countDown = [];
 
   @override
   Widget build(BuildContext context) {
@@ -22,40 +27,56 @@ class ToolCountdown extends StatelessWidget {
           ),
           Card(
             child: ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: countDown.length >= 3 ? 3 : countDown.length,
-                itemBuilder: (ctx, index) {
-                  var info = countDown[index];
-                  return Container(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              "距离${info.text!}",
-                              style: const TextStyle(fontSize: 18),
-                            ),
-                            TimeDiffText(info.time!),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              info.remark!,
-                              style: const TextStyle(color: Colors.black45),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  );
-                }),
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              // itemCount: countDown.length >= 3 ? 3 : countDown.length,
+              itemCount: _countDown.length,
+              itemBuilder: (ctx, index) {
+                var info = _countDown[index];
+                return Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: SingleChildScrollView(
+                                child: RichText(
+                                  text: TextSpan(
+                                      text: "距离",
+                                      style: const TextStyle(
+                                          fontSize: 16, color: Colors.black),
+                                      children: [
+                                        TextSpan(
+                                          text: info.text!,
+                                          style: const TextStyle(
+                                              color: DunColors.DunColor),
+                                        )
+                                      ]),
+                                ),
+                                scrollDirection: Axis.horizontal),
+                          ),
+                          SizedBox(width: 10,),
+                          TimeDiffText(info.time!),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            info.remark!,
+                            style: const TextStyle(color: Colors.black45),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
           )
         ],
       ),
@@ -82,7 +103,7 @@ class _TimeDiffTextState extends State<TimeDiffText> {
     setState(() {
       _timeText = TimeUnit.timeDiff(starTime: widget.stopTime);
     });
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(const Duration(minutes: 1), (timer) {
       ///定时任务
       setState(() {
         _timeText = TimeUnit.timeDiff(starTime: widget.stopTime);
@@ -99,6 +120,9 @@ class _TimeDiffTextState extends State<TimeDiffText> {
 
   @override
   Widget build(BuildContext context) {
-    return Text(_timeText);
+    return Text(
+      _timeText,
+      style: const TextStyle(fontSize: 14),
+    );
   }
 }

@@ -2,23 +2,23 @@ import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_info.dart';
 import 'package:dun_cookie_flutter/model/source_data.dart';
 import 'package:dun_cookie_flutter/page/home/dun_buttom_navigation_bar.dart';
+import 'package:dun_cookie_flutter/page/setting/main.dart';
 import 'package:dun_cookie_flutter/page/update_dialog/main.dart';
 import 'package:dun_cookie_flutter/provider/common_provider.dart';
-import 'package:dun_cookie_flutter/provider/list_source_info_provider.dart';
 import 'package:dun_cookie_flutter/router/router.dart';
-import 'package:dun_cookie_flutter/service/info_request.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class MainScaffold extends StatelessWidget {
   MainScaffold({Key? key}) : super(key: key);
 
+  BuildContext? _context;
+
   @override
   Widget build(BuildContext context) {
+    _context = context;
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<ListSourceInfoProvider>(
-            create: (_) => ListSourceInfoProvider()),
         ChangeNotifierProvider<CommonProvider>(create: (_) => CommonProvider()),
         ChangeNotifierProvider<CeobecanteenInfo>(
             create: (_) => CeobecanteenInfo()),
@@ -70,8 +70,18 @@ class MainScaffold extends StatelessWidget {
   }
 
   _appBar(routerIndex) => AppBar(
-        title: Text(DunRouter.pageTitles[routerIndex]),
-      );
+      title: Text(DunRouter.pageTitles[routerIndex]),
+      actions: routerIndex == 2
+          ? [
+              IconButton(
+                icon: const Icon(Icons.settings),
+                tooltip: '设置',
+                onPressed: () {
+                  Navigator.pushNamed(_context!, DunSetting.routerName);
+                },
+              ),
+            ]
+          : [Container()]);
 
   _theme(themeIndex) => DunTheme.themeList[themeIndex];
 

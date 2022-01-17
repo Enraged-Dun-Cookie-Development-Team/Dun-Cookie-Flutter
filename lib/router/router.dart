@@ -3,6 +3,7 @@ import 'package:dun_cookie_flutter/page/Error/main.dart';
 import 'package:dun_cookie_flutter/page/bakery/main.dart';
 import 'package:dun_cookie_flutter/page/home/main.dart';
 import 'package:dun_cookie_flutter/page/main/dun_list.dart';
+import 'package:dun_cookie_flutter/page/setting/main.dart';
 import 'package:dun_cookie_flutter/page/tool/main.dart';
 import 'package:dun_cookie_flutter/page/main/dun_share.dart';
 import 'package:dun_cookie_flutter/page/update_dialog/main.dart';
@@ -16,8 +17,10 @@ class DunRouter {
     DunWidgetToImage.routeName: (context) => DunWidgetToImage(),
     DunWebView.routeName: (context) => DunWebView(),
     DunTool.routeName: (context) => DunTool(),
+    DunSetting.routerName: (context) => DunSetting()
   };
 
+  /// 底部栏用
   static const pageTitles = ["小刻食堂 alpha", "蜜饼工坊 alpha", "常用工具 alpha"];
   static const pages = [DunList(), Bakery(), DunTool()];
 
@@ -27,12 +30,12 @@ class DunRouter {
     final Function? pageBuilder = routes[name];
     if (pageBuilder != null) {
       if (settings.arguments != null) {
-        // 如果透传了参数
+        // 如果传了参数
         return MaterialPageRoute(
             builder: (context) =>
                 pageBuilder(context, arguments: settings.arguments));
       } else {
-        // 没有透传参数
+        // 没有传参数
         return MaterialPageRoute(builder: (context) => pageBuilder(context));
       }
     }

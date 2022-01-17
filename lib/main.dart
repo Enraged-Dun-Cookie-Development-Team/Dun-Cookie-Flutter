@@ -1,3 +1,4 @@
+import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/page/Error/main.dart';
 import 'package:dun_cookie_flutter/page/update_dialog/main.dart';
 import 'package:dun_cookie_flutter/router/router.dart';
@@ -14,9 +15,7 @@ class DunMain extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: DunRouter.routes,
-      theme: ThemeData(
-          brightness:Brightness.dark
-      ),
+      theme: DunTheme.themeList[0],
       onUnknownRoute: (settings) =>
           MaterialPageRoute(builder: (context) => DunError(error: "404")),
       initialRoute: "/",
