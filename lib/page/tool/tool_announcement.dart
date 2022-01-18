@@ -11,14 +11,14 @@ class ToolAnnouncement extends StatelessWidget {
       margin: const EdgeInsets.all(6),
       child: Swiper(
         itemBuilder: (c, i) {
-          return Card(
+          return const Card(
             child: Center(
-              child: Text("公告${(i + 1).toString()}"),
+              child: Text("公告"),
             ),
           );
         },
-        autoplay: true,
-        itemCount: 6,
+        // autoplay: true,
+        itemCount: 1,
         pagination: const SwiperPagination(),
       ),
     );
