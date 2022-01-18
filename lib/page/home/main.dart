@@ -1,11 +1,10 @@
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
-import 'package:dun_cookie_flutter/model/ceobecanteen_info.dart';
-import 'package:dun_cookie_flutter/model/source_data.dart';
 import 'package:dun_cookie_flutter/page/home/dun_buttom_navigation_bar.dart';
 import 'package:dun_cookie_flutter/page/setting/main.dart';
 import 'package:dun_cookie_flutter/page/update_dialog/main.dart';
 import 'package:dun_cookie_flutter/provider/common_provider.dart';
 import 'package:dun_cookie_flutter/router/router.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,40 +16,32 @@ class MainScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _context = context;
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<CommonProvider>(create: (_) => CommonProvider()),
-        ChangeNotifierProvider<CeobecanteenInfo>(
-            create: (_) => CeobecanteenInfo()),
-        ChangeNotifierProvider<SourceData>(create: (_) => SourceData()),
-      ],
-      child: Selector<CommonProvider, Map<String, int>>(
-        selector: (ctx, commonProvider) {
-          return {
-            "routerIndex": commonProvider.routerIndex,
-            "themeIndex": commonProvider.themeIndex
-          };
-        },
-        shouldRebuild: (prev, next) => prev != next,
-        builder: (ctx, data, child) {
-          return Theme(
-            data: _theme(data["themeIndex"]),
-            child: Scaffold(
-              appBar: _appBar(data["routerIndex"]),
-              body: DunRouter.pages[data["routerIndex"]!],
-              bottomNavigationBar: DunBottomNavigationBar(),
-              floatingActionButton: data["routerIndex"] == 0
-                  ? _floatingActionButton(
-                      "assets/logo/logo.png", ctx, data["routerIndex"], true)
-                  : _floatingActionButton("assets/logo/logo@noactive.png", ctx,
-                      data["routerIndex"], false),
-              floatingActionButtonLocation:
-                  FloatingActionButtonLocation.centerDocked,
-              // drawer: const DunDrawer(),
-            ),
-          );
-        },
-      ),
+    return Selector<CommonProvider, Map<String, int>>(
+      selector: (ctx, commonProvider) {
+        return {
+          "routerIndex": commonProvider.routerIndex,
+          "themeIndex": commonProvider.themeIndex
+        };
+      },
+      shouldRebuild: (prev, next) => prev != next,
+      builder: (ctx, data, child) {
+        return Theme(
+          data: _theme(data["themeIndex"]),
+          child: Scaffold(
+            appBar: _appBar(data["routerIndex"]),
+            body: DunRouter.pages[data["routerIndex"]!],
+            bottomNavigationBar: DunBottomNavigationBar(),
+            floatingActionButton: data["routerIndex"] == 0
+                ? _floatingActionButton(
+                "assets/logo/logo.png", ctx, data["routerIndex"], true)
+                : _floatingActionButton("assets/logo/logo@noactive.png", ctx,
+                data["routerIndex"], false),
+            floatingActionButtonLocation:
+            FloatingActionButtonLocation.centerDocked,
+            // drawer: const DunDrawer(),
+          ),
+        );
+      },
     );
   }
 
