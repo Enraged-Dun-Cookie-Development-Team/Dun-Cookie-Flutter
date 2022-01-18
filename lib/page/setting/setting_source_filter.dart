@@ -1,6 +1,7 @@
 import 'package:dun_cookie_flutter/model/source_info.dart';
 import 'package:dun_cookie_flutter/provider/common_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SettingSourceFilter extends StatefulWidget {
   const SettingSourceFilter({Key? key}) : super(key: key);
@@ -28,23 +29,29 @@ class _SettingSourceFilterState extends State<SettingSourceFilter> {
         title: const Text("饼来源"),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: List.generate(list.length, (index) {
-            String priority = list[index].priority.toString();
-            return ListTile(
-                title: Text(list[index].title),
-                leading: Image.asset(
-                  list[index].icon,
-                  width: 30,
-                ),
-                trailing: Switch(
-                  value: CommonProvider().checkSource.contains(priority),
-                  onChanged: (value) {
-                    CommonProvider().setCheckListInPriority(priority, value);
-                  },
-                ));
-          }),
-        ),
+        child: Consumer<CommonProvider>(builder: (context, data, child) {
+          return Column(
+            children: List.generate(
+              list.length,
+              (index) {
+                String priority = list[index].priority.toString();
+                return ListTile(
+                  title: Text(list[index].title),
+                  leading: Image.asset(
+                    list[index].icon,
+                    width: 30,
+                  ),
+                  trailing: Switch(
+                    value: data.checkSource.contains(priority),
+                    onChanged: (value) {
+                      data.setCheckListInPriority(priority, value);
+                    },
+                  ),
+                );
+              },
+            ),
+          );
+        }),
       ),
     );
   }

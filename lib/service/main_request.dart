@@ -6,14 +6,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'main.dart';
 
 class MainRequest {
-  static Initialized() async {
-    var data = await MainRequest.canteenCardListAll();
-    return data;
-  }
-
-  static _canteenOriginalCardList() async {
+  static _canteenOriginalCardList({Map<String, String>? source}) async {
     const url = "/canteen/cardList";
-    var request = await HttpClass.get(url);
+    var request = await HttpClass.get(url, params: source);
     if (request["error"]) {
       DunToast.showError("服务器连接出错");
       return;
@@ -23,26 +18,24 @@ class MainRequest {
     }
   }
 
-  static Future canteenCardListInType(List<int> typeList) async {
-    List<SourceData> data = await MainRequest.canteenCardListAll();
-    List<SourceData> resultInType = [];
-    typeList.forEach((element) => resultInType
-        .addAll(data.where((x) => x.sourceInfo!.priority == 0).toList()));
-    return resultInType;
-  }
-
-  static Future<List<SourceData>> canteenCardListAll() async {
-    var data = await MainRequest._canteenOriginalCardList();
-    var sourceLists = SourceList.sourcePriorityList;
-    var resultJson = [];
-    sourceLists.forEach((sourceList) {
-      var info = data[sourceList["data"].dataName];
-      info.forEach((e) => e["sourceInfo"] = sourceList["data"]);
-      resultJson.addAll(info);
-    });
+  static Future<List<SourceData>> canteenCardList(
+      {Map<String, String>? source}) async {
     List<SourceData> resultAll = [];
-    resultJson
-        .forEach((element) => resultAll.add(SourceData.fromJson(element)));
+    if (source?["source"]?.length == 0) {
+      return resultAll;
+    }
+    var data = await MainRequest._canteenOriginalCardList(source: source);
+    List<SourceInfo> sourceLists = SourceList.sourceList;
+    for (var sourceInfo in sourceLists) {
+      if (data[sourceInfo.dataName] == null) {
+        continue;
+      }
+      List<dynamic> info = data[sourceInfo.dataName];
+      for (var e in info) {
+        e["sourceInfo"] = sourceInfo;
+        resultAll.add(SourceData.fromJson(e));
+      }
+    }
     resultAll.sort((x, y) => y.timeForSort!.compareTo(x.timeForSort!));
     return resultAll;
   }

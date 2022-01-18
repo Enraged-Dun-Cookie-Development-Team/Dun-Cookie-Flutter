@@ -47,7 +47,7 @@ class _DunWidgetToImageState extends State<DunWidgetToImage> {
               child: Container(
                 color: Colors.white,
                 width: size.width,
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: Card(
                   elevation: 15.0,
                   shape: const RoundedRectangleBorder(
@@ -160,7 +160,6 @@ class _DunWidgetToImageState extends State<DunWidgetToImage> {
     Uint8List pngBytes = await _widgetToUint8List();
     final result = await ImageGallerySaver.saveImage(pngBytes,
         name: DateTime.now().toString());
-    print(result);
     if (result["isSuccess"]) {
       Fluttertoast.showToast(msg: "保存完成", fontSize: 16.0);
     }

@@ -1,8 +1,10 @@
 import 'package:dun_cookie_flutter/model/source_data.dart';
 import 'package:dun_cookie_flutter/page/main/dun_card_item.dart';
+import 'package:dun_cookie_flutter/provider/common_provider.dart';
 import 'package:dun_cookie_flutter/service/main_request.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DunList extends StatefulWidget {
   const DunList({Key? key}) : super(key: key);
@@ -24,32 +26,35 @@ class _DunListState extends State<DunList> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        FutureBuilder<List<SourceData>>(
-          future: MainRequest.canteenCardListAll(),
-          builder: (ctx, snapshot) {
-            if (!snapshot.hasData) {
+        Consumer<CommonProvider>(builder: (context, data, child) {
+          return FutureBuilder<List<SourceData>>(
+            future: MainRequest.canteenCardList(
+                source: {"source": data.checkSource.join("_")}),
+            builder: (ctx, snapshot) {
+              if (!snapshot.hasData) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              if (snapshot.data != null) {
+                final list = snapshot.data!;
+                return ListView.builder(
+                  itemCount: list.length,
+                  itemBuilder: (ctx, index) {
+                    var info = list[index];
+                    return DunCardItem(
+                      info: info,
+                      index: index,
+                    );
+                  },
+                );
+              }
               return const Center(
-                child: CircularProgressIndicator(),
+                child: Text("报错了"),
               );
-            }
-            if (snapshot.data != null) {
-              final list = snapshot.data!;
-              return ListView.builder(
-                itemCount: list.length,
-                itemBuilder: (ctx, index) {
-                  var info = list[index];
-                  return DunCardItem(
-                    info: info,
-                    index: index,
-                  );
-                },
-              );
-            }
-            return const Center(
-              child: Text("报错了"),
-            );
-          },
-        ),
+            },
+          );
+        }),
         const TestText()
       ],
     );

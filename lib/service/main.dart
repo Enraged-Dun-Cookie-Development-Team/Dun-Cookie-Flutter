@@ -39,6 +39,17 @@ class HttpClass {
   static InterceptorsWrapper _dInter() {
     return InterceptorsWrapper(
       onRequest: (options, handler) {
+        //dio.lock()是先锁定请求不发送出去，当整个取值添加到请求头后再dio.unlock()解锁发送出去
+
+        // Future<dynamic> future = Future(()async{
+        //   SharedPreferences prefs =await SharedPreferences.getInstance();
+        //   return prefs.getString("loginToken");
+        // });
+        // return future.then((value) {
+        //   options.headers["Authorization"] = value;
+        //   return options;
+        // }).whenComplete(() => dio.unlock()); // unlock the dio
+        print(options.baseUrl + options.path);
         return handler.next(options);
       },
       onResponse: (response, handler) {
@@ -54,8 +65,8 @@ class HttpClass {
     );
   }
 
-  static Future get(String url) {
-    return _request(url);
+  static Future get(String url, {params}) {
+    return _request(url, params: params);
   }
 
   static Future tempGet(String url) {
