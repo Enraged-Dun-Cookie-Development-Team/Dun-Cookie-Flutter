@@ -387,9 +387,9 @@ class QuickJumpList {
     _quickJump = [];
 
     _quickJump.add(QuickJump(
-        "https://mapcn.ark-nights.com", "PRTS.Wiki", "assets/link/akwiki.png"));
+        "https://prts.wiki/w/%E9%A6%96%E9%A1%B5", "PRTS.Wiki", "assets/link/akwiki.png"));
     _quickJump.add(QuickJump(
-        "https://mapcn.ark-nights.com", "PRTS.Map", "assets/link/akmap.ico"));
+        "https://map.ark-nights.com", "PRTS.Map", "assets/link/akmap.ico"));
     _quickJump.add(QuickJump("https://penguin-stats.cn/", "企鹅物流",
         "assets/link/penguin_stats_logo.webp"));
     _quickJump.add(QuickJump(
@@ -401,7 +401,7 @@ class QuickJumpList {
     _quickJump.add(
         QuickJump("https://aog.wiki/", "刷素材一图流", "assets/link/akgraph.ico"));
     _quickJump.add(QuickJump(
-        "https://viktorlab.cn/akdata/", "Arknight DPS", "assets/link/dps.ico"));
+        "https://viktorlab.cn/akdata/dps/", "Arknight DPS", "assets/link/dps.ico"));
     _quickJump.add(QuickJump("https://arknightscommunity.drblack-system.com/",
         "泰拉通讯枢纽", "assets/link/tltxsn.png"));
     return _quickJump;
