@@ -29,14 +29,23 @@ class _DunShareImageState extends State<DunShareImage> {
   void initState() {
     widget._imageList.forEach((element) => _showImageList[element] = true);
     eventBus.on<DunShareImageIsShare>().listen((event) {
-      setState(() {
-        _showChecked = !event.dunShareImageIsShare;
-        widget._imageList = _handleImageList();
-      });
-      Future.delayed(const Duration(seconds: 1))
-          .then((value) => Navigator.of(context).pop());
+      // Flutter中setState导致的内存泄漏——setState() Unhandled Exception: setState() called after dispose()
+      if (mounted) {
+        setState(() {
+          _showChecked = !event.dunShareImageIsShare;
+          widget._imageList = _handleImageList();
+        });
+        Future.delayed(const Duration(seconds: 1))
+            .then((value) => Navigator.of(context).pop());
+      }
     });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+
+    super.dispose();
   }
 
   @override
