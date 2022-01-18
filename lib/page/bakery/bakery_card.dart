@@ -8,7 +8,6 @@ class BakeryCard extends StatefulWidget {
 }
 
 class _BakeryCardState extends State<BakeryCard> {
-
   @override
   void initState() {
     super.initState();
@@ -19,26 +18,10 @@ class _BakeryCardState extends State<BakeryCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Center(
-            child: Text(
-              "2022-01-01 16:00:00",
-              style: TextStyle(),
-            ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemBuilder: (ctx, index) {
-                return Text("?");
-              },
-              itemCount: 6,
-            ),
-          ),
-        ],
+    return const Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Center(
+        child: Text("蜜饼工坊，敬请期待"),
       ),
     );
   }

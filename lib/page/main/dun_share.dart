@@ -4,7 +4,9 @@ import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/model/source_data.dart';
 import 'package:dun_cookie_flutter/page/main/dun_content.dart';
 import 'package:dun_cookie_flutter/page/main/dun_headren.dart';
-import 'package:dun_cookie_flutter/page/main/dun_print_image.dart';
+import 'package:dun_cookie_flutter/page/main/dun_share_image.dart';
+import 'package:dun_cookie_flutter/provider/common_event_bus.dart';
+import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
@@ -34,47 +36,66 @@ class _DunWidgetToImageState extends State<DunWidgetToImage> {
     final SourceData sourceData =
         ModalRoute.of(context)!.settings.arguments as SourceData;
     final size = MediaQuery.of(context).size;
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(title: const Text("小刻名片生成"), actions: [
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("小刻分享"),
+        actions: [
           _button(_widgetToImageSave, Icons.save_alt),
           _button(_widgetToImageShare, Icons.share)
-        ]),
-        body: ListView(
-          children: [
-            RepaintBoundary(
-              key: _globalKey,
-              child: Container(
-                color: Colors.white,
-                width: size.width,
-                padding: const EdgeInsets.all(20),
-                child: Card(
-                  elevation: 15.0,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(20.0)),
+        ],
+        elevation: 0,
+        backgroundColor: const Color(0xFF333333),
+      ),
+      body: ListView(
+        children: [
+          RepaintBoundary(
+            key: _globalKey,
+            child: Container(
+              color: const Color(0xFF333333),
+              width: size.width,
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  Image.asset(
+                    "assets/logo/logo.png",
+                    width: 60,
                   ),
-                  clipBehavior: Clip.antiAlias,
-                  semanticContainer: false,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      // 卡片头
-                      SizedBox(
-                        height: 131,
-                        width: size.width,
-                        child: _stackHear(sourceData),
-                      ),
-                      // 卡片中部
-                      DunContent(sourceData),
-                      // 卡片图片
-                      DunPrintImage(data: sourceData)
-                    ],
+                  Card(
+                    margin: const EdgeInsets.only(top: 0),
+                    elevation: 15.0,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                    ),
+                    clipBehavior: Clip.antiAlias,
+                    semanticContainer: false,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // 卡片头
+                        SizedBox(
+                          height: 131,
+                          width: size.width,
+                          child: _stackHear(sourceData),
+                        ),
+                        // 卡片中部
+                        DunContent(sourceData),
+                        // 卡片图片
+                        DunShareImage(data: sourceData),
+                      ],
+                    ),
                   ),
-                ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Text(
+                    "-去应用商店下载小刻食堂-",
+                    style: TextStyle(fontSize: 14, color: Colors.white),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -115,23 +136,17 @@ class _DunWidgetToImageState extends State<DunWidgetToImage> {
           children: [
             Container(
               padding: const EdgeInsets.all(10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Image.asset(
-                    "assets/logo/logo.png",
-                    width: 40,
-                    height: 40,
-                  ),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  const Text(
-                    "小刻食堂",
-                    style: TextStyle(
-                        fontSize: 28, color: DunColors.DunColor),
-                  )
-                ],
+              alignment: Alignment.topLeft,
+              child: RichText(
+                text: const TextSpan(
+                    text: "小刻食堂",
+                    style: TextStyle(color: DunColors.DunColor, fontSize: 28),
+                    children: [
+                      TextSpan(
+                        text: " 移动版",
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ]),
               ),
             ),
             // 头部引用
@@ -157,6 +172,8 @@ class _DunWidgetToImageState extends State<DunWidgetToImage> {
 
 //图片保存
   void _widgetToImageSave() async {
+    DunShareImageIsShare event = DunShareImageIsShare(true);
+    eventBus.fire(event);
     Uint8List pngBytes = await _widgetToUint8List();
     final result = await ImageGallerySaver.saveImage(pngBytes,
         name: DateTime.now().toString());
@@ -167,6 +184,8 @@ class _DunWidgetToImageState extends State<DunWidgetToImage> {
 
 //  图片分享
   void _widgetToImageShare() async {
+    DunShareImageIsShare event = DunShareImageIsShare(true);
+    eventBus.fire(event);
     Uint8List pngBytes = await _widgetToUint8List();
     final document = await getApplicationDocumentsDirectory();
     final dir = Directory(document.path +

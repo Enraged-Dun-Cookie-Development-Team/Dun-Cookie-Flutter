@@ -33,11 +33,11 @@ class MainScaffold extends StatelessWidget {
             bottomNavigationBar: DunBottomNavigationBar(),
             floatingActionButton: data["routerIndex"] == 0
                 ? _floatingActionButton(
-                "assets/logo/logo.png", ctx, data["routerIndex"], true)
+                    "assets/logo/logo.png", ctx, data["routerIndex"], true)
                 : _floatingActionButton("assets/logo/logo@noactive.png", ctx,
-                data["routerIndex"], false),
+                    data["routerIndex"], false),
             floatingActionButtonLocation:
-            FloatingActionButtonLocation.centerDocked,
+                FloatingActionButtonLocation.centerDocked,
             // drawer: const DunDrawer(),
           ),
         );

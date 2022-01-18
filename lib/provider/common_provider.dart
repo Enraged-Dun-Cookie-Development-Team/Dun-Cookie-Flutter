@@ -6,7 +6,7 @@ class CommonProvider with ChangeNotifier {
   CommonProvider();
 
   // 路由初始化页面
-  int _routerIndex = 2;
+  int _routerIndex = 0;
 
   int get routerIndex {
     return _routerIndex;

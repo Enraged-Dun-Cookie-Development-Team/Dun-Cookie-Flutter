@@ -8,9 +8,6 @@ class Bakery extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
     return Swiper(
       itemBuilder: (BuildContext context, int index) {
         return const Card(
@@ -20,7 +17,7 @@ class Bakery extends StatelessWidget {
         );
       },
       loop: false,
-      itemCount: 3,
+      itemCount: 1,
       // pagination: SwiperPagination(),
       // control: SwiperControl(),
     );

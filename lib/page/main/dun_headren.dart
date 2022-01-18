@@ -63,7 +63,7 @@ class DunHead extends StatelessWidget {
                       icon: const Icon(Icons.share),
                       onPressed: () {
                         Navigator.pushNamed(context, DunWidgetToImage.routeName,
-                            arguments: info.jumpUrl);
+                            arguments: info);
                       },
                     ),
             ],

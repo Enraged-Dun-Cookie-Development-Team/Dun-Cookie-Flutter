@@ -24,40 +24,35 @@ class _DunListState extends State<DunList> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Consumer<CommonProvider>(builder: (context, data, child) {
-          return FutureBuilder<List<SourceData>>(
-            future: MainRequest.canteenCardList(
-                source: {"source": data.checkSource.join("_")}),
-            builder: (ctx, snapshot) {
-              if (!snapshot.hasData) {
-                return const Center(
-                  child: CircularProgressIndicator(),
+    return Consumer<CommonProvider>(builder: (context, data, child) {
+      return FutureBuilder<List<SourceData>>(
+        future: MainRequest.canteenCardList(
+            source: {"source": data.checkSource.join("_")}),
+        builder: (ctx, snapshot) {
+          if (!snapshot.hasData) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          if (snapshot.data != null) {
+            final list = snapshot.data!;
+            return ListView.builder(
+              itemCount: list.length,
+              itemBuilder: (ctx, index) {
+                var info = list[index];
+                return DunCardItem(
+                  info: info,
+                  index: index,
                 );
-              }
-              if (snapshot.data != null) {
-                final list = snapshot.data!;
-                return ListView.builder(
-                  itemCount: list.length,
-                  itemBuilder: (ctx, index) {
-                    var info = list[index];
-                    return DunCardItem(
-                      info: info,
-                      index: index,
-                    );
-                  },
-                );
-              }
-              return const Center(
-                child: Text("报错了"),
-              );
-            },
+              },
+            );
+          }
+          return const Center(
+            child: Text("报错了"),
           );
-        }),
-        const TestText()
-      ],
-    );
+        },
+      );
+    });
   }
 
   //  获取数据
@@ -75,30 +70,5 @@ class _DunListState extends State<DunList> {
     // 持续两秒 先不需要等待
     // await _getDate();
     // await Future.delayed(Duration(milliseconds: 2000), () {});
-  }
-}
-
-class TestText extends StatelessWidget {
-  const TestText({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const Positioned(
-      bottom: 10,
-      right: 10,
-      child: Text(
-        "本界面内容仅供展示，具体请以程序实际情况为准。",
-        style: TextStyle(
-          color: Colors.redAccent,
-          fontSize: 16,
-          shadows: [
-            Shadow(
-              color: Colors.black38,
-              blurRadius: 10,
-            )
-          ],
-        ),
-      ),
-    );
   }
 }
