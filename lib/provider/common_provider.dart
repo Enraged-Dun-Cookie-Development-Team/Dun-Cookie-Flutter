@@ -6,7 +6,7 @@ class CommonProvider with ChangeNotifier {
   CommonProvider();
 
   // 路由初始化页面
-  int _routerIndex = 0;
+  int _routerIndex = 2;
 
   int get routerIndex {
     return _routerIndex;
@@ -34,11 +34,22 @@ class CommonProvider with ChangeNotifier {
   }
 
   // 选中的来源
-  final List<String> _checkSource = [];
+  List<String> _checkSource = [];
 
-  static get checkSource async {
-    var _checkSource =
-        await DunPreferences().getStringList(key: "listCheckSource");
+  void checkSourceInPreferences() {
+    DunPreferences().getStringList(key: "listCheckSource").then((value) {
+      _checkSource = value;
+      notifyListeners();
+    });
+  }
+
+  List<String> get checkSource {
+    // 这里调用上面的异步获取值 如果没有就直接等于下面的数组
+    print(_checkSource);
+    if (_checkSource == null) {
+      checkSourceInPreferences();
+      _checkSource = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
+    }
     return _checkSource;
   }
 
@@ -46,7 +57,7 @@ class CommonProvider with ChangeNotifier {
     if (isAdd) {
       _checkSource.add(priority);
     } else {
-      _checkSource.removeWhere((element) => element == priority);
+      _checkSource.remove(priority);
     }
     // 保存记录
     DunPreferences()

@@ -1,9 +1,11 @@
+
 import 'package:dun_cookie_flutter/common/browser/main.dart';
 import 'package:dun_cookie_flutter/page/Error/main.dart';
 import 'package:dun_cookie_flutter/page/bakery/main.dart';
 import 'package:dun_cookie_flutter/page/home/main.dart';
 import 'package:dun_cookie_flutter/page/main/dun_list.dart';
 import 'package:dun_cookie_flutter/page/setting/main.dart';
+import 'package:dun_cookie_flutter/page/setting/setting_source_filter.dart';
 import 'package:dun_cookie_flutter/page/tool/main.dart';
 import 'package:dun_cookie_flutter/page/main/dun_share.dart';
 import 'package:dun_cookie_flutter/page/update_dialog/main.dart';
@@ -17,7 +19,8 @@ class DunRouter {
     DunWidgetToImage.routeName: (context) => DunWidgetToImage(),
     DunWebView.routeName: (context) => DunWebView(),
     DunTool.routeName: (context) => DunTool(),
-    DunSetting.routerName: (context) => DunSetting()
+    DunSetting.routerName: (context) => DunSetting(),
+    SettingSourceFilter.routerName: (context) => SettingSourceFilter()
   };
 
   /// 底部栏用
