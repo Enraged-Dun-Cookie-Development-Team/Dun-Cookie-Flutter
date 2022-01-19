@@ -13,7 +13,7 @@ class ToolAnnouncement extends StatelessWidget {
         itemBuilder: (c, i) {
           return const Card(
             child: Center(
-              child: Text("公告"),
+              child: Text("意见建议，请在右上角设置进入反馈查看反馈方法"),
             ),
           );
         },

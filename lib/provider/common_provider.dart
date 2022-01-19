@@ -47,7 +47,12 @@ class CommonProvider with ChangeNotifier {
 
   void checkSourceInPreferences() {
     DunPreferences().getStringList(key: "listCheckSource").then((value) {
-      _checkSource = value;
+      if (value != null && value.length > 0) {
+        _checkSource = value;
+      } else {
+        _checkSource = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
+      }
+
       notifyListeners();
     });
   }

@@ -9,7 +9,11 @@ class DunShareImage extends StatefulWidget {
   DunShareImage({Key? key, required this.data}) : super(key: key) {
     _hasImage = (data.coverImage != null || data.imageList!.isNotEmpty);
     _isMultiImage = _hasImage && data.imageList!.length > 1;
-    _imageList = _isMultiImage ? data.imageList! : [data.coverImage!];
+    _imageList = _hasImage
+        ? _isMultiImage
+            ? data.imageList!
+            : [data.coverImage!]
+        : [];
   }
 
   SourceData data;
@@ -44,7 +48,6 @@ class _DunShareImageState extends State<DunShareImage> {
 
   @override
   void dispose() {
-
     super.dispose();
   }
 

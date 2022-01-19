@@ -24,10 +24,15 @@ class _DunListState extends State<DunList> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<CommonProvider>(builder: (context, data, child) {
+    return Selector<CommonProvider, List<String>>(
+        selector: (ctx, commonProvider) {
+      return commonProvider.checkSource;
+    }, shouldRebuild: (prev, next) {
+      return prev != next;
+    }, builder: (context, checkSource, child) {
       return FutureBuilder<List<SourceData>>(
         future: MainRequest.canteenCardList(
-            source: {"source": data.checkSource.join("_")}),
+            source: {"source": checkSource.join("_")}),
         builder: (ctx, snapshot) {
           if (!snapshot.hasData) {
             return const Center(
@@ -59,7 +64,7 @@ class _DunListState extends State<DunList> {
   // _getDate() {
   //   MainRequest.canteenCardListAll().then((value) {
   //     setState(() {
-  //       list = value;
+  //       main = value;
   //     });
   //     return true;
   //   });

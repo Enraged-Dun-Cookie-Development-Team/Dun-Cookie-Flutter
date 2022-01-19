@@ -46,56 +46,60 @@ class _DunWidgetToImageState extends State<DunWidgetToImage> {
         elevation: 0,
         backgroundColor: const Color(0xFF333333),
       ),
-      body: ListView(
-        children: [
-          RepaintBoundary(
-            key: _globalKey,
-            child: Container(
-              color: const Color(0xFF333333),
-              width: size.width,
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                children: [
-                  Image.asset(
-                    "assets/logo/logo.png",
-                    width: 60,
-                  ),
-                  Card(
-                    margin: const EdgeInsets.only(top: 0),
-                    elevation: 15.0,
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(20.0)),
+      body: Container(
+        color: const Color(0xFF333333),
+        height: MediaQuery.of(context).size.height,
+        child: ListView(
+          children: [
+            RepaintBoundary(
+              key: _globalKey,
+              child: Container(
+                color: const Color(0xFF333333),
+                width: size.width,
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    Image.asset(
+                      "assets/logo/logo.png",
+                      width: 60,
                     ),
-                    clipBehavior: Clip.antiAlias,
-                    semanticContainer: false,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        // 卡片头
-                        SizedBox(
-                          height: 131,
-                          width: size.width,
-                          child: _stackHear(sourceData),
-                        ),
-                        // 卡片中部
-                        DunContent(sourceData),
-                        // 卡片图片
-                        DunShareImage(data: sourceData),
-                      ],
+                    Card(
+                      margin: const EdgeInsets.only(top: 0),
+                      elevation: 15.0,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                      ),
+                      clipBehavior: Clip.antiAlias,
+                      semanticContainer: false,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          // 卡片头
+                          SizedBox(
+                            height: 131,
+                            width: size.width,
+                            child: _stackHear(sourceData),
+                          ),
+                          // 卡片中部
+                          DunContent(sourceData),
+                          // 卡片图片
+                          DunShareImage(data: sourceData),
+                        ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  const Text(
-                    "-去应用商店下载小刻食堂-",
-                    style: TextStyle(fontSize: 14, color: Colors.white),
-                  ),
-                ],
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Text(
+                      "-去应用商店下载小刻食堂-",
+                      style: TextStyle(fontSize: 14, color: Colors.white),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

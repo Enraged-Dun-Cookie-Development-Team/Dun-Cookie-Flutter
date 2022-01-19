@@ -12,7 +12,7 @@ class DunPreferences {
     _prefs = SharedPreferences.getInstance();
   }
 
-  saveBool({key, value}) async {
+  Future<bool?> saveBool({key, value}) async {
     await _prefs.then((_) => _.setBool(key, value));
   }
 

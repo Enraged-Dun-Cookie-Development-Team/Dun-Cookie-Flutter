@@ -1,5 +1,7 @@
+import 'package:dun_cookie_flutter/common/persistence/main.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/page/home/dun_buttom_navigation_bar.dart';
+import 'package:dun_cookie_flutter/page/home/open_screen_info.dart';
 import 'package:dun_cookie_flutter/page/setting/main.dart';
 import 'package:dun_cookie_flutter/page/update_dialog/main.dart';
 import 'package:dun_cookie_flutter/provider/common_provider.dart';
@@ -8,10 +10,30 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class MainScaffold extends StatelessWidget {
+class MainScaffold extends StatefulWidget {
   MainScaffold({Key? key}) : super(key: key);
 
+  @override
+  State<MainScaffold> createState() => _MainScaffoldState();
+}
+
+class _MainScaffoldState extends State<MainScaffold> {
   BuildContext? _context;
+
+  _checkOpenScreenInfo() async {
+    var data = await DunPreferences().getBool(key: "notOnce");
+    if (!data) {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const OpenScreenInfo()));
+    }
+  }
+
+  @override
+  void initState() {
+    // 是否是第一次进入APP
+    _checkOpenScreenInfo();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
