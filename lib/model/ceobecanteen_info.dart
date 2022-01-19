@@ -20,16 +20,13 @@ String ceobecanteenInfoToJson(CeobecanteenInfo data) =>
     json.encode(data.toJson());
 
 class CeobecanteenInfo with ChangeNotifier {
-  CeobecanteenInfo({
-    this.list,
-    this.btnList,
-    this.dayInfo,
-    this.logo,
-    this.upgrade,
-    this.testVersion,
-    this.testUpdate,
-    this.testNotUpdate,
-  });
+  CeobecanteenInfo(
+      {this.list,
+      this.btnList,
+      this.dayInfo,
+      this.logo,
+      this.upgrade,
+      this.app});
 
   CeobecanteenInfo? _data;
 
@@ -62,9 +59,7 @@ class CeobecanteenInfo with ChangeNotifier {
     logo = json['logo'];
     upgrade =
         json['upgrade'] != null ? Upgrade.fromJson(json['upgrade']) : null;
-    testVersion = json['testVersion'];
-    testUpdate = json['testUpdate'];
-    testNotUpdate = json['testNotUpdate'];
+    app = json['app'] != null ? App.fromJson(json['app']) : null;
   }
 
   List<AnnouncementList>? list;
@@ -74,9 +69,7 @@ class CeobecanteenInfo with ChangeNotifier {
   DayInfo? dayInfo;
   String? logo;
   Upgrade? upgrade;
-  int? testVersion;
-  bool? testUpdate;
-  bool? testNotUpdate;
+  App? app;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -93,9 +86,7 @@ class CeobecanteenInfo with ChangeNotifier {
     if (upgrade != null) {
       map['upgrade'] = upgrade?.toJson();
     }
-    map['testVersion'] = testVersion;
-    map['testUpdate'] = testUpdate;
-    map['testNotUpdate'] = testNotUpdate;
+    map['app'] = app?.toJson();
     return map;
   }
 }
@@ -383,11 +374,10 @@ class QuickJumpList {
   static List<QuickJump> _quickJump = [];
 
   static get quickJump {
-
     _quickJump = [];
 
-    _quickJump.add(QuickJump(
-        "https://prts.wiki/w/%E9%A6%96%E9%A1%B5", "PRTS.Wiki", "assets/link/akwiki.png"));
+    _quickJump.add(QuickJump("https://prts.wiki/w/%E9%A6%96%E9%A1%B5",
+        "PRTS.Wiki", "assets/link/akwiki.png"));
     _quickJump.add(QuickJump(
         "https://map.ark-nights.com", "PRTS.Map", "assets/link/akmap.ico"));
     _quickJump.add(QuickJump("https://penguin-stats.cn/", "企鹅物流",
@@ -400,10 +390,36 @@ class QuickJumpList {
         QuickJump("https://kokodayo.fun/", "Kokodayo", "assets/link/kkdy.png"));
     _quickJump.add(
         QuickJump("https://aog.wiki/", "刷素材一图流", "assets/link/akgraph.ico"));
-    _quickJump.add(QuickJump(
-        "https://viktorlab.cn/akdata/dps/", "Arknight DPS", "assets/link/dps.ico"));
+    _quickJump.add(QuickJump("https://viktorlab.cn/akdata/dps/", "Arknight DPS",
+        "assets/link/dps.ico"));
     _quickJump.add(QuickJump("https://arknightscommunity.drblack-system.com/",
         "泰拉通讯枢纽", "assets/link/tltxsn.png"));
     return _quickJump;
+  }
+}
+
+App AppFromJson(String str) => App.fromJson(json.decode(str));
+
+String AppToJson(DayInfo data) => json.encode(data.toJson());
+
+class App {
+  App({this.lastFocusVersion, this.update, this.version});
+
+  App.fromJson(dynamic json) {
+    lastFocusVersion = json['lastFocusVersion'];
+    update = json['update'];
+    version = json['version'];
+  }
+
+  double? lastFocusVersion;
+  bool? update;
+  double? version;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['lastFocusVersion'] = lastFocusVersion;
+    map['update'] = update;
+    map['version'] = version;
+    return map;
   }
 }
