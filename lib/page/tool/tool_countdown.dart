@@ -21,10 +21,10 @@ class ToolCountdown extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
-          const Text(
-            "活动倒计时",
-            style: TextStyle(color: DunColors.DunColor, fontSize: 16),
-          ),
+          // const Text(
+          //   "活动倒计时",
+          //   style: TextStyle(color: DunColors.DunColor, fontSize: 16),
+          // ),
           Card(
             child: ListView.builder(
               shrinkWrap: true,

@@ -4,6 +4,7 @@ import 'package:dun_cookie_flutter/model/ceobecanteen_info.dart';
 import 'package:dun_cookie_flutter/page/tool/tool_announcement.dart';
 import 'package:dun_cookie_flutter/page/tool/tool_countdown.dart';
 import 'package:dun_cookie_flutter/page/tool/tool_grid.dart';
+import 'package:dun_cookie_flutter/page/tool/tool_resource.dart';
 import 'package:dun_cookie_flutter/service/info_request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -42,6 +43,8 @@ class _DunToolState extends State<DunTool> {
                 CeobecanteenInfo ceobecanteenInfo = data.ceobecanteenInfo!;
                 return ListView(
                   children: [
+                    // 物资是否开放
+                    ToolResource(ceobecanteenInfo.dayInfo!.resources!),
                     // 倒计时
                     if (ceobecanteenInfo.dayInfo != null &&
                         ceobecanteenInfo.dayInfo!.countdown != null)

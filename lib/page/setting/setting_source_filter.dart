@@ -1,3 +1,4 @@
+import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
 import 'package:dun_cookie_flutter/model/source_info.dart';
 import 'package:dun_cookie_flutter/provider/common_provider.dart';
 import 'package:flutter/material.dart';
@@ -37,14 +38,21 @@ class _SettingSourceFilterState extends State<SettingSourceFilter> {
                 String priority = list[index].priority.toString();
                 return ListTile(
                   title: Text(list[index].title),
-                  leading: Image.asset(
-                    list[index].icon,
-                    width: 30,
+                  leading: ClipRRect(
+                    borderRadius: BorderRadius.circular(4),
+                    child: Image.asset(
+                      list[index].icon,
+                      width: 30,
+                    ),
                   ),
                   trailing: Switch(
                     value: data.checkSource.contains(priority),
                     onChanged: (value) {
-                      data.setCheckListInPriority(priority, value);
+                      if (!value && data.checkSource.length == 1) {
+                        DunToast.showError("至少关注一个哦");
+                      } else {
+                        data.setCheckListInPriority(priority, value);
+                      }
                     },
                   ),
                 );
