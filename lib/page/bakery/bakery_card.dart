@@ -21,7 +21,7 @@ class _BakeryCardState extends State<BakeryCard> {
     return const Padding(
       padding: EdgeInsets.all(8.0),
       child: Center(
-        child: Text("蜜饼工坊，敬请期待"),
+        child: Text("蜜饼工坊，大厦基地建设中，敬请期待"),
       ),
     );
   }

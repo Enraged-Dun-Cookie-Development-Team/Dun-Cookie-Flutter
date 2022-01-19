@@ -1,4 +1,5 @@
 import 'package:dun_cookie_flutter/common/persistence/main.dart';
+import 'package:dun_cookie_flutter/common/static_variable/main.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -6,7 +7,7 @@ class CommonProvider with ChangeNotifier {
   CommonProvider();
 
   // 路由初始化页面
-  int _routerIndex = 0;
+  int _routerIndex = StaticVariable.starRouterIndex;
 
   int get routerIndex {
     return _routerIndex;
@@ -18,7 +19,7 @@ class CommonProvider with ChangeNotifier {
   }
 
   // 主题index
-  int _themeIndex = 0;
+  int _themeIndex = StaticVariable.starThemeIndex;
 
   int get themeIndex {
     return _themeIndex;

@@ -1,3 +1,4 @@
+import 'package:dun_cookie_flutter/common/static_variable/main.dart';
 import 'package:flutter/material.dart';
 
 class DunInfo extends StatelessWidget {
@@ -21,7 +22,7 @@ class DunInfo extends StatelessWidget {
                   width: 100,
                 ),
                 const Text(
-                  "小刻食堂 alpha",
+                  "小刻食堂 V${StaticVariable.version}",
                   style: TextStyle(fontSize: 26),
                 ),
                 const Text(

@@ -17,4 +17,15 @@ class OpenAppOrBrowser {
       Navigator.pushNamed(ctx, DunWebView.routeName, arguments: url);
     }
   }
+
+  static openAppUrlScheme(String appUrlScheme, BuildContext ctx) async {
+    if (appUrlScheme != null) {
+      if (await canLaunch(appUrlScheme)) {
+        DunToast.showSuccess("正在唤起APP");
+        await launch(appUrlScheme);
+      } else {
+        DunToast.showError("没有检测到对应app");
+      }
+    }
+  }
 }

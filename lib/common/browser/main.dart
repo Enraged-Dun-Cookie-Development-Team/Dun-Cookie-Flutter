@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
+import 'package:dun_cookie_flutter/common/tool/open_app_or_browser.dart';
 import 'package:dun_cookie_flutter/provider/view_webpage_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -60,6 +61,16 @@ class _DunWebViewMainState extends State<DunWebViewMain> {
         builder: (ctx, data, child) {
           return WebView(
             initialUrl: widget.url,
+            navigationDelegate: (request) {
+              if (request.url.startsWith('bilibili://') ||
+                  request.url.startsWith('weibo://') ||
+                  request.url.startsWith('orpheus://')) {
+                OpenAppOrBrowser.openAppUrlScheme(request.url, context);
+                Navigator.pop(context);
+                return NavigationDecision.prevent;
+              }
+              return NavigationDecision.navigate;
+            },
             javascriptMode: JavascriptMode.unrestricted,
             onPageStarted: (url) {
               data.setUrl(url);
