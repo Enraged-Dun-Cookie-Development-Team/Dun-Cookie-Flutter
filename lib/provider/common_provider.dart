@@ -65,7 +65,9 @@ class CommonProvider with ChangeNotifier {
       _checkSource.remove(priority);
     }
     // 保存记录
-    DunPreferences().saveStringList(key: "listCheckSource", value: _checkSource);
+    DunPreferences()
+        .saveStringList(key: "listCheckSource", value: _checkSource);
+    notifyListeners();
   }
 
 //  获取到的数据
