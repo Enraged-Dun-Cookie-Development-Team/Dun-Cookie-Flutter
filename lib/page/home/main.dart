@@ -23,6 +23,8 @@ class MainScaffold extends StatefulWidget {
 class _MainScaffoldState extends State<MainScaffold> {
   BuildContext? _context;
 
+  _init() async {}
+
   _checkOpenScreenInfo() async {
     var data = await DunPreferences().getBool(key: "notOnce");
     if (!data) {
@@ -43,6 +45,8 @@ class _MainScaffoldState extends State<MainScaffold> {
 
   @override
   void initState() {
+    // 初始化全局变量，读取设置
+    _init();
     // 是否是第一次进入APP
     _checkOpenScreenInfo();
     // 获取CeobecanteenInfo和判断版本

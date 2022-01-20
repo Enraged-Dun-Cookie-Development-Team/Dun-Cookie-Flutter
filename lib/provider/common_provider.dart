@@ -1,6 +1,7 @@
 import 'package:dun_cookie_flutter/common/persistence/main.dart';
 import 'package:dun_cookie_flutter/common/static_variable/main.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
+import 'package:dun_cookie_flutter/model/source_data.dart';
 import 'package:flutter/material.dart';
 
 class CommonProvider with ChangeNotifier {
@@ -38,23 +39,23 @@ class CommonProvider with ChangeNotifier {
   List<String> _checkSource = [];
 
   List<String> get checkSource {
-    // 这里调用上面的异步获取值 如果没有就直接等于下面的数组
-    if (_checkSource.isEmpty) {
-      checkSourceInPreferences();
-    }
     return _checkSource;
   }
 
-  void checkSourceInPreferences() {
-    DunPreferences().getStringList(key: "listCheckSource").then((value) {
-      if (value != null && value.length > 0) {
-        _checkSource = value;
-      } else {
-        _checkSource = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
-      }
+  set checkSource(List<String> value) {
+    _checkSource = value;
+    notifyListeners();
+  }
 
-      notifyListeners();
-    });
+  checkSourceInPreferences() async {
+    List<String> value =
+        await DunPreferences().getStringList(key: "listCheckSource");
+    if (value != null && value.length > 0) {
+      _checkSource = value;
+    } else {
+      _checkSource = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
+    }
+    return _checkSource;
   }
 
   void setCheckListInPriority(priority, isAdd) async {
@@ -64,8 +65,18 @@ class CommonProvider with ChangeNotifier {
       _checkSource.remove(priority);
     }
     // 保存记录
-    DunPreferences()
-        .saveStringList(key: "listCheckSource", value: _checkSource);
+    DunPreferences().saveStringList(key: "listCheckSource", value: _checkSource);
+  }
+
+//  获取到的数据
+  List<SourceData> _sourceData = [];
+
+  List<SourceData> get sourceData {
+    return _sourceData;
+  }
+
+  set sourceData(List<SourceData> value) {
+    _sourceData = value;
     notifyListeners();
   }
 }

@@ -20,58 +20,40 @@ class _DunListState extends State<DunList> {
     super.initState();
     // 清除30天前的图片缓存
     clearDiskCachedImages(duration: const Duration(days: 30));
+    _getDate();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Selector<CommonProvider, List<String>>(
-      selector: (ctx, commonProvider) {
-        return commonProvider.checkSource;
-      },
-      shouldRebuild: (prev, next) {
-        return prev != next;
-      },
-      builder: (context, checkSource, child) {
-        return FutureBuilder<List<SourceData>>(
-          future: MainRequest.canteenCardList(
-              source: {"source": checkSource.join("_")}),
-          builder: (ctx, snapshot) {
-            if (!snapshot.hasData) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            if (snapshot.data != null) {
-              final list = snapshot.data!;
-              return ListView.builder(
-                itemCount: list.length,
-                itemBuilder: (ctx, index) {
-                  var info = list[index];
-                  return DunCardItem(
-                    info: info,
-                    index: index,
-                  );
-                },
-              );
-            }
-            return const Center(
-              child: Text("报错了"),
+    return Selector<CommonProvider, List<SourceData>>(
+      builder: (context, sourceDataList, child) {
+        return ListView.builder(
+          itemCount: sourceDataList.length,
+          itemBuilder: (ctx, index) {
+            var info = sourceDataList[index];
+            return DunCardItem(
+              info: info,
+              index: index,
             );
           },
         );
+      },
+      selector: (ctx, commonProvider) {
+        return commonProvider.sourceData;
+      },
+      shouldRebuild: (prev, next) {
+        return prev != next;
       },
     );
   }
 
   //  获取数据
-  // _getDate() {
-  //   MainRequest.canteenCardListAll().then((value) {
-  //     setState(() {
-  //       main = value;
-  //     });
-  //     return true;
-  //   });
-  // }
+  _getDate() async {
+    var provider = Provider.of<CommonProvider>(context, listen: false);
+    List<String> checkSource = await provider.checkSourceInPreferences();
+    provider.sourceData = await MainRequest.canteenCardList(
+        source: {"source": checkSource.join("_")});
+  }
 
   // 下拉刷新
   Future<void> _onRefresh() async {
