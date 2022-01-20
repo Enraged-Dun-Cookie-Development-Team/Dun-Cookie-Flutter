@@ -1,4 +1,5 @@
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
+import 'package:dun_cookie_flutter/common/tool/time_unit.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_info.dart';
 import 'package:dun_cookie_flutter/page/tool/tool_link.dart';
 import 'package:dun_cookie_flutter/page/tool/tool_video.dart';
@@ -11,7 +12,15 @@ class ToolGrid extends StatelessWidget {
     this.type = 0,
     this.videoInfo,
     this.linkInfo,
-  }) : super(key: key);
+  }) : super(key: key) {
+    if (videoInfo != null) {
+      // 视频信息过滤
+      videoInfo = videoInfo!
+          .where((element) => TimeUnit.isTimeRange(
+              DateTime.now(), element.starTime, element.overTime))
+          .toList();
+    }
+  }
 
   String title;
   int type; //0 为链接  1为视频

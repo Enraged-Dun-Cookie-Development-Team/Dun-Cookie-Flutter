@@ -1,4 +1,6 @@
 import 'package:dun_cookie_flutter/common/static_variable/main.dart';
+import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 
 class DunInfo extends StatelessWidget {
@@ -32,7 +34,16 @@ class DunInfo extends StatelessWidget {
                 const Text(
                   "欢迎来QQ群【蹲饼组】反馈BUG或提出意见建议，一起来玩",
                   style: TextStyle(fontSize: 12),
-                )
+                ),
+                ElevatedButton(
+                    onPressed: () {
+                      Clipboard.setData(const ClipboardData(text: '362860473'));
+                      DunToast.showSuccess("已复制，来QQ群找我们聊天吧！");
+                    },
+                    child: const Text(
+                      "群号：362860473，点击复制",
+                      style: TextStyle(fontSize: 14),
+                    )),
               ],
             ),
           ),

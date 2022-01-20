@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:dun_cookie_flutter/common/browser/main.dart';
 
+//如果要添加新的 去搜索 app名称+UrlScheme
 class OpenAppOrBrowser {
   static openUrl(String url, BuildContext ctx, {String? appUrlScheme}) async {
     if (appUrlScheme != null) {
