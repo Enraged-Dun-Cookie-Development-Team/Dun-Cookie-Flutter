@@ -5,6 +5,7 @@ import 'package:dun_cookie_flutter/service/main_request.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class DunList extends StatefulWidget {
   const DunList({Key? key}) : super(key: key);
@@ -23,19 +24,61 @@ class _DunListState extends State<DunList> {
     _getDate();
   }
 
+  final RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
+
+  String headerStr = "后期有好看的动画，监修中……";
+
   @override
   Widget build(BuildContext context) {
     return Selector<CommonProvider, List<SourceData>>(
       builder: (context, sourceDataList, child) {
-        return ListView.builder(
-          itemCount: sourceDataList.length,
-          itemBuilder: (ctx, index) {
-            var info = sourceDataList[index];
-            return DunCardItem(
-              info: info,
-              index: index,
-            );
-          },
+        return SmartRefresher(
+          header: BezierHeader(
+            child: Center(
+              child: Text(
+                headerStr,
+                style: const TextStyle(color: Colors.white, fontSize: 18),
+              ),
+            ),
+            onModeChange: (mode) {
+              // switch (mode) {
+              //   case RefreshStatus.idle:
+              //     setState(() {
+              //       headerStr = "小刻躁动起来了";
+              //     });
+              //     break;
+              //   case RefreshStatus.canRefresh:
+              //     setState(() {
+              //       headerStr = "按不住了！快来帮忙！";
+              //     });
+              //     break;
+              //   case RefreshStatus.refreshing:
+              //     setState(() {
+              //       headerStr = "她冲出去了！";
+              //     });
+              //     break;
+              //   case RefreshStatus.completed:
+              //     setState(() {
+              //       headerStr = "她进食堂了！";
+              //     });
+              //     break;
+              // }
+            },
+          ),
+          controller: _refreshController,
+          enablePullDown: true,
+          onRefresh: _onRefresh,
+          child: ListView.builder(
+            itemCount: sourceDataList.length,
+            itemBuilder: (ctx, index) {
+              var info = sourceDataList[index];
+              return DunCardItem(
+                info: info,
+                index: index,
+              );
+            },
+          ),
         );
       },
       selector: (ctx, commonProvider) {
@@ -47,18 +90,18 @@ class _DunListState extends State<DunList> {
     );
   }
 
+  void _onRefresh() async {
+    // monitor network fetch
+    await _getDate();
+    // if failed,use refreshFailed()
+    _refreshController.refreshCompleted();
+  }
+
   //  获取数据
   _getDate() async {
     var provider = Provider.of<CommonProvider>(context, listen: false);
     List<String> checkSource = await provider.checkSourceInPreferences();
     provider.sourceData = await MainRequest.canteenCardList(
         source: {"source": checkSource.join("_")});
-  }
-
-  // 下拉刷新
-  Future<void> _onRefresh() async {
-    // 持续两秒 先不需要等待
-    // await _getDate();
-    // await Future.delayed(Duration(milliseconds: 2000), () {});
   }
 }
