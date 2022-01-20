@@ -41,14 +41,14 @@ class OpenScreenInfo extends StatelessWidget {
                 height: 3,
               ),
               const Text(
-                "这个版本的发布的主要目的是测试服务器的稳定性，注意：当前的版本不包含推送的功能！需要进入APP进行手动刷新查看，查看的方法点击下面的小刻logo就能刷新，剩下的为数不多的功能就自己探索吧！",
+                "这个版本的发布的主要目的是测试服务器的稳定性，注意：当前的版本不包含推送的功能！需要进入APP进行手动下拉刷新查看，剩下的为数不多的功能就自己探索吧！",
                 style: TextStyle(fontSize: 18),
               ),
               const SizedBox(
                 height: 6,
               ),
               const Text(
-                "第一次写移动端，请不要催更，因为要打肉鸽，如果有问题，在设置里面有反馈方法，这个版本没有自动更新和强制更新，后期接口会失效，到时候正式版发布的时候需要重新下载",
+                "第一次写移动端，请不要催更，因为要打肉鸽，如果有问题，在设置里面有反馈方法",
                 style: TextStyle(fontSize: 18, color: Colors.red),
               ),
               const SizedBox(
