@@ -77,41 +77,8 @@ class _ViewImageExtendedImageState extends State<ViewImageExtendedImage>
     return ExtendedImageGesturePageView.builder(
       itemBuilder: (BuildContext context, int index) {
         var item = widget.imageList![index];
-        Widget image = ExtendedImage.network(
-          item,
-          fit: BoxFit.contain,
-          mode: ExtendedImageMode.gesture,
-          initGestureConfigHandler: (state) {
-            return GestureConfig(
-              inPageView: true,
-            );
-          },
-          onDoubleTap: (state) {
-            double? begin = 0.0;
-            double end = 0.0;
-            if (state.gestureDetails?.totalScale == 1.0) {
-              begin = 1.0;
-              end = 2.0;
-            } else {
-              begin = state.gestureDetails?.totalScale;
-              end = 1.0;
-            }
-            try {
-              _animationController.reset();
-              _animation = Tween<double>(begin: begin, end: end)
-                  .animate(_animationController);
-              _animation.addListener(() {
-                state.handleDoubleTap(
-                    scale: _animation.value,
-                    doubleTapPosition: state.pointerDownPosition);
-              });
-              _animationController.forward();
-            } catch (e) {
-              print('放大错误');
-            }
-          },
-        );
-        image = GestureDetector(
+
+        return GestureDetector(
           onLongPress: () async {
             Uint8List? bytes = await getNetworkImageData(item, useCache: true);
             final result = await ImageGallerySaver.saveImage(bytes!,
@@ -121,13 +88,42 @@ class _ViewImageExtendedImageState extends State<ViewImageExtendedImage>
             }
           },
           child: Container(
-            child: image,
+            child: ExtendedImage.network(
+              item,
+              fit: BoxFit.contain,
+              mode: ExtendedImageMode.gesture,
+              initGestureConfigHandler: (state) {
+                return GestureConfig(
+                  inPageView: true,
+                );
+              },
+              onDoubleTap: (state) {
+                double? begin = 0.0;
+                double end = 0.0;
+                if (state.gestureDetails?.totalScale == 1.0) {
+                  begin = 1.0;
+                  end = 2.0;
+                } else {
+                  begin = state.gestureDetails?.totalScale;
+                  end = 1.0;
+                }
+                try {
+                  _animationController.reset();
+                  _animation = Tween<double>(begin: begin, end: end)
+                      .animate(_animationController);
+                  _animation.addListener(() {
+                    state.handleDoubleTap(
+                        scale: _animation.value,
+                        doubleTapPosition: state.pointerDownPosition);
+                  });
+                  _animationController.forward();
+                } catch (e) {
+                  print('放大错误');
+                }
+              },
+            ),
             padding: const EdgeInsets.all(5.0),
           ),
-        );
-        return Hero(
-          tag: item,
-          child: image,
         );
       },
       itemCount: widget.imageList!.length,
@@ -175,10 +171,3 @@ class _ViewImageExtendedImageState extends State<ViewImageExtendedImage>
   }
 }
 
-// Future<bool> saveNetworkImageToPhoto(String url, {bool useCache: true}) async {
-//   var data = await getNetworkImageData(url, useCache: useCache);
-//   final result = await ImageGallerySaver.saveImage(
-//       Uint8List.fromList(response.data),
-//       quality: 60,
-//       name: "hello");
-// }
