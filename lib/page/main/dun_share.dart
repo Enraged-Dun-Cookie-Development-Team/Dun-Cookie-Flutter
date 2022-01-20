@@ -1,12 +1,12 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
+import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
 import 'package:dun_cookie_flutter/model/source_data.dart';
 import 'package:dun_cookie_flutter/page/main/dun_content.dart';
 import 'package:dun_cookie_flutter/page/main/dun_headren.dart';
 import 'package:dun_cookie_flutter/page/main/dun_share_image.dart';
 import 'package:dun_cookie_flutter/provider/common_event_bus.dart';
-import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
@@ -182,7 +182,7 @@ class _DunWidgetToImageState extends State<DunWidgetToImage> {
     final result = await ImageGallerySaver.saveImage(pngBytes,
         name: DateTime.now().toString());
     if (result["isSuccess"]) {
-      Fluttertoast.showToast(msg: "保存完成", fontSize: 16.0);
+      DunToast.showSuccess("图片已保存");
     }
   }
 

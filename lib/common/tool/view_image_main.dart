@@ -1,7 +1,11 @@
+import 'dart:typed_data';
+
+import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
 import 'package:dun_cookie_flutter/provider/view_image_currentIndex_provider.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
 
 class ViewImageExtendedImage extends StatefulWidget {
   ViewImageExtendedImage({
@@ -107,9 +111,19 @@ class _ViewImageExtendedImageState extends State<ViewImageExtendedImage>
             }
           },
         );
-        image = Container(
-          child: image,
-          padding: const EdgeInsets.all(5.0),
+        image = GestureDetector(
+          onLongPress: () async {
+            Uint8List? bytes = await getNetworkImageData(item, useCache: true);
+            final result = await ImageGallerySaver.saveImage(bytes!,
+                name: DateTime.now().toString());
+            if (result["isSuccess"]) {
+              DunToast.showSuccess("保存完成");
+            }
+          },
+          child: Container(
+            child: image,
+            padding: const EdgeInsets.all(5.0),
+          ),
         );
         return Hero(
           tag: item,
@@ -160,3 +174,11 @@ class _ViewImageExtendedImageState extends State<ViewImageExtendedImage>
     );
   }
 }
+
+// Future<bool> saveNetworkImageToPhoto(String url, {bool useCache: true}) async {
+//   var data = await getNetworkImageData(url, useCache: useCache);
+//   final result = await ImageGallerySaver.saveImage(
+//       Uint8List.fromList(response.data),
+//       quality: 60,
+//       name: "hello");
+// }

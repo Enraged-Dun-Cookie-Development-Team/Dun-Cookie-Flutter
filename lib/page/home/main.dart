@@ -66,17 +66,16 @@ class _MainScaffoldState extends State<MainScaffold> {
       },
       shouldRebuild: (prev, next) => prev != next,
       builder: (ctx, data, child) {
+        int routerIndex = data["routerIndex"] as int;
         return Theme(
           data: _theme(data["themeIndex"]),
           child: Scaffold(
-            appBar: _appBar(data["routerIndex"]),
-            body: DunRouter.pages[data["routerIndex"]!],
+            appBar: _appBar(routerIndex),
+            body: DunRouter.pages[routerIndex],
             bottomNavigationBar: DunBottomNavigationBar(),
-            floatingActionButton: data["routerIndex"] == 0
-                ? _floatingActionButton(
-                    "assets/logo/logo.png", ctx, data["routerIndex"], true)
-                : _floatingActionButton("assets/logo/logo@noactive.png", ctx,
-                    data["routerIndex"], false),
+            floatingActionButton: routerIndex == 0
+                ? _floatingActionButton(routerIndex, true)
+                : _floatingActionButton(routerIndex, false),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerDocked,
             // drawer: const DunDrawer(),
@@ -86,16 +85,16 @@ class _MainScaffoldState extends State<MainScaffold> {
     );
   }
 
-  _floatingActionButton(url, BuildContext ctx, routerIndex, isActive) {
+  _floatingActionButton(routerIndex, isActive) {
     return FloatingActionButton(
-      backgroundColor: isActive ? DunColors.DunColor : Colors.white,
+      backgroundColor: isActive ? DunColors.DunColor : Colors.grey,
       onPressed: () {
         if (routerIndex != 0) {
-          Provider.of<CommonProvider>(ctx, listen: false).setRouterIndex(0);
+          Provider.of<CommonProvider>(context, listen: false).setRouterIndex(0);
         }
       },
       child: Image.asset(
-        url,
+        "assets/logo/logo.png",
         width: 34,
       ),
     );
