@@ -60,7 +60,9 @@ class ToolCountdown extends StatelessWidget {
                                 ),
                                 scrollDirection: Axis.horizontal),
                           ),
-                          SizedBox(width: 10,),
+                          const SizedBox(
+                            width: 10,
+                          ),
                           TimeDiffText(info.time!),
                         ],
                       ),

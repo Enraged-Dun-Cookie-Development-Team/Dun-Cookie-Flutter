@@ -2,13 +2,13 @@ import 'package:dun_cookie_flutter/common/browser/main.dart';
 import 'package:dun_cookie_flutter/page/Error/main.dart';
 import 'package:dun_cookie_flutter/page/bakery/main.dart';
 import 'package:dun_cookie_flutter/page/home/main.dart';
-import 'package:dun_cookie_flutter/page/info/main.dart';
+import 'package:dun_cookie_flutter/page/setting/setting_info.dart';
 import 'package:dun_cookie_flutter/page/main/dun_list.dart';
 import 'package:dun_cookie_flutter/page/setting/main.dart';
 import 'package:dun_cookie_flutter/page/setting/setting_source_filter.dart';
 import 'package:dun_cookie_flutter/page/tool/main.dart';
 import 'package:dun_cookie_flutter/page/main/dun_share.dart';
-import 'package:dun_cookie_flutter/page/update_dialog/main.dart';
+import 'package:dun_cookie_flutter/page/update/main.dart';
 import 'package:flutter/material.dart';
 
 class DunRouter {
@@ -22,10 +22,11 @@ class DunRouter {
     DunSetting.routerName: (context) => const DunSetting(),
     SettingSourceFilter.routerName: (context) => const SettingSourceFilter(),
     DunInfo.routerName: (context) => const DunInfo(),
+    DunUpdate.routerName: (context) => const DunUpdate(),
   };
 
   /// 底部栏用
-  static const pageTitles = ["小刻食堂 alpha", "蜜饼工坊 alpha", "常用工具 alpha"];
+  static const pageTitles = ["小刻食堂", "蜜饼工坊", "常用工具"];
   static const pages = [DunList(), Bakery(), DunTool()];
 
   /// 添加页面后记得在上面加上 不然就会直接跳转到404

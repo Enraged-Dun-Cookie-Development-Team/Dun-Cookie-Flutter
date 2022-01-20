@@ -32,7 +32,9 @@ class ToolLink extends StatelessWidget {
       title = linkInfo.name;
     }
     return GestureDetector(
-      child: Padding(
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        width: double.infinity,
         padding: const EdgeInsets.only(left: 10),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,

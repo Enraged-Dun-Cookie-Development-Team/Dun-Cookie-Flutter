@@ -1,6 +1,11 @@
-import 'package:dun_cookie_flutter/page/info/main.dart';
+import 'package:dun_cookie_flutter/common/static_variable/main.dart';
+import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
+import 'package:dun_cookie_flutter/model/ceobecanteen_info.dart';
+import 'package:dun_cookie_flutter/page/setting/setting_info.dart';
 import 'package:dun_cookie_flutter/page/setting/setting_source_filter.dart';
+import 'package:dun_cookie_flutter/page/update/main.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DunSetting extends StatelessWidget {
   const DunSetting({Key? key}) : super(key: key);
@@ -11,7 +16,7 @@ class DunSetting extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("设置"),
+        title: const Text("设置"),
       ),
       body: Column(
         children: [
@@ -24,8 +29,25 @@ class DunSetting extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Text("建议反馈BUG提交"),
-            subtitle: const Text("没事你也可以进来看看"),
+            title: const Text("检测升级"),
+            subtitle: const Text("可以试着点点"),
+            trailing: const Icon(Icons.arrow_right),
+            onTap: () {
+              DunApp? app =
+                  Provider.of<CeobecanteenInfo>(context, listen: false)
+                      .ceobecanteenInfo
+                      ?.app;
+              if (app?.version != StaticVariable.version) {
+                Navigator.pushNamed(context, DunUpdate.routerName,
+                    arguments: app);
+              } else {
+                DunToast.showSuccess("当前版本是最新版本");
+              }
+            },
+          ),
+          ListTile(
+            title: const Text("建议反馈BUG提交吹水扯淡"),
+            subtitle: const Text("欢迎进群"),
             trailing: const Icon(Icons.arrow_right),
             onTap: () {
               Navigator.pushNamed(context, DunInfo.routerName);

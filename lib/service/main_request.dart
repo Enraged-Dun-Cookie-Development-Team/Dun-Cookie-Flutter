@@ -9,6 +9,7 @@ class MainRequest {
   static _canteenOriginalCardList({Map<String, String>? source}) async {
     const url = "/canteen/cardList";
     var request = await HttpClass.get(url, params: source);
+    print("请求一次全部数据");
     if (request["error"]) {
       DunToast.showError("服务器连接出错");
       return;

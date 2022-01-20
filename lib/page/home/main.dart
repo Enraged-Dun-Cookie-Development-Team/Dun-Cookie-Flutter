@@ -1,11 +1,14 @@
 import 'package:dun_cookie_flutter/common/persistence/main.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/page/home/dun_buttom_navigation_bar.dart';
-import 'package:dun_cookie_flutter/page/home/open_screen_info.dart';
+import 'package:dun_cookie_flutter/page/info/open_screen_info.dart';
 import 'package:dun_cookie_flutter/page/setting/main.dart';
-import 'package:dun_cookie_flutter/page/update_dialog/main.dart';
+import 'package:dun_cookie_flutter/page/update/main.dart';
 import 'package:dun_cookie_flutter/provider/common_provider.dart';
 import 'package:dun_cookie_flutter/router/router.dart';
+import 'package:dun_cookie_flutter/common/static_variable/main.dart';
+import 'package:dun_cookie_flutter/model/ceobecanteen_info.dart';
+import 'package:dun_cookie_flutter/service/info_request.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -28,10 +31,22 @@ class _MainScaffoldState extends State<MainScaffold> {
     }
   }
 
+//  获取info文件并判断文件版本
+  _getCeobecanteenInfoAndCheckVersion() async {
+    CeobecanteenInfo value = await InfoRequest.getCeobecanteenInfo();
+    Provider.of<CeobecanteenInfo>(context, listen: false)
+        .setCeobecanteenInfo(value);
+    if (value.app!.version != StaticVariable.version) {
+      Navigator.pushNamed(context, DunUpdate.routerName, arguments: value.app);
+    }
+  }
+
   @override
   void initState() {
     // 是否是第一次进入APP
     _checkOpenScreenInfo();
+    // 获取CeobecanteenInfo和判断版本
+    _getCeobecanteenInfoAndCheckVersion();
     super.initState();
   }
 
@@ -97,15 +112,4 @@ class _MainScaffoldState extends State<MainScaffold> {
           : [Container()]);
 
   _theme(themeIndex) => DunTheme.themeList[themeIndex];
-
-  _updateDialog(BuildContext context) {
-    Future.delayed(Duration(seconds: 1), () async {
-      var result = await showUpdateDialog(context);
-      if (result == null) {
-        print("取消删除");
-      } else {
-        print("已确认删除");
-      }
-    });
-  }
 }

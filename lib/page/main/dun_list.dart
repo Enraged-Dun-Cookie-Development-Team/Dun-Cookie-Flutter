@@ -25,39 +25,42 @@ class _DunListState extends State<DunList> {
   @override
   Widget build(BuildContext context) {
     return Selector<CommonProvider, List<String>>(
-        selector: (ctx, commonProvider) {
-      return commonProvider.checkSource;
-    }, shouldRebuild: (prev, next) {
-      return prev != next;
-    }, builder: (context, checkSource, child) {
-      return FutureBuilder<List<SourceData>>(
-        future: MainRequest.canteenCardList(
-            source: {"source": checkSource.join("_")}),
-        builder: (ctx, snapshot) {
-          if (!snapshot.hasData) {
+      selector: (ctx, commonProvider) {
+        return commonProvider.checkSource;
+      },
+      shouldRebuild: (prev, next) {
+        return prev != next;
+      },
+      builder: (context, checkSource, child) {
+        return FutureBuilder<List<SourceData>>(
+          future: MainRequest.canteenCardList(
+              source: {"source": checkSource.join("_")}),
+          builder: (ctx, snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            if (snapshot.data != null) {
+              final list = snapshot.data!;
+              return ListView.builder(
+                itemCount: list.length,
+                itemBuilder: (ctx, index) {
+                  var info = list[index];
+                  return DunCardItem(
+                    info: info,
+                    index: index,
+                  );
+                },
+              );
+            }
             return const Center(
-              child: CircularProgressIndicator(),
+              child: Text("报错了"),
             );
-          }
-          if (snapshot.data != null) {
-            final list = snapshot.data!;
-            return ListView.builder(
-              itemCount: list.length,
-              itemBuilder: (ctx, index) {
-                var info = list[index];
-                return DunCardItem(
-                  info: info,
-                  index: index,
-                );
-              },
-            );
-          }
-          return const Center(
-            child: Text("报错了"),
-          );
-        },
-      );
-    });
+          },
+        );
+      },
+    );
   }
 
   //  获取数据

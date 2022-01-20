@@ -24,9 +24,6 @@ class _DunToolState extends State<DunTool> {
   @override
   void initState() {
     super.initState();
-    InfoRequest.getCeobecanteenInfo().then((value) =>
-        Provider.of<CeobecanteenInfo>(context, listen: false)
-            .setCeobecanteenInfo(value));
   }
 
   @override

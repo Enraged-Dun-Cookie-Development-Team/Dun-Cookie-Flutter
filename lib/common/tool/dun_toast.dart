@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class DunToast {
-  static double fontsize = 16.0;
+  static const double _fontsize = 16.0;
 
   static showInfo(text) {
-    Fluttertoast.showToast(msg: text, fontSize: fontsize);
+    Fluttertoast.showToast(msg: text, fontSize: _fontsize);
   }
 
   // https://pub.dev/packages/fluttertoast
@@ -15,7 +15,7 @@ class DunToast {
         msg: text,
         textColor: Colors.white,
         backgroundColor: Colors.green,
-        fontSize: fontsize);
+        fontSize: _fontsize);
   }
 
   static showError(text) {
@@ -23,6 +23,6 @@ class DunToast {
         msg: text,
         textColor: Colors.white,
         backgroundColor: Colors.red,
-        fontSize: fontsize);
+        fontSize: _fontsize);
   }
 }

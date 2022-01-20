@@ -5,8 +5,9 @@ import 'package:dun_cookie_flutter/service/main.dart';
 class InfoRequest {
   static _getCeobecanteenInfo() async {
     final url =
-        "http://api.ceobecanteen.top/canteen/info?${Random().nextInt(100).toString()}";
+        "http://api.ceobecanteen.top/canteen/info?${Random().nextInt(100000).toString()}";
     var request = await HttpClass.tempGet(url);
+    print("请求一次小刻info");
     if (request["error"]) {
       return;
     } else {

@@ -59,7 +59,7 @@ class CeobecanteenInfo with ChangeNotifier {
     logo = json['logo'];
     upgrade =
         json['upgrade'] != null ? Upgrade.fromJson(json['upgrade']) : null;
-    app = json['app'] != null ? App.fromJson(json['app']) : null;
+    app = json['app'] != null ? DunApp.fromJson(json['app']) : null;
   }
 
   List<AnnouncementList>? list;
@@ -69,7 +69,7 @@ class CeobecanteenInfo with ChangeNotifier {
   DayInfo? dayInfo;
   String? logo;
   Upgrade? upgrade;
-  App? app;
+  DunApp? app;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -398,28 +398,31 @@ class QuickJumpList {
   }
 }
 
-App AppFromJson(String str) => App.fromJson(json.decode(str));
+DunApp AppFromJson(String str) => DunApp.fromJson(json.decode(str));
 
 String AppToJson(DayInfo data) => json.encode(data.toJson());
 
-class App {
-  App({this.lastFocusVersion, this.update, this.version});
+class DunApp {
+  DunApp({this.lastFocusVersion, this.update, this.version, this.description});
 
-  App.fromJson(dynamic json) {
+  DunApp.fromJson(dynamic json) {
     lastFocusVersion = json['lastFocusVersion'];
     update = json['update'];
     version = json['version'];
+    description = json['description'];
   }
 
-  double? lastFocusVersion;
+  String? lastFocusVersion;
   bool? update;
-  double? version;
+  String? version;
+  String? description;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['lastFocusVersion'] = lastFocusVersion;
     map['update'] = update;
     map['version'] = version;
+    map['description'] = description;
     return map;
   }
 }

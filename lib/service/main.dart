@@ -49,7 +49,7 @@ class HttpClass {
         //   options.headers["Authorization"] = value;
         //   return options;
         // }).whenComplete(() => dio.unlock()); // unlock the dio
-        print(options.baseUrl + options.path);
+        // print(options.baseUrl + options.path);
         return handler.next(options);
       },
       onResponse: (response, handler) {
