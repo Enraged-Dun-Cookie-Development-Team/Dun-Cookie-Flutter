@@ -6,6 +6,8 @@ class DunColors {
   static const Color DunColorGrey = Color.fromARGB(255, 161, 152, 147);
   static const Color DunColorComplementary = Color.fromARGB(255, 199, 131, 65);
 
+  static const Color DunPink = Color(0xFFf25d8e);
+
   static const Color BakeryColor = Color.fromARGB(255, 245, 130, 32);
   static const Color BakeryColorLigth = Color.fromARGB(255, 230, 132, 56);
   static const Color BakeryColorGrey = Color.fromARGB(255, 170, 172, 183);
@@ -15,9 +17,17 @@ class DunColors {
 
 class DunTheme {
   static final ThemeData _mainTheme = ThemeData(
-
     brightness: Brightness.light,
     primaryColor: DunColors.DunColor,
+    floatingActionButtonTheme: const FloatingActionButtonThemeData(
+        highlightElevation: 25,
+        focusColor: DunColors.DunColor,
+        splashColor: DunColors.DunPink,
+        extendedIconLabelSpacing: 50),
+    buttonTheme: const ButtonThemeData(
+        buttonColor: DunColors.DunColor,
+        splashColor: DunColors.DunPink,
+        highlightColor: DunColors.DunColorLigth),
     appBarTheme: const AppBarTheme(backgroundColor: DunColors.DunColor),
     splashColor: Colors.red,
     colorScheme:

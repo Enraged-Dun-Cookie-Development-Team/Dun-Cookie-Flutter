@@ -50,6 +50,7 @@ dependencies:
   card_swiper: ^2.0.1
   flutter_html: ^3.0.0-alpha.2
   url_launcher: ^6.0.18
+  animations: ^2.0.2
 
 dev_dependencies:
   flutter_test:
