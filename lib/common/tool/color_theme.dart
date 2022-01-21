@@ -24,10 +24,19 @@ class DunTheme {
         focusColor: DunColors.DunColor,
         splashColor: DunColors.DunPink,
         extendedIconLabelSpacing: 50),
-    buttonTheme: const ButtonThemeData(
-        buttonColor: DunColors.DunColor,
-        splashColor: DunColors.DunPink,
-        highlightColor: DunColors.DunColorLigth),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ButtonStyle(
+        overlayColor: MaterialStateProperty.all(DunColors.DunPink), // 波纹颜色
+        backgroundColor: MaterialStateProperty.resolveWith(
+          (states) {
+            if (states.contains(MaterialState.pressed)) {
+              return DunColors.DunColorLigth; // 点击颜色
+            }
+            return DunColors.DunColor;
+          },
+        ),
+      ),
+    ),
     appBarTheme: const AppBarTheme(backgroundColor: DunColors.DunColor),
     splashColor: Colors.red,
     colorScheme:
