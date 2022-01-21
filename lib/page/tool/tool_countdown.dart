@@ -9,7 +9,7 @@ class ToolCountdown extends StatelessWidget {
   ToolCountdown(List<Countdown> countDown, {Key? key}) {
     _countDown = countDown.where((timeDM) {
       return TimeUnit.isTimeRange(
-          TimeUnit.chinaNow(), timeDM.starTime, timeDM.overTime);
+          TimeUnit.utcChinaNow(), timeDM.starTime, timeDM.overTime);
     }).toList();
   }
 

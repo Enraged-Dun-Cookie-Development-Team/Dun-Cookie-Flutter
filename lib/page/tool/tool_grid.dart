@@ -17,7 +17,7 @@ class ToolGrid extends StatelessWidget {
       // 视频信息过滤
       videoInfo = videoInfo!
           .where((element) => TimeUnit.isTimeRange(
-              TimeUnit.chinaNow(), element.starTime, element.overTime))
+              TimeUnit.utcChinaNow(), element.starTime, element.overTime))
           .toList();
     }
   }
