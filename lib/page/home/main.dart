@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:dun_cookie_flutter/common/persistence/main.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/page/home/dun_buttom_navigation_bar.dart';
@@ -11,6 +12,7 @@ import 'package:dun_cookie_flutter/model/ceobecanteen_info.dart';
 import 'package:dun_cookie_flutter/service/info_request.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class MainScaffold extends StatefulWidget {
@@ -20,8 +22,12 @@ class MainScaffold extends StatefulWidget {
   State<MainScaffold> createState() => _MainScaffoldState();
 }
 
-class _MainScaffoldState extends State<MainScaffold> {
+class _MainScaffoldState extends State<MainScaffold>
+    with SingleTickerProviderStateMixin {
   BuildContext? _context;
+
+  // late AnimationController _animationController;
+  // late Animation<Color> _animation;
 
   _init() async {}
 
@@ -51,6 +57,9 @@ class _MainScaffoldState extends State<MainScaffold> {
     _checkOpenScreenInfo();
     // 获取CeobecanteenInfo和判断版本
     _getCeobecanteenInfoAndCheckVersion();
+    // 动画
+    // _animationController = AnimationController(
+    //     duration: const Duration(milliseconds: 500), vsync: this);
     super.initState();
   }
 
@@ -67,41 +76,47 @@ class _MainScaffoldState extends State<MainScaffold> {
       shouldRebuild: (prev, next) => prev != next,
       builder: (ctx, data, child) {
         int routerIndex = data["routerIndex"] as int;
-        return Theme(
-          data: _theme(data["themeIndex"]),
-          child: Scaffold(
-            appBar: _appBar(routerIndex),
-            body: DunRouter.pages[routerIndex],
-            bottomNavigationBar: DunBottomNavigationBar(),
-            floatingActionButton: routerIndex == 0
-                ? _floatingActionButton(routerIndex, true)
-                : _floatingActionButton(routerIndex, false),
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerDocked,
-            // drawer: const DunDrawer(),
+        return Scaffold(
+          appBar: _appBar(routerIndex),
+          body: PageTransitionSwitcher(
+            // reverse: flag,//可以不设置，作用是控制动画方向是否反转，值为true为正向，false为反向，可以根据情况改变此值让动画效果更合理，
+            child: DunRouter.pages[routerIndex],
+            duration: const Duration(milliseconds: 500),
+            transitionBuilder: (child, animation, secondaryAnimation) =>
+                SharedAxisTransition(
+                    child: child,
+                    animation: animation,
+                    secondaryAnimation: secondaryAnimation,
+                    transitionType: SharedAxisTransitionType.scaled),
           ),
+          bottomNavigationBar: DunBottomNavigationBar(),
+          floatingActionButton: FloatingActionButton(
+            backgroundColor:
+                routerIndex == 0 ? DunColors.DunColor : Colors.grey,
+            onPressed: () {
+              if (routerIndex != 0) {
+                Provider.of<CommonProvider>(context, listen: false)
+                    .setRouterIndex(0);
+              }
+            },
+            child: Image.asset(
+              "assets/logo/logo.png",
+              width: 34,
+            ),
+          ),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
+          // drawer: const DunDrawer(),
         );
       },
     );
   }
 
-  _floatingActionButton(routerIndex, isActive) {
-    return FloatingActionButton(
-      backgroundColor: isActive ? DunColors.DunColor : Colors.grey,
-      onPressed: () {
-        if (routerIndex != 0) {
-          Provider.of<CommonProvider>(context, listen: false).setRouterIndex(0);
-        }
-      },
-      child: Image.asset(
-        "assets/logo/logo.png",
-        width: 34,
-      ),
-    );
-  }
-
   _appBar(routerIndex) => AppBar(
       title: Text(DunRouter.pageTitles[routerIndex]),
+      systemOverlayStyle: const SystemUiOverlayStyle(
+        statusBarIconBrightness: Brightness.light,
+      ),
       actions: routerIndex == 2
           ? [
               IconButton(
