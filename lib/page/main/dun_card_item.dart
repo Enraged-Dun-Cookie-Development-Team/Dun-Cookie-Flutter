@@ -76,7 +76,7 @@ class _DunCardItemState extends State<DunCardItem>
   // 浏览器打开
   void _goSource(url) {
     int priority = widget.info.sourceInfo!.priority!;
-    late String appUrl;
+    String appUrl = "";
     if (priority == 0) {
       // bilibili
       var id = url.split('/').last;

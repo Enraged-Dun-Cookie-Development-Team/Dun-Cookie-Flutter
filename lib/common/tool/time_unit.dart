@@ -4,7 +4,7 @@ class TimeUnit {
   static String timeDiff(
       {required starTime, endTime = null, isShowSecond = false}) {
     var startDate = DateTime.parse(starTime);
-    var endDate = DateTime.now();
+    var endDate = chinaNow();
     if (endTime != null) {
       endDate = DateTime.parse(endTime);
     }
@@ -71,5 +71,9 @@ class TimeUnit {
       default:
         return '无效';
     }
+  }
+
+  static chinaNow() {
+    return DateTime.now().toUtc().add(const Duration(hours: 8));
   }
 }

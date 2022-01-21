@@ -6,7 +6,7 @@ import 'package:dun_cookie_flutter/common/browser/main.dart';
 //如果要添加新的 去搜索 app名称+UrlScheme
 class OpenAppOrBrowser {
   static openUrl(String url, BuildContext ctx, {String? appUrlScheme}) async {
-    if (appUrlScheme != null) {
+    if (appUrlScheme != null && appUrlScheme != "") {
       if (await canLaunch(appUrlScheme)) {
         DunToast.showSuccess("正在唤起APP");
         await launch(appUrlScheme);

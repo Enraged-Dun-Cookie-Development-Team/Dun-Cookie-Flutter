@@ -9,7 +9,7 @@ class ToolCountdown extends StatelessWidget {
   ToolCountdown(List<Countdown> countDown, {Key? key}) {
     _countDown = countDown.where((timeDM) {
       return TimeUnit.isTimeRange(
-          DateTime.now(), timeDM.starTime, timeDM.overTime);
+          TimeUnit.chinaNow(), timeDM.starTime, timeDM.overTime);
     }).toList();
   }
 
@@ -68,10 +68,12 @@ class ToolCountdown extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          Text(
-                            info.remark!,
-                            style: const TextStyle(color: Colors.black45),
-                          ),
+                          SingleChildScrollView(
+                              child: Text(
+                                info.remark!,
+                                style: const TextStyle(color: Colors.black45),
+                              ),
+                              scrollDirection: Axis.horizontal),
                         ],
                       ),
                     ],
