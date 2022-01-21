@@ -4,6 +4,9 @@ class TimeUnit {
   static String timeDiff(
       {required starTime, endTime = null, isShowSecond = false}) {
     var startDate = DateTime.parse(starTime);
+    var timeOffset = startDate.timeZoneOffset;
+    var minOffset = timeOffset.inMinutes;
+    startDate = startDate.add(Duration(minutes: minOffset));
     var endDate = chinaNow();
     if (endTime != null) {
       endDate = DateTime.parse(endTime);
