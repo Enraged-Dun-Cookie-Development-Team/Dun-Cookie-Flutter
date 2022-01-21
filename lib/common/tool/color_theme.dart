@@ -15,6 +15,7 @@ class DunColors {
 
 class DunTheme {
   static final ThemeData _mainTheme = ThemeData(
+
     brightness: Brightness.light,
     primaryColor: DunColors.DunColor,
     appBarTheme: const AppBarTheme(backgroundColor: DunColors.DunColor),

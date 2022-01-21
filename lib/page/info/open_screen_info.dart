@@ -8,6 +8,7 @@ class OpenScreenInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: "小刻食堂",
       home: Scaffold(
         appBar: AppBar(
           title: const Text("这是一则很重要的说明！"),

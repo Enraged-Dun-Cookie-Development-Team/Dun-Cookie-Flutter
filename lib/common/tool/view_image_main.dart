@@ -49,6 +49,7 @@ class _ViewImageExtendedImageState extends State<ViewImageExtendedImage>
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: "小刻食堂",
       home: Scaffold(
         backgroundColor: Colors.black,
         body: SafeArea(

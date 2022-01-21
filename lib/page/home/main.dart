@@ -11,6 +11,7 @@ import 'package:dun_cookie_flutter/model/ceobecanteen_info.dart';
 import 'package:dun_cookie_flutter/service/info_request.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class MainScaffold extends StatefulWidget {
@@ -67,19 +68,16 @@ class _MainScaffoldState extends State<MainScaffold> {
       shouldRebuild: (prev, next) => prev != next,
       builder: (ctx, data, child) {
         int routerIndex = data["routerIndex"] as int;
-        return Theme(
-          data: _theme(data["themeIndex"]),
-          child: Scaffold(
-            appBar: _appBar(routerIndex),
-            body: DunRouter.pages[routerIndex],
-            bottomNavigationBar: DunBottomNavigationBar(),
-            floatingActionButton: routerIndex == 0
-                ? _floatingActionButton(routerIndex, true)
-                : _floatingActionButton(routerIndex, false),
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerDocked,
-            // drawer: const DunDrawer(),
-          ),
+        return Scaffold(
+          appBar: _appBar(routerIndex),
+          body: DunRouter.pages[routerIndex],
+          bottomNavigationBar: DunBottomNavigationBar(),
+          floatingActionButton: routerIndex == 0
+              ? _floatingActionButton(routerIndex, true)
+              : _floatingActionButton(routerIndex, false),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
+          // drawer: const DunDrawer(),
         );
       },
     );
@@ -102,6 +100,9 @@ class _MainScaffoldState extends State<MainScaffold> {
 
   _appBar(routerIndex) => AppBar(
       title: Text(DunRouter.pageTitles[routerIndex]),
+      systemOverlayStyle: const SystemUiOverlayStyle(
+        statusBarIconBrightness: Brightness.light,
+      ),
       actions: routerIndex == 2
           ? [
               IconButton(
