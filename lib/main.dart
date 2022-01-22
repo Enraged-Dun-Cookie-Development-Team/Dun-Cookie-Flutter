@@ -1,20 +1,18 @@
+import 'package:dun_cookie_flutter/common/init/main.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/page/Error/main.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_info.dart';
 import 'package:dun_cookie_flutter/model/source_data.dart';
 import 'package:dun_cookie_flutter/router/router.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'provider/common_provider.dart';
 
 void main() {
   runApp(const DunMain());
-  // 现在只有安卓
-  // 沉浸式状态栏
-  SystemUiOverlayStyle systemUiOverlayStyle = const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent);
-  SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
+  DunInit().initNotifications((result) {
+    print(result);
+  });
 }
 
 class DunMain extends StatelessWidget {
