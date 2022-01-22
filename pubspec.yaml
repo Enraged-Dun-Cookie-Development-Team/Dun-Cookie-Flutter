@@ -52,6 +52,7 @@ dependencies:
   url_launcher: ^6.0.18
   animations: ^2.0.2
   animate_do: ^2.1.0
+  flutter_local_notifications: ^9.2.0
 
 dev_dependencies:
   flutter_test:
