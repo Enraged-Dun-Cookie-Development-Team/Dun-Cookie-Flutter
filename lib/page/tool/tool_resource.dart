@@ -68,7 +68,7 @@ class ToolResource extends StatelessWidget {
 
 //  计算是否开启
   bool resourcesNotToday(List<int> dayList) {
-    DateTime dt = TimeUnit.chinaNow();
+    DateTime dt = TimeUnit.utcChinaNow();
     if (TimeUnit.isTimeRange(dt, _resources.starTime, _resources.overTime)) {
       return true;
     }

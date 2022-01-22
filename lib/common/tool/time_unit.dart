@@ -3,13 +3,12 @@ import 'dart:ffi';
 class TimeUnit {
   static String timeDiff(
       {required starTime, endTime = null, isShowSecond = false}) {
-    var startDate = DateTime.parse(starTime);
-    var timeOffset = startDate.timeZoneOffset;
-    var minOffset = timeOffset.inMinutes;
-    startDate = startDate.add(Duration(minutes: minOffset));
-    var endDate = chinaNow();
+    var chinaTime = DateTime.parse(starTime);
+    var startDate = changeLocalTime(chinaTime);
+    startDate = toUtcChinaTime(startDate);
+    var endDate = utcChinaNow();
     if (endTime != null) {
-      endDate = DateTime.parse(endTime);
+      endDate = DateTime.parse(endTime).toUtc().add(const Duration(hours: 8));
     }
     int inSeconds = endDate.difference(startDate).inSeconds.abs();
     var day = (inSeconds / 86400).floor();
@@ -76,7 +75,25 @@ class TimeUnit {
     }
   }
 
-  static chinaNow() {
+  // 获取现在时间转为utc时区的中国时间
+  static utcChinaNow() {
     return DateTime.now().toUtc().add(const Duration(hours: 8));
+  }
+
+  // 校准接口获取时间为正确的当地时间
+  // param: chinaTime 当地时区的中国时间
+  static changeLocalTime(chinaTime) {
+    // 时区时间偏移量
+    var timeOffset = chinaTime.timeZoneOffset;
+    var minOffset = timeOffset.inMinutes;
+    // 根据偏移量调整时间
+    var localTime = chinaTime.add(Duration(minutes: minOffset - 8*60));
+
+    return localTime;
+  }
+
+  // 将当地时间转为UTC时区的中国时间
+  static toUtcChinaTime(localTime) {
+    return localTime.toUtc().add(const Duration(hours: 8));
   }
 }
