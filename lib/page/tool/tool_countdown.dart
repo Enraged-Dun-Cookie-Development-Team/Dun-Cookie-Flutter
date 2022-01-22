@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:animate_do/animate_do.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/time_unit.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_info.dart';
@@ -25,61 +26,68 @@ class ToolCountdown extends StatelessWidget {
           //   "活动倒计时",
           //   style: TextStyle(color: DunColors.DunColor, fontSize: 16),
           // ),
-          Card(
-            child: ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              // itemCount: countDown.length >= 3 ? 3 : countDown.length,
-              itemCount: _countDown.length,
-              itemBuilder: (ctx, index) {
-                var info = _countDown[index];
-                return Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
+          FadeInUp(
+            child: Card(
+              child: ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                // itemCount: countDown.length >= 3 ? 3 : countDown.length,
+                itemCount: _countDown.length,
+                itemBuilder: (ctx, index) {
+                  var info = _countDown[index];
+                  return FadeInRight(
+                    delay: Duration(milliseconds: 50 * index),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 6, horizontal: 10),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Expanded(
-                            child: SingleChildScrollView(
-                                child: RichText(
-                                  text: TextSpan(
-                                      text: "距离",
-                                      style: const TextStyle(
-                                          fontSize: 16, color: Colors.black),
-                                      children: [
-                                        TextSpan(
-                                          text: info.text!,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: SingleChildScrollView(
+                                    child: RichText(
+                                      text: TextSpan(
+                                          text: "距离",
                                           style: const TextStyle(
-                                              color: DunColors.DunColor),
-                                        )
-                                      ]),
-                                ),
-                                scrollDirection: Axis.horizontal),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          TimeDiffText(info.time!),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          SingleChildScrollView(
-                              child: Text(
-                                info.remark!,
-                                style: const TextStyle(color: Colors.black45),
+                                              fontSize: 16,
+                                              color: Colors.black),
+                                          children: [
+                                            TextSpan(
+                                              text: info.text!,
+                                              style: const TextStyle(
+                                                  color: DunColors.DunColor),
+                                            )
+                                          ]),
+                                    ),
+                                    scrollDirection: Axis.horizontal),
                               ),
-                              scrollDirection: Axis.horizontal),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              TimeDiffText(info.time!),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              SingleChildScrollView(
+                                  child: Text(
+                                    info.remark!,
+                                    style:
+                                        const TextStyle(color: Colors.black45),
+                                  ),
+                                  scrollDirection: Axis.horizontal),
+                            ],
+                          ),
                         ],
                       ),
-                    ],
-                  ),
-                );
-              },
+                    ),
+                  );
+                },
+              ),
             ),
           )
         ],

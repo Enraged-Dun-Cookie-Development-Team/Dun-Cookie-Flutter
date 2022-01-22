@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/time_unit.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_info.dart';
@@ -31,9 +32,11 @@ class ToolGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(
-          title,
-          style: const TextStyle(color: DunColors.DunColor, fontSize: 16),
+        FadeInUp(
+          child: Text(
+            title,
+            style: const TextStyle(color: DunColors.DunColor, fontSize: 16),
+          ),
         ),
         Padding(
           padding: const EdgeInsets.all(10),
@@ -47,10 +50,13 @@ class ToolGrid extends StatelessWidget {
                 crossAxisSpacing: 2,
                 childAspectRatio: type == 0 ? 4 : 1),
             itemBuilder: (ctx, index) {
-              return Card(
-                child: type == 0
-                    ? ToolLink(linkInfo![index])
-                    : ToolVideo(videoInfo![index]),
+              return FadeInUp(
+                delay: Duration(milliseconds: index * 50),
+                child: Card(
+                  child: type == 0
+                      ? ToolLink(linkInfo![index])
+                      : ToolVideo(videoInfo![index]),
+                ),
               );
             },
           ),

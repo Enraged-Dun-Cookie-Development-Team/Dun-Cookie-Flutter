@@ -5,6 +5,7 @@ import 'package:dun_cookie_flutter/page/setting/setting_info.dart';
 import 'package:dun_cookie_flutter/page/setting/setting_source_filter.dart';
 import 'package:dun_cookie_flutter/page/update/main.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class DunSetting extends StatelessWidget {
@@ -17,6 +18,7 @@ class DunSetting extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("设置"),
+        systemOverlayStyle: SystemUiOverlayStyle.light,
       ),
       body: Column(
         children: [

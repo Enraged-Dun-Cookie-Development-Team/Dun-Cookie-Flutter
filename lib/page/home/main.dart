@@ -79,6 +79,7 @@ class _MainScaffoldState extends State<MainScaffold>
         return Scaffold(
           appBar: _appBar(routerIndex),
           body: PageTransitionSwitcher(
+            reverse: routerIndex == 1 ? true : false,
             // reverse: flag,//可以不设置，作用是控制动画方向是否反转，值为true为正向，false为反向，可以根据情况改变此值让动画效果更合理，
             child: DunRouter.pages[routerIndex],
             duration: const Duration(milliseconds: 500),
@@ -87,7 +88,9 @@ class _MainScaffoldState extends State<MainScaffold>
                     child: child,
                     animation: animation,
                     secondaryAnimation: secondaryAnimation,
-                    transitionType: SharedAxisTransitionType.scaled),
+                    transitionType: routerIndex == 0
+                        ? SharedAxisTransitionType.scaled
+                        : SharedAxisTransitionType.horizontal),
           ),
           bottomNavigationBar: DunBottomNavigationBar(),
           floatingActionButton: FloatingActionButton(

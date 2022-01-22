@@ -2,6 +2,7 @@ import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
 import 'package:dun_cookie_flutter/model/source_info.dart';
 import 'package:dun_cookie_flutter/provider/common_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class SettingSourceFilter extends StatefulWidget {
@@ -28,6 +29,7 @@ class _SettingSourceFilterState extends State<SettingSourceFilter> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("饼来源"),
+        systemOverlayStyle: SystemUiOverlayStyle.light,
       ),
       body: SingleChildScrollView(
         child: Consumer<CommonProvider>(builder: (context, data, child) {

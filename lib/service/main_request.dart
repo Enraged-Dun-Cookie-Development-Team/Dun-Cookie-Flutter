@@ -27,6 +27,9 @@ class MainRequest {
     }
     var data = await MainRequest._canteenOriginalCardList(source: source);
     List<SourceInfo> sourceLists = SourceList.sourceList;
+    if (data == null) {
+      return resultAll;
+    }
     for (var sourceInfo in sourceLists) {
       if (data[sourceInfo.dataName] == null) {
         continue;

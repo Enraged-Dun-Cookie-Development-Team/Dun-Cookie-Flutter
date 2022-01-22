@@ -69,16 +69,20 @@ class _DunListState extends State<DunList> {
           controller: _refreshController,
           enablePullDown: true,
           onRefresh: _onRefresh,
-          child: ListView.builder(
-            itemCount: sourceDataList.length,
-            itemBuilder: (ctx, index) {
-              var info = sourceDataList[index];
-              return DunCardItem(
-                info: info,
-                index: index,
-              );
-            },
-          ),
+          child: sourceDataList.isEmpty
+              ? const Center(
+                  child: Text("等待食堂数据……"),
+                )
+              : ListView.builder(
+                  itemCount: sourceDataList.length,
+                  itemBuilder: (ctx, index) {
+                    var info = sourceDataList[index];
+                    return DunCardItem(
+                      info: info,
+                      index: index,
+                    );
+                  },
+                ),
         );
       },
       selector: (ctx, commonProvider) {
