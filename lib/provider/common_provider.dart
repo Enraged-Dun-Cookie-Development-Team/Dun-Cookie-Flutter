@@ -57,13 +57,13 @@ class CommonProvider with ChangeNotifier {
     }
   }
 
-  void setCheckListInPriority(priority, isAdd) async {
+  void setCheckListInPriority(priority, isAdd) {
     if (isAdd) {
-      checkSource.add(priority);
+      _checkSource.add(priority);
     } else {
-      checkSource.remove(priority);
+      _checkSource.remove(priority);
     }
-    checkSource = checkSource;
+    checkSource = _checkSource;
     // 保存记录
     DunPreferences()
         .saveStringList(key: "listCheckSource", value: _checkSource);
@@ -84,7 +84,7 @@ class CommonProvider with ChangeNotifier {
 
   // 在前面追加饼并且重新排序一次
   addListInSourceData(List<SourceData> value) {
-    sourceData.addAll(value);
-    sourceData = sourceData;
+    _sourceData.addAll(value);
+    sourceData = _sourceData;
   }
 }

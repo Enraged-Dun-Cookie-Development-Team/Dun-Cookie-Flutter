@@ -38,36 +38,45 @@ class _SettingSourceFilterState extends State<SettingSourceFilter> {
           systemOverlayStyle: SystemUiOverlayStyle.light,
         ),
         body: SingleChildScrollView(
-          child: Consumer<CommonProvider>(builder: (context, data, child) {
-            return Column(
-              children: List.generate(
-                list.length,
-                (index) {
-                  String priority = list[index].priority.toString();
-                  return ListTile(
-                    title: Text(list[index].title),
-                    leading: ClipRRect(
-                      borderRadius: BorderRadius.circular(4),
-                      child: Image.asset(
-                        list[index].icon,
-                        width: 30,
-                      ),
-                    ),
-                    trailing: Switch(
-                      value: data.checkSource.contains(priority),
-                      onChanged: (value) {
-                        if (!value && data.checkSource.length == 1) {
-                          DunToast.showError("至少关注一个哦");
-                        } else {
-                          data.setCheckListInPriority(priority, value);
-                        }
-                      },
-                    ),
-                  );
-                },
-              ),
-            );
-          }),
+          child: Selector<CommonProvider, List<String>>(
+            // 不知道为什么prev 恒等于 next 等个老师傅解释
+              shouldRebuild: (prev, next) => true,
+              // shouldRebuild: (prev, next) => prev != next,
+              builder: (ctx, checkSource, child) {
+                return Column(
+                  children: List.generate(
+                    list.length,
+                    (index) {
+                      String priority = list[index].priority.toString();
+                      return ListTile(
+                        title: Text(list[index].title),
+                        leading: ClipRRect(
+                          borderRadius: BorderRadius.circular(4),
+                          child: Image.asset(
+                            list[index].icon,
+                            width: 30,
+                          ),
+                        ),
+                        trailing: Switch(
+                          value: checkSource.contains(priority),
+                          onChanged: (value) {
+                            if (!value && checkSource.length == 1) {
+                              DunToast.showError("至少关注一个哦");
+                            } else {
+                              Provider.of<CommonProvider>(context,
+                                      listen: false)
+                                  .setCheckListInPriority(priority, value);
+                            }
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                );
+              },
+              selector: (ctx, commonProvider) {
+                return commonProvider.checkSource;
+              }),
         ),
       ),
     );
