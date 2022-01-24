@@ -108,9 +108,6 @@ class _DunListState extends State<DunList> {
 
   //  获取数据
   _getDate() async {
-    var provider = Provider.of<CommonProvider>(context, listen: false);
-    List<String> checkSource = await provider.checkSourceInPreferences();
-    provider.sourceData = await MainRequest.canteenCardList(
-        source: {"source": checkSource.join("_")});
+
   }
 }

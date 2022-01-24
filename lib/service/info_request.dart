@@ -6,18 +6,16 @@ class InfoRequest {
   static _getCeobecanteenInfo() async {
     final url =
         "http://api.ceobecanteen.top/canteen/info?${Random().nextInt(100000).toString()}";
-    var request = await HttpClass.tempGet(url);
-    print("请求一次小刻info");
-    if (request["error"]) {
-      return;
-    } else {
-      var data = request['data'];
-      return data;
-    }
+    print("请求info数据");
+    return await HttpClass.tempGet(url);
   }
 
   static Future<CeobecanteenInfo> getCeobecanteenInfo() async {
-    var resultJson = await _getCeobecanteenInfo();
-    return CeobecanteenInfo.fromJson(resultJson);
+    var resultMap = await _getCeobecanteenInfo();
+    if (resultMap["error"]) {
+      return CeobecanteenInfo();
+    } else {
+      return CeobecanteenInfo.fromJson(resultMap["data"]);
+    }
   }
 }

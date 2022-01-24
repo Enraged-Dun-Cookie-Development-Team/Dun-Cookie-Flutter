@@ -1,9 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:dun_cookie_flutter/common/static_variable/main.dart';
+import 'package:dun_cookie_flutter/provider/common_event_bus.dart';
+import 'package:provider/provider.dart';
 import 'config.dart';
 
 class HttpClass {
   static final BaseOptions _baseOptions = BaseOptions(
-    baseUrl: HttpConfig.baseUrl,
     connectTimeout: HttpConfig.timeout,
     contentType: Headers.jsonContentType,
     responseType: ResponseType.json,
@@ -18,18 +20,16 @@ class HttpClass {
     bool isNoBaseUrl = false,
   }) async {
     final options = Options(method: method);
-    if (isNoBaseUrl) {
-      dio.options.baseUrl = "";
-    } else {
-      dio.options.baseUrl = HttpConfig.baseUrl;
-    }
+    isNoBaseUrl
+        ? dio.options.baseUrl = ""
+        : dio.options.baseUrl = HttpConfig.baseUrl;
     try {
+      dio.interceptors.add(_dInter());
       Response response = await dio.request(
         url,
         queryParameters: params,
         options: options,
       );
-      dio.interceptors.add(_dInter());
       return {"error": false, "data": response.data};
     } catch (e) {
       return {"error": true, "data": []};
@@ -39,17 +39,11 @@ class HttpClass {
   static InterceptorsWrapper _dInter() {
     return InterceptorsWrapper(
       onRequest: (options, handler) {
-        //dio.lock()是先锁定请求不发送出去，当整个取值添加到请求头后再dio.unlock()解锁发送出去
-
-        // Future<dynamic> future = Future(()async{
-        //   SharedPreferences prefs =await SharedPreferences.getInstance();
-        //   return prefs.getString("loginToken");
-        // });
-        // return future.then((value) {
-        //   options.headers["Authorization"] = value;
-        //   return options;
-        // }).whenComplete(() => dio.unlock()); // unlock the dio
-        // print(options.baseUrl + options.path);
+        if (StaticVariable.deviceId == null) {
+          dio.lock();
+          eventBus.on<DeviceInfoBus>().listen((_) => dio.unlock());
+        }
+        options.headers.addAll({"deviceID": StaticVariable.deviceId});
         return handler.next(options);
       },
       onResponse: (response, handler) {

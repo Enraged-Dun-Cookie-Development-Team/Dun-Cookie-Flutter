@@ -1,14 +1,15 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/time_unit.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_info.dart';
 import 'package:flutter/material.dart';
 
 class ToolResource extends StatelessWidget {
-  ToolResource(Resources resources, {Key? key}) {
-    _resources = resources;
+  ToolResource(DayInfo? dayInfo, {Key? key}) {
+    _resources = dayInfo != null ? dayInfo.resources! : null;
   }
 
-  late final Resources _resources;
+  late final Resources? _resources;
   static bool openResources = false;
   static List<Map<String, dynamic>> resourceInfo = [
     {
@@ -70,7 +71,8 @@ class ToolResource extends StatelessWidget {
 //  计算是否开启
   bool resourcesNotToday(List<int> dayList) {
     DateTime dt = TimeUnit.utcChinaNow();
-    if (TimeUnit.isTimeRange(dt, _resources.starTime, _resources.overTime)) {
+    if (_resources != null &&
+        TimeUnit.isTimeRange(dt, _resources!.starTime, _resources!.overTime)) {
       return true;
     }
     int week = dt.weekday;
@@ -87,31 +89,35 @@ class ToolResource extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(10),
-      child: GridView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 5, mainAxisSpacing: 2, crossAxisSpacing: 2),
-        itemBuilder: (ctx, index) {
-          List<int> dayList = resourceInfo[index]["day"] as List<int>;
-          String weekList = dayList.map((element) {
-            return TimeUnit.numberToWeek(element);
-          }).join(",");
-          return FadeInUp(
-            delay: Duration(milliseconds: 50 * index),
-            child: Tooltip(
-              message: "${resourceInfo[index]["name"]}:$weekList",
-              child: resourcesNotToday(dayList)
-                  ? Image.asset(resourceInfo[index]["src"])
-                  : Image.asset(
-                      resourceInfo[index]["src"],
-                      color: Colors.white24,
-                      colorBlendMode: BlendMode.modulate,
-                    ),
-            ),
-          );
-        },
-        itemCount: resourceInfo.length,
+      child: Column(
+        children: [
+          GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 5, mainAxisSpacing: 2, crossAxisSpacing: 2),
+            itemBuilder: (ctx, index) {
+              List<int> dayList = resourceInfo[index]["day"] as List<int>;
+              String weekList = dayList.map((element) {
+                return TimeUnit.numberToWeek(element);
+              }).join(",");
+              return FadeInUp(
+                delay: Duration(milliseconds: 50 * index),
+                child: Tooltip(
+                  message: "${resourceInfo[index]["name"]}:$weekList",
+                  child: resourcesNotToday(dayList)
+                      ? Image.asset(resourceInfo[index]["src"])
+                      : Image.asset(
+                          resourceInfo[index]["src"],
+                          color: Colors.white24,
+                          colorBlendMode: BlendMode.modulate,
+                        ),
+                ),
+              );
+            },
+            itemCount: resourceInfo.length,
+          ),
+        ],
       ),
     );
   }

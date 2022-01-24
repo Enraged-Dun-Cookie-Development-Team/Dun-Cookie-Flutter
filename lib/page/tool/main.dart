@@ -1,13 +1,12 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:dun_cookie_flutter/cache/setting_cache.dart';
+import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_info.dart';
 import 'package:dun_cookie_flutter/page/tool/tool_announcement.dart';
 import 'package:dun_cookie_flutter/page/tool/tool_countdown.dart';
 import 'package:dun_cookie_flutter/page/tool/tool_grid.dart';
 import 'package:dun_cookie_flutter/page/tool/tool_resource.dart';
-import 'package:dun_cookie_flutter/service/info_request.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:provider/provider.dart';
 
 class DunTool extends StatefulWidget {
@@ -40,8 +39,14 @@ class _DunToolState extends State<DunTool> {
                 CeobecanteenInfo ceobecanteenInfo = data.ceobecanteenInfo!;
                 return ListView(
                   children: [
+                    if (ceobecanteenInfo.app == null)
+                      const Text(
+                        "以下数据为离线数据",
+                        style:
+                            TextStyle(color: DunColors.DunColor, fontSize: 16),
+                      ),
                     // 物资是否开放
-                    ToolResource(ceobecanteenInfo.dayInfo!.resources!),
+                    ToolResource(ceobecanteenInfo.dayInfo),
                     // 倒计时
                     if (ceobecanteenInfo.dayInfo != null &&
                         ceobecanteenInfo.dayInfo!.countdown != null)

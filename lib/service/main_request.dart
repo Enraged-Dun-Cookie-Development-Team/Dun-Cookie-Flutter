@@ -43,4 +43,17 @@ class MainRequest {
     resultAll.sort((x, y) => y.timeForSort!.compareTo(x.timeForSort!));
     return resultAll;
   }
+
+  static Future<List<SourceData>> canteenNewCardList() async {
+    const url = "/canteen/newCardList";
+    List<SourceData> resultAll = [];
+    var request = await HttpClass.get(url);
+    if (request["error"]) {
+      DunToast.showError("服务器连接出错");
+      return resultAll;
+    } else {
+      var data = request['data']['data'];
+      return data;
+    }
+  }
 }
