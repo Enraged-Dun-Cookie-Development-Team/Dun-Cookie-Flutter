@@ -2,6 +2,7 @@ import 'package:dun_cookie_flutter/common/init/main.dart';
 import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
 import 'package:dun_cookie_flutter/model/source_data.dart';
 import 'package:dun_cookie_flutter/page/main/dun_card_item.dart';
+import 'package:dun_cookie_flutter/provider/common_event_bus.dart';
 import 'package:dun_cookie_flutter/provider/common_provider.dart';
 import 'package:dun_cookie_flutter/service/list_request.dart';
 import 'package:extended_image/extended_image.dart';
@@ -90,9 +91,6 @@ class _DunListState extends State<DunList> {
     // }
     // Provider.of<CommonProvider>(context, listen: false)
     //     .addListInSourceData(newList);
-    var provider = Provider.of<CommonProvider>(context, listen: false);
-    provider.checkSource = await provider.checkSourceInPreferences();
-    provider.sourceData = await ListRequest.canteenCardList(
-        source: {"source": provider.checkSource.join("_")});
+    eventBus.fire(DeviceInfoBus());
   }
 }

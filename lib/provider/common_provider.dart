@@ -47,28 +47,26 @@ class CommonProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  checkSourceInPreferences() async {
+  Future checkSourceInPreferences() async {
     List<String> value =
         await DunPreferences().getStringList(key: "listCheckSource");
     if (value != null && value.length > 0) {
-      _checkSource = value;
-      return value;
+      checkSource = value;
     } else {
-      _checkSource = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
-      return ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
+      checkSource = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
     }
   }
 
   void setCheckListInPriority(priority, isAdd) async {
     if (isAdd) {
-      _checkSource.add(priority);
+      checkSource.add(priority);
     } else {
-      _checkSource.remove(priority);
+      checkSource.remove(priority);
     }
+    checkSource = checkSource;
     // 保存记录
     DunPreferences()
         .saveStringList(key: "listCheckSource", value: _checkSource);
-    notifyListeners();
   }
 
 //  获取到的数据

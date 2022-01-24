@@ -1,5 +1,6 @@
 import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
 import 'package:dun_cookie_flutter/model/source_info.dart';
+import 'package:dun_cookie_flutter/provider/common_event_bus.dart';
 import 'package:dun_cookie_flutter/provider/common_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -26,42 +27,48 @@ class _SettingSourceFilterState extends State<SettingSourceFilter> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("饼来源"),
-        systemOverlayStyle: SystemUiOverlayStyle.light,
-      ),
-      body: SingleChildScrollView(
-        child: Consumer<CommonProvider>(builder: (context, data, child) {
-          return Column(
-            children: List.generate(
-              list.length,
-              (index) {
-                String priority = list[index].priority.toString();
-                return ListTile(
-                  title: Text(list[index].title),
-                  leading: ClipRRect(
-                    borderRadius: BorderRadius.circular(4),
-                    child: Image.asset(
-                      list[index].icon,
-                      width: 30,
+    return WillPopScope(
+      onWillPop: () async {
+        eventBus.fire(ChangeSourceBus());
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text("饼来源"),
+          systemOverlayStyle: SystemUiOverlayStyle.light,
+        ),
+        body: SingleChildScrollView(
+          child: Consumer<CommonProvider>(builder: (context, data, child) {
+            return Column(
+              children: List.generate(
+                list.length,
+                (index) {
+                  String priority = list[index].priority.toString();
+                  return ListTile(
+                    title: Text(list[index].title),
+                    leading: ClipRRect(
+                      borderRadius: BorderRadius.circular(4),
+                      child: Image.asset(
+                        list[index].icon,
+                        width: 30,
+                      ),
                     ),
-                  ),
-                  trailing: Switch(
-                    value: data.checkSource.contains(priority),
-                    onChanged: (value) {
-                      if (!value && data.checkSource.length == 1) {
-                        DunToast.showError("至少关注一个哦");
-                      } else {
-                        data.setCheckListInPriority(priority, value);
-                      }
-                    },
-                  ),
-                );
-              },
-            ),
-          );
-        }),
+                    trailing: Switch(
+                      value: data.checkSource.contains(priority),
+                      onChanged: (value) {
+                        if (!value && data.checkSource.length == 1) {
+                          DunToast.showError("至少关注一个哦");
+                        } else {
+                          data.setCheckListInPriority(priority, value);
+                        }
+                      },
+                    ),
+                  );
+                },
+              ),
+            );
+          }),
+        ),
       ),
     );
   }

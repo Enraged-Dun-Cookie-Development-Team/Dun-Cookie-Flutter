@@ -27,16 +27,18 @@ class MainScaffold extends StatefulWidget {
 }
 
 class _MainScaffoldState extends State<MainScaffold> {
-  BuildContext? _context;
-
   _init() async {
+    // 获取设备ID
     StaticVariable.deviceId = await DeviceInfo.getId();
     eventBus.fire(DeviceInfoBus());
+    eventBus.on<ChangeSourceBus>().listen((event) {
+      _getData();
+    });
   }
 
   _getData() async {
     var provider = Provider.of<CommonProvider>(context, listen: false);
-    provider.checkSource = await provider.checkSourceInPreferences();
+    await provider.checkSourceInPreferences();
     provider.sourceData = await ListRequest.canteenCardList(
         source: {"source": provider.checkSource.join("_")});
   }
@@ -79,7 +81,6 @@ class _MainScaffoldState extends State<MainScaffold> {
 
   @override
   Widget build(BuildContext context) {
-    _context = context;
     return Selector<CommonProvider, int>(
       selector: (ctx, commonProvider) {
         return commonProvider.routerIndex;
@@ -136,7 +137,7 @@ class _MainScaffoldState extends State<MainScaffold> {
                 icon: const Icon(Icons.settings),
                 tooltip: '设置',
                 onPressed: () {
-                  Navigator.pushNamed(_context!, DunSetting.routerName);
+                  Navigator.pushNamed(context, DunSetting.routerName);
                 },
               ),
             ]
