@@ -12,3 +12,9 @@ class DunShareImageIsShare {
 }
 
 class DeviceInfoBus {}
+
+class CheckSourceBus {
+  CheckSourceBus(this.list);
+
+  List<String> list;
+}

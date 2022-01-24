@@ -1,7 +1,7 @@
 import 'package:dun_cookie_flutter/common/browser/main.dart';
 import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
 import 'package:dun_cookie_flutter/common/tool/open_app_or_browser.dart';
-import 'package:dun_cookie_flutter/model/ceobecanteen_info.dart';
+import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
 import 'package:dun_cookie_flutter/model/source_info.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';

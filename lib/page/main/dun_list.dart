@@ -1,8 +1,9 @@
 import 'package:dun_cookie_flutter/common/init/main.dart';
+import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
 import 'package:dun_cookie_flutter/model/source_data.dart';
 import 'package:dun_cookie_flutter/page/main/dun_card_item.dart';
 import 'package:dun_cookie_flutter/provider/common_provider.dart';
-import 'package:dun_cookie_flutter/service/main_request.dart';
+import 'package:dun_cookie_flutter/service/list_request.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -23,7 +24,7 @@ class _DunListState extends State<DunList> {
     super.initState();
     // 清除30天前的图片缓存
     clearDiskCachedImages(duration: const Duration(days: 30));
-    _getDate();
+    // _getDate();
     // Future.delayed(Duration(seconds: 1)).then((value) {
     //   DunInit().showCookieNotification();
     // });
@@ -46,30 +47,7 @@ class _DunListState extends State<DunList> {
                 style: const TextStyle(color: Colors.white, fontSize: 18),
               ),
             ),
-            onModeChange: (mode) {
-              // switch (mode) {
-              //   case RefreshStatus.idle:
-              //     setState(() {
-              //       headerStr = "小刻躁动起来了";
-              //     });
-              //     break;
-              //   case RefreshStatus.canRefresh:
-              //     setState(() {
-              //       headerStr = "按不住了！快来帮忙！";
-              //     });
-              //     break;
-              //   case RefreshStatus.refreshing:
-              //     setState(() {
-              //       headerStr = "她冲出去了！";
-              //     });
-              //     break;
-              //   case RefreshStatus.completed:
-              //     setState(() {
-              //       headerStr = "她进食堂了！";
-              //     });
-              //     break;
-              // }
-            },
+            onModeChange: (mode) {},
           ),
           controller: _refreshController,
           enablePullDown: true,
@@ -100,14 +78,21 @@ class _DunListState extends State<DunList> {
   }
 
   void _onRefresh() async {
-    // monitor network fetch
     await _getDate();
-    // if failed,use refreshFailed()
     _refreshController.refreshCompleted();
   }
 
   //  获取数据
   _getDate() async {
-
+    // List<SourceData> newList = await ListRequest.canteenNewCardList();
+    // if (newList.length != 0) {
+    //   DunToast.showSuccess("找到了${newList.length}个新饼");
+    // }
+    // Provider.of<CommonProvider>(context, listen: false)
+    //     .addListInSourceData(newList);
+    var provider = Provider.of<CommonProvider>(context, listen: false);
+    provider.checkSource = await provider.checkSourceInPreferences();
+    provider.sourceData = await ListRequest.canteenCardList(
+        source: {"source": provider.checkSource.join("_")});
   }
 }

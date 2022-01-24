@@ -1,6 +1,6 @@
 import 'package:dun_cookie_flutter/common/static_variable/main.dart';
 import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
-import 'package:dun_cookie_flutter/model/ceobecanteen_info.dart';
+import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
 import 'package:dun_cookie_flutter/page/setting/setting_info.dart';
 import 'package:dun_cookie_flutter/page/setting/setting_source_filter.dart';
 import 'package:dun_cookie_flutter/page/update/main.dart';
@@ -36,7 +36,7 @@ class DunSetting extends StatelessWidget {
             trailing: const Icon(Icons.arrow_right),
             onTap: () {
               DunApp? app =
-                  Provider.of<CeobecanteenInfo>(context, listen: false)
+                  Provider.of<CeobecanteenData>(context, listen: false)
                       .ceobecanteenInfo
                       ?.app;
               if (app?.version != StaticVariable.version) {

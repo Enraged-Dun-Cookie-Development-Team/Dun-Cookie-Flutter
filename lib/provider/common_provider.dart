@@ -51,8 +51,10 @@ class CommonProvider with ChangeNotifier {
     List<String> value =
         await DunPreferences().getStringList(key: "listCheckSource");
     if (value != null && value.length > 0) {
+      _checkSource = value;
       return value;
     } else {
+      _checkSource = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
       return ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
     }
   }
@@ -77,8 +79,14 @@ class CommonProvider with ChangeNotifier {
   }
 
   set sourceData(List<SourceData> value) {
+    _sourceData.sort((x, y) => y.timeForSort!.compareTo(x.timeForSort!));
     _sourceData = value;
     notifyListeners();
   }
 
+  // 在前面追加饼并且重新排序一次
+  addListInSourceData(List<SourceData> value) {
+    sourceData.addAll(value);
+    sourceData = sourceData;
+  }
 }

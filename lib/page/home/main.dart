@@ -11,9 +11,9 @@ import 'package:dun_cookie_flutter/provider/common_event_bus.dart';
 import 'package:dun_cookie_flutter/provider/common_provider.dart';
 import 'package:dun_cookie_flutter/router/router.dart';
 import 'package:dun_cookie_flutter/common/static_variable/main.dart';
-import 'package:dun_cookie_flutter/model/ceobecanteen_info.dart';
+import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
 import 'package:dun_cookie_flutter/service/info_request.dart';
-import 'package:dun_cookie_flutter/service/main_request.dart';
+import 'package:dun_cookie_flutter/service/list_request.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -37,7 +37,7 @@ class _MainScaffoldState extends State<MainScaffold> {
   _getData() async {
     var provider = Provider.of<CommonProvider>(context, listen: false);
     provider.checkSource = await provider.checkSourceInPreferences();
-    provider.sourceData = await MainRequest.canteenCardList(
+    provider.sourceData = await ListRequest.canteenCardList(
         source: {"source": provider.checkSource.join("_")});
   }
 
@@ -51,8 +51,8 @@ class _MainScaffoldState extends State<MainScaffold> {
 
 //  获取info文件并判断文件版本
   _getCeobecanteenInfoAndCheckVersion() async {
-    CeobecanteenInfo value = await InfoRequest.getCeobecanteenInfo();
-    Provider.of<CeobecanteenInfo>(context, listen: false)
+    CeobecanteenData value = await InfoRequest.getCeobecanteenInfo();
+    Provider.of<CeobecanteenData>(context, listen: false)
         .setCeobecanteenInfo(value);
     if (value.app == null) {
       DunToast.showError("资源服务器无法连接，无法工具页部分信息");
@@ -88,20 +88,21 @@ class _MainScaffoldState extends State<MainScaffold> {
       builder: (ctx, routerIndex, child) {
         return Scaffold(
           appBar: _appBar(routerIndex),
-          body: PageTransitionSwitcher(
-            reverse: routerIndex == 1 ? true : false,
-            // reverse: flag,//可以不设置，作用是控制动画方向是否反转，值为true为正向，false为反向，可以根据情况改变此值让动画效果更合理，
-            child: DunRouter.pages[routerIndex],
-            duration: const Duration(milliseconds: 500),
-            transitionBuilder: (child, animation, secondaryAnimation) =>
-                SharedAxisTransition(
-                    child: child,
-                    animation: animation,
-                    secondaryAnimation: secondaryAnimation,
-                    transitionType: routerIndex == 0
-                        ? SharedAxisTransitionType.scaled
-                        : SharedAxisTransitionType.horizontal),
-          ),
+          body: DunRouter.pages[routerIndex],
+          // PageTransitionSwitcher(
+          //   reverse: routerIndex == 1 ? true : false,
+          //   // reverse: flag,//可以不设置，作用是控制动画方向是否反转，值为true为正向，false为反向，可以根据情况改变此值让动画效果更合理，
+          //   child: DunRouter.pages[routerIndex],
+          //   duration: const Duration(milliseconds: 500),
+          //   transitionBuilder: (child, animation, secondaryAnimation) =>
+          //       SharedAxisTransition(
+          //           child: child,
+          //           animation: animation,
+          //           secondaryAnimation: secondaryAnimation,
+          //           transitionType: routerIndex == 0
+          //               ? SharedAxisTransitionType.scaled
+          //               : SharedAxisTransitionType.horizontal),
+          // ),
           bottomNavigationBar: DunBottomNavigationBar(),
           floatingActionButton: FloatingActionButton(
             backgroundColor:

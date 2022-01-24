@@ -13,14 +13,14 @@ import 'package:flutter/cupertino.dart';
 /// testUpdate : true
 /// testNotUpdate : false
 
-CeobecanteenInfo ceobecanteenInfoFromJson(String str) =>
-    CeobecanteenInfo.fromJson(json.decode(str));
+CeobecanteenData ceobecanteenInfoFromJson(String str) =>
+    CeobecanteenData.fromJson(json.decode(str));
 
-String ceobecanteenInfoToJson(CeobecanteenInfo data) =>
+String ceobecanteenInfoToJson(CeobecanteenData data) =>
     json.encode(data.toJson());
 
-class CeobecanteenInfo with ChangeNotifier {
-  CeobecanteenInfo(
+class CeobecanteenData with ChangeNotifier {
+  CeobecanteenData(
       {this.list,
       this.btnList,
       this.dayInfo,
@@ -28,20 +28,20 @@ class CeobecanteenInfo with ChangeNotifier {
       this.upgrade,
       this.app});
 
-  CeobecanteenInfo? _data;
+  CeobecanteenData? _data;
 
-  setCeobecanteenInfo(CeobecanteenInfo data) {
+  setCeobecanteenInfo(CeobecanteenData data) {
     data.quickJump = QuickJumpList.quickJump;
     data.sourceInfo = SourceList.sourceList;
     _data = data;
     notifyListeners();
   }
 
-  CeobecanteenInfo? get ceobecanteenInfo {
+  CeobecanteenData? get ceobecanteenInfo {
     return _data;
   }
 
-  CeobecanteenInfo.fromJson(dynamic json) {
+  CeobecanteenData.fromJson(dynamic json) {
     if (json['main'] != null) {
       list = [];
       json['main'].forEach((v) {

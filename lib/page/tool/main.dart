@@ -1,7 +1,7 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:dun_cookie_flutter/cache/setting_cache.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
-import 'package:dun_cookie_flutter/model/ceobecanteen_info.dart';
+import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
 import 'package:dun_cookie_flutter/page/tool/tool_announcement.dart';
 import 'package:dun_cookie_flutter/page/tool/tool_countdown.dart';
 import 'package:dun_cookie_flutter/page/tool/tool_grid.dart';
@@ -33,10 +33,10 @@ class _DunToolState extends State<DunTool> {
         const ToolAnnouncement(),
         //活动公告
         Expanded(
-          child: Consumer<CeobecanteenInfo>(
+          child: Consumer<CeobecanteenData>(
             builder: (context, data, child) {
               if (data.ceobecanteenInfo != null) {
-                CeobecanteenInfo ceobecanteenInfo = data.ceobecanteenInfo!;
+                CeobecanteenData ceobecanteenInfo = data.ceobecanteenInfo!;
                 return ListView(
                   children: [
                     if (ceobecanteenInfo.app == null)

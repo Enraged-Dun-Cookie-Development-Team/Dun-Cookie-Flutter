@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'package:dun_cookie_flutter/model/ceobecanteen_info.dart';
+import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
 import 'package:dun_cookie_flutter/service/main.dart';
 
 class InfoRequest {
@@ -10,12 +10,12 @@ class InfoRequest {
     return await HttpClass.tempGet(url);
   }
 
-  static Future<CeobecanteenInfo> getCeobecanteenInfo() async {
+  static Future<CeobecanteenData> getCeobecanteenInfo() async {
     ResponseData response = await _getCeobecanteenInfo();
     if (response.error) {
-      return CeobecanteenInfo();
+      return CeobecanteenData();
     } else {
-      return CeobecanteenInfo.fromJson(response.data);
+      return CeobecanteenData.fromJson(response.data);
     }
   }
 }

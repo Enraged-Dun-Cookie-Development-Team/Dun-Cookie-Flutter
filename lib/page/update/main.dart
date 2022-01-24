@@ -1,6 +1,6 @@
 import 'package:dun_cookie_flutter/common/static_variable/main.dart';
 import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
-import 'package:dun_cookie_flutter/model/ceobecanteen_info.dart';
+import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
