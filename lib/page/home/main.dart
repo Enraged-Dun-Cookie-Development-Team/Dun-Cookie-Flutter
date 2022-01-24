@@ -128,6 +128,7 @@ class _MainScaffoldState extends State<MainScaffold> {
 
   _appBar(routerIndex) => AppBar(
       title: Text(DunRouter.pageTitles[routerIndex]),
+      backgroundColor: routerIndex == 1 ? const Color(0xFFF58220) : null,
       systemOverlayStyle: const SystemUiOverlayStyle(
         statusBarIconBrightness: Brightness.light,
       ),
