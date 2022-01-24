@@ -11,11 +11,11 @@ class InfoRequest {
   }
 
   static Future<CeobecanteenInfo> getCeobecanteenInfo() async {
-    var resultMap = await _getCeobecanteenInfo();
-    if (resultMap["error"]) {
+    ResponseData response = await _getCeobecanteenInfo();
+    if (response.error) {
       return CeobecanteenInfo();
     } else {
-      return CeobecanteenInfo.fromJson(resultMap["data"]);
+      return CeobecanteenInfo.fromJson(response.data);
     }
   }
 }

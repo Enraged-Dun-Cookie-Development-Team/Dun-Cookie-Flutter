@@ -30,9 +30,9 @@ class HttpClass {
         queryParameters: params,
         options: options,
       );
-      return {"error": false, "data": response.data};
+      return ResponseData(false, response.data, "");
     } catch (e) {
-      return {"error": true, "data": []};
+      return ResponseData(true, [], e.toString());
     }
   }
 
@@ -70,4 +70,12 @@ class HttpClass {
   static Future post(String url, {Map<String, dynamic>? params}) {
     return _request(url, method: "post", params: params);
   }
+}
+
+class ResponseData {
+  ResponseData(this.error, this.data, this.msg);
+
+  bool error = false;
+  dynamic data;
+  String msg = "";
 }

@@ -8,33 +8,29 @@ import 'main.dart';
 class MainRequest {
   static _canteenOriginalCardList({Map<String, String>? source}) async {
     const url = "/canteen/cardList";
-    var request = await HttpClass.get(url, params: source);
+    ResponseData request = await HttpClass.get(url, params: source);
     print("请求一次全部数据");
-    if (request["error"]) {
-      DunToast.showError("服务器连接出错");
-      return;
-    } else {
-      var data = request['data']['data'];
-      return data;
-    }
+    return request;
   }
 
   static Future<List<SourceData>> canteenCardList(
       {Map<String, String>? source}) async {
     List<SourceData> resultAll = [];
     if (source?["source"]?.length == 0) {
-      return resultAll;
+      // return ResponseData(false, [], "没有传入参数");
+      return [];
     }
-    var data = await MainRequest._canteenOriginalCardList(source: source);
+    ResponseData data =
+        await MainRequest._canteenOriginalCardList(source: source);
+    if (data.error) {
+      return [];
+    }
     List<SourceInfo> sourceLists = SourceList.sourceList;
-    if (data == null) {
-      return resultAll;
-    }
     for (var sourceInfo in sourceLists) {
-      if (data[sourceInfo.dataName] == null) {
+      if (data.data["data"][sourceInfo.dataName] == null) {
         continue;
       }
-      List<dynamic> info = data[sourceInfo.dataName];
+      List<dynamic> info = data.data["data"][sourceInfo.dataName];
       for (var e in info) {
         e["sourceInfo"] = sourceInfo;
         resultAll.add(SourceData.fromJson(e));
@@ -47,12 +43,12 @@ class MainRequest {
   static Future<List<SourceData>> canteenNewCardList() async {
     const url = "/canteen/newCardList";
     List<SourceData> resultAll = [];
-    var request = await HttpClass.get(url);
-    if (request["error"]) {
-      DunToast.showError("服务器连接出错");
+    ResponseData request = await HttpClass.get(url);
+    if (request.error) {
+      DunToast.showError(request.msg);
       return resultAll;
     } else {
-      var data = request['data']['data'];
+      var data = request.data['data'];
       return data;
     }
   }
