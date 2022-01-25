@@ -1,4 +1,5 @@
 //底部栏
+import 'package:dun_cookie_flutter/provider/common_event_bus.dart';
 import 'package:dun_cookie_flutter/provider/common_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -99,7 +100,8 @@ class _ButtonItemState extends State<ButtonItem>
 
   _onTap(index, CommonProvider data) {
     if (index != data.routerIndex) {
-      data.setRouterIndex(index);
+      Provider.of<CommonProvider>(context, listen: false)
+          .setRouterIndex(index);
     }
   }
 }

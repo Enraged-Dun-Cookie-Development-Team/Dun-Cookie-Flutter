@@ -38,7 +38,7 @@ class DunTheme {
       ),
     ),
     appBarTheme: const AppBarTheme(backgroundColor: DunColors.DunColor),
-    splashColor: Colors.red,
+    splashColor: DunColors.DunPink,
     colorScheme:
         ColorScheme.fromSwatch().copyWith(secondary: DunColors.DunColorLigth),
     textTheme: const TextTheme(
@@ -58,17 +58,17 @@ class DunTheme {
   static final ThemeData _bakeryTheme = ThemeData(
     brightness: Brightness.light,
     primaryColor: DunColors.BakeryColor,
-    appBarTheme: const AppBarTheme(backgroundColor: DunColors.BakeryColor),
-    splashColor: Colors.blue,
+    appBarTheme: const AppBarTheme(backgroundColor: DunColors.BakeryColorLigth),
+    splashColor: DunColors.DunPink,
     colorScheme: ColorScheme.fromSwatch()
         .copyWith(secondary: DunColors.BakeryColorLigth),
     textTheme: const TextTheme(
-      headline1: TextStyle(fontSize: 16, color: DunColors.BakeryColor),
-      headline2: TextStyle(fontSize: 18, color: DunColors.BakeryColor),
-      headline3: TextStyle(fontSize: 20, color: DunColors.BakeryColor),
-      headline4: TextStyle(fontSize: 26, color: DunColors.BakeryColor),
-      headline5: TextStyle(fontSize: 30, color: DunColors.BakeryColor),
-      headline6: TextStyle(fontSize: 36, color: DunColors.BakeryColor),
+      headline1: TextStyle(fontSize: 14, color: DunColors.BakeryColor),
+      headline2: TextStyle(fontSize: 16, color: DunColors.BakeryColor),
+      headline3: TextStyle(fontSize: 18, color: DunColors.BakeryColor),
+      headline4: TextStyle(fontSize: 20, color: DunColors.BakeryColor),
+      headline5: TextStyle(fontSize: 26, color: DunColors.BakeryColor),
+      headline6: TextStyle(fontSize: 30, color: DunColors.BakeryColor),
       bodyText1: TextStyle(fontSize: 14),
       bodyText2: TextStyle(fontSize: 14),
       subtitle1: TextStyle(fontSize: 16),

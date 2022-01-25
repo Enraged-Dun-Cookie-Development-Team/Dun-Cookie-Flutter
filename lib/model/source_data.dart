@@ -22,7 +22,7 @@ SourceData SourceDataFromJson(String str) =>
 
 String SourceDataToJson(SourceData data) => json.encode(data.toJson());
 
-class SourceData with ChangeNotifier {
+class SourceData {
   SourceData({
     this.dataSource,
     this.id,
@@ -43,7 +43,6 @@ class SourceData with ChangeNotifier {
 
   setSourceData(SourceData data) {
     _data = data;
-    notifyListeners();
   }
 
   SourceData? get sourceData {

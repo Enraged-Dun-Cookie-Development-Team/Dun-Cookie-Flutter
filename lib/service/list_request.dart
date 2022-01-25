@@ -6,9 +6,6 @@ import 'package:dun_cookie_flutter/provider/common_event_bus.dart';
 import 'main.dart';
 
 class ListRequest {
-  ListRequest() {
-    eventBus.on().listen((event) {});
-  }
 
 //  处理返回的数据
   static List<SourceData> _responseDataToListData(ResponseData request) {

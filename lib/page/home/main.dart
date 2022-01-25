@@ -3,6 +3,7 @@ import 'package:dun_cookie_flutter/common/persistence/main.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/device_info.dart';
 import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
+import 'package:dun_cookie_flutter/model/bakery_data.dart';
 import 'package:dun_cookie_flutter/page/home/dun_buttom_navigation_bar.dart';
 import 'package:dun_cookie_flutter/page/info/open_screen_info.dart';
 import 'package:dun_cookie_flutter/page/setting/main.dart';
@@ -12,6 +13,7 @@ import 'package:dun_cookie_flutter/provider/common_provider.dart';
 import 'package:dun_cookie_flutter/router/router.dart';
 import 'package:dun_cookie_flutter/common/static_variable/main.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
+import 'package:dun_cookie_flutter/service/brkery_request.dart';
 import 'package:dun_cookie_flutter/service/info_request.dart';
 import 'package:dun_cookie_flutter/service/list_request.dart';
 import 'package:flutter/cupertino.dart';
@@ -66,6 +68,12 @@ class _MainScaffoldState extends State<MainScaffold> {
     }
   }
 
+  _getBakeryInfo() async {
+    BakeryData value = await BakeryRequest.getBakeryInfo();
+    Provider.of<CommonProvider>(context, listen: false)
+        .addListInBakeryData(value);
+  }
+
   @override
   void initState() {
     // 初始化全局变量，读取设置
@@ -76,6 +84,8 @@ class _MainScaffoldState extends State<MainScaffold> {
     _getData();
     // 获取CeobecanteenInfo和判断版本
     _getCeobecanteenInfoAndCheckVersion();
+    // 获取饼组信息
+    _getBakeryInfo();
     super.initState();
   }
 

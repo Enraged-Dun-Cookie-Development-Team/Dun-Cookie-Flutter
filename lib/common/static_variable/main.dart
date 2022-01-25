@@ -5,9 +5,6 @@ class StaticVariable {
   //  初始路由
   static const int starRouterIndex = 0;
 
-  //  主题index
-  static const int starThemeIndex = 0;
-
   //  设备ID
   static String? deviceId;
 }

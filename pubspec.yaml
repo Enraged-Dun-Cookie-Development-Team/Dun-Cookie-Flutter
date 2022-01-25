@@ -54,6 +54,7 @@ dependencies:
   animate_do: ^2.1.0
   flutter_local_notifications: ^9.2.0
   device_info_plus: ^3.2.1
+  timelines: ^0.1.0
 
 dev_dependencies:
   flutter_test:
