@@ -5,6 +5,7 @@ import 'package:dun_cookie_flutter/common/tool/device_info.dart';
 import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
 import 'package:dun_cookie_flutter/model/bakery_data.dart';
 import 'package:dun_cookie_flutter/page/home/dun_buttom_navigation_bar.dart';
+import 'package:dun_cookie_flutter/page/home/home_body.dart';
 import 'package:dun_cookie_flutter/page/info/open_screen_info.dart';
 import 'package:dun_cookie_flutter/page/setting/main.dart';
 import 'package:dun_cookie_flutter/page/update/main.dart';
@@ -98,22 +99,9 @@ class _MainScaffoldState extends State<MainScaffold> {
       shouldRebuild: (prev, next) => prev != next,
       builder: (ctx, routerIndex, child) {
         return Scaffold(
+          // appBar: _appBar(routerIndex),
           appBar: _appBar(routerIndex),
           body: DunRouter.pages[routerIndex],
-          // PageTransitionSwitcher(
-          //   reverse: routerIndex == 1 ? true : false,
-          //   // reverse: flag,//可以不设置，作用是控制动画方向是否反转，值为true为正向，false为反向，可以根据情况改变此值让动画效果更合理，
-          //   child: DunRouter.pages[routerIndex],
-          //   duration: const Duration(milliseconds: 500),
-          //   transitionBuilder: (child, animation, secondaryAnimation) =>
-          //       SharedAxisTransition(
-          //           child: child,
-          //           animation: animation,
-          //           secondaryAnimation: secondaryAnimation,
-          //           transitionType: routerIndex == 0
-          //               ? SharedAxisTransitionType.scaled
-          //               : SharedAxisTransitionType.horizontal),
-          // ),
           bottomNavigationBar: DunBottomNavigationBar(),
           floatingActionButton: FloatingActionButton(
             backgroundColor:
@@ -137,20 +125,20 @@ class _MainScaffoldState extends State<MainScaffold> {
   }
 
   _appBar(routerIndex) => AppBar(
-      title: Text(DunRouter.pageTitles[routerIndex]),
-      backgroundColor: routerIndex == 1 ? const Color(0xFFF58220) : null,
-      systemOverlayStyle: const SystemUiOverlayStyle(
-        statusBarIconBrightness: Brightness.light,
-      ),
-      actions: routerIndex == 2
-          ? [
-              IconButton(
-                icon: const Icon(Icons.settings),
-                tooltip: '设置',
-                onPressed: () {
-                  Navigator.pushNamed(context, DunSetting.routerName);
-                },
-              ),
-            ]
-          : [Container()]);
+        title: Text(DunRouter.pageTitles[routerIndex]),
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          statusBarIconBrightness: Brightness.light,
+        ),
+        actions: routerIndex == 2
+            ? [
+                IconButton(
+                  icon: const Icon(Icons.settings),
+                  tooltip: '设置',
+                  onPressed: () {
+                    Navigator.pushNamed(context, DunSetting.routerName);
+                  },
+                ),
+              ]
+            : [Container()],
+      );
 }

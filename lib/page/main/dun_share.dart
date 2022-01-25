@@ -8,7 +8,6 @@ import 'package:dun_cookie_flutter/page/main/dun_headren.dart';
 import 'package:dun_cookie_flutter/page/main/dun_share_image.dart';
 import 'package:dun_cookie_flutter/provider/common_event_bus.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -127,7 +126,7 @@ class _DunWidgetToImageState extends State<DunWidgetToImage> {
         // 小刻食堂标题和下面的分界线
         Positioned(
           left: 0,
-          top: 60,
+          top: 50,
           child: Container(
             height: 3,
             width: 200,

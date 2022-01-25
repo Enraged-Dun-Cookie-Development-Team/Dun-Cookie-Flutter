@@ -38,16 +38,18 @@ class DunHead extends StatelessWidget {
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     source.title,
+                    style: Theme.of(context).textTheme.headline2,
                   ),
                   const SizedBox(
                     height: 2,
                   ),
                   Text(
                     info.timeForDisplay!,
-                    style: const TextStyle(fontSize: 14, color: Colors.black45),
+                    style: Theme.of(context).textTheme.subtitle2,
                   ),
                 ],
               )
