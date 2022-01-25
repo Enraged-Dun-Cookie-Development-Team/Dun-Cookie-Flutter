@@ -87,9 +87,8 @@ class DunUpdate extends StatelessWidget {
                     Clipboard.setData(const ClipboardData(text: '362860473'));
                     DunToast.showSuccess("已复制，来QQ群找我们升级吧！");
                   },
-                  child: const Text(
+                  child: Text(
                     "群号：362860473，点击复制",
-                    style: TextStyle(fontSize: 14),
                   ),
                 )
               ],

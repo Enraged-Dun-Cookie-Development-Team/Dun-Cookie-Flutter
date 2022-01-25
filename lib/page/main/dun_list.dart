@@ -45,7 +45,10 @@ class _DunListState extends State<DunList> {
             child: Center(
               child: Text(
                 headerStr,
-                style: const TextStyle(color: Colors.white, fontSize: 18),
+                style: Theme.of(context)
+                    .textTheme
+                    .headline2!
+                    .copyWith(color: Colors.white),
               ),
             ),
             onModeChange: (mode) {},

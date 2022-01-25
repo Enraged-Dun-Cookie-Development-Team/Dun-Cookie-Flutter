@@ -90,9 +90,12 @@ class _DunWidgetToImageState extends State<DunWidgetToImage> {
                     const SizedBox(
                       height: 10,
                     ),
-                    const Text(
+                    Text(
                       "-去应用商店下载小刻食堂-",
-                      style: TextStyle(fontSize: 14, color: Colors.white),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText1!
+                          .copyWith(color: Colors.white),
                     ),
                   ],
                 ),
@@ -142,13 +145,12 @@ class _DunWidgetToImageState extends State<DunWidgetToImage> {
               padding: const EdgeInsets.all(10),
               alignment: Alignment.topLeft,
               child: RichText(
-                text: const TextSpan(
+                text: TextSpan(
                     text: "小刻食堂",
-                    style: TextStyle(color: DunColors.DunColor, fontSize: 28),
+                    style: Theme.of(context).textTheme.headline4,
                     children: [
                       TextSpan(
                         text: " 移动版",
-                        style: TextStyle(fontSize: 16),
                       ),
                     ]),
               ),

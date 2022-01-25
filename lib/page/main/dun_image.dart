@@ -1,4 +1,3 @@
-
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/model/source_data.dart';
 import 'package:dun_cookie_flutter/common/tool/view_image_main.dart';
@@ -114,10 +113,7 @@ class _DunImageState extends State<DunImage>
                   color: Colors.white,
                   child: Text(
                     "${((progress ?? 0.0) * 100).toInt()}%",
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: DunColors.DunColor,
-                    ),
+                    style: Theme.of(context).textTheme.headline1,
                   ),
                 ),
               )

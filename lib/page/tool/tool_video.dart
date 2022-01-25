@@ -27,7 +27,6 @@ class ToolVideo extends StatelessWidget {
               videoInfo.name!,
               overflow: TextOverflow.ellipsis,
               maxLines: 3,
-              style: const TextStyle(fontSize: 14),
             ),
           )
         ],

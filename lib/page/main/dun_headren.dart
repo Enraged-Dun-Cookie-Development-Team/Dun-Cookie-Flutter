@@ -41,7 +41,6 @@ class DunHead extends StatelessWidget {
                 children: [
                   Text(
                     source.title,
-                    style: const TextStyle(fontSize: 18),
                   ),
                   const SizedBox(
                     height: 2,

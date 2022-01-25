@@ -41,6 +41,18 @@ class DunTheme {
     splashColor: Colors.red,
     colorScheme:
         ColorScheme.fromSwatch().copyWith(secondary: DunColors.DunColorLigth),
+    textTheme: const TextTheme(
+      headline1: TextStyle(fontSize: 14, color: DunColors.DunColor),
+      headline2: TextStyle(fontSize: 16, color: DunColors.DunColor),
+      headline3: TextStyle(fontSize: 18, color: DunColors.DunColor),
+      headline4: TextStyle(fontSize: 20, color: DunColors.DunColor),
+      headline5: TextStyle(fontSize: 26, color: DunColors.DunColor),
+      headline6: TextStyle(fontSize: 30, color: DunColors.DunColor),
+      bodyText1: TextStyle(fontSize: 14),
+      bodyText2: TextStyle(fontSize: 14),
+      subtitle1: TextStyle(fontSize: 16),
+      subtitle2: TextStyle(fontSize: 14, color: Colors.black45),
+    ),
   );
 
   static final ThemeData _bakeryTheme = ThemeData(
@@ -50,6 +62,18 @@ class DunTheme {
     splashColor: Colors.blue,
     colorScheme: ColorScheme.fromSwatch()
         .copyWith(secondary: DunColors.BakeryColorLigth),
+    textTheme: const TextTheme(
+      headline1: TextStyle(fontSize: 16, color: DunColors.BakeryColor),
+      headline2: TextStyle(fontSize: 18, color: DunColors.BakeryColor),
+      headline3: TextStyle(fontSize: 20, color: DunColors.BakeryColor),
+      headline4: TextStyle(fontSize: 26, color: DunColors.BakeryColor),
+      headline5: TextStyle(fontSize: 30, color: DunColors.BakeryColor),
+      headline6: TextStyle(fontSize: 36, color: DunColors.BakeryColor),
+      bodyText1: TextStyle(fontSize: 14),
+      bodyText2: TextStyle(fontSize: 14),
+      subtitle1: TextStyle(fontSize: 16),
+      subtitle2: TextStyle(fontSize: 14, color: Colors.black45),
+    ),
   );
 
   static List<ThemeData> themeList = [_mainTheme, _bakeryTheme];

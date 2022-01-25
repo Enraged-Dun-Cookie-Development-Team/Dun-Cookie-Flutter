@@ -13,7 +13,7 @@ class DunError extends StatelessWidget {
           Text("错误，请联系我们处理！"),
           Text(
             error,
-            style: TextStyle(fontSize: 36, color: Colors.red),
+            style: Theme.of(context).textTheme.headline6!.copyWith(color: Colors.red),
           )
         ],
       ),

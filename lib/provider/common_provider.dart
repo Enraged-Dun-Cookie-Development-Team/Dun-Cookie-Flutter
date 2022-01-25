@@ -77,8 +77,8 @@ class CommonProvider with ChangeNotifier {
   }
 
   set sourceData(List<SourceData> value) {
-    _sourceData.sort((x, y) => y.timeForSort!.compareTo(x.timeForSort!));
     _sourceData = value;
+    _sourceData.sort((x, y) => y.timeForSort!.compareTo(x.timeForSort!));
     notifyListeners();
   }
 

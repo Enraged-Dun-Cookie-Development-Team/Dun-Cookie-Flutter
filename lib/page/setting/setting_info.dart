@@ -23,26 +23,23 @@ class DunInfo extends StatelessWidget {
                   "assets/logo/logo.png",
                   width: 100,
                 ),
-                const Text(
+                Text(
                   "小刻食堂 V${StaticVariable.version}",
-                  style: TextStyle(fontSize: 26),
+                  style: Theme.of(context).textTheme.headline3,
                 ),
-                const Text(
+                Text(
                   "Powered By 蓝芷怡 & 洛梧藤",
-                  style: TextStyle(fontSize: 14),
                 ),
-                const Text(
+                Text(
                   "欢迎来QQ群【蹲饼组】反馈BUG或提出意见建议，一起来玩",
-                  style: TextStyle(fontSize: 12),
                 ),
                 ElevatedButton(
                     onPressed: () {
                       Clipboard.setData(const ClipboardData(text: '362860473'));
                       DunToast.showSuccess("已复制，来QQ群找我们聊天吧！");
                     },
-                    child: const Text(
+                    child: Text(
                       "群号：362860473，点击复制",
-                      style: TextStyle(fontSize: 14),
                     )),
               ],
             ),

@@ -28,13 +28,15 @@ class _BakeryCardState extends State<BakeryCard> {
             Image.asset(
               "assets/logo/logo_mb.png",
               width: 130,
+              excludeFromSemantics: true,
+              gaplessPlayback: true,
             ),
             const SizedBox(
               height: 6,
             ),
-            const Text(
+            Text(
               "蜜饼工坊，大厦基地建设中，敬请期待",
-              style: TextStyle(fontSize: 16, color: Color(0xFFF58220)),
+              style: Theme.of(context).textTheme.headline1,
             ),
             const SizedBox(
               height: 6,

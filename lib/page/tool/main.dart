@@ -40,10 +40,9 @@ class _DunToolState extends State<DunTool> {
                 return ListView(
                   children: [
                     if (ceobecanteenInfo.app == null)
-                      const Text(
+                      Text(
                         "以下数据为离线数据",
-                        style:
-                            TextStyle(color: DunColors.DunColor, fontSize: 16),
+                        style: Theme.of(context).textTheme.headline2,
                       ),
                     // 物资是否开放
                     ToolResource(ceobecanteenInfo.dayInfo),

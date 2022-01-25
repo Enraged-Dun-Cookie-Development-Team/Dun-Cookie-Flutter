@@ -35,7 +35,7 @@ class ToolGrid extends StatelessWidget {
         FadeInUp(
           child: Text(
             title,
-            style: const TextStyle(color: DunColors.DunColor, fontSize: 16),
+            style: Theme.of(context).textTheme.headline1,
           ),
         ),
         Padding(

@@ -52,9 +52,9 @@ class ToolCountdown extends StatelessWidget {
                                     child: RichText(
                                       text: TextSpan(
                                           text: "距离",
-                                          style: const TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.black),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyText1,
                                           children: [
                                             TextSpan(
                                               text: info.text!,
@@ -71,17 +71,13 @@ class ToolCountdown extends StatelessWidget {
                               TimeDiffText(info.time!),
                             ],
                           ),
-                          Row(
-                            children: [
-                              SingleChildScrollView(
-                                  child: Text(
-                                    info.remark!,
-                                    style:
-                                        const TextStyle(color: Colors.black45),
-                                  ),
-                                  scrollDirection: Axis.horizontal),
-                            ],
-                          ),
+                          SingleChildScrollView(
+                              child: Text(
+                                info.remark!,
+                                style:
+                                   Theme.of(context).textTheme.subtitle2,
+                              ),
+                              scrollDirection: Axis.horizontal),
                         ],
                       ),
                     ),
@@ -134,7 +130,6 @@ class _TimeDiffTextState extends State<TimeDiffText> {
   Widget build(BuildContext context) {
     return Text(
       _timeText,
-      style: const TextStyle(fontSize: 14),
     );
   }
 }
