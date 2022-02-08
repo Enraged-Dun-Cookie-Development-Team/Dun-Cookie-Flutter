@@ -2,6 +2,7 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:dun_cookie_flutter/cache/setting_cache.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
+import 'package:dun_cookie_flutter/page/setting/main.dart';
 import 'package:dun_cookie_flutter/page/tool/tool_announcement.dart';
 import 'package:dun_cookie_flutter/page/tool/tool_countdown.dart';
 import 'package:dun_cookie_flutter/page/tool/tool_grid.dart';
@@ -31,6 +32,15 @@ class _DunToolState extends State<DunTool> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("工具箱"),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings),
+            tooltip: '设置',
+            onPressed: () {
+              Navigator.pushNamed(context, DunSetting.routerName);
+            },
+          ),
+        ],
       ),
       body: Column(
         children: [
