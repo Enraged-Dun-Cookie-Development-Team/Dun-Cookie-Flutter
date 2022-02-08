@@ -28,7 +28,8 @@ class _DunCardItemState extends State<DunCardItem>
     SourceData info = widget.info;
     return GestureDetector(
       onTap: () => _goSource(info.jumpUrl),
-      child: FadeInUp(
+      child: FadeIn(
+        duration: const Duration(milliseconds: 1000),
         child: Column(
           children: [
             DunHead(info),

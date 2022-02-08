@@ -100,7 +100,15 @@ class _MainScaffoldState extends State<MainScaffold> {
       builder: (ctx, routerIndex, child) {
         return Scaffold(
           // appBar: _appBar(routerIndex),
-          appBar: _appBar(routerIndex),
+          appBar: PreferredSize(
+            preferredSize: const Size.fromHeight(0),
+            child: AppBar(
+              systemOverlayStyle: const SystemUiOverlayStyle(
+                statusBarIconBrightness: Brightness.light,
+              ),
+              elevation: 0, //去掉Appbar底部阴影
+            ),
+          ),
           body: DunRouter.pages[routerIndex],
           bottomNavigationBar: DunBottomNavigationBar(),
           floatingActionButton: FloatingActionButton(
@@ -125,7 +133,9 @@ class _MainScaffoldState extends State<MainScaffold> {
   }
 
   _appBar(routerIndex) => AppBar(
-        title: Text(DunRouter.pageTitles[routerIndex]),
+        title: Text(
+          DunRouter.pageTitles[routerIndex],
+        ),
         systemOverlayStyle: const SystemUiOverlayStyle(
           statusBarIconBrightness: Brightness.light,
         ),

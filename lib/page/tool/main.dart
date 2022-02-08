@@ -7,6 +7,7 @@ import 'package:dun_cookie_flutter/page/tool/tool_countdown.dart';
 import 'package:dun_cookie_flutter/page/tool/tool_grid.dart';
 import 'package:dun_cookie_flutter/page/tool/tool_resource.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class DunTool extends StatefulWidget {
@@ -27,55 +28,60 @@ class _DunToolState extends State<DunTool> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        // APP公告
-        const ToolAnnouncement(),
-        //活动公告
-        Expanded(
-          child: Consumer<CeobecanteenData>(
-            builder: (context, data, child) {
-              if (data.ceobecanteenInfo != null) {
-                CeobecanteenData ceobecanteenInfo = data.ceobecanteenInfo!;
-                return ListView(
-                  children: [
-                    if (ceobecanteenInfo.app == null)
-                      Text(
-                        "以下数据为离线数据",
-                        style: Theme.of(context).textTheme.headline2,
-                      ),
-                    // 物资是否开放
-                    ToolResource(ceobecanteenInfo.dayInfo),
-                    // 倒计时
-                    if (ceobecanteenInfo.dayInfo != null &&
-                        ceobecanteenInfo.dayInfo!.countdown != null)
-                      ToolCountdown(ceobecanteenInfo.dayInfo!.countdown!),
-                    // 官方源
-                    if (ceobecanteenInfo.sourceInfo != null)
-                      ToolGrid(
-                        "饼的发源地",
-                        linkInfo: ceobecanteenInfo.sourceInfo,
-                      ),
-                    // 快捷工具
-                    if (ceobecanteenInfo.quickJump != null)
-                      ToolGrid(
-                        "在线第三方工具",
-                        linkInfo: ceobecanteenInfo.quickJump,
-                      ),
-                    //推荐视频
-                    if (ceobecanteenInfo.btnList != null)
-                      ToolGrid("视频推荐",
-                          type: 1, videoInfo: ceobecanteenInfo.btnList)
-                  ],
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("工具箱"),
+      ),
+      body: Column(
+        children: [
+          // APP公告
+          const ToolAnnouncement(),
+          //活动公告
+          Expanded(
+            child: Consumer<CeobecanteenData>(
+              builder: (context, data, child) {
+                if (data.ceobecanteenInfo != null) {
+                  CeobecanteenData ceobecanteenInfo = data.ceobecanteenInfo!;
+                  return ListView(
+                    children: [
+                      if (ceobecanteenInfo.app == null)
+                        Text(
+                          "以下数据为离线数据",
+                          style: Theme.of(context).textTheme.headline2,
+                        ),
+                      // 物资是否开放
+                      ToolResource(ceobecanteenInfo.dayInfo),
+                      // 倒计时
+                      if (ceobecanteenInfo.dayInfo != null &&
+                          ceobecanteenInfo.dayInfo!.countdown != null)
+                        ToolCountdown(ceobecanteenInfo.dayInfo!.countdown!),
+                      // 官方源
+                      if (ceobecanteenInfo.sourceInfo != null)
+                        ToolGrid(
+                          "饼的发源地",
+                          linkInfo: ceobecanteenInfo.sourceInfo,
+                        ),
+                      // 快捷工具
+                      if (ceobecanteenInfo.quickJump != null)
+                        ToolGrid(
+                          "在线第三方工具",
+                          linkInfo: ceobecanteenInfo.quickJump,
+                        ),
+                      //推荐视频
+                      if (ceobecanteenInfo.btnList != null)
+                        ToolGrid("视频推荐",
+                            type: 1, videoInfo: ceobecanteenInfo.btnList)
+                    ],
+                  );
+                }
+                return const Center(
+                  child: Text("正在获取，请稍后"),
                 );
-              }
-              return const Center(
-                child: Text("正在获取，请稍后"),
-              );
-            },
-          ),
-        )
-      ],
+              },
+            ),
+          )
+        ],
+      ),
     );
   }
 }
