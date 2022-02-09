@@ -84,6 +84,7 @@ flutter:
     - assets/sources_logo/
     - assets/image/
     - assets/image/resource_image/
+    - assets/image/load/
     - assets/link/
 
   # An image asset can refer to one or more resolution-specific "variants", see

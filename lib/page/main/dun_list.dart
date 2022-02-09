@@ -2,6 +2,7 @@ import 'package:dun_cookie_flutter/common/init/main.dart';
 import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
 import 'package:dun_cookie_flutter/model/source_data.dart';
 import 'package:dun_cookie_flutter/page/main/dun_card_item.dart';
+import 'package:dun_cookie_flutter/page/main/dun_loading.dart';
 import 'package:dun_cookie_flutter/provider/common_event_bus.dart';
 import 'package:dun_cookie_flutter/provider/common_provider.dart';
 import 'package:dun_cookie_flutter/service/list_request.dart';
@@ -46,22 +47,22 @@ class _DunListState extends State<DunList> {
           statusBarIconBrightness: Brightness.light,
         ),
       ),
-
       body: Selector<CommonProvider, List<SourceData>>(
         builder: (context, sourceDataList, child) {
           return SmartRefresher(
-            header: BezierHeader(
-              child: Center(
-                child: Text(
-                  headerStr,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline2!
-                      .copyWith(color: Colors.white),
-                ),
-              ),
-              onModeChange: (mode) {},
-            ),
+            // header: BezierHeader(
+            //   child: Center(
+            //     child: Text(
+            //       headerStr,
+            //       style: Theme.of(context)
+            //           .textTheme
+            //           .headline2!
+            //           .copyWith(color: Colors.white),
+            //     ),
+            //   ),
+            //   onModeChange: (mode) {},
+            // ),
+            header: DunLoading(),
             controller: _refreshController,
             enablePullDown: true,
             onRefresh: _onRefresh,
@@ -93,7 +94,8 @@ class _DunListState extends State<DunList> {
 
   void _onRefresh() async {
     await _getDate();
-    _refreshController.refreshCompleted();
+    Future.delayed(const Duration(seconds: 2))
+        .then((value) => _refreshController.refreshCompleted());
   }
 
   //  获取数据
