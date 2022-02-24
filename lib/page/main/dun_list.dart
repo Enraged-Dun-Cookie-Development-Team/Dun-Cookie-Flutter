@@ -1,5 +1,6 @@
 import 'package:dun_cookie_flutter/common/init/main.dart';
 import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
+import 'package:dun_cookie_flutter/model/app_bar_data.dart';
 import 'package:dun_cookie_flutter/model/source_data.dart';
 import 'package:dun_cookie_flutter/page/main/dun_card_item.dart';
 import 'package:dun_cookie_flutter/page/main/dun_loading.dart';
@@ -16,7 +17,6 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 class DunList extends StatefulWidget {
   const DunList({Key? key}) : super(key: key);
   static String routeName = "/dunList";
-
   @override
   State<DunList> createState() => _DunListState();
 }
@@ -40,55 +40,47 @@ class _DunListState extends State<DunList> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("小刻食堂"),
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarIconBrightness: Brightness.light,
-        ),
-      ),
-      body: Selector<CommonProvider, List<SourceData>>(
-        builder: (context, sourceDataList, child) {
-          return SmartRefresher(
-            // header: BezierHeader(
-            //   child: Center(
-            //     child: Text(
-            //       headerStr,
-            //       style: Theme.of(context)
-            //           .textTheme
-            //           .headline2!
-            //           .copyWith(color: Colors.white),
-            //     ),
-            //   ),
-            //   onModeChange: (mode) {},
-            // ),
-            header: DunLoading(),
-            controller: _refreshController,
-            enablePullDown: true,
-            onRefresh: _onRefresh,
-            child: sourceDataList.isEmpty
-                ? const Center(
-                    child: Text("等待食堂数据……"),
-                  )
-                : ListView.builder(
-                    itemCount: sourceDataList.length,
-                    itemBuilder: (ctx, index) {
-                      var info = sourceDataList[index];
-                      return DunCardItem(
-                        info: info,
-                        index: index,
-                      );
-                    },
-                  ),
-          );
-        },
-        selector: (ctx, commonProvider) {
-          return commonProvider.sourceData;
-        },
-        shouldRebuild: (prev, next) {
-          return prev != next;
-        },
-      ),
+    return Selector<CommonProvider, List<SourceData>>(
+      builder: (context, sourceDataList, child) {
+        return SmartRefresher(
+          // header: BezierHeader(
+          //   child: Center(
+          //     child: Text(
+          //       headerStr,
+          //       style: Theme.of(context)
+          //           .textTheme
+          //           .headline2!
+          //           .copyWith(color: Colors.white),
+          //     ),
+          //   ),
+          //   onModeChange: (mode) {},
+          // ),
+          header: DunLoading(),
+          controller: _refreshController,
+          enablePullDown: true,
+          onRefresh: _onRefresh,
+          child: sourceDataList.isEmpty
+              ? const Center(
+            child: Text("等待食堂数据……"),
+          )
+              : ListView.builder(
+            itemCount: sourceDataList.length,
+            itemBuilder: (ctx, index) {
+              var info = sourceDataList[index];
+              return DunCardItem(
+                info: info,
+                index: index,
+              );
+            },
+          ),
+        );
+      },
+      selector: (ctx, commonProvider) {
+        return commonProvider.sourceData;
+      },
+      shouldRebuild: (prev, next) {
+        return prev != next;
+      },
     );
   }
 

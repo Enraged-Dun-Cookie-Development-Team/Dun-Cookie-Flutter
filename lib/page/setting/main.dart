@@ -15,48 +15,42 @@ class DunSetting extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("设置"),
-        systemOverlayStyle: SystemUiOverlayStyle.light,
-      ),
-      body: Column(
-        children: [
-          ListTile(
-            title: const Text("饼来源"),
-            subtitle: const Text("选择勾选来源，最少选择一个"),
-            trailing: const Icon(Icons.arrow_right),
-            onTap: () {
-              Navigator.pushNamed(context, SettingSourceFilter.routerName);
-            },
-          ),
-          ListTile(
-            title: const Text("检测升级"),
-            subtitle: const Text("可以试着点点"),
-            trailing: const Icon(Icons.arrow_right),
-            onTap: () {
-              DunApp? app =
-                  Provider.of<CeobecanteenData>(context, listen: false)
-                      .ceobecanteenInfo
-                      ?.app;
-              if (app?.version != StaticVariable.version) {
-                Navigator.pushNamed(context, DunUpdate.routerName,
-                    arguments: app);
-              } else {
-                DunToast.showSuccess("当前版本是最新版本");
-              }
-            },
-          ),
-          ListTile(
-            title: const Text("建议反馈BUG提交吹水扯淡"),
-            subtitle: const Text("欢迎进群"),
-            trailing: const Icon(Icons.arrow_right),
-            onTap: () {
-              Navigator.pushNamed(context, DunInfo.routerName);
-            },
-          ),
-        ],
-      ),
+    return Column(
+      children: [
+        ListTile(
+          title: const Text("饼来源"),
+          subtitle: const Text("选择勾选来源，最少选择一个"),
+          trailing: const Icon(Icons.arrow_right),
+          onTap: () {
+            Navigator.pushNamed(context, SettingSourceFilter.routerName);
+          },
+        ),
+        ListTile(
+          title: const Text("检测升级"),
+          subtitle: const Text("可以试着点点"),
+          trailing: const Icon(Icons.arrow_right),
+          onTap: () {
+            DunApp? app =
+                Provider.of<CeobecanteenData>(context, listen: false)
+                    .ceobecanteenInfo
+                    ?.app;
+            if (app?.version != StaticVariable.version) {
+              Navigator.pushNamed(context, DunUpdate.routerName,
+                  arguments: app);
+            } else {
+              DunToast.showSuccess("当前版本是最新版本");
+            }
+          },
+        ),
+        ListTile(
+          title: const Text("建议反馈BUG提交吹水扯淡"),
+          subtitle: const Text("欢迎进群"),
+          trailing: const Icon(Icons.arrow_right),
+          onTap: () {
+            Navigator.pushNamed(context, DunInfo.routerName);
+          },
+        ),
+      ],
     );
   }
 }

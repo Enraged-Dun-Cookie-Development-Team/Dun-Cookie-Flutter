@@ -117,10 +117,10 @@ class _DunWidgetToImageState extends State<DunWidgetToImage> {
           child: SizedBox(
             height: 120,
             child: QrImage(
-              data: sourceData.jumpUrl!,
-              version: QrVersions.auto,
-              gapless: false,
-            ),
+                data: sourceData.jumpUrl!,
+                version: QrVersions.auto,
+                gapless: false,
+                foregroundColor: DunColors.DunColor),
           ),
         ),
         // 小刻食堂标题和下面的分界线

@@ -26,64 +26,59 @@ class ToolCountdown extends StatelessWidget {
           //   "活动倒计时",
           //   style: TextStyle(color: DunColors.DunColor, fontSize: 16),
           // ),
-          FadeInUp(
-            child: Card(
-              child: ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                // itemCount: countDown.length >= 3 ? 3 : countDown.length,
-                itemCount: _countDown.length,
-                itemBuilder: (ctx, index) {
-                  var info = _countDown[index];
-                  return FadeInRight(
-                    delay: Duration(milliseconds: 50 * index),
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 6, horizontal: 10),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
+          Card(
+            child: ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              // itemCount: countDown.length >= 3 ? 3 : countDown.length,
+              itemCount: _countDown.length,
+              itemBuilder: (ctx, index) {
+                var info = _countDown[index];
+                return Container(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 6, horizontal: 10),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                child: SingleChildScrollView(
-                                    child: RichText(
-                                      text: TextSpan(
-                                          text: "距离",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyText1,
-                                          children: [
-                                            TextSpan(
-                                              text: info.text!,
-                                              style: const TextStyle(
-                                                  color: DunColors.DunColor),
-                                            )
-                                          ]),
-                                    ),
-                                    scrollDirection: Axis.horizontal),
-                              ),
-                              const SizedBox(
-                                width: 10,
-                              ),
-                              TimeDiffText(info.time!),
-                            ],
+                          Expanded(
+                            child: SingleChildScrollView(
+                                child: RichText(
+                                  text: TextSpan(
+                                      text: "距离",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1,
+                                      children: [
+                                        TextSpan(
+                                          text: info.text!,
+                                          style: const TextStyle(
+                                              color: DunColors.DunColor),
+                                        )
+                                      ]),
+                                ),
+                                scrollDirection: Axis.horizontal),
                           ),
-                          SingleChildScrollView(
-                              child: Text(
-                                info.remark!,
-                                style:
-                                   Theme.of(context).textTheme.subtitle2,
-                              ),
-                              scrollDirection: Axis.horizontal),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          TimeDiffText(info.time!),
                         ],
                       ),
-                    ),
-                  );
-                },
-              ),
+                      SingleChildScrollView(
+                          child: Text(
+                            info.remark!,
+                            style:
+                               Theme.of(context).textTheme.subtitle2,
+                          ),
+                          scrollDirection: Axis.horizontal),
+                    ],
+                  ),
+                );
+              },
             ),
           )
         ],

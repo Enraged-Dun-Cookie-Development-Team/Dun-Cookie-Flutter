@@ -32,11 +32,9 @@ class ToolGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        FadeInUp(
-          child: Text(
-            title,
-            style: Theme.of(context).textTheme.headline1,
-          ),
+        Text(
+          title,
+          style: Theme.of(context).textTheme.headline1,
         ),
         Padding(
           padding: const EdgeInsets.all(10),
@@ -50,13 +48,10 @@ class ToolGrid extends StatelessWidget {
                 crossAxisSpacing: 2,
                 childAspectRatio: type == 0 ? 4 : 1),
             itemBuilder: (ctx, index) {
-              return FadeInUp(
-                delay: Duration(milliseconds: index * 50),
-                child: Card(
-                  child: type == 0
-                      ? ToolLink(linkInfo![index])
-                      : ToolVideo(videoInfo![index]),
-                ),
+              return Card(
+                child: type == 0
+                    ? ToolLink(linkInfo![index])
+                    : ToolVideo(videoInfo![index]),
               );
             },
           ),

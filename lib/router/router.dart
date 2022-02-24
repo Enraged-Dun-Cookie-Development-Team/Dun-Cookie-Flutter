@@ -26,8 +26,8 @@ class DunRouter {
   };
 
   /// 底部栏用
-  static const pageTitles = ["小刻食堂", "蜜饼工坊", "常用工具"];
-  static const pages = [DunList(), Bakery(), DunTool()];
+  static const pageTitles = ["小刻食堂", "蜜饼工坊", "常用工具", "设置"];
+  static const pages = [DunList(), Bakery(), DunTool(), DunSetting()];
 
   /// 添加页面后记得在上面加上 不然就会直接跳转到404
   static Route routeGenerator(RouteSettings settings) {

@@ -3,6 +3,7 @@ import 'package:dun_cookie_flutter/common/persistence/main.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/device_info.dart';
 import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
+import 'package:dun_cookie_flutter/model/app_bar_Data.dart';
 import 'package:dun_cookie_flutter/model/bakery_data.dart';
 import 'package:dun_cookie_flutter/page/home/dun_buttom_navigation_bar.dart';
 import 'package:dun_cookie_flutter/page/home/home_body.dart';
@@ -99,56 +100,53 @@ class _MainScaffoldState extends State<MainScaffold> {
       shouldRebuild: (prev, next) => prev != next,
       builder: (ctx, routerIndex, child) {
         return Scaffold(
-          // appBar: _appBar(routerIndex),
-          appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(0),
-            child: AppBar(
-              systemOverlayStyle: const SystemUiOverlayStyle(
-                statusBarIconBrightness: Brightness.light,
-              ),
-              elevation: 0, //去掉Appbar底部阴影
+          appBar: AppBar(
+            title: Text(DunRouter.pageTitles[routerIndex]),
+            systemOverlayStyle: const SystemUiOverlayStyle(
+              statusBarIconBrightness: Brightness.light,
+            ),
+          ),
+          drawer: Drawer(
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: [
+                DrawerHeader(
+                  decoration: const BoxDecoration(
+                    color: DunColors.DunColor,
+                  ),
+                  child: Column(
+                    children: const [
+                      Image(
+                        image: AssetImage("assets/logo/logo.png"),
+                        width: 100,
+                      ),
+                      Text(
+                        '小刻食堂 V' + StaticVariable.version,
+                        style: TextStyle(
+                            color: Colors.white, fontSize: 18),
+                      )
+                    ],
+                  ),
+                ),
+                Column(
+                  children: List.generate(
+                    DunRouter.pageTitles.length,
+                    (index) => ListTile(
+                      title: Text(DunRouter.pageTitles[index]),
+                      onTap: () => {
+                        Provider.of<CommonProvider>(context, listen: false)
+                            .setRouterIndex(index),
+                        Navigator.pop(context)
+                      },
+                    ),
+                  ),
+                )
+              ],
             ),
           ),
           body: DunRouter.pages[routerIndex],
-          bottomNavigationBar: DunBottomNavigationBar(),
-          floatingActionButton: FloatingActionButton(
-            backgroundColor:
-                routerIndex == 0 ? DunColors.DunColor : Colors.grey,
-            onPressed: () {
-              if (routerIndex != 0) {
-                Provider.of<CommonProvider>(context, listen: false)
-                    .setRouterIndex(0);
-              }
-            },
-            child: Image.asset(
-              "assets/logo/logo.png",
-              width: 34,
-            ),
-          ),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerDocked,
         );
       },
     );
   }
-
-  _appBar(routerIndex) => AppBar(
-        title: Text(
-          DunRouter.pageTitles[routerIndex],
-        ),
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarIconBrightness: Brightness.light,
-        ),
-        actions: routerIndex == 2
-            ? [
-                IconButton(
-                  icon: const Icon(Icons.settings),
-                  tooltip: '设置',
-                  onPressed: () {
-                    Navigator.pushNamed(context, DunSetting.routerName);
-                  },
-                ),
-              ]
-            : [Container()],
-      );
 }

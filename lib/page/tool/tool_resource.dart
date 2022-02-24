@@ -101,18 +101,15 @@ class ToolResource extends StatelessWidget {
               String weekList = dayList.map((element) {
                 return TimeUnit.numberToWeek(element);
               }).join(",");
-              return FadeInUp(
-                delay: Duration(milliseconds: 50 * index),
-                child: Tooltip(
-                  message: "${resourceInfo[index]["name"]}:$weekList",
-                  child: resourcesNotToday(dayList)
-                      ? Image.asset(resourceInfo[index]["src"])
-                      : Image.asset(
-                          resourceInfo[index]["src"],
-                          color: Colors.white24,
-                          colorBlendMode: BlendMode.modulate,
-                        ),
-                ),
+              return Tooltip(
+                message: "${resourceInfo[index]["name"]}:$weekList",
+                child: resourcesNotToday(dayList)
+                    ? Image.asset(resourceInfo[index]["src"])
+                    : Image.asset(
+                        resourceInfo[index]["src"],
+                        color: Colors.white24,
+                        colorBlendMode: BlendMode.modulate,
+                      ),
               );
             },
             itemCount: resourceInfo.length,
