@@ -36,25 +36,12 @@ class _DunListState extends State<DunList> {
   final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
 
-  String headerStr = "后期有好看的动画，监修中……";
 
   @override
   Widget build(BuildContext context) {
     return Selector<CommonProvider, List<SourceData>>(
       builder: (context, sourceDataList, child) {
         return SmartRefresher(
-          // header: BezierHeader(
-          //   child: Center(
-          //     child: Text(
-          //       headerStr,
-          //       style: Theme.of(context)
-          //           .textTheme
-          //           .headline2!
-          //           .copyWith(color: Colors.white),
-          //     ),
-          //   ),
-          //   onModeChange: (mode) {},
-          // ),
           header: DunLoading(),
           controller: _refreshController,
           enablePullDown: true,
