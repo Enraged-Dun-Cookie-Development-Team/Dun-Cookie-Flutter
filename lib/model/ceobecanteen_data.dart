@@ -42,9 +42,9 @@ class CeobecanteenData with ChangeNotifier {
   }
 
   CeobecanteenData.fromJson(dynamic json) {
-    if (json['main'] != null) {
+    if (json['list'] != null) {
       list = [];
-      json['main'].forEach((v) {
+      json['list'].forEach((v) {
         list?.add(AnnouncementList.fromJson(v));
       });
     }

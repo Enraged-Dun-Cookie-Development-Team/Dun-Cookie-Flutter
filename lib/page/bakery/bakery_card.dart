@@ -16,6 +16,7 @@ class BakeryCard extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
+          const Text("以下为示例样式，非最终样式，蜜饼工坊，敬请期待"),
           Text(
             "${data.createTime!}发布，${data.updateTime == null ? "暂未修改" : "于${data.updateTime}修改"}",
             style: DunStyles.text14,
@@ -57,9 +58,7 @@ class BakeryCard extends StatelessWidget {
                                 : Container(
                                     child: Text(
                                       indexDay.content!,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .subtitle2!
+                                      style: DunStyles.text16C
                                           .copyWith(
                                               fontStyle: FontStyle.italic),
                                     ),

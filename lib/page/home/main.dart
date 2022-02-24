@@ -3,9 +3,9 @@ import 'package:dun_cookie_flutter/common/persistence/main.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/device_info.dart';
 import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
+import 'package:dun_cookie_flutter/common/tool/open_app_or_browser.dart';
 import 'package:dun_cookie_flutter/model/app_bar_Data.dart';
 import 'package:dun_cookie_flutter/model/bakery_data.dart';
-import 'package:dun_cookie_flutter/page/home/dun_buttom_navigation_bar.dart';
 import 'package:dun_cookie_flutter/page/home/home_body.dart';
 import 'package:dun_cookie_flutter/page/info/open_screen_info.dart';
 import 'package:dun_cookie_flutter/page/setting/main.dart';
@@ -63,7 +63,8 @@ class _MainScaffoldState extends State<MainScaffold> {
     if (value.app == null) {
       DunToast.showError("资源服务器无法连接，无法工具页部分信息");
     } else {
-      if (value.app!.version != StaticVariable.version) {
+      if (double.parse(value.app!.version!) >
+          double.parse(StaticVariable.version)) {
         Navigator.pushNamed(context, DunUpdate.routerName,
             arguments: value.app);
       }
@@ -102,10 +103,21 @@ class _MainScaffoldState extends State<MainScaffold> {
         return Scaffold(
           appBar: AppBar(
             title: Row(
-              children: [
-                Text(DunRouter.pageTitles[routerIndex])
-              ],
+              children: [Text(DunRouter.pageTitles[routerIndex])],
             ),
+            actions: routerIndex == 1
+                ? [
+                    IconButton(
+                      icon: const Icon(Icons.add_to_home_screen),
+                      tooltip: '前往B站空间',
+                      onPressed: () {
+                        OpenAppOrBrowser.openUrl(
+                            "https://m.bilibili.com/space/8412516", context,
+                            appUrlScheme: "bilibili://space/8412516");
+                      },
+                    ),
+                  ]
+                : null,
             systemOverlayStyle: const SystemUiOverlayStyle(
               statusBarIconBrightness: Brightness.light,
             ),
@@ -125,7 +137,7 @@ class _MainScaffoldState extends State<MainScaffold> {
                         width: 100,
                       ),
                       Text(
-                        '小刻食堂 V' + StaticVariable.version,
+                        '小刻食堂 beta V' + StaticVariable.version,
                         style: TextStyle(color: Colors.white, fontSize: 18),
                       )
                     ],
@@ -144,6 +156,10 @@ class _MainScaffoldState extends State<MainScaffold> {
                       },
                     ),
                   ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text("本程序未经过多轮测试，如果有bug和闪退，请于设置页面反馈通道反馈"),
                 )
               ],
             ),

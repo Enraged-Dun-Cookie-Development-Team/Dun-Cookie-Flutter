@@ -49,9 +49,7 @@ class ToolCountdown extends StatelessWidget {
                                 child: RichText(
                                   text: TextSpan(
                                       text: "距离",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1,
+                                      style: DunStyles.text14C,
                                       children: [
                                         TextSpan(
                                           text: info.text!,

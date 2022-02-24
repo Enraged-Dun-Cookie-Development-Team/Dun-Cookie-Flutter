@@ -30,11 +30,12 @@ class DunSetting extends StatelessWidget {
           subtitle: const Text("可以试着点点"),
           trailing: const Icon(Icons.arrow_right),
           onTap: () {
-            DunApp? app =
-                Provider.of<CeobecanteenData>(context, listen: false)
-                    .ceobecanteenInfo
-                    ?.app;
-            if (app?.version != StaticVariable.version) {
+            DunApp? app = Provider.of<CeobecanteenData>(context, listen: false)
+                .ceobecanteenInfo
+                ?.app;
+            if (app?.version != null &&
+                double.parse(app!.version!) >
+                    double.parse(StaticVariable.version)) {
               Navigator.pushNamed(context, DunUpdate.routerName,
                   arguments: app);
             } else {

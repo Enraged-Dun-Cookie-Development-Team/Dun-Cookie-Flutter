@@ -31,22 +31,25 @@ class _DunToolState extends State<DunTool> {
   @override
   Widget build(BuildContext context) {
     return FadeIn(
-      child: Column(
-        children: [
-          // APP公告
-          // const ToolAnnouncement(),
-          //活动公告
-          Expanded(
-            child: Consumer<CeobecanteenData>(
-              builder: (context, data, child) {
-                if (data.ceobecanteenInfo != null) {
-                  CeobecanteenData ceobecanteenInfo = data.ceobecanteenInfo!;
-                  return ListView(
+      child: Consumer<CeobecanteenData>(
+        builder: (context, data, child) {
+          if (data.ceobecanteenInfo != null) {
+            CeobecanteenData ceobecanteenInfo = data.ceobecanteenInfo!;
+            return Column(
+              children: [
+                // ToolAnnouncement(ceobecanteenInfo.list!),
+                Expanded(
+                  child: ListView(
                     children: [
                       if (ceobecanteenInfo.app == null)
-                        Text(
-                          "以下数据为离线数据",
-                          style: DunStyles.text16C,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Text(
+                              "以下数据为离线数据",
+                              style: DunStyles.text16C,
+                            ),
+                          ],
                         ),
                       // 物资是否开放
                       ToolResource(ceobecanteenInfo.dayInfo),
@@ -71,15 +74,15 @@ class _DunToolState extends State<DunTool> {
                         ToolGrid("视频推荐",
                             type: 1, videoInfo: ceobecanteenInfo.btnList)
                     ],
-                  );
-                }
-                return const Center(
-                  child: Text("正在获取，请稍后"),
-                );
-              },
-            ),
-          )
-        ],
+                  ),
+                )
+              ],
+            );
+          }
+          return const Center(
+            child: Text("正在获取，请稍后"),
+          );
+        },
       ),
     );
   }

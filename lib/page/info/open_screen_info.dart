@@ -50,9 +50,7 @@ class OpenScreenInfo extends StatelessWidget {
                 ),
                 Text(
                   "第一次写移动端，请不要催更，因为要打肉鸽，如果有问题，在设置里面有反馈方法",
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText1!
+                  style: DunStyles.text14C
                       .copyWith(color: Colors.red),
                 ),
                 const SizedBox(

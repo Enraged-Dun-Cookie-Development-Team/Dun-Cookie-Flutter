@@ -91,9 +91,7 @@ class _DunWidgetToImageState extends State<DunWidgetToImage> {
                     ),
                     Text(
                       "-去应用商店下载小刻食堂-",
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText1!
+                      style: DunStyles.text14C
                           .copyWith(color: Colors.white),
                     ),
                   ],

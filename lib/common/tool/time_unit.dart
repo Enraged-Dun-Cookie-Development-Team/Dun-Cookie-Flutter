@@ -23,6 +23,7 @@ class TimeUnit {
 
 // 时间范围判定
   static bool isTimeRange(time, starTime, endTime) {
+    time ??= DateTime.now();
     var _time = stringOrDateTimeToDateTime(time);
     var _starTime = stringOrDateTimeToDateTime(starTime);
     var _endTime = stringOrDateTimeToDateTime(endTime);
