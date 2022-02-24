@@ -17,6 +17,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 class DunList extends StatefulWidget {
   const DunList({Key? key}) : super(key: key);
   static String routeName = "/dunList";
+
   @override
   State<DunList> createState() => _DunListState();
 }
@@ -27,7 +28,6 @@ class _DunListState extends State<DunList> {
     super.initState();
     // 清除30天前的图片缓存
     clearDiskCachedImages(duration: const Duration(days: 30));
-    // _getDate();
     // Future.delayed(Duration(seconds: 1)).then((value) {
     //   DunInit().showCookieNotification();
     // });
@@ -36,30 +36,29 @@ class _DunListState extends State<DunList> {
   final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
 
-
   @override
   Widget build(BuildContext context) {
     return Selector<CommonProvider, List<SourceData>>(
       builder: (context, sourceDataList, child) {
         return SmartRefresher(
-          header: DunLoading(),
+          header: const DunLoading(),
           controller: _refreshController,
           enablePullDown: true,
           onRefresh: _onRefresh,
           child: sourceDataList.isEmpty
               ? const Center(
-            child: Text("等待食堂数据……"),
-          )
+                  child: Text("等待食堂数据……"),
+                )
               : ListView.builder(
-            itemCount: sourceDataList.length,
-            itemBuilder: (ctx, index) {
-              var info = sourceDataList[index];
-              return DunCardItem(
-                info: info,
-                index: index,
-              );
-            },
-          ),
+                  itemCount: sourceDataList.length,
+                  itemBuilder: (ctx, index) {
+                    var info = sourceDataList[index];
+                    return DunCardItem(
+                      info: info,
+                      index: index,
+                    );
+                  },
+                ),
         );
       },
       selector: (ctx, commonProvider) {
@@ -73,8 +72,7 @@ class _DunListState extends State<DunList> {
 
   void _onRefresh() async {
     await _getDate();
-    Future.delayed(const Duration(seconds: 2))
-        .then((value) => _refreshController.refreshCompleted());
+    _refreshController.refreshCompleted();
   }
 
   //  获取数据
@@ -85,6 +83,11 @@ class _DunListState extends State<DunList> {
     // }
     // Provider.of<CommonProvider>(context, listen: false)
     //     .addListInSourceData(newList);
-    eventBus.fire(DeviceInfoBus());
+    var provider = Provider.of<CommonProvider>(context, listen: false);
+    await provider.checkSourceInPreferences();
+    var data = await ListRequest.canteenCardList(
+        source: {"source": provider.checkSource.join("_")});
+    provider.sourceData = data;
+    return data;
   }
 }

@@ -146,7 +146,7 @@ class _DunWidgetToImageState extends State<DunWidgetToImage> {
               child: RichText(
                 text: TextSpan(
                     text: "小刻食堂",
-                    style: Theme.of(context).textTheme.headline4,
+                    style: DunStyles.text20C,
                     children: [
                       TextSpan(
                         text: " 移动版",

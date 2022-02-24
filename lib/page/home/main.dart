@@ -101,7 +101,11 @@ class _MainScaffoldState extends State<MainScaffold> {
       builder: (ctx, routerIndex, child) {
         return Scaffold(
           appBar: AppBar(
-            title: Text(DunRouter.pageTitles[routerIndex]),
+            title: Row(
+              children: [
+                Text(DunRouter.pageTitles[routerIndex])
+              ],
+            ),
             systemOverlayStyle: const SystemUiOverlayStyle(
               statusBarIconBrightness: Brightness.light,
             ),
@@ -122,8 +126,7 @@ class _MainScaffoldState extends State<MainScaffold> {
                       ),
                       Text(
                         '小刻食堂 V' + StaticVariable.version,
-                        style: TextStyle(
-                            color: Colors.white, fontSize: 18),
+                        style: TextStyle(color: Colors.white, fontSize: 18),
                       )
                     ],
                   ),
@@ -132,6 +135,7 @@ class _MainScaffoldState extends State<MainScaffold> {
                   children: List.generate(
                     DunRouter.pageTitles.length,
                     (index) => ListTile(
+                      leading: DunRouter.pagesIcon[index],
                       title: Text(DunRouter.pageTitles[index]),
                       onTap: () => {
                         Provider.of<CommonProvider>(context, listen: false)

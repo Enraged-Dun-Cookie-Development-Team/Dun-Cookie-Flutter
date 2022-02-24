@@ -1,3 +1,4 @@
+import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/model/source_data.dart';
 import 'package:dun_cookie_flutter/model/source_info.dart';
 import 'package:dun_cookie_flutter/page/main/dun_share.dart';
@@ -42,14 +43,14 @@ class DunHead extends StatelessWidget {
                 children: [
                   Text(
                     source.title,
-                    style: Theme.of(context).textTheme.headline2,
+                    style: DunStyles.text16C,
                   ),
                   const SizedBox(
                     height: 2,
                   ),
                   Text(
                     info.timeForDisplay!,
-                    style: Theme.of(context).textTheme.subtitle2,
+                    style: DunStyles.text14,
                   ),
                 ],
               )

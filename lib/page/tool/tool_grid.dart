@@ -34,7 +34,7 @@ class ToolGrid extends StatelessWidget {
       children: [
         Text(
           title,
-          style: Theme.of(context).textTheme.headline1,
+          style: DunStyles.text14C,
         ),
         Padding(
           padding: const EdgeInsets.all(10),

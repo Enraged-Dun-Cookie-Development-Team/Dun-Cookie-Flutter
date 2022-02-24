@@ -46,7 +46,7 @@ class _DunToolState extends State<DunTool> {
                       if (ceobecanteenInfo.app == null)
                         Text(
                           "以下数据为离线数据",
-                          style: Theme.of(context).textTheme.headline2,
+                          style: DunStyles.text16C,
                         ),
                       // 物资是否开放
                       ToolResource(ceobecanteenInfo.dayInfo),

@@ -1,4 +1,5 @@
 import 'package:dun_cookie_flutter/common/browser/main.dart';
+import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/page/Error/main.dart';
 import 'package:dun_cookie_flutter/page/bakery/main.dart';
 import 'package:dun_cookie_flutter/page/home/main.dart';
@@ -28,6 +29,12 @@ class DunRouter {
   /// 底部栏用
   static const pageTitles = ["小刻食堂", "蜜饼工坊", "常用工具", "设置"];
   static const pages = [DunList(), Bakery(), DunTool(), DunSetting()];
+  static const pagesIcon = [
+    Image(image:AssetImage("assets/logo/cookie.png"),height: 30,),
+    Image(image:AssetImage("assets/logo/logo_mb.png"),height: 30,),
+    Icon(Icons.handyman,size: 30,color: DunColors.DunColor,),
+    Icon(Icons.settings,size: 30,color: DunColors.DunColor),
+  ];
 
   /// 添加页面后记得在上面加上 不然就会直接跳转到404
   static Route routeGenerator(RouteSettings settings) {

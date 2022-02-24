@@ -113,7 +113,7 @@ class _DunImageState extends State<DunImage>
                   color: Colors.white,
                   child: Text(
                     "${((progress ?? 0.0) * 100).toInt()}%",
-                    style: Theme.of(context).textTheme.headline1,
+                    style: DunStyles.text14C,
                   ),
                 ),
               )

@@ -16,6 +16,18 @@ class DunColors {
       Color.fromARGB(255, 22, 191, 255);
 }
 
+class DunStyles {
+  static const text14C = TextStyle(fontSize: 14, color: DunColors.DunColor);
+  static const text16C = TextStyle(fontSize: 16, color: DunColors.DunColor);
+  static const text18C = TextStyle(fontSize: 18, color: DunColors.DunColor);
+  static const text20C = TextStyle(fontSize: 20, color: DunColors.DunColor);
+  static const text26C = TextStyle(fontSize: 26, color: DunColors.DunColor);
+  static const text30C = TextStyle(fontSize: 30, color: DunColors.DunColor);
+  static const text14 = TextStyle(fontSize: 14);
+  static const text18 = TextStyle(fontSize: 18);
+  static const text14B = TextStyle(fontSize: 14, color: Colors.black45);
+}
+
 class DunTheme {
   static final ThemeData _mainTheme = ThemeData(
     brightness: Brightness.light,
@@ -37,18 +49,6 @@ class DunTheme {
     splashColor: DunColors.DunPink,
     colorScheme:
         ColorScheme.fromSwatch().copyWith(secondary: DunColors.DunColorLigth),
-    textTheme: const TextTheme(
-      headline1: TextStyle(fontSize: 14, color: DunColors.DunColor),
-      headline2: TextStyle(fontSize: 16, color: DunColors.DunColor),
-      headline3: TextStyle(fontSize: 18, color: DunColors.DunColor),
-      headline4: TextStyle(fontSize: 20, color: DunColors.DunColor),
-      headline5: TextStyle(fontSize: 26, color: DunColors.DunColor),
-      headline6: TextStyle(fontSize: 30, color: DunColors.DunColor),
-      bodyText1: TextStyle(fontSize: 14),
-      bodyText2: TextStyle(fontSize: 14),
-      subtitle1: TextStyle(fontSize: 16),
-      subtitle2: TextStyle(fontSize: 14, color: Colors.black45),
-    ),
   );
 
   static List<ThemeData> themeList = [_mainTheme];

@@ -72,7 +72,7 @@ class ToolCountdown extends StatelessWidget {
                           child: Text(
                             info.remark!,
                             style:
-                               Theme.of(context).textTheme.subtitle2,
+                              DunStyles.text14,
                           ),
                           scrollDirection: Axis.horizontal),
                     ],

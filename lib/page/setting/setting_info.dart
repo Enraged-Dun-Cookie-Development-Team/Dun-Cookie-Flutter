@@ -1,4 +1,5 @@
 import 'package:dun_cookie_flutter/common/static_variable/main.dart';
+import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
@@ -23,24 +24,25 @@ class DunInfo extends StatelessWidget {
                   "assets/logo/logo.png",
                   width: 100,
                 ),
-                Text(
+                const Text(
                   "小刻食堂 V${StaticVariable.version}",
-                  style: Theme.of(context).textTheme.headline3,
+                  style: DunStyles.text18C,
                 ),
-                Text(
+                const Text(
                   "Powered By 蓝芷怡 & 洛梧藤",
                 ),
-                Text(
+                const Text(
                   "欢迎来QQ群【蹲饼组】反馈BUG或提出意见建议，一起来玩",
                 ),
                 ElevatedButton(
-                    onPressed: () {
-                      Clipboard.setData(const ClipboardData(text: '362860473'));
-                      DunToast.showSuccess("已复制，来QQ群找我们聊天吧！");
-                    },
-                    child: Text(
-                      "群号：362860473，点击复制",
-                    )),
+                  onPressed: () {
+                    Clipboard.setData(const ClipboardData(text: '362860473'));
+                    DunToast.showSuccess("已复制，来QQ群找我们聊天吧！");
+                  },
+                  child: const Text(
+                    "群号：362860473，点击复制",
+                  ),
+                ),
               ],
             ),
           ),

@@ -1,3 +1,4 @@
+import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:flutter/material.dart';
 
 class DunError extends StatelessWidget {
@@ -13,7 +14,7 @@ class DunError extends StatelessWidget {
           Text("错误，请联系我们处理！"),
           Text(
             error,
-            style: Theme.of(context).textTheme.headline6!.copyWith(color: Colors.red),
+            style: DunStyles.text30C.copyWith(color: Colors.red),
           )
         ],
       ),

@@ -30,7 +30,7 @@ class OpenScreenInfo extends StatelessWidget {
                 ),
                 Text(
                   "首先欢迎你使用小刻食堂移动端",
-                  style: Theme.of(context).textTheme.headline4,
+                  style: DunStyles.text20C,
                 ),
                 const SizedBox(
                   height: 3,

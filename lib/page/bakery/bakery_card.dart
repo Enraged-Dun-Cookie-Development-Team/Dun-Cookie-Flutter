@@ -18,11 +18,11 @@ class BakeryCard extends StatelessWidget {
         children: [
           Text(
             "${data.createTime!}发布，${data.updateTime == null ? "暂未修改" : "于${data.updateTime}修改"}",
-            style: Theme.of(context).textTheme.subtitle2,
+            style: DunStyles.text14,
           ),
           Text(
             data.title!,
-            style: Theme.of(context).textTheme.headline2,
+            style: DunStyles.text16C,
           ),
           const SizedBox(
             height: 6,
@@ -47,7 +47,7 @@ class BakeryCard extends StatelessWidget {
                             Container(
                               child: Padding(
                                 padding: const EdgeInsets.all(6),
-                                child: Text(indexDay.datetime!.toString(),style: Theme.of(context).textTheme.headline4,),
+                                child: Text(indexDay.datetime!.toString(),style: DunStyles.text20C,),
                               ),
                               margin: const EdgeInsets.only(left: 5),
                             ),
