@@ -8,6 +8,7 @@ class OpenScreenInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: DunTheme.themeList[0],
       title: "小刻食堂",
       home: Scaffold(
         appBar: AppBar(

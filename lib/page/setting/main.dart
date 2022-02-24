@@ -1,5 +1,6 @@
 import 'package:dun_cookie_flutter/common/static_variable/main.dart';
 import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
+import 'package:dun_cookie_flutter/common/tool/open_app_or_browser.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
 import 'package:dun_cookie_flutter/page/setting/setting_info.dart';
 import 'package:dun_cookie_flutter/page/setting/setting_source_filter.dart';
@@ -41,6 +42,16 @@ class DunSetting extends StatelessWidget {
             } else {
               DunToast.showSuccess("当前版本是最新版本");
             }
+          },
+        ),
+        ListTile(
+          title: const Text("关注我们的B站账号"),
+          subtitle: const Text("欢迎点赞"),
+          trailing: const Icon(Icons.arrow_right),
+          onTap: () {
+            OpenAppOrBrowser.openUrl(
+                "https://m.bilibili.com/space/1723599428", context,
+                appUrlScheme: "bilibili://space/1723599428");
           },
         ),
         ListTile(

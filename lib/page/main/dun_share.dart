@@ -91,8 +91,7 @@ class _DunWidgetToImageState extends State<DunWidgetToImage> {
                     ),
                     Text(
                       "-去应用商店下载小刻食堂-",
-                      style: DunStyles.text14C
-                          .copyWith(color: Colors.white),
+                      style: DunStyles.text14C.copyWith(color: Colors.white),
                     ),
                   ],
                 ),
@@ -121,35 +120,33 @@ class _DunWidgetToImageState extends State<DunWidgetToImage> {
                 foregroundColor: DunColors.DunColor),
           ),
         ),
-        // 小刻食堂标题和下面的分界线
-        Positioned(
-          left: 0,
-          top: 50,
-          child: Container(
-            height: 3,
-            width: 200,
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [DunColors.DunColor, Colors.white],
-              ),
-            ),
-          ),
-        ),
         // 小刻食堂标题
         Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               padding: const EdgeInsets.all(10),
               alignment: Alignment.topLeft,
               child: RichText(
-                text: TextSpan(
+                text: const TextSpan(
                     text: "小刻食堂",
                     style: DunStyles.text20C,
                     children: [
                       TextSpan(
                         text: " 移动版",
+                        style: DunStyles.text14C,
                       ),
                     ]),
+              ),
+            ),
+            // 小刻食堂标题和下面的分界线
+            Container(
+              height: 3,
+              width: 200,
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [DunColors.DunColor, Colors.white],
+                ),
               ),
             ),
             // 头部引用
@@ -179,7 +176,8 @@ class _DunWidgetToImageState extends State<DunWidgetToImage> {
     eventBus.fire(event);
     Uint8List pngBytes = await _widgetToUint8List();
     final result = await ImageGallerySaver.saveImage(pngBytes,
-        name: DateTime.now().toString());
+        name:
+            "ceobecanteen_" + DateTime.now().millisecondsSinceEpoch.toString());
     if (result["isSuccess"]) {
       DunToast.showSuccess("图片已保存");
     }
@@ -192,6 +190,7 @@ class _DunWidgetToImageState extends State<DunWidgetToImage> {
     Uint8List pngBytes = await _widgetToUint8List();
     final document = await getApplicationDocumentsDirectory();
     final dir = Directory(document.path +
+        "/ceobecanteen_" +
         DateTime.now().millisecondsSinceEpoch.toString() +
         '.png');
     final imageFile = File(dir.path);

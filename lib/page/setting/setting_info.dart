@@ -1,6 +1,7 @@
 import 'package:dun_cookie_flutter/common/static_variable/main.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
+import 'package:dun_cookie_flutter/page/setting/main.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 
@@ -26,13 +27,13 @@ class DunInfo extends StatelessWidget {
                 ),
                 const Text(
                   "小刻食堂 V${StaticVariable.version}",
-                  style: DunStyles.text18C,
+                  style: DunStyles.text30C,
                 ),
                 const Text(
                   "Powered By 蓝芷怡 & 洛梧藤",
                 ),
                 const Text(
-                  "欢迎来QQ群【蹲饼组】反馈BUG或提出意见建议，一起来玩",
+                  "欢迎来QQ群【蹲饼组】反馈BUG或提出意见建议",
                 ),
                 ElevatedButton(
                   onPressed: () {
