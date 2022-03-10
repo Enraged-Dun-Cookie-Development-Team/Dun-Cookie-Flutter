@@ -1,4 +1,4 @@
-import 'package:dun_cookie_flutter/common/static_variable/main.dart';
+import 'package:dun_cookie_flutter/common/Constant/main.dart';
 import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
 import 'package:dun_cookie_flutter/common/tool/open_app_or_browser.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
@@ -36,7 +36,7 @@ class DunSetting extends StatelessWidget {
                 ?.app;
             if (app?.version != null &&
                 double.parse(app!.version!) >
-                    double.parse(StaticVariable.version)) {
+                    double.parse(Constant.version)) {
               Navigator.pushNamed(context, DunUpdate.routerName,
                   arguments: app);
             } else {

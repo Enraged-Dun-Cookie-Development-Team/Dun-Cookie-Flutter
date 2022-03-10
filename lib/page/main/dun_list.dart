@@ -6,7 +6,7 @@ import 'package:dun_cookie_flutter/page/main/dun_card_item.dart';
 import 'package:dun_cookie_flutter/page/main/dun_loading.dart';
 import 'package:dun_cookie_flutter/provider/common_event_bus.dart';
 import 'package:dun_cookie_flutter/provider/common_provider.dart';
-import 'package:dun_cookie_flutter/service/list_request.dart';
+import 'package:dun_cookie_flutter/request/list_request.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -71,18 +71,17 @@ class _DunListState extends State<DunList> {
   }
 
   void _onRefresh() async {
-    await _getDate();
+    List<SourceData> newList = await ListRequest.canteenNewCardList();
+    if (newList.isNotEmpty) {
+      DunToast.showSuccess("找到了${newList.length}个新饼");
+    }
+    Provider.of<CommonProvider>(context, listen: false)
+        .addListInSourceData(newList);
     _refreshController.refreshCompleted();
   }
 
   //  获取数据
   _getDate() async {
-    // List<SourceData> newList = await ListRequest.canteenNewCardList();
-    // if (newList.length != 0) {
-    //   DunToast.showSuccess("找到了${newList.length}个新饼");
-    // }
-    // Provider.of<CommonProvider>(context, listen: false)
-    //     .addListInSourceData(newList);
     var provider = Provider.of<CommonProvider>(context, listen: false);
     await provider.checkSourceInPreferences();
     var data = await ListRequest.canteenCardList(

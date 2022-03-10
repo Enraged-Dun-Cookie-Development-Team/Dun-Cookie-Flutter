@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:dun_cookie_flutter/common/static_variable/main.dart';
+import 'package:dun_cookie_flutter/common/Constant/main.dart';
 import 'package:dun_cookie_flutter/provider/common_event_bus.dart';
 import 'package:provider/provider.dart';
 import 'config.dart';
@@ -17,12 +17,23 @@ class HttpClass {
     String url, {
     String method = "get",
     Map<String, dynamic>? params,
-    bool isNoBaseUrl = false,
+    int? type,
   }) async {
     final options = Options(method: method);
-    isNoBaseUrl
-        ? dio.options.baseUrl = ""
-        : dio.options.baseUrl = HttpConfig.baseUrl;
+   switch(type){
+     case -1:
+       dio.options.baseUrl = "";
+       break;
+     case 0:
+       dio.options.baseUrl = HttpConfig.lwtBaseUrl;
+       break;
+     case 1:
+       dio.options.baseUrl = HttpConfig.wyqBaseUrl;
+       break;
+     case 2:
+       dio.options.baseUrl = HttpConfig.ceobecanteenBaseUrl;
+       break;
+   }
     try {
       dio.interceptors.add(_dInter());
       Response response = await dio.request(
@@ -39,19 +50,15 @@ class HttpClass {
   static InterceptorsWrapper _dInter() {
     return InterceptorsWrapper(
       onRequest: (options, handler) {
-        if (StaticVariable.deviceId == null) {
+        if (Constant.deviceId == null) {
           dio.lock();
           eventBus.on<DeviceInfoBus>().listen((_) => dio.unlock());
         }
-        options.headers.addAll({"deviceID": StaticVariable.deviceId});
+        options.headers.addAll({"deviceID": Constant.deviceId});
         return handler.next(options);
       },
       onResponse: (response, handler) {
-        if (response != null) {
-          return handler.next(response);
-        } else {
-          return;
-        }
+        return handler.next(response);
       },
       onError: (DioError err, handler) async {
         return handler.next(err);
@@ -59,22 +66,17 @@ class HttpClass {
     );
   }
 
-  static Future get(String url, {params}) {
-    return _request(url, params: params);
+  static Future get(String url, {params, type = 0}) {
+    return _request(url, params: params, type: type);
   }
 
-  static Future tempGet(String url) {
-    return _request(url, isNoBaseUrl: true);
-  }
-
-  static Future post(String url, {Map<String, dynamic>? params}) {
-    return _request(url, method: "post", params: params);
+  static Future post(String url, {Map<String, dynamic>? params, type = 0}) {
+    return _request(url, method: "post", params: params, type: type);
   }
 }
 
 class ResponseData {
   ResponseData(this.error, this.data, this.msg);
-
   bool error = false;
   dynamic data;
   String msg = "";

@@ -1,5 +1,5 @@
 import 'package:dun_cookie_flutter/common/persistence/main.dart';
-import 'package:dun_cookie_flutter/common/static_variable/main.dart';
+import 'package:dun_cookie_flutter/common/Constant/main.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/model/bakery_data.dart';
 import 'package:dun_cookie_flutter/model/source_data.dart';
@@ -10,7 +10,7 @@ class CommonProvider with ChangeNotifier {
   CommonProvider();
 
   // 路由初始化页面
-  int _routerIndex = StaticVariable.starRouterIndex;
+  int _routerIndex = Constant.starRouterIndex;
 
   int get routerIndex {
     return _routerIndex;

@@ -1,4 +1,4 @@
-class StaticVariable {
+class Constant {
   //  版本
   static const String version = "0.25";
 

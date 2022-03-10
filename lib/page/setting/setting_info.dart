@@ -1,4 +1,4 @@
-import 'package:dun_cookie_flutter/common/static_variable/main.dart';
+import 'package:dun_cookie_flutter/common/Constant/main.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
 import 'package:dun_cookie_flutter/page/setting/main.dart';
@@ -26,7 +26,7 @@ class DunInfo extends StatelessWidget {
                   width: 100,
                 ),
                 const Text(
-                  "小刻食堂 V${StaticVariable.version}",
+                  "小刻食堂 V${Constant.version}",
                   style: DunStyles.text30C,
                 ),
                 const Text(

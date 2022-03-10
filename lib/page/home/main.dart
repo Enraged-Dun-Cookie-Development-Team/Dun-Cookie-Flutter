@@ -15,10 +15,9 @@ import 'package:dun_cookie_flutter/provider/common_provider.dart';
 import 'package:dun_cookie_flutter/router/router.dart';
 import 'package:dun_cookie_flutter/common/static_variable/main.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
-import 'package:dun_cookie_flutter/service/brkery_request.dart';
-import 'package:dun_cookie_flutter/service/info_request.dart';
-import 'package:dun_cookie_flutter/service/list_request.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:dun_cookie_flutter/request/bakery_request.dart';
+import 'package:dun_cookie_flutter/request/info_request.dart';
+import 'package:dun_cookie_flutter/request/list_request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -33,7 +32,7 @@ class MainScaffold extends StatefulWidget {
 class _MainScaffoldState extends State<MainScaffold> {
   _init() async {
     // 获取设备ID
-    StaticVariable.deviceId = await DeviceInfo.getId();
+    Constant.deviceId = await DeviceInfo.getId();
     eventBus.fire(DeviceInfoBus());
     eventBus.on<ChangeSourceBus>().listen((event) {
       _getData();
@@ -64,7 +63,7 @@ class _MainScaffoldState extends State<MainScaffold> {
       DunToast.showError("资源服务器无法连接，无法工具页部分信息");
     } else {
       if (double.parse(value.app!.version!) >
-          double.parse(StaticVariable.version)) {
+          double.parse(Constant.version)) {
         Navigator.pushNamed(context, DunUpdate.routerName,
             arguments: value.app);
       }
@@ -137,7 +136,7 @@ class _MainScaffoldState extends State<MainScaffold> {
                         width: 100,
                       ),
                       Text(
-                        '小刻食堂 beta V' + StaticVariable.version,
+                        '小刻食堂 beta V' + Constant.version,
                         style: TextStyle(color: Colors.white, fontSize: 18),
                       )
                     ],

@@ -1,4 +1,4 @@
-import 'package:dun_cookie_flutter/common/static_variable/main.dart';
+import 'package:dun_cookie_flutter/common/Constant/main.dart';
 import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +13,7 @@ class DunUpdate extends StatelessWidget {
     final List<int> nowVersion =
         dunApp.version!.split(".").map((a) => int.parse(a)).toList();
     final List<int> pastVersion =
-        StaticVariable.version.split(".").map((a) => int.parse(a)).toList();
+        Constant.version.split(".").map((a) => int.parse(a)).toList();
     final List<int> lastVersion =
         dunApp.lastFocusVersion!.split(".").map((a) => int.parse(a)).toList();
 
@@ -75,7 +75,7 @@ class DunUpdate extends StatelessWidget {
                   ], style: TextStyle(color: Colors.black)),
                 ),
                 _content("版本升级",
-                    "${StaticVariable.version} --> ${dunApp.version.toString()}"),
+                    "${Constant.version} --> ${dunApp.version.toString()}"),
                 _content("更新时间", "现在"),
                 _content("更新模式", isFocus ? "强制" : "非强制",
                     color: isFocus ? Colors.red : Colors.black),

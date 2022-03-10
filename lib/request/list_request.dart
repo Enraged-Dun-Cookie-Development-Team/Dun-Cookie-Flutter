@@ -49,7 +49,7 @@ class ListRequest {
 
 //  请求新的饼
   static Future<List<SourceData>> canteenNewCardList() async {
-    const url = "/canteen/newCardList";
+    const url = "/api/v0/ceobe/update";
     List<SourceData> resultAll = [];
     ResponseData request = await HttpClass.get(url);
     print("请求一次新数据");

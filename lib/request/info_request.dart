@@ -1,13 +1,12 @@
 import 'dart:math';
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
-import 'package:dun_cookie_flutter/service/main.dart';
+import 'package:dun_cookie_flutter/request/main.dart';
 
 class InfoRequest {
   static _getCeobecanteenInfo() async {
-    final url =
-        "http://api.ceobecanteen.top/canteen/info?${Random().nextInt(100000).toString()}";
+    final url ="/canteen/info?${Random().nextInt(100000).toString()}";
     print("请求info数据");
-    return await HttpClass.tempGet(url);
+    return await HttpClass.get(url,type: 2);
   }
 
   static Future<CeobecanteenData> getCeobecanteenInfo() async {
