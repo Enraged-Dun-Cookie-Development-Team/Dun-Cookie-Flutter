@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
    <application
         android:label="小刻食堂"
-        android:name="${applicationName}"
+        android:name="android.app.Application"
         android:requestLegacyExternalStorage="true"
         android:icon="@mipmap/logo">
         <activity

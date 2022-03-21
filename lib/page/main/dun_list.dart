@@ -38,27 +38,14 @@ class _DunListState extends State<DunList> {
 
   @override
   Widget build(BuildContext context) {
-    return Selector<CommonProvider, List<SourceData>>(
+    return Selector<CommonProvider, List<SourceData>?>(
       builder: (context, sourceDataList, child) {
         return SmartRefresher(
           header: const DunLoading(),
           controller: _refreshController,
           enablePullDown: true,
           onRefresh: _onRefresh,
-          child: sourceDataList.isEmpty
-              ? const Center(
-                  child: Text("等待食堂数据……"),
-                )
-              : ListView.builder(
-                  itemCount: sourceDataList.length,
-                  itemBuilder: (ctx, index) {
-                    var info = sourceDataList[index];
-                    return DunCardItem(
-                      info: info,
-                      index: index,
-                    );
-                  },
-                ),
+          child: checkListHasValue(sourceDataList),
         );
       },
       selector: (ctx, commonProvider) {
@@ -70,13 +57,24 @@ class _DunListState extends State<DunList> {
     );
   }
 
+  bool isAllowRefresh = true;
+
   void _onRefresh() async {
-    List<SourceData> newList = await ListRequest.canteenNewCardList();
-    if (newList.isNotEmpty) {
-      DunToast.showSuccess("找到了${newList.length}个新饼");
+    // List<SourceData> newList = await ListRequest.canteenNewCardList();
+    // if (newList.isNotEmpty) {
+    //   DunToast.showSuccess("找到了${newList.length}个新饼");
+    // }
+    // Provider.of<CommonProvider>(context, listen: false)
+    //     .addListInSourceData(newList);
+    if (isAllowRefresh) {
+      _getDate();
+      isAllowRefresh = false;
+      Future.delayed(const Duration(seconds: 5), () {
+        isAllowRefresh = true;
+      });
+    } else {
+      DunToast.showError("阿伟，休息一下吧");
     }
-    Provider.of<CommonProvider>(context, listen: false)
-        .addListInSourceData(newList);
     _refreshController.refreshCompleted();
   }
 
@@ -88,5 +86,49 @@ class _DunListState extends State<DunList> {
         source: {"source": provider.checkSource.join("_")});
     provider.sourceData = data;
     return data;
+  }
+
+  // 根据列表调整显示内容
+  // data == null 初始化
+  // data == [] 数据库连接失败
+  checkListHasValue(sourceDataList) {
+    if (sourceDataList != null && sourceDataList.length > 0) {
+      return ListView.builder(
+        itemCount: sourceDataList.length,
+        itemBuilder: (ctx, index) {
+          var info = sourceDataList[index];
+          return DunCardItem(
+            info: info,
+            index: index,
+          );
+        },
+      );
+    } else if (sourceDataList == null) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            Image(
+              image: AssetImage("assets/logo/loading.gif"),
+              width: 120,
+            ),
+            Text("等待食堂数据……"),
+          ],
+        ),
+      );
+    } else {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            Image(
+              image: AssetImage("assets/logo/loading.gif"),
+              width: 120,
+            ),
+            Text("哦豁！服务器炸了"),
+          ],
+        ),
+      );
+    }
   }
 }

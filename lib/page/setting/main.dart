@@ -1,4 +1,5 @@
-import 'package:dun_cookie_flutter/common/Constant/main.dart';
+import 'package:dun_cookie_flutter/common/constant/main.dart';
+import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
 import 'package:dun_cookie_flutter/common/tool/open_app_or_browser.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
@@ -18,6 +19,10 @@ class DunSetting extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        const Padding(
+          padding: EdgeInsets.all(15.0),
+          child: Text("本程序未经过多轮测试，如果有bug和闪退，请于下面反馈通道反馈",style: DunStyles.text16C,),
+        ),
         ListTile(
           title: const Text("饼来源"),
           subtitle: const Text("选择勾选来源，最少选择一个"),
@@ -35,8 +40,7 @@ class DunSetting extends StatelessWidget {
                 .ceobecanteenInfo
                 ?.app;
             if (app?.version != null &&
-                double.parse(app!.version!) >
-                    double.parse(Constant.version)) {
+                double.parse(app!.version!) > double.parse(Constant.version)) {
               Navigator.pushNamed(context, DunUpdate.routerName,
                   arguments: app);
             } else {
@@ -60,6 +64,15 @@ class DunSetting extends StatelessWidget {
           trailing: const Icon(Icons.arrow_right),
           onTap: () {
             Navigator.pushNamed(context, DunInfo.routerName);
+          },
+        ),
+        ListTile(
+          title: Text(Constant.jpushRid == null ? '--' : Constant.jpushRid!),
+          subtitle: const Text("推送ID，收不到推送请复制ID联系我们，没有ID也联系我们"),
+          trailing: const Icon(Icons.handyman),
+          onTap: () {
+            Clipboard.setData(ClipboardData(text: Constant.jpushRid));
+            DunToast.showSuccess("已复制");
           },
         ),
       ],

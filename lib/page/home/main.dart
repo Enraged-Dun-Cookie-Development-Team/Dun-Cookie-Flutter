@@ -1,4 +1,5 @@
 import 'package:animations/animations.dart';
+import 'package:dun_cookie_flutter/common/constant/main.dart';
 import 'package:dun_cookie_flutter/common/persistence/main.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/device_info.dart';
@@ -13,13 +14,13 @@ import 'package:dun_cookie_flutter/page/update/main.dart';
 import 'package:dun_cookie_flutter/provider/common_event_bus.dart';
 import 'package:dun_cookie_flutter/provider/common_provider.dart';
 import 'package:dun_cookie_flutter/router/router.dart';
-import 'package:dun_cookie_flutter/common/static_variable/main.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
 import 'package:dun_cookie_flutter/request/bakery_request.dart';
 import 'package:dun_cookie_flutter/request/info_request.dart';
 import 'package:dun_cookie_flutter/request/list_request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:jpush_flutter/jpush_flutter.dart';
 import 'package:provider/provider.dart';
 
 class MainScaffold extends StatefulWidget {
@@ -36,6 +37,20 @@ class _MainScaffoldState extends State<MainScaffold> {
     eventBus.fire(DeviceInfoBus());
     eventBus.on<ChangeSourceBus>().listen((event) {
       _getData();
+    });
+  }
+
+  _initJPush() async {
+    JPush jpush = new JPush();
+    jpush.setup(
+      appKey: Constant.jpushAppKey,
+      channel: "flutter_channel",
+      production: false,
+    );
+    Constant.jpushRid = await jpush.getRegistrationID();
+    print(Constant.jpushRid);
+    setState(() {
+      Constant.jpushRid = Constant.jpushRid;
     });
   }
 
@@ -62,8 +77,7 @@ class _MainScaffoldState extends State<MainScaffold> {
     if (value.app == null) {
       DunToast.showError("资源服务器无法连接，无法工具页部分信息");
     } else {
-      if (double.parse(value.app!.version!) >
-          double.parse(Constant.version)) {
+      if (double.parse(value.app!.version!) > double.parse(Constant.version)) {
         Navigator.pushNamed(context, DunUpdate.routerName,
             arguments: value.app);
       }
@@ -72,12 +86,17 @@ class _MainScaffoldState extends State<MainScaffold> {
 
   _getBakeryInfo() async {
     BakeryData value = await BakeryRequest.getBakeryInfo();
+    if (value.title == null) {
+      DunToast.showError("饼组服务器无法连接");
+    }
     Provider.of<CommonProvider>(context, listen: false)
         .addListInBakeryData(value);
   }
 
   @override
   void initState() {
+    // 初始化推送变量
+    _initJPush();
     // 初始化全局变量，读取设置
     _init();
     // 是否是第一次进入APP
@@ -88,6 +107,7 @@ class _MainScaffoldState extends State<MainScaffold> {
     _getCeobecanteenInfoAndCheckVersion();
     // 获取饼组信息
     _getBakeryInfo();
+
     super.initState();
   }
 
@@ -132,13 +152,13 @@ class _MainScaffoldState extends State<MainScaffold> {
                   child: Column(
                     children: const [
                       Image(
-                        image: AssetImage("assets/logo/logo.png"),
+                        image: AssetImage("assets/logo/logo_no_line.png"),
                         width: 100,
                       ),
                       Text(
-                        '小刻食堂 beta V' + Constant.version,
+                        '小刻食堂 Bate V' + Constant.version,
                         style: TextStyle(color: Colors.white, fontSize: 18),
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -156,10 +176,6 @@ class _MainScaffoldState extends State<MainScaffold> {
                     ),
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text("本程序未经过多轮测试，如果有bug和闪退，请于设置页面反馈通道反馈"),
-                )
               ],
             ),
           ),

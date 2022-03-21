@@ -1,5 +1,5 @@
 import 'package:dun_cookie_flutter/common/persistence/main.dart';
-import 'package:dun_cookie_flutter/common/Constant/main.dart';
+import 'package:dun_cookie_flutter/common/constant/main.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/model/bakery_data.dart';
 import 'package:dun_cookie_flutter/model/source_data.dart';
@@ -56,21 +56,24 @@ class CommonProvider with ChangeNotifier {
   }
 
 //  获取到的列表数据
-  List<SourceData> _sourceData = [];
+  List<SourceData>? _sourceData;
 
-  List<SourceData> get sourceData {
+  List<SourceData>? get sourceData {
     return _sourceData;
   }
 
-  set sourceData(List<SourceData> value) {
+  set sourceData(List<SourceData>? value) {
     _sourceData = value;
-    _sourceData.sort((x, y) => y.timeForSort!.compareTo(x.timeForSort!));
+    if (_sourceData != null) {
+      _sourceData!.sort((x, y) => y.timeForSort!.compareTo(x.timeForSort!));
+    }
     notifyListeners();
   }
 
   // 在前面追加饼并且重新排序一次
   addListInSourceData(List<SourceData> value) {
-    _sourceData.addAll(value);
+    _sourceData ??= [];
+    _sourceData!.addAll(value);
     sourceData = _sourceData;
   }
 

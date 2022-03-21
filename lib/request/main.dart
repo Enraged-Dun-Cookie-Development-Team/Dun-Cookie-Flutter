@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:dun_cookie_flutter/common/Constant/main.dart';
+import 'package:dun_cookie_flutter/common/constant/main.dart';
 import 'package:dun_cookie_flutter/provider/common_event_bus.dart';
 import 'package:provider/provider.dart';
 import 'config.dart';
@@ -20,20 +20,20 @@ class HttpClass {
     int? type,
   }) async {
     final options = Options(method: method);
-   switch(type){
-     case -1:
-       dio.options.baseUrl = "";
-       break;
-     case 0:
-       dio.options.baseUrl = HttpConfig.lwtBaseUrl;
-       break;
-     case 1:
-       dio.options.baseUrl = HttpConfig.wyqBaseUrl;
-       break;
-     case 2:
-       dio.options.baseUrl = HttpConfig.ceobecanteenBaseUrl;
-       break;
-   }
+    switch (type) {
+      case -1:
+        dio.options.baseUrl = "";
+        break;
+      case 0:
+        dio.options.baseUrl = HttpConfig.lwtBaseUrl;
+        break;
+      case 1:
+        dio.options.baseUrl = HttpConfig.wyqBaseUrl;
+        break;
+      case 2:
+        dio.options.baseUrl = HttpConfig.ceobecanteenBaseUrl;
+        break;
+    }
     try {
       dio.interceptors.add(_dInter());
       Response response = await dio.request(
@@ -43,18 +43,18 @@ class HttpClass {
       );
       return ResponseData(false, response.data, "");
     } catch (e) {
-      return ResponseData(true, [], e.toString());
+      return ResponseData(true, null, e.toString());
     }
   }
 
   static InterceptorsWrapper _dInter() {
     return InterceptorsWrapper(
       onRequest: (options, handler) {
-        if (Constant.deviceId == null) {
+        if (Constant.jpushRid == null) {
           dio.lock();
           eventBus.on<DeviceInfoBus>().listen((_) => dio.unlock());
         }
-        options.headers.addAll({"deviceID": Constant.deviceId});
+        options.headers.addAll({"JPushRid": Constant.jpushRid});
         return handler.next(options);
       },
       onResponse: (response, handler) {
@@ -77,6 +77,7 @@ class HttpClass {
 
 class ResponseData {
   ResponseData(this.error, this.data, this.msg);
+
   bool error = false;
   dynamic data;
   String msg = "";

@@ -1,4 +1,4 @@
-import 'package:dun_cookie_flutter/common/Constant/main.dart';
+import 'package:dun_cookie_flutter/common/constant/main.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
 import 'package:dun_cookie_flutter/page/setting/main.dart';
@@ -14,38 +14,56 @@ class DunInfo extends StatelessWidget {
     return GestureDetector(
       child: Scaffold(
         body: Center(
-          child: SizedBox(
-            height: 300,
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 10,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                "assets/logo/logo.png",
+                width: 100,
+              ),
+              const SizedBox(
+                height: 6,
+              ),
+              const Text(
+                "小刻食堂 V${Constant.version}",
+                style: DunStyles.text26C,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const Text(
+                "Flutter By 蓝芷怡",
+              ),
+              const Text(
+                "NodeJS By 云闪",
+              ),
+              const Text(
+                "后台 By 洛梧藤 & Jacky",
+              ),
+              const Text(
+                "画师 By 不画涩图の企鹅",
+              ),
+              const Text(
+                "宣发 By 不到60kg不改名",
+              ),
+              const SizedBox(height: 10,),
+              const Text(
+                "欢迎联系我们为小刻食堂添砖加瓦",
+              ),
+              const SizedBox(height: 10,),
+              const Text(
+                "欢迎来QQ群【蹲饼组】反馈BUG或提出意见建议",
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Clipboard.setData(const ClipboardData(text: '362860473'));
+                  DunToast.showSuccess("根本难不倒他");
+                },
+                child: const Text(
+                  "群号：362860473，点击复制",
                 ),
-                Image.asset(
-                  "assets/logo/logo.png",
-                  width: 100,
-                ),
-                const Text(
-                  "小刻食堂 V${Constant.version}",
-                  style: DunStyles.text30C,
-                ),
-                const Text(
-                  "Powered By 蓝芷怡 & 洛梧藤",
-                ),
-                const Text(
-                  "欢迎来QQ群【蹲饼组】反馈BUG或提出意见建议",
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Clipboard.setData(const ClipboardData(text: '362860473'));
-                    DunToast.showSuccess("已复制，来QQ群找我们聊天吧！");
-                  },
-                  child: const Text(
-                    "群号：362860473，点击复制",
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
