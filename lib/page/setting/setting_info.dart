@@ -38,7 +38,7 @@ class DunInfo extends StatelessWidget {
                 "NodeJS By 云闪",
               ),
               const Text(
-                "后台 By 洛梧藤 & Jacky",
+                "后台 By 洛梧藤 & 凊弦凝绝",
               ),
               const Text(
                 "画师 By 不画涩图の企鹅",
