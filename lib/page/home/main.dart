@@ -31,6 +31,8 @@ class MainScaffold extends StatefulWidget {
 }
 
 class _MainScaffoldState extends State<MainScaffold> {
+
+
   _init() async {
     // 初始化推送变量
     await _initJPush();

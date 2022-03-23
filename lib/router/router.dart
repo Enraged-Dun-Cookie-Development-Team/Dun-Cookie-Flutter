@@ -30,7 +30,7 @@ class DunRouter {
   static const pageTitles = ["小刻食堂", "蜜饼工坊", "常用工具", "设置"];
   static const pages = [DunList(), Bakery(), DunTool(), DunSetting()];
   static const pagesIcon = [
-    Image(image:AssetImage("assets/logo/cookie.png"),height: 30,),
+    Image(image:AssetImage("assets/logo/logo_item.png"),height: 30,),
     Image(image:AssetImage("assets/logo/logo_mb.png"),height: 30,),
     Icon(Icons.handyman,size: 30,color: DunColors.DunColor,),
     Icon(Icons.settings,size: 30,color: DunColors.DunColor),

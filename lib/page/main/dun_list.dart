@@ -104,7 +104,7 @@ class _DunListState extends State<DunList> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
             Image(
-              image: AssetImage("assets/logo/loading.gif"),
+              image: AssetImage("assets/image/load/loading.gif"),
               width: 120,
             ),
             Text("等待食堂数据……"),
@@ -117,7 +117,7 @@ class _DunListState extends State<DunList> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
             Image(
-              image: AssetImage("assets/logo/loading.gif"),
+              image: AssetImage("assets/image/load/error.png"),
               width: 120,
             ),
             Text("哦豁！服务器炸了"),

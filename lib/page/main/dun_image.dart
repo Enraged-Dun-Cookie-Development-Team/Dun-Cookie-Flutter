@@ -104,7 +104,7 @@ class _DunImageState extends State<DunImage>
           return Stack(
             alignment: Alignment.center,
             children: [
-              const Image(image: AssetImage("assets/logo/loading.gif")),
+              const Image(image: AssetImage("assets/image/load/loading.gif")),
               Positioned(
                 right: 0,
                 bottom: 0,
