@@ -13,8 +13,6 @@ class DunShareImageIsShare {
   bool dunShareImageIsShare;
 }
 
-class DeviceInfoBus {}
-
 class ChangeSourceBus {}
 
 class ChangeThemeBus {

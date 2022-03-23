@@ -50,10 +50,6 @@ class HttpClass {
   static InterceptorsWrapper _dInter() {
     return InterceptorsWrapper(
       onRequest: (options, handler) {
-        if (Constant.jpushRid == null) {
-          dio.lock();
-          eventBus.on<DeviceInfoBus>().listen((_) => dio.unlock());
-        }
         options.headers.addAll({"JPushRid": Constant.jpushRid});
         return handler.next(options);
       },

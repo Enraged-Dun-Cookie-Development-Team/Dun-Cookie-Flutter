@@ -60,22 +60,17 @@ class _DunListState extends State<DunList> {
   bool isAllowRefresh = true;
 
   void _onRefresh() async {
-    // List<SourceData> newList = await ListRequest.canteenNewCardList();
-    // if (newList.isNotEmpty) {
-    //   DunToast.showSuccess("找到了${newList.length}个新饼");
-    // }
-    // Provider.of<CommonProvider>(context, listen: false)
-    //     .addListInSourceData(newList);
     if (isAllowRefresh) {
-      _getDate();
+      await _getDate();
       isAllowRefresh = false;
       Future.delayed(const Duration(seconds: 5), () {
         isAllowRefresh = true;
       });
+      _refreshController.refreshCompleted();
     } else {
       DunToast.showError("阿伟，休息一下吧");
+      _refreshController.refreshCompleted();
     }
-    _refreshController.refreshCompleted();
   }
 
   //  获取数据

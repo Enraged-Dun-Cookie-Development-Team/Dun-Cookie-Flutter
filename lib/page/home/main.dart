@@ -32,9 +32,22 @@ class MainScaffold extends StatefulWidget {
 
 class _MainScaffoldState extends State<MainScaffold> {
   _init() async {
+    // 初始化推送变量
+    await _initJPush();
+    // 初始化监听事件
+    await _initEventBus();
+    // 是否是第一次进入APP
+    await _checkOpenScreenInfo();
+    // 第一次打开APP 全部拉一次数据
+    await _getData();
+    // 获取CeobecanteenInfo和判断版本
+    await _getCeobecanteenInfoAndCheckVersion();
+    // 获取饼组信息
+    await _getBakeryInfo();
+  }
+
+  _initEventBus() async {
     // 获取设备ID
-    Constant.deviceId = await DeviceInfo.getId();
-    eventBus.fire(DeviceInfoBus());
     eventBus.on<ChangeSourceBus>().listen((event) {
       _getData();
     });
@@ -95,19 +108,8 @@ class _MainScaffoldState extends State<MainScaffold> {
 
   @override
   void initState() {
-    // 初始化推送变量
-    _initJPush();
     // 初始化全局变量，读取设置
     _init();
-    // 是否是第一次进入APP
-    _checkOpenScreenInfo();
-    // 第一次打开APP 全部拉一次数据
-    _getData();
-    // 获取CeobecanteenInfo和判断版本
-    _getCeobecanteenInfoAndCheckVersion();
-    // 获取饼组信息
-    _getBakeryInfo();
-
     super.initState();
   }
 
