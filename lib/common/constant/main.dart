@@ -1,6 +1,6 @@
 class Constant {
   //  版本
-  static const String version = "0.3";
+  static const String version = "0.36";
 
   //  初始路由
   static const int starRouterIndex = 0;
