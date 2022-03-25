@@ -7,6 +7,7 @@ import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
 import 'package:dun_cookie_flutter/common/tool/open_app_or_browser.dart';
 import 'package:dun_cookie_flutter/model/app_bar_Data.dart';
 import 'package:dun_cookie_flutter/model/bakery_data.dart';
+import 'package:dun_cookie_flutter/model/setting_data.dart';
 import 'package:dun_cookie_flutter/provider/setting_provider.dart';
 import 'package:dun_cookie_flutter/page/home/home_body.dart';
 import 'package:dun_cookie_flutter/page/info/open_screen_info.dart';
@@ -39,20 +40,24 @@ class _MainScaffoldState extends State<MainScaffold> {
     await _readData();
     // 初始化监听事件
     await _initEventBus();
-    // 是否是第一次进入APP
-    // await _checkOpenScreenInfo();
-    // 第一次打开APP 全部拉一次数据
+    // 打开APP 全部拉一次数据
     await _getData();
     // 获取CeobecanteenInfo和判断版本
     await _getCeobecanteenInfoAndCheckVersion();
     // 获取饼组信息
     await _getBakeryInfo();
+    // 动态菜单
+    await _getMenu();
   }
 
   _initEventBus() async {
     // 获取设备ID
     eventBus.on<ChangeSourceBus>().listen((event) {
       _getData();
+    });
+    // 获取设备ID
+    eventBus.on<ChangeMenu>().listen((event) {
+      _getMenu();
     });
   }
 
@@ -110,6 +115,27 @@ class _MainScaffoldState extends State<MainScaffold> {
     }
     Provider.of<CommonProvider>(context, listen: false)
         .addListInBakeryData(value);
+  }
+
+  // var shortcutMenu = List.generate(0, (index) => const ListTile());
+  List<QuickJump> shortcutMenu = [];
+
+  _getMenu() async {
+    shortcutMenu = [];
+    CeobecanteenData? ceobecanteenData =
+        Provider.of<CeobecanteenData>(context, listen: false).ceobecanteenInfo;
+    var settingProvider = Provider.of<SettingProvider>(context, listen: false);
+    var shortcutList = settingProvider.appSetting.shortcutList;
+    if (ceobecanteenData!.quickJump != null) {
+      ceobecanteenData!.quickJump!.forEach((element) {
+        if (shortcutList!.contains(element.name)) {
+          shortcutMenu.add(element);
+        }
+      });
+    }
+    setState(() {
+      shortcutMenu = shortcutMenu;
+    });
   }
 
   @override
@@ -180,6 +206,27 @@ class _MainScaffoldState extends State<MainScaffold> {
                         Provider.of<CommonProvider>(context, listen: false)
                             .setRouterIndex(index),
                         Navigator.pop(context)
+                      },
+                    ),
+                  ),
+                ),
+                const Divider(
+                  height: 6.0,
+                  indent: 0.0,
+                  color: DunColors.DunColor,
+                ),
+                Column(
+                  children: List.generate(
+                    shortcutMenu.length,
+                    (index) => ListTile(
+                      leading: Image(
+                        image: AssetImage(shortcutMenu[index].img),
+                        width: 30,
+                      ),
+                      title: Text(shortcutMenu[index].name),
+                      onTap: () => {
+                        OpenAppOrBrowser.openUrl(
+                            shortcutMenu[index].url, context)
                       },
                     ),
                   ),

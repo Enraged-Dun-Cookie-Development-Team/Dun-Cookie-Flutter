@@ -15,6 +15,8 @@ class DunShareImageIsShare {
 
 class ChangeSourceBus {}
 
+class ChangeMenu {}
+
 class ChangeThemeBus {
   ChangeThemeBus(this._themeIndex) {
     themeIndex = _themeIndex;
