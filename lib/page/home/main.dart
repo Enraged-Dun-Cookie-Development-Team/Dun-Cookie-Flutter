@@ -218,9 +218,12 @@ class _MainScaffoldState extends State<MainScaffold> {
                 Column(
                   children: shortcutMenu.isEmpty
                       ? [
-                          const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Text("在线第三方工具内长按添加快捷进入"),
+                          const Opacity(
+                            opacity: 0.2,
+                            child: Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Text("在线第三方工具内长按添加快捷进入"),
+                            ),
                           )
                         ]
                       : List.generate(

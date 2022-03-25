@@ -10,6 +10,7 @@ import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:vibration/vibration.dart';
 
 class ToolLink extends StatefulWidget {
   ToolLink(this.linkInfo, {Key? key});
@@ -56,6 +57,7 @@ class _ToolLinkState extends State<ToolLink> {
         width: double.infinity,
         padding: const EdgeInsets.only(left: 10),
         child: Stack(
+          alignment:Alignment.centerLeft,
           children: [
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -73,7 +75,13 @@ class _ToolLinkState extends State<ToolLink> {
               ],
             ),
             Positioned(
-              child: hasShortcut ?  const Icon(Icons.menu_open,size: 16,color: DunColors.DunColor,): Container(),
+              child: hasShortcut
+                  ? const Icon(
+                      Icons.menu_open,
+                      size: 16,
+                      color: DunColors.DunColor,
+                    )
+                  : Container(),
               top: 3,
               right: 3,
             )
@@ -95,7 +103,7 @@ class _ToolLinkState extends State<ToolLink> {
     OpenAppOrBrowser.openUrl(url, context, appUrlScheme: jumpApp);
   }
 
-  _handleShortcut(title, isAdd) {
+  _handleShortcut(title, isAdd) async {
     setState(() {
       hasShortcut = isAdd;
     });
@@ -107,5 +115,9 @@ class _ToolLinkState extends State<ToolLink> {
     }
     eventBus.fire(ChangeMenu());
     settingData.saveAppSetting();
+    var hasAmplitude = await Vibration.hasAmplitudeControl();
+    if (hasAmplitude != null && hasAmplitude) {
+      Vibration.vibrate(duration: 100,amplitude: 100);
+    }
   }
 }
