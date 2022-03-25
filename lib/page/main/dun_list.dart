@@ -1,6 +1,7 @@
 import 'package:dun_cookie_flutter/common/init/main.dart';
 import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
 import 'package:dun_cookie_flutter/model/app_bar_data.dart';
+import 'package:dun_cookie_flutter/provider/setting_provider.dart';
 import 'package:dun_cookie_flutter/model/source_data.dart';
 import 'package:dun_cookie_flutter/page/main/dun_card_item.dart';
 import 'package:dun_cookie_flutter/page/main/dun_loading.dart';
@@ -61,9 +62,9 @@ class _DunListState extends State<DunList> {
 
   void _onRefresh() async {
     if (isAllowRefresh) {
-      await _getDate();
+      await _getData();
       isAllowRefresh = false;
-      Future.delayed(const Duration(seconds: 5), () {
+      Future.delayed(const Duration(seconds: 10), () {
         isAllowRefresh = true;
       });
       _refreshController.refreshCompleted();
@@ -74,11 +75,11 @@ class _DunListState extends State<DunList> {
   }
 
   //  获取数据
-  _getDate() async {
-    var provider = Provider.of<CommonProvider>(context, listen: false);
-    await provider.checkSourceInPreferences();
+  _getData() async {
+    var settingData = Provider.of<SettingProvider>(context, listen: false);
     var data = await ListRequest.canteenCardList(
-        source: {"source": provider.checkSource.join("_")});
+        source: {"source": settingData.appSetting.checkSource!.join("_")});
+    var provider = Provider.of<CommonProvider>(context, listen: false);
     provider.sourceData = data;
     return data;
   }

@@ -7,6 +7,7 @@ import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
 import 'package:dun_cookie_flutter/common/tool/open_app_or_browser.dart';
 import 'package:dun_cookie_flutter/model/app_bar_Data.dart';
 import 'package:dun_cookie_flutter/model/bakery_data.dart';
+import 'package:dun_cookie_flutter/provider/setting_provider.dart';
 import 'package:dun_cookie_flutter/page/home/home_body.dart';
 import 'package:dun_cookie_flutter/page/info/open_screen_info.dart';
 import 'package:dun_cookie_flutter/page/setting/main.dart';
@@ -31,15 +32,15 @@ class MainScaffold extends StatefulWidget {
 }
 
 class _MainScaffoldState extends State<MainScaffold> {
-
-
   _init() async {
     // 初始化推送变量
     await _initJPush();
+    // 初始化设置
+    await _readData();
     // 初始化监听事件
     await _initEventBus();
     // 是否是第一次进入APP
-    await _checkOpenScreenInfo();
+    // await _checkOpenScreenInfo();
     // 第一次打开APP 全部拉一次数据
     await _getData();
     // 获取CeobecanteenInfo和判断版本
@@ -69,19 +70,22 @@ class _MainScaffoldState extends State<MainScaffold> {
     });
   }
 
-  _getData() async {
-    var provider = Provider.of<CommonProvider>(context, listen: false);
-    await provider.checkSourceInPreferences();
-    provider.sourceData = await ListRequest.canteenCardList(
-        source: {"source": provider.checkSource.join("_")});
-  }
-
-  _checkOpenScreenInfo() async {
-    var data = await DunPreferences().getBool(key: "notOnce");
-    if (!data) {
+  _readData() async {
+    var settingData = Provider.of<SettingProvider>(context, listen: false);
+    await settingData.readAppSetting();
+    if (settingData.appSetting.notOnce!) {
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => const OpenScreenInfo()));
+      settingData.appSetting.notOnce = false;
+      settingData.saveAppSetting();
     }
+  }
+
+  _getData() async {
+    var settingData = Provider.of<SettingProvider>(context, listen: false);
+    var commonProvider = Provider.of<CommonProvider>(context, listen: false);
+    commonProvider.sourceData = await ListRequest.canteenCardList(
+        source: {"source": settingData.appSetting.checkSource!.join("_")});
   }
 
 //  获取info文件并判断文件版本

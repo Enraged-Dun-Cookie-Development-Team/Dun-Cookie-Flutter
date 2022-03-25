@@ -21,40 +21,6 @@ class CommonProvider with ChangeNotifier {
     eventBus.fire(ChangeThemeBus(index));
   }
 
-  // 选中的来源
-  List<String> _checkSource = [];
-
-  List<String> get checkSource {
-    return _checkSource;
-  }
-
-  set checkSource(List<String> value) {
-    _checkSource = value;
-    notifyListeners();
-  }
-
-  Future checkSourceInPreferences() async {
-    List<String> value =
-        await DunPreferences().getStringList(key: "listCheckSource");
-    if (value != null && value.length > 0) {
-      checkSource = value;
-    } else {
-      checkSource = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
-    }
-  }
-
-  void setCheckListInPriority(priority, isAdd) {
-    if (isAdd) {
-      _checkSource.add(priority);
-    } else {
-      _checkSource.remove(priority);
-    }
-    checkSource = _checkSource;
-    // 保存记录
-    DunPreferences()
-        .saveStringList(key: "listCheckSource", value: _checkSource);
-  }
-
 //  获取到的列表数据
   List<SourceData>? _sourceData;
 

@@ -59,7 +59,7 @@ class _DunWidgetToImageState extends State<DunWidgetToImage> {
                 child: Column(
                   children: [
                     Image.asset(
-                      "assets/logo/logo_no_line.png",
+                      "assets/logo/logo_no_line_share.png",
                       width: 60,
                     ),
                     Card(

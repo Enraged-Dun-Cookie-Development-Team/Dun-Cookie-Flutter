@@ -27,7 +27,7 @@ class DunRouter {
   };
 
   /// 底部栏用
-  static const pageTitles = ["小刻食堂", "蜜饼工坊", "常用工具", "设置"];
+  static const pageTitles = ["小刻食堂", "蜜饼工坊", "常用工具", "设置与其他"];
   static const pages = [DunList(), Bakery(), DunTool(), DunSetting()];
   static const pagesIcon = [
     Image(image:AssetImage("assets/logo/logo_item.png"),height: 30,),

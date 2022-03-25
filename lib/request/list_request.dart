@@ -10,7 +10,7 @@ class ListRequest {
 //  处理返回的数据
   static List<SourceData> _responseDataToListData(ResponseData request) {
     if (request.error) {
-      DunToast.showError("服务器崩了，快到等会他就自己好了");
+      DunToast.showError("服务器崩了，等会它就自己好了");
       return [];
     }
     List<SourceData> resultAll = [];

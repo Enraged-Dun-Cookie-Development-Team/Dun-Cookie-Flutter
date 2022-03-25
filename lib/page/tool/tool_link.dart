@@ -52,6 +52,9 @@ class ToolLink extends StatelessWidget {
           ],
         ),
       ),
+      onLongPress:(){
+
+      } ,
       onTap: () {
         _openApp(url: url, jumpApp: jumpApp);
       },
@@ -60,5 +63,9 @@ class ToolLink extends StatelessWidget {
 
   _openApp({url, jumpApp}) async {
     OpenAppOrBrowser.openUrl(url, _context!, appUrlScheme: jumpApp);
+  }
+
+  _handleShortcut(QuickJump qj) async {
+
   }
 }

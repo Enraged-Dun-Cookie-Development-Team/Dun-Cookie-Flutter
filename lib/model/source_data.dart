@@ -32,11 +32,14 @@ class SourceData {
     this.jumpUrl,
     this.coverImage,
     this.imageList,
+    this.previewList,
     this.imageHttpList,
     this.isTop,
     this.retweeted,
     this.componentData,
     this.sourceInfo,
+    this.hasImage = false,
+    this.isMultiImage = false,
   });
 
   SourceData? _data;
@@ -59,6 +62,8 @@ class SourceData {
     coverImage = json['coverImage'];
     imageList =
         json['imageList'] != null ? json['imageList'].cast<String>() : [];
+    previewList =
+        json['previewList'] != null ? json['previewList'].cast<String>() : [];
     imageHttpList = json['imageHttpList'] != null
         ? json['imageHttpList'].cast<String>()
         : [];
@@ -70,6 +75,9 @@ class SourceData {
     sourceInfo = (json['sourceInfo'] != null
         ? SourceInfo.fromJson(json['sourceInfo'])
         : null)!;
+
+    hasImage = (coverImage != null || imageList!.isNotEmpty);
+    isMultiImage = (hasImage && imageList!.length > 1);
   }
 
   String? dataSource;
@@ -80,11 +88,15 @@ class SourceData {
   String? jumpUrl;
   String? coverImage;
   List<String>? imageList;
+  List<String>? previewList;
   List<String>? imageHttpList;
   bool? isTop;
   Retweeted? retweeted;
   Map<String, dynamic>? componentData;
   SourceInfo? sourceInfo;
+
+  late bool hasImage;
+  late bool isMultiImage;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -96,6 +108,7 @@ class SourceData {
     map['jumpUrl'] = jumpUrl;
     map['coverImage'] = coverImage;
     map['imageList'] = imageList;
+    map['previewList'] = previewList;
     map['imageHttpList'] = imageHttpList;
     map['isTop'] = isTop;
     if (retweeted != null) {

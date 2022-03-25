@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:dun_cookie_flutter/common/init/main.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/model/bakery_data.dart';
+import 'package:dun_cookie_flutter/provider/setting_provider.dart';
 import 'package:dun_cookie_flutter/page/Error/main.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
 import 'package:dun_cookie_flutter/model/source_data.dart';
@@ -67,6 +68,8 @@ class _DunMainState extends State<DunMain> {
         providers: [
           ChangeNotifierProvider<CommonProvider>(
               create: (_) => CommonProvider()),
+          ChangeNotifierProvider<SettingProvider>(
+              create: (_) => SettingProvider()),
           ChangeNotifierProvider<CeobecanteenData>(
               create: (_) => CeobecanteenData()),
         ],

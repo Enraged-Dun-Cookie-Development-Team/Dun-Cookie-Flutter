@@ -32,19 +32,19 @@ class DunPreferences {
     return await _prefs.then((_) => _.setStringList(key, value));
   }
 
-  getBool({key, value}) async {
+  getBool({key}) async {
     return await _prefs.then((_) => _.getBool(key) ?? false);
   }
 
-  getDouble({key, value}) async {
+  getDouble({key}) async {
     return await _prefs.then((_) => _.getDouble(key) ?? 0.0);
   }
 
-  getInt({key, value}) async {
+  getInt({key}) async {
     return await _prefs.then((_) => _.getInt(key) ?? 0);
   }
 
-  getString({key, value}) async {
+  getString({key}) async {
     return await _prefs.then((_) => _.getString(key) ?? "");
   }
 

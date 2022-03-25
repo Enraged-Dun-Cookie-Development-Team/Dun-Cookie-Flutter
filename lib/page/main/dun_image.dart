@@ -1,20 +1,15 @@
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/model/source_data.dart';
 import 'package:dun_cookie_flutter/common/tool/view_image_main.dart';
+import 'package:dun_cookie_flutter/provider/setting_provider.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DunImage extends StatefulWidget {
-  DunImage(this.info, {Key? key})
-      : hasImage = info.coverImage != null || info.imageList!.isNotEmpty,
-        isMultiImage =
-            (info.coverImage != null || info.imageList!.isNotEmpty) &&
-                info.imageList!.length > 1,
-        super(key: key);
+  DunImage(this.info, {Key? key}) : super(key: key);
 
   SourceData info;
-  bool hasImage = false;
-  bool isMultiImage = false;
 
   @override
   _DunImageState createState() => _DunImageState();
@@ -37,10 +32,10 @@ class _DunImageState extends State<DunImage>
 
   @override
   Widget build(BuildContext context) {
-    if (widget.hasImage) {
+    if (widget.info.hasImage) {
       return Container(
         alignment: Alignment.center,
-        child: widget.isMultiImage ? _multiImage() : _oneImage(),
+        child: widget.info.isMultiImage ? _multiImage() : _oneImage(),
         padding: const EdgeInsets.all(10),
       );
     } else {
@@ -48,15 +43,34 @@ class _DunImageState extends State<DunImage>
     }
   }
 
+  List<String> _checkIsPreview(isOneImage) {
+    var settingData = Provider.of<SettingProvider>(context, listen: false);
+    if (settingData.appSetting.isPreview! &&
+        widget.info.previewList!.isNotEmpty) {
+      // 如果有略缩图且开启了略缩图开关
+      return widget.info.previewList!;
+    }
+    if (isOneImage) {
+      return [widget.info.coverImage!];
+    } else {
+      return widget.info.imageList!;
+    }
+  }
+
   /// 一张图
   _oneImage() {
-    return _kazeFadeImage(
-      widget.info.coverImage!,
-    );
+    var imageList = _checkIsPreview(true);
+    // return _kazeFadeImage(
+    //   widget.info.previewList!.length == 1
+    //       ? widget.info.previewList![0]
+    //       : widget.info.coverImage!,
+    // );
+    return _kazeFadeImage(imageList[0]);
   }
 
   /// 多张图
   _multiImage() {
+    var imageList = _checkIsPreview(false);
     return GridView(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 3,
@@ -66,15 +80,31 @@ class _DunImageState extends State<DunImage>
       scrollDirection: Axis.vertical,
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      children: List.generate(
-        widget.info.imageList!.length,
-        (index) {
-          return _kazeFadeImage(
-            widget.info.imageList![index],
-            index: index,
-          );
-        },
-      ),
+      children: List.generate(imageList.length, (index) {
+        return _kazeFadeImage(
+          imageList[index],
+          index: index,
+        );
+      }),
+      // children: widget.info.previewList!.isNotEmpty
+      //     ? List.generate(
+      //         widget.info.previewList!.length,
+      //         (index) {
+      //           return _kazeFadeImage(
+      //             widget.info.previewList![index],
+      //             index: index,
+      //           );
+      //         },
+      //       )
+      //     : List.generate(
+      //         widget.info.imageList!.length,
+      //         (index) {
+      //           return _kazeFadeImage(
+      //             widget.info.imageList![index],
+      //             index: index,
+      //           );
+      //         },
+      //       ),
     );
   }
 
@@ -109,7 +139,7 @@ class _DunImageState extends State<DunImage>
                 right: 0,
                 bottom: 0,
                 child: Container(
-                  padding: EdgeInsets.all(4),
+                  padding: const EdgeInsets.all(4),
                   color: Colors.white,
                   child: Text(
                     "${((progress ?? 0.0) * 100).toInt()}%",
@@ -130,7 +160,7 @@ class _DunImageState extends State<DunImage>
                       opacity: anim1,
                       child: ViewImageExtendedImage(
                           text: widget.info.content!,
-                          imageList: widget.isMultiImage
+                          imageList: widget.info.isMultiImage
                               ? widget.info.imageList
                               : [widget.info.coverImage!],
                           currentIndex: index),
@@ -140,7 +170,7 @@ class _DunImageState extends State<DunImage>
               );
             },
             child: Hero(
-              tag: widget.isMultiImage
+              tag: widget.info.isMultiImage
                   ? widget.info.imageList![index]
                   : widget.info.coverImage!,
               child: ClipRRect(

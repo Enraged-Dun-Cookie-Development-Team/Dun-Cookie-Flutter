@@ -42,6 +42,8 @@ class SourceList {
         jumpApp: "orpheus://artist/32540734"));
     _sourceList.add(SourceInfo.getModel("yjwb.jpg", "鹰角网络微博", "鹰角网络微博", 10,
         type: "weibo", uid: 7461423907));
+    _sourceList.add(SourceInfo.getModel("zmd.png", "明日方舟终末地", "终末地B站动态", 11,
+        type: "bili", uid: 1265652806));
     return _sourceList;
   }
 }
