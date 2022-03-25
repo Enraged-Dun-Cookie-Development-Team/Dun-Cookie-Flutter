@@ -3,6 +3,7 @@ import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/open_app_or_browser.dart';
 import 'package:dun_cookie_flutter/provider/view_webpage_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
@@ -56,6 +57,7 @@ class _DunWebViewMainState extends State<DunWebViewMain> {
           icon: const Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pop(),
         ),
+        systemOverlayStyle: SystemUiOverlayStyle.light,
       ),
       body: Consumer<ViewWebPageProvider>(
         builder: (ctx, data, child) {

@@ -37,7 +37,7 @@ class _DunSettingState extends State<DunSetting> {
         const Padding(
           padding: EdgeInsets.all(15.0),
           child: Text(
-            "已内置推送，但是未启用新饼推送，如果收到推送，是我们在测试，不需要管",
+            "已内置推送，但是未启用新饼推送，如果收到推送，是我们在测试，不是正式数据",
             style: DunStyles.text16C,
           ),
         ),

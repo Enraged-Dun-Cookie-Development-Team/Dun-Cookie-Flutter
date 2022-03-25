@@ -58,6 +58,7 @@ class DunUpdate extends StatelessWidget {
         appBar: AppBar(
           automaticallyImplyLeading: isFocus ? false : true,
           title: const Text("[公告]不停机客户端更新公告"),
+          systemOverlayStyle: SystemUiOverlayStyle.light,
         ),
         body: SingleChildScrollView(
           child: Padding(

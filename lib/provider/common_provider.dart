@@ -18,7 +18,8 @@ class CommonProvider with ChangeNotifier {
 
   setRouterIndex(index) {
     _routerIndex = index;
-    eventBus.fire(ChangeThemeBus(index));
+    notifyListeners();
+    // eventBus.fire(ChangeThemeBus(index));
   }
 
 //  获取到的列表数据

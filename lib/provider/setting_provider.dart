@@ -49,7 +49,7 @@ class SettingProvider with ChangeNotifier {
           "11"
         ],
         isPreview: true,
-        shortcutList: ["企鹅物流"],
+        shortcutList: [],
         notOnce: true);
   }
 }

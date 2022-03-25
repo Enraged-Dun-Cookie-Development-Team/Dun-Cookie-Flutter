@@ -202,10 +202,10 @@ class _MainScaffoldState extends State<MainScaffold> {
                     (index) => ListTile(
                       leading: DunRouter.pagesIcon[index],
                       title: Text(DunRouter.pageTitles[index]),
-                      onTap: () => {
+                      onTap: () {
                         Provider.of<CommonProvider>(context, listen: false)
-                            .setRouterIndex(index),
-                        Navigator.pop(context)
+                            .setRouterIndex(index);
+                        Navigator.pop(context);
                       },
                     ),
                   ),
@@ -216,20 +216,28 @@ class _MainScaffoldState extends State<MainScaffold> {
                   color: DunColors.DunColor,
                 ),
                 Column(
-                  children: List.generate(
-                    shortcutMenu.length,
-                    (index) => ListTile(
-                      leading: Image(
-                        image: AssetImage(shortcutMenu[index].img),
-                        width: 30,
-                      ),
-                      title: Text(shortcutMenu[index].name),
-                      onTap: () => {
-                        OpenAppOrBrowser.openUrl(
-                            shortcutMenu[index].url, context)
-                      },
-                    ),
-                  ),
+                  children: shortcutMenu.isEmpty
+                      ? [
+                          const Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: Text("在线第三方工具内长按添加快捷进入"),
+                          )
+                        ]
+                      : List.generate(
+                          shortcutMenu.length,
+                          (index) => ListTile(
+                            leading: Image(
+                              image: AssetImage(shortcutMenu[index].img),
+                              width: 30,
+                            ),
+                            title: Text(shortcutMenu[index].name),
+                            onTap: () {
+                              Navigator.pop(context);
+                              OpenAppOrBrowser.openUrl(
+                                  shortcutMenu[index].url, context);
+                            },
+                          ),
+                        ),
                 ),
               ],
             ),

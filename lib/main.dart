@@ -18,12 +18,11 @@ void main() {
   runApp(DunMain());
   //沉浸式状态栏
   if (Platform.isAndroid) {
-    SystemChrome.setSystemUIOverlayStyle(
-        const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+    SystemUiOverlayStyle systemUiOverlayStyle = const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,  //设置为透明
+    );
+    SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
   }
-  // DunInit().initNotifications((result) {
-  //   print(result);
-  // });
 }
 
 class DunMain extends StatefulWidget {
@@ -34,15 +33,15 @@ class DunMain extends StatefulWidget {
 }
 
 class _DunMainState extends State<DunMain> {
-  int themeIndex = 0;
+  // int themeIndex = 0;
 
   @override
   void initState() {
-    eventBus.on<ChangeThemeBus>().listen((event) {
-      setState(() {
-        themeIndex = event.themeIndex;
-      });
-    });
+    // eventBus.on<ChangeThemeBus>().listen((event) {
+    //   setState(() {
+    //     themeIndex = event.themeIndex;
+    //   });
+    // });
     super.initState();
   }
 
