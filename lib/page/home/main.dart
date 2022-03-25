@@ -122,12 +122,12 @@ class _MainScaffoldState extends State<MainScaffold> {
 
   _getMenu() async {
     shortcutMenu = [];
-    CeobecanteenData? ceobecanteenData =
-        Provider.of<CeobecanteenData>(context, listen: false).ceobecanteenInfo;
+    CeobecanteenData ceobecanteenData =
+        Provider.of<CeobecanteenData>(context, listen: false).ceobecanteenInfo!;
     var settingProvider = Provider.of<SettingProvider>(context, listen: false);
     var shortcutList = settingProvider.appSetting.shortcutList;
-    if (ceobecanteenData!.quickJump != null) {
-      ceobecanteenData!.quickJump!.forEach((element) {
+    if (ceobecanteenData.quickJump != null) {
+      ceobecanteenData.quickJump!.forEach((element) {
         if (shortcutList!.contains(element.name)) {
           shortcutMenu.add(element);
         }
