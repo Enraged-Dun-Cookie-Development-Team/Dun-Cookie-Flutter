@@ -245,9 +245,34 @@ class _MainScaffoldState extends State<MainScaffold> {
               ],
             ),
           ),
-          body: DunRouter.pages[routerIndex],
+          body: WillPopScope(
+              onWillPop: () async {
+                // 设置的话 退回到主页
+                if (routerIndex == 3) {
+                  Provider.of<CommonProvider>(context, listen: false)
+                      .setRouterIndex(0);
+                  return false;
+                } else {
+                  return doubleClickBack();
+                }
+              },
+              child: DunRouter.pages[routerIndex]),
         );
       },
     );
+  }
+
+  int last = 0;
+
+  // 连续按两次退出  未实现
+  Future<bool> doubleClickBack() {
+    int now = DateTime.now().millisecondsSinceEpoch;
+    if (now - last > 1000) {
+      last = DateTime.now().millisecondsSinceEpoch;
+      DunToast.showSuccess("再按一次退出");
+      return Future.value(false);
+    } else {
+      return Future.value(true);
+    }
   }
 }

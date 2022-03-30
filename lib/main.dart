@@ -19,7 +19,7 @@ void main() {
   //沉浸式状态栏
   if (Platform.isAndroid) {
     SystemUiOverlayStyle systemUiOverlayStyle = const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,  //设置为透明
+      statusBarColor: Colors.transparent, //设置为透明
     );
     SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
   }
@@ -37,49 +37,26 @@ class _DunMainState extends State<DunMain> {
 
   @override
   void initState() {
-    // eventBus.on<ChangeThemeBus>().listen((event) {
-    //   setState(() {
-    //     themeIndex = event.themeIndex;
-    //   });
-    // });
     super.initState();
-  }
-
-  int last = 0;
-
-  // 连续按两次退出  未实现
-  Future<bool> doubleClickBack() {
-    int now = DateTime.now().millisecondsSinceEpoch;
-    if (now - last > 1000) {
-      last = DateTime.now().millisecondsSinceEpoch;
-      DunToast.showSuccess("再按一次退出");
-      return Future.value(false);
-    } else {
-      return Future.value(true);
-    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: doubleClickBack,
-      child: MultiProvider(
-        providers: [
-          ChangeNotifierProvider<CommonProvider>(
-              create: (_) => CommonProvider()),
-          ChangeNotifierProvider<SettingProvider>(
-              create: (_) => SettingProvider()),
-          ChangeNotifierProvider<CeobecanteenData>(
-              create: (_) => CeobecanteenData()),
-        ],
-        child: MaterialApp(
-          title: "小刻食堂",
-          routes: DunRouter.routes,
-          theme: DunTheme.themeList[0],
-          onUnknownRoute: (settings) =>
-              MaterialPageRoute(builder: (context) => DunError(error: "404")),
-          initialRoute: "/",
-        ),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<CommonProvider>(create: (_) => CommonProvider()),
+        ChangeNotifierProvider<SettingProvider>(
+            create: (_) => SettingProvider()),
+        ChangeNotifierProvider<CeobecanteenData>(
+            create: (_) => CeobecanteenData()),
+      ],
+      child: MaterialApp(
+        title: "",
+        routes: DunRouter.routes,
+        theme: DunTheme.themeList[0],
+        onUnknownRoute: (settings) =>
+            MaterialPageRoute(builder: (context) => DunError(error: "404")),
+        initialRoute: "/",
       ),
     );
   }

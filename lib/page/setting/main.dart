@@ -3,7 +3,6 @@ import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
 import 'package:dun_cookie_flutter/common/tool/open_app_or_browser.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
-import 'package:dun_cookie_flutter/model/setting_data.dart';
 import 'package:dun_cookie_flutter/page/setting/setting_info.dart';
 import 'package:dun_cookie_flutter/page/setting/setting_source_filter.dart';
 import 'package:dun_cookie_flutter/page/update/main.dart';
@@ -23,6 +22,17 @@ class DunSetting extends StatefulWidget {
 }
 
 class _DunSettingState extends State<DunSetting> {
+  @override
+  void initState() {
+    setState(() {
+      DunSetting.isPreview =
+          Provider.of<SettingProvider>(context, listen: false)
+              .appSetting
+              .isPreview!;
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -98,11 +108,13 @@ class _DunSettingState extends State<DunSetting> {
           subtitle: const Text("可以试着点点"),
           trailing: const Icon(Icons.arrow_right),
           onTap: () {
-            DunApp? app = Provider.of<CeobecanteenData>(context, listen: false)
-                .ceobecanteenInfo
-                ?.app;
+            DunApp? app =
+                Provider.of<CeobecanteenData>(context, listen: false)
+                    .ceobecanteenInfo
+                    ?.app;
             if (app?.version != null &&
-                double.parse(app!.version!) > double.parse(Constant.version)) {
+                double.parse(app!.version!) >
+                    double.parse(Constant.version)) {
               Navigator.pushNamed(context, DunUpdate.routerName,
                   arguments: app);
             } else {
