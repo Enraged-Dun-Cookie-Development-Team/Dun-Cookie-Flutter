@@ -9,8 +9,8 @@ class Constant {
   static String? deviceId;
 
   //  设备RID
-  static String? jpushRid;
+  // static String? jpushRid;
 
-  //  设备AppKey
-  static String jpushAppKey = "6248b1e12f48c74929e9d0bc";
+  // //  设备AppKey
+  // static String jpushAppKey = "6248b1e12f48c74929e9d0bc";
 }

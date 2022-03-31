@@ -50,7 +50,7 @@ class HttpClass {
   static InterceptorsWrapper _dInter() {
     return InterceptorsWrapper(
       onRequest: (options, handler) {
-        options.headers.addAll({"JPushRid": Constant.jpushRid});
+        // options.headers.addAll({"JPushRid": Constant.jpushRid});
         return handler.next(options);
       },
       onResponse: (response, handler) {

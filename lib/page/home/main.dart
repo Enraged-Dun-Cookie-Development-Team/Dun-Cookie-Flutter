@@ -22,7 +22,6 @@ import 'package:dun_cookie_flutter/request/info_request.dart';
 import 'package:dun_cookie_flutter/request/list_request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:jpush_flutter/jpush_flutter.dart';
 import 'package:provider/provider.dart';
 
 class MainScaffold extends StatefulWidget {
@@ -35,7 +34,7 @@ class MainScaffold extends StatefulWidget {
 class _MainScaffoldState extends State<MainScaffold> {
   _init() async {
     // 初始化推送变量
-    await _initJPush();
+    // await _initJPush();
     // 初始化设置
     await _readData();
     // 初始化监听事件
@@ -61,19 +60,19 @@ class _MainScaffoldState extends State<MainScaffold> {
     });
   }
 
-  _initJPush() async {
-    JPush jpush = new JPush();
-    jpush.setup(
-      appKey: Constant.jpushAppKey,
-      channel: "flutter_channel",
-      production: false,
-    );
-    Constant.jpushRid = await jpush.getRegistrationID();
-    print(Constant.jpushRid);
-    setState(() {
-      Constant.jpushRid = Constant.jpushRid;
-    });
-  }
+  // _initJPush() async {
+  //   JPush jpush = new JPush();
+  //   jpush.setup(
+  //     appKey: Constant.jpushAppKey,
+  //     channel: "flutter_channel",
+  //     production: false,
+  //   );
+  //   Constant.jpushRid = await jpush.getRegistrationID();
+  //   print(Constant.jpushRid);
+  //   setState(() {
+  //     Constant.jpushRid = Constant.jpushRid;
+  //   });
+  // }
 
   _readData() async {
     var settingData = Provider.of<SettingProvider>(context, listen: false);
