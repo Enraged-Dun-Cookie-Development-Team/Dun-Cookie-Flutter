@@ -22,6 +22,7 @@ import 'package:dun_cookie_flutter/request/info_request.dart';
 import 'package:dun_cookie_flutter/request/list_request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mobpush_plugin/mobpush_plugin.dart';
 import 'package:provider/provider.dart';
 
 class MainScaffold extends StatefulWidget {
@@ -34,7 +35,7 @@ class MainScaffold extends StatefulWidget {
 class _MainScaffoldState extends State<MainScaffold> {
   _init() async {
     // 初始化推送变量
-    // await _initJPush();
+    await _initMobPush();
     // 初始化设置
     await _readData();
     // 初始化监听事件
@@ -60,19 +61,17 @@ class _MainScaffoldState extends State<MainScaffold> {
     });
   }
 
-  // _initJPush() async {
-  //   JPush jpush = new JPush();
-  //   jpush.setup(
-  //     appKey: Constant.jpushAppKey,
-  //     channel: "flutter_channel",
-  //     production: false,
-  //   );
-  //   Constant.jpushRid = await jpush.getRegistrationID();
-  //   print(Constant.jpushRid);
-  //   setState(() {
-  //     Constant.jpushRid = Constant.jpushRid;
-  //   });
-  // }
+  _initMobPush() async {
+    //设置隐私协议授权状态
+    MobpushPlugin.updatePrivacyPermissionStatus(true);
+    //获取注册的设备id， 这个可以不初始化
+    Map<String, dynamic> ridMap = await MobpushPlugin.getRegistrationId();
+    String regId = ridMap['res'].toString();
+    print('RID: ' + regId);
+    setState(() {
+      Constant.mobRId = regId;
+    });
+  }
 
   _readData() async {
     var settingData = Provider.of<SettingProvider>(context, listen: false);

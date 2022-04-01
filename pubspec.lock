@@ -352,6 +352,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
+  mobpush_plugin:
+    dependency: "direct main"
+    description:
+      name: mobpush_plugin
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.1"
   nested:
     dependency: transitive
     description:

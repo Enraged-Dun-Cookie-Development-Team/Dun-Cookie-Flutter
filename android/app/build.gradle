@@ -54,6 +54,11 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+
+        ndk {
+            //选择要添加的对应 cpu 类型的 .so 库。
+            abiFilters 'armeabi-v7a'
+        }
     }
 
     signingConfigs {
@@ -77,4 +82,21 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+
+apply plugin: 'com.mob.sdk'
+
+MobSDK {
+    appKey "359ea68d9b658"            //在MobPush注册的app key
+    appSecret "6652363189e64cf91ef668da35d01267"    //在MobPush注册的app secret
+
+    MobPush {
+        devInfo {
+            //配置小米厂商推送
+            XIAOMI {
+                appId "2882303761520147041"
+                appKey "5582014752041"
+            }
+        }
+    }
 }
