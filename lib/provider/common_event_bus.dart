@@ -17,6 +17,8 @@ class ChangeSourceBus {}
 
 class ChangeMenu {}
 
+class UpdatePrivacyPermissionStatus{}
+
 class ChangeThemeBus {
   ChangeThemeBus(this._themeIndex) {
     themeIndex = _themeIndex;

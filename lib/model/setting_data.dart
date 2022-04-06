@@ -24,7 +24,7 @@ class SettingData {
 
   List<String>? checkSource; // 设定的类别
   bool? isPreview; // 是否为省流 true省流
-  bool? notOnce; //  是否为第一次进入 true第一次
+  bool? notOnce; //  是否为第一次进入(同意软件协议) true第一次（同意）
   List<String>? shortcutList; // 快捷方式
 
   Map<String, dynamic> toJson() {

@@ -34,23 +34,13 @@ class MainScaffold extends StatefulWidget {
 
 class _MainScaffoldState extends State<MainScaffold> {
   _init() async {
-    // 初始化推送变量
-    await _initMobPush();
-    // 初始化设置
-    await _readData();
     // 初始化监听事件
-    await _initEventBus();
-    // 打开APP 全部拉一次数据
-    await _getData();
-    // 获取CeobecanteenInfo和判断版本
-    await _getCeobecanteenInfoAndCheckVersion();
-    // 获取饼组信息
-    await _getBakeryInfo();
-    // 动态菜单
-    await _getMenu();
+    _initEventBus();
+    // 初始化设置
+    _readData();
   }
 
-  _initEventBus() async {
+  _initEventBus() {
     // 获取设备ID
     eventBus.on<ChangeSourceBus>().listen((event) {
       _getData();
@@ -59,17 +49,9 @@ class _MainScaffoldState extends State<MainScaffold> {
     eventBus.on<ChangeMenu>().listen((event) {
       _getMenu();
     });
-  }
-
-  _initMobPush() async {
-    //设置隐私协议授权状态
-    MobpushPlugin.updatePrivacyPermissionStatus(true);
-    //获取注册的设备id， 这个可以不初始化
-    Map<String, dynamic> ridMap = await MobpushPlugin.getRegistrationId();
-    String regId = ridMap['res'].toString();
-    print('RID: ' + regId);
-    setState(() {
-      Constant.mobRId = regId;
+    // 同意隐私授权后执行
+    eventBus.on<UpdatePrivacyPermissionStatus>().listen((event) {
+      _readData();
     });
   }
 
@@ -79,9 +61,28 @@ class _MainScaffoldState extends State<MainScaffold> {
     if (settingData.appSetting.notOnce!) {
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => const OpenScreenInfo()));
-      settingData.appSetting.notOnce = false;
-      settingData.saveAppSetting();
+    } else {
+      // 初始化推送变量
+      await _initMobPush();
+      // 打开APP 全部拉一次数据
+      await _getData();
+      // 获取CeobecanteenInfo和判断版本
+      await _getCeobecanteenInfoAndCheckVersion();
+      // 获取饼组信息
+      await _getBakeryInfo();
+      // 动态菜单
+      await _getMenu();
     }
+  }
+
+  _initMobPush() async {
+    //获取注册的设备id， 这个可以不初始化
+    Map<String, dynamic> ridMap = await MobpushPlugin.getRegistrationId();
+    String regId = ridMap['res'].toString();
+    print('RID: ' + regId);
+    setState(() {
+      Constant.mobRId = regId;
+    });
   }
 
   _getData() async {
@@ -121,7 +122,9 @@ class _MainScaffoldState extends State<MainScaffold> {
   _getMenu() async {
     shortcutMenu = [];
     CeobecanteenData ceobecanteenData =
-        Provider.of<CeobecanteenData>(context, listen: false).ceobecanteenInfo!;
+    Provider
+        .of<CeobecanteenData>(context, listen: false)
+        .ceobecanteenInfo!;
     var settingProvider = Provider.of<SettingProvider>(context, listen: false);
     var shortcutList = settingProvider.appSetting.shortcutList;
     if (ceobecanteenData.quickJump != null) {
@@ -158,16 +161,16 @@ class _MainScaffoldState extends State<MainScaffold> {
             ),
             actions: routerIndex == 1
                 ? [
-                    IconButton(
-                      icon: const Icon(Icons.add_to_home_screen),
-                      tooltip: '前往B站空间',
-                      onPressed: () {
-                        OpenAppOrBrowser.openUrl(
-                            "https://m.bilibili.com/space/8412516", context,
-                            appUrlScheme: "bilibili://space/8412516");
-                      },
-                    ),
-                  ]
+              IconButton(
+                icon: const Icon(Icons.add_to_home_screen),
+                tooltip: '前往B站空间',
+                onPressed: () {
+                  OpenAppOrBrowser.openUrl(
+                      "https://m.bilibili.com/space/8412516", context,
+                      appUrlScheme: "bilibili://space/8412516");
+                },
+              ),
+            ]
                 : null,
             systemOverlayStyle: const SystemUiOverlayStyle(
               statusBarIconBrightness: Brightness.light,
@@ -187,7 +190,9 @@ class _MainScaffoldState extends State<MainScaffold> {
                         image: AssetImage("assets/logo/logo_no_line.png"),
                         width: 100,
                       ),
-                      SizedBox(height: 5,),
+                      SizedBox(
+                        height: 5,
+                      ),
                       Text(
                         '小刻食堂 Bate V' + Constant.version,
                         style: TextStyle(color: Colors.white, fontSize: 18),
@@ -198,15 +203,16 @@ class _MainScaffoldState extends State<MainScaffold> {
                 Column(
                   children: List.generate(
                     DunRouter.pageTitles.length,
-                    (index) => ListTile(
-                      leading: DunRouter.pagesIcon[index],
-                      title: Text(DunRouter.pageTitles[index]),
-                      onTap: () {
-                        Provider.of<CommonProvider>(context, listen: false)
-                            .setRouterIndex(index);
-                        Navigator.pop(context);
-                      },
-                    ),
+                        (index) =>
+                        ListTile(
+                          leading: DunRouter.pagesIcon[index],
+                          title: Text(DunRouter.pageTitles[index]),
+                          onTap: () {
+                            Provider.of<CommonProvider>(context, listen: false)
+                                .setRouterIndex(index);
+                            Navigator.pop(context);
+                          },
+                        ),
                   ),
                 ),
                 const Divider(
@@ -217,29 +223,30 @@ class _MainScaffoldState extends State<MainScaffold> {
                 Column(
                   children: shortcutMenu.isEmpty
                       ? [
-                          const Opacity(
-                            opacity: 0.2,
-                            child: Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text("在线第三方工具内长按添加快捷进入"),
-                            ),
-                          )
-                        ]
+                    const Opacity(
+                      opacity: 0.2,
+                      child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text("在线第三方工具内长按添加快捷进入"),
+                      ),
+                    )
+                  ]
                       : List.generate(
-                          shortcutMenu.length,
-                          (index) => ListTile(
-                            leading: Image(
-                              image: AssetImage(shortcutMenu[index].img),
-                              width: 30,
-                            ),
-                            title: Text(shortcutMenu[index].name),
-                            onTap: () {
-                              Navigator.pop(context);
-                              OpenAppOrBrowser.openUrl(
-                                  shortcutMenu[index].url, context);
-                            },
+                    shortcutMenu.length,
+                        (index) =>
+                        ListTile(
+                          leading: Image(
+                            image: AssetImage(shortcutMenu[index].img),
+                            width: 30,
                           ),
+                          title: Text(shortcutMenu[index].name),
+                          onTap: () {
+                            Navigator.pop(context);
+                            OpenAppOrBrowser.openUrl(
+                                shortcutMenu[index].url, context);
+                          },
                         ),
+                  ),
                 ),
               ],
             ),
@@ -265,9 +272,13 @@ class _MainScaffoldState extends State<MainScaffold> {
 
   // 连续按两次退出  未实现
   Future<bool> doubleClickBack() {
-    int now = DateTime.now().millisecondsSinceEpoch;
+    int now = DateTime
+        .now()
+        .millisecondsSinceEpoch;
     if (now - last > 1000) {
-      last = DateTime.now().millisecondsSinceEpoch;
+      last = DateTime
+          .now()
+          .millisecondsSinceEpoch;
       DunToast.showSuccess("再按一次退出");
       return Future.value(false);
     } else {

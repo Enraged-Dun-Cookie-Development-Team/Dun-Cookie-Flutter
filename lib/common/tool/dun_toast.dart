@@ -25,4 +25,5 @@ class DunToast {
         backgroundColor: Colors.red,
         fontSize: _fontsize);
   }
+
 }

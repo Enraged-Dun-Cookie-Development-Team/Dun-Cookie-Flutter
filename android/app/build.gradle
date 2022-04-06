@@ -34,7 +34,7 @@ if (keystorePropertiesFile.exists()) {
 android {
 
     compileSdkVersion flutter.compileSdkVersion
-    buildToolsVersion '30.0.3'
+    buildToolsVersion '30.0.0'
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -79,7 +79,7 @@ android {
             }
         }
     }
-    ndkVersion '21.0.6113669'
+    ndkVersion '22.1.7171670'
 }
 
 flutter {
@@ -102,8 +102,8 @@ MobSDK {
         devInfo {
             //配置小米厂商推送
             XIAOMI {
-                appId "2882303761520147041"
-                appKey "5582014752041"
+                appId "/2882303761520147041"
+                appKey "/5582014752041"
             }
         }
     }
