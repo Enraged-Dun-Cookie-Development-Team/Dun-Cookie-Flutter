@@ -187,6 +187,7 @@ class _MainScaffoldState extends State<MainScaffold> {
                         image: AssetImage("assets/logo/logo_no_line.png"),
                         width: 100,
                       ),
+                      SizedBox(height: 5,),
                       Text(
                         '小刻食堂 Bate V' + Constant.version,
                         style: TextStyle(color: Colors.white, fontSize: 18),
