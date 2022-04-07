@@ -77,8 +77,10 @@ class _MainScaffoldState extends State<MainScaffold> {
 
   _initMobPush() async {
     //获取注册的设备id， 这个可以不初始化
+    DunToast.showSuccess('获取RID');
     Map<String, dynamic> ridMap = await MobpushPlugin.getRegistrationId();
     String regId = ridMap['res'].toString();
+    DunToast.showSuccess('RID: ' + regId);
     print('RID: ' + regId);
     setState(() {
       Constant.mobRId = regId;
@@ -286,3 +288,4 @@ class _MainScaffoldState extends State<MainScaffold> {
     }
   }
 }
+

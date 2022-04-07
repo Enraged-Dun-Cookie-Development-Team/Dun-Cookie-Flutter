@@ -79,7 +79,7 @@ class OpenScreenInfo extends StatelessWidget {
                         settingData.saveAppSetting();
                         DunToast.showInfo("注册中……请耐心等待");
                         MobpushPlugin.updatePrivacyPermissionStatus(true).then((value) {
-                          DunToast.showInfo(value);
+                          DunToast.showInfo(value.toString());
                           eventBus.fire(UpdatePrivacyPermissionStatus());
                           Navigator.pop(context);
                         });
