@@ -17,14 +17,23 @@ class BakeryCard extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
-          const Text("以下为示例样式，非最终样式，蜜饼工坊，敬请期待"),
-          Text(
-            "${data.createTime!}发布，${data.createTime == null ? "暂未修改" : "于${data.modifyTime}修改"}",
-            style: DunStyles.text14,
-          ),
-          Text(
-            data.description!,
-            style: DunStyles.text16C,
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text("以下为示例样式，非最终样式，蜜饼工坊，敬请期待"),
+              Text(
+                data.description!,
+                style: DunStyles.text16C,
+              ),
+              Text(
+                "${data.createTime!}发布",
+                style: DunStyles.text14,
+              ),
+              Text(
+                data.createTime == null ? "暂未修改" : "于${data.modifyTime}修改",
+                style: DunStyles.text14,
+              ),
+            ],
           ),
           const SizedBox(
             height: 6,

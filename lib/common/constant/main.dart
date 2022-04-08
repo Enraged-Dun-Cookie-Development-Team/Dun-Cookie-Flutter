@@ -1,6 +1,6 @@
 class Constant {
   //  版本
-  static const String version = "0.37";
+  static const String version = "0.375";
 
   //  初始路由
   static const int starRouterIndex = 0;
@@ -11,6 +11,6 @@ class Constant {
   // 设备RID
   static String? mobRId;
 
-  // //  设备AppKey
-  // static String jpushAppKey = "6248b1e12f48c74929e9d0bc";
+// //  设备AppKey
+// static String jpushAppKey = "6248b1e12f48c74929e9d0bc";
 }
