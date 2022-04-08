@@ -44,6 +44,34 @@ class CommonProvider with ChangeNotifier {
     sourceData = _sourceData;
   }
 
+  // 数据存到缓存中
+  saveListSourceData(List<SourceData>? value) {
+    List<String> jsonSourceData = [];
+    if (sourceData == null) {
+      DunPreferences().saveStringList(key: "jsonSourceData", value: []);
+      return;
+    }
+    for (var element in value!) {
+      jsonSourceData.add(SourceDataToJson(element));
+    }
+    DunPreferences()
+        .saveStringList(key: "jsonSourceData", value: jsonSourceData);
+  }
+
+  getListSourceData() async {
+    List<String> jsonSourceData =
+        await DunPreferences().getStringList(key: "jsonSourceData");
+    if (jsonSourceData.isEmpty) {
+      sourceData = null;
+      return;
+    }
+    List<SourceData>? sourceDataList = [];
+    for (var element in jsonSourceData) {
+      sourceDataList.add(SourceDataFromJson(element));
+    }
+    sourceData = sourceDataList;
+  }
+
 //  获取到的蜜饼工坊数据
   BakeryData _bakeryData = BakeryData();
 

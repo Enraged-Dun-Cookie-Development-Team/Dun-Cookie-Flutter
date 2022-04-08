@@ -53,7 +53,8 @@ class _MainScaffoldState extends State<MainScaffold> {
       _getMenu();
     });
     // 同意隐私授权后执行
-    eventBus.on<UpdatePrivacyPermissionStatus>().listen((event) {
+    eventBus.on<UpdatePrivacyPermissionStatus>().listen((event) async {
+      await _initMobPush();
       _readData();
     });
     // 动态改变饼组下拉数据
@@ -81,18 +82,22 @@ class _MainScaffoldState extends State<MainScaffold> {
   _readData() async {
     var settingData = Provider.of<SettingProvider>(context, listen: false);
     await settingData.readAppSetting();
+    Constant.mobRId = settingData.appSetting.rid;
+    // var commonProvider = Provider.of<CommonProvider>(context, listen: false);
+    // await commonProvider.getListSourceData();
     if (settingData.appSetting.notOnce!) {
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => const OpenScreenInfo()));
     } else {
-      // 初始化推送变量
-      await _initMobPush();
       // 打开APP 全部拉一次数据
       await _getData();
       // 获取CeobecanteenInfo和判断版本
       await _getCeobecanteenInfoAndCheckVersion();
       // 动态菜单
       await _getMenu();
+
+      // 推送变量
+      _initMobPush();
     }
   }
 
@@ -100,6 +105,10 @@ class _MainScaffoldState extends State<MainScaffold> {
     //获取注册的设备id， 这个可以不初始化
     Map<String, dynamic> ridMap = await MobpushPlugin.getRegistrationId();
     String regId = ridMap['res'].toString();
+    var settingData = Provider.of<SettingProvider>(context, listen: false);
+    if (settingData.appSetting.rid != regId) {
+      settingData.saveRid(regId);
+    }
     print('RID: ' + regId);
     setState(() {
       Constant.mobRId = regId;
@@ -111,6 +120,7 @@ class _MainScaffoldState extends State<MainScaffold> {
     var commonProvider = Provider.of<CommonProvider>(context, listen: false);
     commonProvider.sourceData = await ListRequest.canteenCardList(
         source: {"source": settingData.appSetting.checkSource!.join("_")});
+    // commonProvider.saveListSourceData(commonProvider.sourceData!);
   }
 
 //  获取info文件并判断文件版本

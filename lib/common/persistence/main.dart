@@ -48,7 +48,7 @@ class DunPreferences {
     return await _prefs.then((_) => _.getString(key) ?? "");
   }
 
-  Future<List<String>> getStringList({key, value}) async {
+  Future<List<String>> getStringList({key}) async {
     return await _prefs.then((_) => _.getStringList(key) ?? []);
   }
 }

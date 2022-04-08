@@ -17,6 +17,11 @@ class SettingProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  saveRid(rid) {
+    _settingData.rid = rid;
+    saveAppSetting();
+  }
+
   saveAppSetting() {
     DunPreferences()
         .saveString(key: "settingData", value: settingDataToJson(_settingData));
@@ -50,6 +55,7 @@ class SettingProvider with ChangeNotifier {
         ],
         isPreview: true,
         shortcutList: [],
-        notOnce: true);
+        notOnce: true,
+        rid: "--");
   }
 }

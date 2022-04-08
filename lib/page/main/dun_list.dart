@@ -81,6 +81,7 @@ class _DunListState extends State<DunList> {
         source: {"source": settingData.appSetting.checkSource!.join("_")});
     var provider = Provider.of<CommonProvider>(context, listen: false);
     provider.sourceData = data;
+    // provider.saveListSourceData(data);
     return data;
   }
 

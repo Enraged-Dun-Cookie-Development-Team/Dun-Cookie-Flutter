@@ -11,13 +11,18 @@ String settingDataToJson(SettingData data) => json.encode(data.toJson());
 
 class SettingData {
   SettingData(
-      {this.checkSource, this.isPreview, this.shortcutList, this.notOnce});
+      {this.checkSource,
+      this.isPreview,
+      this.shortcutList,
+      this.notOnce,
+      this.rid});
 
   SettingData.fromJson(dynamic json) {
     checkSource =
         json['checkSource'] != null ? json['checkSource'].cast<String>() : [];
     isPreview = json['isPreview'];
     notOnce = json['notOnce'];
+    rid = json['rid'];
     shortcutList =
         json['shortcutList'] != null ? json['shortcutList'].cast<String>() : [];
   }
@@ -26,6 +31,7 @@ class SettingData {
   bool? isPreview; // 是否为省流 true省流
   bool? notOnce; //  是否为第一次进入(同意软件协议) true第一次（同意）
   List<String>? shortcutList; // 快捷方式
+  String? rid;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -33,6 +39,7 @@ class SettingData {
     map['isPreview'] = isPreview;
     map['shortcutList'] = shortcutList;
     map['notOnce'] = notOnce;
+    map['rid'] = rid;
     return map;
   }
 }
