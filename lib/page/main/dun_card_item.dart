@@ -1,5 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:dun_cookie_flutter/common/browser/main.dart';
+import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/open_app_or_browser.dart';
 import 'package:dun_cookie_flutter/model/source_data.dart';
 import 'package:dun_cookie_flutter/page/main/dun_content.dart';
@@ -30,17 +31,20 @@ class _DunCardItemState extends State<DunCardItem>
       onTap: () => _goSource(info.jumpUrl),
       child: FadeIn(
         duration: const Duration(milliseconds: 1000),
-        child: Column(
-          children: [
-            DunHead(info),
-            DunContent(info),
-            DunImage(info),
-            Container(
-              width: double.infinity,
-              height: 6,
-              color: Colors.black12,
-            )
-          ],
+        child: Card(
+          elevation: 30.0,
+          margin: const EdgeInsets.all(10),
+          child: Column(
+            children: [
+              DunHead(info),
+              const Divider(
+                height: 8,
+                color: DunColors.DunColor,
+              ),
+              DunContent(info),
+              DunImage(info),
+            ],
+          ),
         ),
       ),
     );

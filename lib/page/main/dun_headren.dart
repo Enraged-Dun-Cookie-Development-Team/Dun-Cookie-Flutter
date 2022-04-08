@@ -43,14 +43,14 @@ class DunHead extends StatelessWidget {
                 children: [
                   Text(
                     source.title,
-                    style: DunStyles.text16C,
+                    style: DunStyles.text16,
                   ),
                   const SizedBox(
                     height: 2,
                   ),
                   Text(
                     info.timeForDisplay!,
-                    style: DunStyles.text14,
+                    style: DunStyles.text14B,
                   ),
                 ],
               )
