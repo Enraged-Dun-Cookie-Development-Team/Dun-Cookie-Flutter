@@ -31,20 +31,22 @@ class _DunCardItemState extends State<DunCardItem>
       onTap: () => _goSource(info.jumpUrl),
       child: FadeIn(
         duration: const Duration(milliseconds: 1000),
-        child: Card(
-          elevation: 30.0,
-          margin: const EdgeInsets.all(10),
-          child: Column(
-            children: [
-              DunHead(info),
-              const Divider(
-                height: 8,
-                color: DunColors.DunColor,
-              ),
-              DunContent(info),
-              DunImage(info),
-            ],
-          ),
+        child: Column(
+          children: [
+            DunHead(info),
+            // const Divider(
+            //   height: 8,
+            //   color: DunColors.DunColor,
+            //   endIndent: 200,
+            // ),
+            DunContent(info),
+            DunImage(info),
+            Container(
+              width: double.infinity,
+              height: 1,
+              color: Colors.black26,
+            )
+          ],
         ),
       ),
     );
