@@ -20,18 +20,25 @@ class BakeryCard extends StatelessWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text("以下为示例样式，非最终样式，蜜饼工坊，敬请期待"),
               Text(
-                data.description!,
-                style: DunStyles.text16C,
+                '#' +
+                    data.id! +
+                    (data.description! != ""
+                        ? "（ver. ${data.description!}）"
+                        : ""),
+                style: DunStyles.text20C,
               ),
               Text(
                 "${data.createTime!}发布",
-                style: DunStyles.text14,
+                style: DunStyles.text12,
               ),
               Text(
                 data.createTime == null ? "暂未修改" : "于${data.modifyTime}修改",
-                style: DunStyles.text14,
+                style: DunStyles.text12,
+              ),
+              const Text(
+                "以下为示例样式，非最终样式，蜜饼工坊，敬请期待",
+                style: DunStyles.text12,
               ),
             ],
           ),
@@ -66,10 +73,12 @@ class BakeryCard extends StatelessWidget {
                               margin: const EdgeInsets.only(left: 5),
                             ),
                             ContentTimeLine(indexDay.info!),
-                            const Divider(
-                              height: 8,
-                              color: DunColors.DunColor,
-                            ),
+                            indexDay.content!.isEmpty
+                                ? Container()
+                                : const Divider(
+                                    height: 8,
+                                    color: DunColors.DunColor,
+                                  ),
                             indexDay.content!.isEmpty
                                 ? Container()
                                 : Container(
