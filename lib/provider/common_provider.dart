@@ -45,18 +45,17 @@ class CommonProvider with ChangeNotifier {
   }
 
 //  获取到的蜜饼工坊数据
-  List<BakeryData> _bakeryData = [];
+  BakeryData _bakeryData = BakeryData();
 
-  List<BakeryData> get bakeryData => _bakeryData;
+  BakeryData get bakeryData => _bakeryData;
 
-  set bakeryData(List<BakeryData> value) {
+  set bakeryData(BakeryData value) {
     _bakeryData = value;
     notifyListeners();
   }
 
   // 在前面追加饼并且重新排序一次
   addListInBakeryData(value) {
-    _bakeryData.insert(0, value);
     bakeryData = _bakeryData;
   }
 }

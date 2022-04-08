@@ -20,25 +20,25 @@ class BakeryRequest {
     }
   }
 
-
   static _getBakeryMansionIdList() async {
-    const url = "/canteen/bakery/mansionId";
+    // const url = "/canteen/bakery/mansionId";
+    const url = "/canteen/mansionId";
     print("请求饼组ID列表");
     return await HttpClass.get(url, type: requestType);
   }
 
-  static Future<List<int>> getBakeryMansionIdList(id) async {
+  static Future<List<String>> getBakeryMansionIdList() async {
     ResponseData response = await _getBakeryMansionIdList();
     if (response.error) {
       return [];
     } else {
-      return response.data;
+      return response.data["data"].cast<String>();
     }
   }
 
-
   static _getBakeryMansionInfo(id) async {
-    final url = "/canteen/bakery/mansionInfo?mansion_id=$id";
+    // final url = "/canteen/bakery/mansionInfo?mansion_id=$id";
+    final url = "/canteen/mansionInfo?mansion_id=$id";
     print("根据ID请求饼组数据");
     return await HttpClass.get(url, type: requestType);
   }
@@ -48,8 +48,7 @@ class BakeryRequest {
     if (response.error) {
       return BakeryData();
     } else {
-      return BakeryData.fromJson(response.data);
+      return BakeryData.fromJson(response.data['data']);
     }
   }
-
 }

@@ -2,6 +2,7 @@ import 'package:dun_cookie_flutter/common/persistence/main.dart';
 import 'package:dun_cookie_flutter/common/constant/main.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:event_bus/event_bus.dart';
+import 'package:flutter/material.dart';
 
 class CommonEventBus {}
 
@@ -17,7 +18,14 @@ class ChangeSourceBus {}
 
 class ChangeMenu {}
 
-class UpdatePrivacyPermissionStatus{}
+class UpdatePrivacyPermissionStatus {}
+
+class ChangePopupMenuDownButton {
+  ChangePopupMenuDownButton({this.idList, this.checkId});
+
+  List<String>? idList;
+  String? checkId;
+}
 
 class ChangeThemeBus {
   ChangeThemeBus(this._themeIndex) {

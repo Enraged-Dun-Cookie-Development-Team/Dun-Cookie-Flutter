@@ -15,7 +15,7 @@ import 'package:flutter/material.dart';
 class DunRouter {
   static final Map<String, WidgetBuilder> routes = {
     "/": (context) => MainScaffold(),
-    Bakery.routeName: (context) => const Bakery(),
+    Bakery.routeName: (context) => Bakery(),
     DunList.routeName: (context) => const DunList(),
     DunWidgetToImage.routeName: (context) => DunWidgetToImage(),
     DunWebView.routeName: (context) => DunWebView(),
@@ -28,7 +28,7 @@ class DunRouter {
 
   /// 侧边菜单固定项目
   static const pageTitles = ["小刻食堂", "蜜饼工坊", "常用工具", "设置与其他"];
-  static const pages = [DunList(), Bakery(), DunTool(), DunSetting()];
+  static var pages = [const DunList(), Bakery(), const DunTool(), const DunSetting()];
   static const pagesIcon = [
     Image(image:AssetImage("assets/logo/logo_item.png"),height: 30,),
     Image(image:AssetImage("assets/logo/logo_mb.png"),height: 30,),

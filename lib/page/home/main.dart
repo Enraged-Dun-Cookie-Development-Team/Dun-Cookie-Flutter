@@ -40,6 +40,9 @@ class _MainScaffoldState extends State<MainScaffold> {
     _readData();
   }
 
+  List<PopupMenuItem<String>> bakeryPopupButtonList = [];
+  String bakeryPupopButton = "";
+
   _initEventBus() {
     // 获取设备ID
     eventBus.on<ChangeSourceBus>().listen((event) {
@@ -52,6 +55,26 @@ class _MainScaffoldState extends State<MainScaffold> {
     // 同意隐私授权后执行
     eventBus.on<UpdatePrivacyPermissionStatus>().listen((event) {
       _readData();
+    });
+    // 动态改变饼组下拉数据
+    eventBus.on<ChangePopupMenuDownButton>().listen((event) {
+      if (event.idList != null) {
+        for (var element in event.idList!) {
+          bakeryPopupButtonList.add(
+            PopupMenuItem<String>(
+              value: element,
+              child: Text(
+                element,
+                style: const TextStyle(color: DunColors.DunColor),
+              ),
+            ),
+          );
+        }
+        setState(() {
+          bakeryPopupButtonList = bakeryPopupButtonList;
+          bakeryPupopButton = bakeryPopupButtonList[0].value!;
+        });
+      }
     });
   }
 
@@ -68,8 +91,6 @@ class _MainScaffoldState extends State<MainScaffold> {
       await _getData();
       // 获取CeobecanteenInfo和判断版本
       await _getCeobecanteenInfoAndCheckVersion();
-      // 获取饼组信息
-      await _getBakeryInfo();
       // 动态菜单
       await _getMenu();
     }
@@ -107,16 +128,6 @@ class _MainScaffoldState extends State<MainScaffold> {
     }
   }
 
-  _getBakeryInfo() async {
-    BakeryData value = await BakeryRequest.getBakeryInfo();
-    if (value.title == null) {
-      DunToast.showError("饼组服务器无法连接");
-    }
-    Provider.of<CommonProvider>(context, listen: false)
-        .addListInBakeryData(value);
-  }
-
-  // var shortcutMenu = List.generate(0, (index) => const ListTile());
   List<QuickJump> shortcutMenu = [];
 
   _getMenu() async {
@@ -126,11 +137,11 @@ class _MainScaffoldState extends State<MainScaffold> {
     var settingProvider = Provider.of<SettingProvider>(context, listen: false);
     var shortcutList = settingProvider.appSetting.shortcutList;
     if (ceobecanteenData.quickJump != null) {
-      ceobecanteenData.quickJump!.forEach((element) {
+      for (var element in ceobecanteenData.quickJump!) {
         if (shortcutList!.contains(element.name)) {
           shortcutMenu.add(element);
         }
-      });
+      }
     }
     setState(() {
       shortcutMenu = shortcutMenu;
@@ -159,15 +170,36 @@ class _MainScaffoldState extends State<MainScaffold> {
             ),
             actions: routerIndex == 1
                 ? [
-                    IconButton(
-                      icon: const Icon(Icons.add_to_home_screen),
-                      tooltip: '前往B站空间',
-                      onPressed: () {
-                        OpenAppOrBrowser.openUrl(
-                            "https://m.bilibili.com/space/8412516", context,
-                            appUrlScheme: "bilibili://space/8412516");
-                      },
-                    ),
+                    // IconButton(
+                    //   icon: const Icon(Icons.add_to_home_screen),
+                    //   tooltip: '前往B站空间',
+                    //   onPressed: () {
+                    //     OpenAppOrBrowser.openUrl(
+                    //         "https://m.bilibili.com/space/8412516", context,
+                    //         appUrlScheme: "bilibili://space/8412516");
+                    //   },
+                    // ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        PopupMenuButton(
+                          itemBuilder: (ctx) {
+                            return bakeryPopupButtonList;
+                          },
+                          icon: const Icon(Icons.restore_page),
+                          initialValue: bakeryPupopButton,
+                          tooltip: "切换其他大厦",
+                          onSelected: (value) {
+                            setState(() {
+                              bakeryPupopButton = value.toString();
+                            });
+                            DunToast.showSuccess("获取大厦${value.toString()}");
+                            eventBus.fire(ChangePopupMenuDownButton(
+                                checkId: bakeryPupopButton));
+                          },
+                        ),
+                      ],
+                    )
                   ]
                 : null,
             systemOverlayStyle: const SystemUiOverlayStyle(

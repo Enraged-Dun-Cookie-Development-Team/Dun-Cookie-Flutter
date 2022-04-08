@@ -17,9 +17,10 @@ class ContentTimeLine extends StatelessWidget {
         indicatorBuilder: (_, index) {
           if (infoList[index].isTrue != null) {
             return DotIndicator(
-              color: infoList[index].isTrue! ? Colors.green : Colors.red,
+              color:
+                  infoList[index].isTrue! == "true" ? Colors.green : Colors.red,
               child: Icon(
-                infoList[index].isTrue! ? Icons.done : Icons.close,
+                infoList[index].isTrue! == "true" ? Icons.done : Icons.close,
                 color: Colors.white,
                 size: 14,
               ),
@@ -39,7 +40,7 @@ class ContentTimeLine extends StatelessWidget {
         endConnectorBuilder: (_, index) => index != infoList.length - 1
             ? const SolidLineConnector(
                 thickness: 0.5,
-                color:Colors.black45,
+                color: Colors.black45,
               )
             : null,
         //中间内容

@@ -2,6 +2,7 @@ import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/model/bakery_data.dart';
 import 'package:dun_cookie_flutter/page/bakery/bakery_content_timeline.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:timelines/timelines.dart';
 
 class BakeryCard extends StatelessWidget {
@@ -18,11 +19,11 @@ class BakeryCard extends StatelessWidget {
         children: [
           const Text("以下为示例样式，非最终样式，蜜饼工坊，敬请期待"),
           Text(
-            "${data.createTime!}发布，${data.updateTime == null ? "暂未修改" : "于${data.updateTime}修改"}",
+            "${data.createTime!}发布，${data.createTime == null ? "暂未修改" : "于${data.modifyTime}修改"}",
             style: DunStyles.text14,
           ),
           Text(
-            data.title!,
+            data.description!,
             style: DunStyles.text16C,
           ),
           const SizedBox(
@@ -36,9 +37,9 @@ class BakeryCard extends StatelessWidget {
                   //距离左侧的距离
                   connectionDirection: ConnectionDirection.before,
                   // 方向
-                  itemCount: data.day!.length,
+                  itemCount: data.daily!.length,
                   contentsBuilder: (_, index) {
-                    BakeryDay indexDay = data.day![index];
+                    BakeryDaily indexDay = data.daily![index];
                     return Container(
                       margin: const EdgeInsets.all(8),
                       child: Card(
@@ -48,21 +49,25 @@ class BakeryCard extends StatelessWidget {
                             Container(
                               child: Padding(
                                 padding: const EdgeInsets.all(6),
-                                child: Text(indexDay.datetime!.toString(),style: DunStyles.text20C,),
+                                child: Text(
+                                  indexDay.datetime!.toString(),
+                                  style: DunStyles.text20C,
+                                ),
                               ),
                               margin: const EdgeInsets.only(left: 5),
                             ),
                             ContentTimeLine(indexDay.info!),
+                            const Divider(
+                              height: 8,
+                              color: DunColors.DunColor,
+                            ),
                             indexDay.content!.isEmpty
                                 ? Container()
                                 : Container(
-                                    child: Text(
-                                      indexDay.content!,
-                                      style: DunStyles.text16C
-                                          .copyWith(
-                                              fontStyle: FontStyle.italic),
-                                    ),
                                     margin: const EdgeInsets.all(8),
+                                    child: Html(
+                                      data: indexDay.content!,
+                                    ),
                                   )
                           ],
                         ),
