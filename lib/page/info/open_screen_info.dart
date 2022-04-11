@@ -1,4 +1,3 @@
-import 'package:dun_cookie_flutter/common/persistence/main.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
 import 'package:dun_cookie_flutter/provider/common_event_bus.dart';
