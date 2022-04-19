@@ -46,5 +46,9 @@
             <action android:name="android.intent.action.SEND" />
             <data android:scheme="bilibili" />
         </intent>
+        <intent>
+            <action android:name="android.intent.action.SEND" />
+            <data android:scheme="weixin" />
+        </intent>
     </queries>
 </manifest>

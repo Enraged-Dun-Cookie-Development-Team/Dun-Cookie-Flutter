@@ -1,4 +1,5 @@
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
+import 'package:dun_cookie_flutter/common/tool/open_app_or_browser.dart';
 import 'package:dun_cookie_flutter/model/bakery_data.dart';
 import 'package:dun_cookie_flutter/page/bakery/bakery_content_timeline.dart';
 import 'package:flutter/material.dart';
@@ -20,13 +21,23 @@ class BakeryCard extends StatelessWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                '#' +
-                    data.id! +
-                    (data.description! != ""
-                        ? "（ver. ${data.description!}）"
-                        : ""),
-                style: DunStyles.text20C,
+              InkWell(
+                onTap: () {
+                  if (data.cvlink != null && data.cvlink != "") {
+                    OpenAppOrBrowser.openUrl(
+                        "https://www.bilibili.com/read/cv${data.cvlink}",
+                        context,
+                        appUrlScheme: "bilibili://article/${data.cvlink}");
+                  }
+                },
+                child: Text(
+                  '#' +
+                      data.id! +
+                      (data.description! != ""
+                          ? "（ver. ${data.description!}）"
+                          : ""),
+                  style: DunStyles.text20C,
+                ),
               ),
               Text(
                 "${data.createTime!}发布",

@@ -8,6 +8,7 @@ import 'package:dun_cookie_flutter/common/tool/open_app_or_browser.dart';
 import 'package:dun_cookie_flutter/model/app_bar_Data.dart';
 import 'package:dun_cookie_flutter/model/bakery_data.dart';
 import 'package:dun_cookie_flutter/model/setting_data.dart';
+import 'package:dun_cookie_flutter/page/donate/main.dart';
 import 'package:dun_cookie_flutter/provider/setting_provider.dart';
 import 'package:dun_cookie_flutter/page/home/home_body.dart';
 import 'package:dun_cookie_flutter/page/info/open_screen_info.dart';
@@ -60,6 +61,7 @@ class _MainScaffoldState extends State<MainScaffold> {
     // 动态改变饼组下拉数据
     eventBus.on<ChangePopupMenuDownButton>().listen((event) {
       if (event.idList != null) {
+        bakeryPopupButtonList = [];
         for (var element in event.idList!) {
           bakeryPopupButtonList.add(
             PopupMenuItem<String>(
@@ -253,6 +255,23 @@ class _MainScaffoldState extends State<MainScaffold> {
                       },
                     ),
                   ),
+                ),
+                const Divider(
+                  height: 6.0,
+                  indent: 0.0,
+                  color: DunColors.DunColor,
+                ),
+                ListTile(
+                  leading: const Icon(
+                    Icons.monetization_on,
+                    size: 30,
+                    color: DunColors.DunColor,
+                  ),
+                  title: const Text("捐助"),
+                  onTap: () {
+                    Navigator.pushNamed(context, Donate.routerName);
+                    // Navigator.pop(context);
+                  },
                 ),
                 const Divider(
                   height: 6.0,

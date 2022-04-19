@@ -2,6 +2,7 @@ import 'package:dun_cookie_flutter/common/browser/main.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/page/Error/main.dart';
 import 'package:dun_cookie_flutter/page/bakery/main.dart';
+import 'package:dun_cookie_flutter/page/donate/main.dart';
 import 'package:dun_cookie_flutter/page/home/main.dart';
 import 'package:dun_cookie_flutter/page/setting/setting_info.dart';
 import 'package:dun_cookie_flutter/page/main/dun_list.dart';
@@ -24,6 +25,7 @@ class DunRouter {
     SettingSourceFilter.routerName: (context) => const SettingSourceFilter(),
     DunInfo.routerName: (context) => const DunInfo(),
     DunUpdate.routerName: (context) => const DunUpdate(),
+    Donate.routerName: (context) => const Donate(),
   };
 
   /// 侧边菜单固定项目

@@ -15,12 +15,12 @@ class ContentTimeLine extends StatelessWidget {
         nodePositionBuilder: (_, index) => 0.06,
         //圆圈样式
         indicatorBuilder: (_, index) {
-          if (infoList[index].isTrue != null) {
+          if (infoList[index].forecastStatus != null && infoList[index].forecastStatus != "unknown") {
             return DotIndicator(
               color:
-                  infoList[index].isTrue! == "true" ? Colors.green : Colors.red,
+                  infoList[index].forecastStatus! == "true" ? Colors.green : Colors.red,
               child: Icon(
-                infoList[index].isTrue! == "true" ? Icons.done : Icons.close,
+                infoList[index].forecastStatus! == "true" ? Icons.done : Icons.close,
                 color: Colors.white,
                 size: 14,
               ),
