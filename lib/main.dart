@@ -51,7 +51,7 @@ class _DunMainState extends State<DunMain> {
             create: (_) => CeobecanteenData()),
       ],
       child: MaterialApp(
-        title: "",
+        title: "小刻食堂",
         routes: DunRouter.routes,
         theme: DunTheme.themeList[0],
         onUnknownRoute: (settings) =>

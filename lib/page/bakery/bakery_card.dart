@@ -14,7 +14,7 @@ class BakeryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(6, 6, 6, 0),
+      padding: const EdgeInsets.fromLTRB(10, 6, 10, 0),
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
@@ -31,7 +31,7 @@ class BakeryCard extends StatelessWidget {
                   }
                 },
                 child: Text(
-                  '#' +
+                  '饼学大厦 #' +
                       data.id! +
                       (data.description! != ""
                           ? "（ver. ${data.description!}）"
