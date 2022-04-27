@@ -85,8 +85,6 @@ class _MainScaffoldState extends State<MainScaffold> {
     var settingData = Provider.of<SettingProvider>(context, listen: false);
     await settingData.readAppSetting();
     Constant.mobRId = settingData.appSetting.rid;
-    // var commonProvider = Provider.of<CommonProvider>(context, listen: false);
-    // await commonProvider.getListSourceData();
     if (settingData.appSetting.notOnce!) {
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => const OpenScreenInfo()));

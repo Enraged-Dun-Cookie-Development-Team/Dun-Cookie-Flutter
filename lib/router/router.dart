@@ -2,6 +2,7 @@ import 'package:dun_cookie_flutter/common/browser/main.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/page/Error/main.dart';
 import 'package:dun_cookie_flutter/page/bakery/main.dart';
+import 'package:dun_cookie_flutter/page/comics/main.dart';
 import 'package:dun_cookie_flutter/page/donate/main.dart';
 import 'package:dun_cookie_flutter/page/home/main.dart';
 import 'package:dun_cookie_flutter/page/setting/setting_info.dart';
@@ -26,14 +27,16 @@ class DunRouter {
     DunInfo.routerName: (context) => const DunInfo(),
     DunUpdate.routerName: (context) => const DunUpdate(),
     Donate.routerName: (context) => const Donate(),
+    Comics.routerName: (context) => const Comics(),
   };
 
   /// 侧边菜单固定项目
-  static const pageTitles = ["小刻食堂", "蜜饼工坊", "常用工具", "设置与其他"];
-  static var pages = [const DunList(), Bakery(), const DunTool(), const DunSetting()];
+  static const pageTitles = ["小刻食堂", "蜜饼工坊", "官方漫画", "常用工具", "设置与其他"];
+  static var pages = [const DunList(), Bakery(), const Comics(), const DunTool(), const DunSetting()];
   static const pagesIcon = [
     Image(image:AssetImage("assets/logo/logo_item.png"),height: 30,),
     Image(image:AssetImage("assets/logo/logo_mb.png"),height: 30,),
+    Icon(Icons.book,size: 30,color: DunColors.DunColor,),
     Icon(Icons.handyman,size: 30,color: DunColors.DunColor,),
     Icon(Icons.settings,size: 30,color: DunColors.DunColor),
   ];

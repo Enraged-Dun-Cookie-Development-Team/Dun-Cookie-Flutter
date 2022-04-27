@@ -29,9 +29,6 @@ class _DunListState extends State<DunList> {
     super.initState();
     // 清除30天前的图片缓存
     clearDiskCachedImages(duration: const Duration(days: 30));
-    // Future.delayed(Duration(seconds: 1)).then((value) {
-    //   DunInit().showCookieNotification();
-    // });
   }
 
   final RefreshController _refreshController =
@@ -81,7 +78,6 @@ class _DunListState extends State<DunList> {
         source: {"source": settingData.appSetting.checkSource!.join("_")});
     var provider = Provider.of<CommonProvider>(context, listen: false);
     provider.sourceData = data;
-    // provider.saveListSourceData(data);
     return data;
   }
 
