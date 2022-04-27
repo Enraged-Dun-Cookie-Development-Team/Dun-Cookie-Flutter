@@ -72,7 +72,9 @@ class _BakeryState extends State<Bakery> {
                 width: 200,
               ),
             )
-          : BakeryCard(data);
+          : FadeIn(
+              duration: const Duration(milliseconds: 1000),
+              child: BakeryCard(data));
     }, selector: (ctx, commonProvider) {
       return commonProvider.bakeryData;
     });
