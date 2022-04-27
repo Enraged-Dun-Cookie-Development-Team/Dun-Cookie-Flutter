@@ -1,21 +1,16 @@
 import 'dart:io';
-import 'package:dun_cookie_flutter/common/init/main.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
-import 'package:dun_cookie_flutter/model/bakery_data.dart';
 import 'package:dun_cookie_flutter/provider/setting_provider.dart';
 import 'package:dun_cookie_flutter/page/Error/main.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
-import 'package:dun_cookie_flutter/model/source_data.dart';
-import 'package:dun_cookie_flutter/provider/common_event_bus.dart';
 import 'package:dun_cookie_flutter/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'common/tool/dun_toast.dart';
 import 'provider/common_provider.dart';
 
 void main() {
-  runApp(DunMain());
+  runApp(const DunMain());
   //沉浸式状态栏
   if (Platform.isAndroid) {
     SystemUiOverlayStyle systemUiOverlayStyle = const SystemUiOverlayStyle(
@@ -26,7 +21,7 @@ void main() {
 }
 
 class DunMain extends StatefulWidget {
-  DunMain({Key? key}) : super(key: key);
+  const DunMain({Key? key}) : super(key: key);
 
   @override
   State<DunMain> createState() => _DunMainState();

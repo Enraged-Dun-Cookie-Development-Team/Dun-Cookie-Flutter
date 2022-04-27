@@ -21,7 +21,9 @@ class Bakery extends StatefulWidget {
 class _BakeryState extends State<Bakery> {
   _getBakeryInfo(id) async {
     BakeryData value = await BakeryRequest.getBakeryInfo(id);
+    value.loadData = false;
     if (value.id == null) {
+      value.fuckError = true;
       DunToast.showError("饼组服务器无法连接");
     }
     Provider.of<CommonProvider>(context, listen: false).bakeryData = value;
@@ -44,6 +46,8 @@ class _BakeryState extends State<Bakery> {
     // 监听更新列表
     eventBus.on<ChangePopupMenuDownButton>().listen((event) {
       if (event.checkId != null) {
+        Provider.of<CommonProvider>(context, listen: false).bakeryData =
+            BakeryData();
         _getBakeryInfo(event.checkId!);
       }
     });
@@ -52,13 +56,25 @@ class _BakeryState extends State<Bakery> {
 
   @override
   Widget build(BuildContext context) {
-    return Selector<CommonProvider, BakeryData>(
-      builder: (ctx, data, child) {
-        return data.id == null ? Container() : BakeryCard(data);
-      },
-      selector: (ctx, commonProvider) {
-        return commonProvider.bakeryData;
-      },
-    );
+    return Selector<CommonProvider, BakeryData>(builder: (ctx, data, child) {
+      if (data.fuckError) {
+        return const Center(
+          child: Image(
+            image: AssetImage("assets/image/load/bakery_error.png"),
+            width: 200,
+          ),
+        );
+      }
+      return data.loadData
+          ? const Center(
+              child: Image(
+                image: AssetImage("assets/image/load/bakery_loading.gif"),
+                width: 200,
+              ),
+            )
+          : BakeryCard(data);
+    }, selector: (ctx, commonProvider) {
+      return commonProvider.bakeryData;
+    });
   }
 }
