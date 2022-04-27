@@ -18,8 +18,9 @@ class Comics extends StatefulWidget {
 
 class _ComicsState extends State<Comics> {
   List<SourceData> comicsList = [];
-  bool loadData = false;
-  bool fuckError = false;
+
+  //  加载状态 0一切正常 1正在加载 2加载失败
+  int loadDataType = 0;
 
   @override
   void initState() {
@@ -29,23 +30,42 @@ class _ComicsState extends State<Comics> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        itemCount: comicsList.length,
-        itemBuilder: (ctx, index) {
-          return ComicsCard(comicsList[index]);
-        });
+    return loadDataType == 0
+        ? ListView.builder(
+            itemCount: comicsList.length,
+            itemBuilder: (ctx, index) {
+              return ComicsCard(comicsList[index]);
+            })
+        : loadDataType == 1
+            ? const Center(
+                child: Text("这是精美的加载动画"),
+              )
+            : GestureDetector(
+                onTap: () {
+                  _getData();
+                },
+                child: const Center(
+                  child: Text("这是难受的报错动画"),
+                ),
+              );
   }
 
   //  获取数据
   _getData() async {
+    setState(() {
+      loadDataType = 1;
+    });
     var data = await ListRequest.canteenCardList(source: {"source": "8"});
     if (data.isNotEmpty) {
       setState(() {
         comicsList = data;
+        loadDataType = 0;
       });
     } else {
-      fuckError = true;
-      DunError(error: "哦豁，看不了漫画了");
+      setState(() {
+        loadDataType = 2;
+      });
+      DunError(error: "漫画服务器断开");
     }
   }
 }

@@ -19,42 +19,40 @@ class Bakery extends StatefulWidget {
 }
 
 class _BakeryState extends State<Bakery> {
-  bool fuckError = false;
-  bool loadData = true;
+  //  加载状态 0一切正常 1正在加载 2加载失败
+  int loadDataType = 0;
 
   _getBakeryInfo(id) async {
     setState(() {
-      loadData = true;
+      loadDataType = 1;
     });
     BakeryData value = await BakeryRequest.getBakeryInfo(id);
-    setState(() {
-      loadData = false;
-    });
     if (value.id == null) {
       setState(() {
-        fuckError = true;
+        loadDataType = 2;
       });
       DunToast.showError("饼组服务器无法连接");
+    } else {
+      setState(() {
+        loadDataType = 0;
+      });
+      Provider.of<CommonProvider>(context, listen: false).bakeryData = value;
     }
-    Provider.of<CommonProvider>(context, listen: false).bakeryData = value;
   }
 
   _getBakeryMansionIdList() async {
     setState(() {
-      loadData = true;
+      loadDataType = 1;
     });
     List<String> value = await BakeryRequest.getBakeryMansionIdList();
-    setState(() {
-      loadData = false;
-    });
     if (value.isEmpty) {
       setState(() {
-        fuckError = true;
+        loadDataType = 2;
       });
       DunToast.showError("获取大厦列表失败");
     } else {
       setState(() {
-        fuckError = false;
+        loadDataType = 0;
       });
       eventBus.fire(ChangePopupMenuDownButton(idList: value));
       _getBakeryInfo(value[0].toString());
@@ -79,7 +77,7 @@ class _BakeryState extends State<Bakery> {
   @override
   Widget build(BuildContext context) {
     return Selector<CommonProvider, BakeryData>(builder: (ctx, data, child) {
-      if (fuckError) {
+      if (loadDataType == 2) {
         return GestureDetector(
           onTap: () {
             _getBakeryMansionIdList();
@@ -92,7 +90,7 @@ class _BakeryState extends State<Bakery> {
           ),
         );
       }
-      return loadData
+      return loadDataType == 1
           ? const Center(
               child: Image(
                 image: AssetImage("assets/image/load/bakery_loading.gif"),
