@@ -19,21 +19,43 @@ class Bakery extends StatefulWidget {
 }
 
 class _BakeryState extends State<Bakery> {
+  bool fuckError = false;
+  bool loadData = true;
+
   _getBakeryInfo(id) async {
+    setState(() {
+      loadData = true;
+    });
     BakeryData value = await BakeryRequest.getBakeryInfo(id);
-    value.loadData = false;
+    setState(() {
+      loadData = false;
+    });
     if (value.id == null) {
-      value.fuckError = true;
+      setState(() {
+        fuckError = true;
+      });
       DunToast.showError("饼组服务器无法连接");
     }
     Provider.of<CommonProvider>(context, listen: false).bakeryData = value;
   }
 
   _getBakeryMansionIdList() async {
+    setState(() {
+      loadData = true;
+    });
     List<String> value = await BakeryRequest.getBakeryMansionIdList();
+    setState(() {
+      loadData = false;
+    });
     if (value.isEmpty) {
+      setState(() {
+        fuckError = true;
+      });
       DunToast.showError("获取大厦列表失败");
     } else {
+      setState(() {
+        fuckError = false;
+      });
       eventBus.fire(ChangePopupMenuDownButton(idList: value));
       _getBakeryInfo(value[0].toString());
     }
@@ -57,15 +79,20 @@ class _BakeryState extends State<Bakery> {
   @override
   Widget build(BuildContext context) {
     return Selector<CommonProvider, BakeryData>(builder: (ctx, data, child) {
-      if (data.fuckError) {
-        return const Center(
-          child: Image(
-            image: AssetImage("assets/image/load/bakery_error.png"),
-            width: 200,
+      if (fuckError) {
+        return GestureDetector(
+          onTap: () {
+            _getBakeryMansionIdList();
+          },
+          child: const Center(
+            child: Image(
+              image: AssetImage("assets/image/load/bakery_error.png"),
+              width: 200,
+            ),
           ),
         );
       }
-      return data.loadData
+      return loadData
           ? const Center(
               child: Image(
                 image: AssetImage("assets/image/load/bakery_loading.gif"),

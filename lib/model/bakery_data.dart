@@ -23,9 +23,7 @@ class BakeryData {
       this.modifyTime,
       this.cvlink,
       this.fraction,
-      this.daily,
-      this.fuckError = false,
-      this.loadData = true});
+      this.daily,});
 
   BakeryData.fromJson(dynamic json) {
     id = json['id'];
@@ -50,8 +48,6 @@ class BakeryData {
   String? cvlink;
   int? fraction;
   List<BakeryDaily>? daily;
-  bool fuckError = false;
-  bool loadData = true;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
