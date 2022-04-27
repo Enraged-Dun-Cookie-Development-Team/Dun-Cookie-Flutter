@@ -71,6 +71,9 @@ class _ComicsCardState extends State<ComicsCard> {
                       Text(widget.sourceData.componentData!['introduction'],
                           style: DunStyles.text14B),
                       ListBody(
+                        children: List.generate(episodes.length, (index){
+                          return Text("${episodes[index]['shortTitle']}:${episodes[index]['title']}");
+                        }),
                         // children: List.generate(episodes.length, (index) {
                         //   return ItemTags(
                         //     title: '不知道',
