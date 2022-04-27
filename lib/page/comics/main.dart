@@ -40,8 +40,9 @@ class _ComicsState extends State<Comics> {
   _getData() async {
     var data = await ListRequest.canteenCardList(source: {"source": "8"});
     if (data.isNotEmpty) {
-      comicsList = data;
-      return data;
+      setState(() {
+        comicsList = data;
+      });
     } else {
       fuckError = true;
       DunError(error: "哦豁，看不了漫画了");

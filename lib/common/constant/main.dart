@@ -1,9 +1,9 @@
 class Constant {
   //  版本
-  static const String version = "0.377";
+  static const String version = "0.4";
 
   //  初始路由
-  static const int starRouterIndex = 2;
+  static const int starRouterIndex = 0;
 
   //  设备ID
   static String? deviceId;
