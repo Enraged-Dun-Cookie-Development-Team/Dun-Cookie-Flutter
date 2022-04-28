@@ -34,6 +34,9 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+<!--       <meta-data-->
+<!--           android:name="com.mob.mobpush.debugLevel"-->
+<!--           android:value="4" />-->
     </application>
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
     <queries>
