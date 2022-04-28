@@ -19,21 +19,41 @@ class Bakery extends StatefulWidget {
 }
 
 class _BakeryState extends State<Bakery> {
+  //  加载状态 0一切正常 1正在加载 2加载失败
+  int loadDataType = 0;
+
   _getBakeryInfo(id) async {
+    setState(() {
+      loadDataType = 1;
+    });
     BakeryData value = await BakeryRequest.getBakeryInfo(id);
-    value.loadData = false;
     if (value.id == null) {
-      value.fuckError = true;
+      setState(() {
+        loadDataType = 2;
+      });
       DunToast.showError("饼组服务器无法连接");
+    } else {
+      setState(() {
+        loadDataType = 0;
+      });
+      Provider.of<CommonProvider>(context, listen: false).bakeryData = value;
     }
-    Provider.of<CommonProvider>(context, listen: false).bakeryData = value;
   }
 
   _getBakeryMansionIdList() async {
+    setState(() {
+      loadDataType = 1;
+    });
     List<String> value = await BakeryRequest.getBakeryMansionIdList();
     if (value.isEmpty) {
+      setState(() {
+        loadDataType = 2;
+      });
       DunToast.showError("获取大厦列表失败");
     } else {
+      setState(() {
+        loadDataType = 0;
+      });
       eventBus.fire(ChangePopupMenuDownButton(idList: value));
       _getBakeryInfo(value[0].toString());
     }
@@ -57,15 +77,20 @@ class _BakeryState extends State<Bakery> {
   @override
   Widget build(BuildContext context) {
     return Selector<CommonProvider, BakeryData>(builder: (ctx, data, child) {
-      if (data.fuckError) {
-        return const Center(
-          child: Image(
-            image: AssetImage("assets/image/load/bakery_error.png"),
-            width: 200,
+      if (loadDataType == 2) {
+        return GestureDetector(
+          onTap: () {
+            _getBakeryMansionIdList();
+          },
+          child: const Center(
+            child: Image(
+              image: AssetImage("assets/image/load/bakery_error.png"),
+              width: 200,
+            ),
           ),
         );
       }
-      return data.loadData
+      return loadDataType == 1
           ? const Center(
               child: Image(
                 image: AssetImage("assets/image/load/bakery_loading.gif"),
