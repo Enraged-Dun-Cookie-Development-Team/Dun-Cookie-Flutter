@@ -27,9 +27,6 @@ class HttpClass {
       case 0:
         dio.options.baseUrl = HttpConfig.lwtBaseUrl;
         break;
-      case 1:
-        dio.options.baseUrl = HttpConfig.wyqBaseUrl;
-        break;
       case 2:
         dio.options.baseUrl = HttpConfig.ceobecanteenBaseUrl;
         break;

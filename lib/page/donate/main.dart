@@ -54,6 +54,20 @@ class Donate extends StatelessWidget {
                   "这是一个捐助页面，资金动向我们会公示。",
                   style: DunStyles.text14C.copyWith(color: Colors.red),
                 ),
+                const SizedBox(
+                  height: 10,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    OpenAppOrBrowser.openAppUrlScheme(
+                        "https://shimo.im/sheets/NJkbEgRmQRtpQ7qR/zYa7U/",
+                        context);
+                  },
+                  child: const Text("小刻食堂收支一览"),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
                 const Text(
                   "这是一句卖惨的话，请各位脑补",
                 ),
