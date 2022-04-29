@@ -31,7 +31,7 @@ class BakeryData {
     createTime = json['createTime'];
     modifyTime = json['modifyTime'];
     cvlink =
-        json['cvlink'] == "" ? json['cvlink'] : json['cvlink'].split('cv')[1];
+        json['cv_link'] == "" ? json['cv_link'] : json['cv_link'].split('cv')[1];
     fraction = json['fraction'];
     if (json['daily'] != null) {
       daily = [];
@@ -55,7 +55,7 @@ class BakeryData {
     map['description'] = description;
     map['create_time'] = createTime;
     map['modify_time'] = modifyTime;
-    map['cvlink'] = cvlink == "" ? cvlink : ('cv' + cvlink!);
+    map['cv_link'] = cvlink == "" ? cvlink : ('cv' + cvlink!);
     map['fraction'] = fraction;
     if (daily != null) {
       map['daily'] = daily?.map((v) => v.toJson()).toList();
