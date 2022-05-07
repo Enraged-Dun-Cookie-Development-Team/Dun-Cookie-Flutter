@@ -126,8 +126,8 @@ class _UserWanCardState extends State<UserWanCard> {
                                                       .medias![index].title!,
                                                   overflow:
                                                       TextOverflow.ellipsis,
-                                                  maxLines: 2,
-                                                  style: DunStyles.text14,
+                                                  maxLines: 3,
+                                                  style: DunStyles.text12,
                                                 ),
                                               )
                                             ],

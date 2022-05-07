@@ -67,7 +67,7 @@ class _UserWanState extends State<UserWan> {
         ),
         Container(
           padding: const EdgeInsets.all(8),
-          height: 50,
+          height: 60,
           child: ElevatedButton(
               onPressed: () {
                 OpenAppOrBrowser.openUrl(

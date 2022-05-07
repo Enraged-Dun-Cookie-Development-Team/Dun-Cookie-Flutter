@@ -29,7 +29,7 @@ class ToolVideo extends StatelessWidget {
               videoInfo.name!,
               overflow: TextOverflow.ellipsis,
               maxLines: 3,
-              style:DunStyles.text14,
+              style: DunStyles.text12,
             ),
           )
         ],
