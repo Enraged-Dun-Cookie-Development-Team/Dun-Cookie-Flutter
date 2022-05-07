@@ -171,4 +171,3 @@ class _ViewImageExtendedImageState extends State<ViewImageExtendedImage>
     );
   }
 }
-

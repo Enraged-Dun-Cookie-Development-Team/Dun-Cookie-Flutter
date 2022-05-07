@@ -48,6 +48,9 @@ class _DunMainState extends State<DunMain> {
       child: MaterialApp(
         title: "小刻食堂",
         routes: DunRouter.routes,
+        builder: (ctx, child) {
+          return child!;
+        },
         theme: DunTheme.themeList[0],
         onUnknownRoute: (settings) =>
             MaterialPageRoute(builder: (context) => DunError(error: "404")),

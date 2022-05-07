@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:dun_cookie_flutter/common/constant/main.dart';
 import 'package:dun_cookie_flutter/model/source_data.dart';
 import 'package:dun_cookie_flutter/page/comics/comicsCard.dart';
@@ -34,7 +35,9 @@ class _ComicsState extends State<Comics> {
         ? ListView.builder(
             itemCount: comicsList.length,
             itemBuilder: (ctx, index) {
-              return ComicsCard(comicsList[index]);
+              return FadeIn(
+                  duration: const Duration(milliseconds: 1000),
+                  child: ComicsCard(comicsList[index]));
             })
         : loadDataType == 1
             ? const Center(
