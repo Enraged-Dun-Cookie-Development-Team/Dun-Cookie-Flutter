@@ -259,23 +259,23 @@ class _MainScaffoldState extends State<MainScaffold> {
                   indent: 0.0,
                   color: DunColors.DunColor,
                 ),
-                ListTile(
-                  leading: const Icon(
-                    Icons.monetization_on,
-                    size: 30,
-                    color: DunColors.DunColor,
-                  ),
-                  title: const Text("捐助"),
-                  onTap: () {
-                    Navigator.pushNamed(context, Donate.routerName);
-                    // Navigator.pop(context);
-                  },
-                ),
-                const Divider(
-                  height: 6.0,
-                  indent: 0.0,
-                  color: DunColors.DunColor,
-                ),
+                // ListTile(
+                //   leading: const Icon(
+                //     Icons.monetization_on,
+                //     size: 30,
+                //     color: DunColors.DunColor,
+                //   ),
+                //   title: const Text("捐助"),
+                //   onTap: () {
+                //     Navigator.pushNamed(context, Donate.routerName);
+                //     // Navigator.pop(context);
+                //   },
+                // ),
+                // const Divider(
+                //   height: 6.0,
+                //   indent: 0.0,
+                //   color: DunColors.DunColor,
+                // ),
                 Column(
                   children: shortcutMenu.isEmpty
                       ? [
