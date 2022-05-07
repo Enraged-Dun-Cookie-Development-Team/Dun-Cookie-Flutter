@@ -1,15 +1,10 @@
-import 'package:dun_cookie_flutter/common/constant/main.dart';
 import 'package:dun_cookie_flutter/model/bilibili_user_favlist_data.dart';
-import 'package:dun_cookie_flutter/model/source_data.dart';
-import 'package:dun_cookie_flutter/page/comics/comicsCard.dart';
 import 'package:dun_cookie_flutter/page/error/main.dart';
 import 'package:dun_cookie_flutter/page/user_Wan/userWanCard.dart';
-import 'package:dun_cookie_flutter/provider/setting_provider.dart';
-import 'package:dun_cookie_flutter/provider/common_provider.dart';
-import 'package:dun_cookie_flutter/request/list_request.dart';
 import 'package:dun_cookie_flutter/request/user_request.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+
+import '../../common/tool/open_app_or_browser.dart';
 
 class UserWan extends StatefulWidget {
   const UserWan({Key? key}) : super(key: key);
@@ -33,24 +28,55 @@ class _UserWanState extends State<UserWan> {
 
   @override
   Widget build(BuildContext context) {
-    return loadDataType == 0
-        ? ListView.builder(
-            itemCount: listData.data?.count,
-            itemBuilder: (ctx, index) {
-              return UserWanCard(listData.data!.list![index]);
-            })
-        : loadDataType == 1
-            ? const Center(
-                child: Text("这是精美的加载动画"),
-              )
-            : GestureDetector(
-                onTap: () {
-                  _getFavListData();
-                },
-                child: const Center(
-                  child: Text("这是难受的报错动画"),
-                ),
-              );
+    return Column(
+      children: [
+        Expanded(
+          child: loadDataType == 0
+              ? ListView.builder(
+                  itemCount: listData.data?.count,
+                  itemBuilder: (ctx, index) {
+                    return UserWanCard(listData.data!.list![index]);
+                  })
+              : loadDataType == 1
+                  ? const Center(
+                      child: Text("这是精美的加载动画"),
+                    )
+                  : GestureDetector(
+                      onTap: () {
+                        _getFavListData();
+                      },
+                      child: const Center(
+                        child: Text("这是难受的报错动画"),
+                      ),
+                    ),
+        ),
+        Container(
+          padding: const EdgeInsets.all(8),
+          height: 50,
+          child: ElevatedButton(
+              onPressed: () {
+                OpenAppOrBrowser.openUrl(
+                    "https://m.bilibili.com/space/1579053316", context,
+                    appUrlScheme: "bilibili://space/1579053316");
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: const Image(
+                      image:
+                          AssetImage("assets/image/bilibili_up_wanwanzi.webp"),
+                      height: 24,
+                    ),
+                  ),
+                  const SizedBox(width: 10,),
+                  const Text("数据来源：Wan顽子 的B站动态"),
+                ],
+              )),
+        ),
+      ],
+    );
   }
 
   //  获取数据
@@ -58,7 +84,7 @@ class _UserWanState extends State<UserWan> {
     setState(() {
       loadDataType = 1;
     });
-    var data = await UserRequest.getUserFavlist('1579053316');
+    var data = await UserRequest.getUserFavlist(1579053316);
     if (data.code == 0) {
       setState(() {
         listData = data;

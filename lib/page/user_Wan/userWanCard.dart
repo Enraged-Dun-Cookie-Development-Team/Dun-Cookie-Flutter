@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/request/user_request.dart';
 import 'package:extended_image/extended_image.dart';
@@ -22,7 +23,7 @@ class _UserWanCardState extends State<UserWanCard> {
   BilibiliFavoritesData favoritesData =
       BilibiliFavoritesData(); // 带详情的数据 包含视频列表
   //  加载状态 0一切正常 1正在加载 2加载失败
-  int loadDataType = 0;
+  int loadDataType = 1;
 
   @override
   void initState() {
@@ -37,83 +38,123 @@ class _UserWanCardState extends State<UserWanCard> {
         onTap: () {
           setState(() {
             _isExpanded = !_isExpanded;
-            _getFavData(widget.favData.id);
           });
+          _getFavData(widget.favData.id);
         },
-        child: Column(
-          children: [
-            ExpansionPanelList(
-              elevation: 0,
-              expansionCallback: (panelIndex, isExpanded) {
-                setState(() {
-                  _isExpanded = !isExpanded;
-                });
+        child: ExpansionPanelList(
+          elevation: 0,
+          expansionCallback: (panelIndex, isExpanded) {
+            setState(() {
+              _isExpanded = !isExpanded;
+            });
+          },
+          children: <ExpansionPanel>[
+            ExpansionPanel(
+              headerBuilder: (context, isExpanded) {
+                return Container(
+                  alignment: Alignment.centerLeft,
+                  margin: const EdgeInsets.only(left: 10),
+                  child: Row(
+                    children: [
+                      const Image(
+                        image: AssetImage("assets/sources_logo/bili.ico"),
+                        height: 24,
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Text(widget.favData.title!),
+                    ],
+                  ),
+                );
               },
-              children: <ExpansionPanel>[
-                ExpansionPanel(
-                  headerBuilder: (context, isExpanded) {
-                    return Container(
-                      alignment: Alignment.centerLeft,
-                      margin: const EdgeInsets.only(left: 10),
-                      child: Text(widget.favData.title!),
-                    );
-                  },
-                  body: favoritesData.data == null
-                      ? const Center(child: Text("Loading……"))
-                      : Padding(
-                          padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Wrap(
-                                crossAxisAlignment: WrapCrossAlignment.start,
-                                children: List.generate(
-                                    favoritesData.data!.medias!.length,
-                                    (index) {
-                                  return GestureDetector(
-                                    child: Column(
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(4),
-                                          child: ExtendedImage.network(
-                                            favoritesData
-                                                .data!.medias![index].cover!,
-                                            height: 100,
-                                            fit: BoxFit.cover,
+              body: loadDataType == 1
+                  ? const Center(
+                      child: Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text("Loading……"),
+                      ),
+                    )
+                  : loadDataType == 0
+                      ? FadeIn(
+                          duration: const Duration(milliseconds: 1000),
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+                            child: Column(
+                              children: [
+                                // Row(
+                                //   children: [
+                                //     ElevatedButton(
+                                //         onPressed: () {}, child: Text("前往该收藏"))
+                                //   ],
+                                // ),
+                                // const SizedBox(
+                                //   height: 8,
+                                // ),
+                                GridView.builder(
+                                    shrinkWrap: true,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    itemCount:
+                                        favoritesData.data?.medias?.length,
+                                    gridDelegate:
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 2,
+                                            mainAxisSpacing: 2,
+                                            crossAxisSpacing: 2,
+                                            childAspectRatio: 1),
+                                    itemBuilder: (ctx, index) {
+                                      return GestureDetector(
+                                        child: Card(
+                                          child: Column(
+                                            children: [
+                                              ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(4),
+                                                child: ExtendedImage.network(
+                                                  favoritesData.data!
+                                                      .medias![index].cover!,
+                                                  height: 100,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Text(
+                                                  favoritesData.data!
+                                                      .medias![index].title!,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  maxLines: 2,
+                                                  style: DunStyles.text14,
+                                                ),
+                                              )
+                                            ],
                                           ),
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Text(
-                                            favoritesData
-                                                .data!.medias![index].title!,
-                                            overflow: TextOverflow.ellipsis,
-                                            maxLines: 3,
-                                            style: DunStyles.text14,
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                    onTap: () {
-                                      OpenAppOrBrowser.openUrl(
-                                          "https://m.bilibili.com/video/${favoritesData.data!.medias![index].bvid}",
-                                          context,
-                                          appUrlScheme: favoritesData
-                                              .data!.medias![index].link);
-                                    },
-                                  );
-                                }),
-                              )
-                            ],
+                                        onTap: () {
+                                          OpenAppOrBrowser.openUrl(
+                                              "https://m.bilibili.com/video/${favoritesData.data!.medias![index].bvid}",
+                                              context,
+                                              appUrlScheme: favoritesData
+                                                  .data!.medias![index].link);
+                                        },
+                                      );
+                                    }),
+                              ],
+                            ),
                           ),
-                        ),
-                  isExpanded: _isExpanded,
-                ),
-              ],
-              animationDuration: kThemeAnimationDuration,
+                        )
+                      : const Center(
+                          child: Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text("卧槽 加载失败"),
+                        )),
+              isExpanded: _isExpanded,
             ),
           ],
+          animationDuration: kThemeAnimationDuration,
         ),
       ),
     );
@@ -121,10 +162,13 @@ class _UserWanCardState extends State<UserWanCard> {
 
   //  获取数据
   _getFavData(id) async {
+    if (!_isExpanded) {
+      return;
+    }
     setState(() {
       loadDataType = 1;
     });
-    BilibiliFavoritesData data = BilibiliFavoritesData();
+    BilibiliFavoritesData data = await UserRequest.getUserFav(id);
     if (widget.favData.bilibiliFavoritesData != null) {
       data = widget.favData.bilibiliFavoritesData!;
     } else {

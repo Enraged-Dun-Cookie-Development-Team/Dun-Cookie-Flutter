@@ -131,7 +131,7 @@ class Medias {
     duration = json['duration'];
     upper = json['upper'] != null ? Upper.fromJson(json['upper']) : null;
     attr = json['attr'];
-    cntInfo = json['cnt_info'] != null ? MediasCntInfo.fromJson(json['cntInfo']) : null;
+    cntInfo = json['cnt_info'] != null ? MediasCntInfo.fromJson(json['cnt_info']) : null;
     link = json['link'];
     ctime = json['ctime'];
     pubtime = json['pubtime'];
@@ -328,7 +328,7 @@ class Info {
     cover = json['cover'];
     upper = json['upper'] != null ? Upper.fromJson(json['upper']) : null;
     coverType = json['cover_type'];
-    cntInfo = json['cnt_info'] != null ? CntInfo.fromJson(json['cntInfo']) : null;
+    cntInfo = json['cnt_info'] != null ? CntInfo.fromJson(json['cnt_info']) : null;
     type = json['type'];
     intro = json['intro'];
     ctime = json['ctime'];
