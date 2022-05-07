@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../common/tool/dun_toast.dart';
+import '../../common/tool/open_app_or_browser.dart';
 import '../../request/bakery_request.dart';
 
 class Bakery extends StatefulWidget {
@@ -76,32 +77,66 @@ class _BakeryState extends State<Bakery> {
 
   @override
   Widget build(BuildContext context) {
-    return Selector<CommonProvider, BakeryData>(builder: (ctx, data, child) {
-      if (loadDataType == 2) {
-        return GestureDetector(
-          onTap: () {
-            _getBakeryMansionIdList();
-          },
-          child: const Center(
-            child: Image(
-              image: AssetImage("assets/image/load/bakery_error.png"),
-              width: 200,
+    return Column(
+      children: [
+        Expanded(
+          child:
+              Selector<CommonProvider, BakeryData>(builder: (ctx, data, child) {
+            if (loadDataType == 2) {
+              return GestureDetector(
+                onTap: () {
+                  _getBakeryMansionIdList();
+                },
+                child: const Center(
+                  child: Image(
+                    image: AssetImage("assets/image/load/bakery_error.png"),
+                    width: 200,
+                  ),
+                ),
+              );
+            }
+            return loadDataType == 1
+                ? const Center(
+                    child: Image(
+                      image: AssetImage("assets/image/load/bakery_loading.gif"),
+                      width: 200,
+                    ),
+                  )
+                : FadeIn(
+                    duration: const Duration(milliseconds: 1000),
+                    child: BakeryCard(data));
+          }, selector: (ctx, commonProvider) {
+            return commonProvider.bakeryData;
+          }),
+        ),
+        Container(
+          padding: const EdgeInsets.all(8),
+          height: 50,
+          child: ElevatedButton(
+            onPressed: () {
+              OpenAppOrBrowser.openUrl(
+                  "https://m.bilibili.com/space/8412516", context,
+                  appUrlScheme: "bilibili://space/8412516");
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: const Image(
+                    image: AssetImage("assets/image/bilibili_up_mbgf.webp"),
+                    height: 24,
+                  ),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                const Text("前往 罗德岛蜜饼工坊 的B站空间"),
+              ],
             ),
           ),
-        );
-      }
-      return loadDataType == 1
-          ? const Center(
-              child: Image(
-                image: AssetImage("assets/image/load/bakery_loading.gif"),
-                width: 200,
-              ),
-            )
-          : FadeIn(
-              duration: const Duration(milliseconds: 1000),
-              child: BakeryCard(data));
-    }, selector: (ctx, commonProvider) {
-      return commonProvider.bakeryData;
-    });
+        ),
+      ],
+    );
   }
 }

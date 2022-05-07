@@ -31,8 +31,8 @@ class ListRequest {
 //  查询方法
   static _canteenOriginalCardList({Map<String, String>? source}) async {
     const url = "/canteen/cardList";
-    ResponseData request = await HttpClass.get(url, params: source);
     print("请求一次全部数据");
+    ResponseData request = await HttpClass.get(url, params: source);
     return request;
   }
 
@@ -52,8 +52,8 @@ class ListRequest {
   static Future<List<SourceData>> canteenNewCardList() async {
     const url = "/api/v0/ceobe/update";
     List<SourceData> resultAll = [];
-    ResponseData request = await HttpClass.get(url);
     print("请求一次新数据");
+    ResponseData request = await HttpClass.get(url);
     if (request.error) {
       DunToast.showError(request.msg);
       return resultAll;

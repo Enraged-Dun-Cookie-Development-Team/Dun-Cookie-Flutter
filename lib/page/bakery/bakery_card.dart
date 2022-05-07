@@ -40,17 +40,13 @@ class BakeryCard extends StatelessWidget {
                 ),
               ),
               Text(
-                "${data.createTime!}发布",
-                style: DunStyles.text12,
+                "${data.createTime!}发布 ${data.createTime == null ? "暂未修改" : "于${data.modifyTime}修改"}",
+                style: DunStyles.text12B,
               ),
-              Text(
-                data.createTime == null ? "暂未修改" : "于${data.modifyTime}修改",
-                style: DunStyles.text12,
-              ),
-              const Text(
-                "以下为示例样式，非最终样式，蜜饼工坊，敬请期待",
-                style: DunStyles.text12,
-              ),
+              // const Text(
+              //   "以下为示例样式，非最终样式，蜜饼工坊，敬请期待",
+              //   style: DunStyles.text12,
+              // ),
             ],
           ),
           const SizedBox(

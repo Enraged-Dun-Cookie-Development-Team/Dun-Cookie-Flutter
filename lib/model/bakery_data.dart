@@ -16,22 +16,24 @@ BakeryData bakeryDataFromJson(String str) =>
 String bakeryDataToJson(BakeryData data) => json.encode(data.toJson());
 
 class BakeryData {
-  BakeryData(
-      {this.id,
-      this.description,
-      this.createTime,
-      this.modifyTime,
-      this.cvlink,
-      this.fraction,
-      this.daily,});
+  BakeryData({
+    this.id,
+    this.description,
+    this.createTime,
+    this.modifyTime,
+    this.cvlink,
+    this.fraction,
+    this.daily,
+  });
 
   BakeryData.fromJson(dynamic json) {
     id = json['id'];
     description = json['description'];
-    createTime = json['createTime'];
-    modifyTime = json['modifyTime'];
-    cvlink =
-        json['cv_link'] == "" ? json['cv_link'] : json['cv_link'].split('cv')[1];
+    createTime = json['create_time'];
+    modifyTime = json['modify_time'];
+    cvlink = json['cv_link'] == null
+        ? json['cv_link']
+        : json['cv_link'].split('cv')[1];
     fraction = json['fraction'];
     if (json['daily'] != null) {
       daily = [];
@@ -54,7 +56,7 @@ class BakeryData {
     map['id'] = id;
     map['description'] = description;
     map['create_time'] = createTime;
-    map['modify_time'] = modifyTime;
+    map['create_time'] = modifyTime;
     map['cv_link'] = cvlink == "" ? cvlink : ('cv' + cvlink!);
     map['fraction'] = fraction;
     if (daily != null) {

@@ -1,3 +1,4 @@
+import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/model/bilibili_user_favlist_data.dart';
 import 'package:dun_cookie_flutter/page/error/main.dart';
 import 'package:dun_cookie_flutter/page/user_Wan/userWanCard.dart';
@@ -38,8 +39,22 @@ class _UserWanState extends State<UserWan> {
                     return UserWanCard(listData.data!.list![index]);
                   })
               : loadDataType == 1
-                  ? const Center(
-                      child: Text("这是精美的加载动画"),
+                  ? Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text("这是精美的加载动画"),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            "当前页面数据直接来自B站接口，如果迟迟加载不出来，表示B站对数据进行了调整，请等待软件升级以适配新版接口",
+                            style: DunStyles.text14B,
+                          ),
+                        ],
+                      ),
                     )
                   : GestureDetector(
                       onTap: () {
@@ -70,8 +85,10 @@ class _UserWanState extends State<UserWan> {
                       height: 24,
                     ),
                   ),
-                  const SizedBox(width: 10,),
-                  const Text("数据来源：Wan顽子 的B站动态"),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  const Text("前往 Wan顽子 的B站动态"),
                 ],
               )),
         ),
