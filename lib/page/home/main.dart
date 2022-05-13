@@ -63,7 +63,8 @@ class _MainScaffoldState extends State<MainScaffold> {
       if (event.idList != null) {
         bakeryPopupButtonList = [];
         for (var element in event.idList!) {
-          bakeryPopupButtonList.add(
+          bakeryPopupButtonList.insert(
+            0,
             PopupMenuItem<String>(
               value: element,
               child: Text(
@@ -73,6 +74,7 @@ class _MainScaffoldState extends State<MainScaffold> {
             ),
           );
         }
+        bakeryPopupButtonList.reversed();
         setState(() {
           bakeryPopupButtonList = bakeryPopupButtonList;
           bakeryPupopButton = bakeryPopupButtonList[0].value!;
