@@ -12,7 +12,6 @@ class UserRequest {
     var data = await HttpClass.get(url, type: requestType);
     if (!data.error) {
       var result = BilibiliUserFavlistData.fromJson(data.data);
-      result.data?.list!.sort((x, y) => y.id!.compareTo(x.id!));
       return result;
     }
     return BilibiliUserFavlistData();

@@ -74,7 +74,6 @@ class _MainScaffoldState extends State<MainScaffold> {
             ),
           );
         }
-        bakeryPopupButtonList.reversed();
         setState(() {
           bakeryPopupButtonList = bakeryPopupButtonList;
           bakeryPupopButton = bakeryPopupButtonList[0].value!;
