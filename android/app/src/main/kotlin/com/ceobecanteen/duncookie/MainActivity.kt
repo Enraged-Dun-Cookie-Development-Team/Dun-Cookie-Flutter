@@ -1,4 +1,4 @@
-package com.example.dun_cookie_flutter
+package com.ceobecanteen.duncookie
 
 import io.flutter.embedding.android.FlutterActivity
 

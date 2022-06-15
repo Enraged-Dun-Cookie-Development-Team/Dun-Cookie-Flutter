@@ -45,10 +45,6 @@ android {
         jvmTarget = '1.8'
     }
 
-    sourceSets {
-        main.java.srcDirs += 'src/Main/kotlin'
-    }
-
     defaultConfig {
         applicationId "com.ceobecanteen.duncookie"
         minSdkVersion 21
