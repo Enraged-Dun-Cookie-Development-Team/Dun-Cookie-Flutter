@@ -26,7 +26,7 @@ class DunRouter {
     DunSetting.routerName: (context) => const DunSetting(),
     SettingSourceFilter.routerName: (context) => const SettingSourceFilter(),
     DunInfo.routerName: (context) => const DunInfo(),
-    DunUpdate.routerName: (context) => const DunUpdate(),
+    DunUpdate.routerName: (context) => DunUpdate(),
     Donate.routerName: (context) => const Donate(),
     Comics.routerName: (context) => const Comics(),
     UserWan.routerName: (context) => const UserWan(),

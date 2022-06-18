@@ -20,6 +20,8 @@ PODS:
   - mobpush_plugin (1.1.0):
     - Flutter
     - mob_pushsdk
+  - package_info_plus (0.4.5):
+    - Flutter
   - path_provider_ios (0.0.1):
     - Flutter
   - share (0.0.1):
@@ -42,6 +44,7 @@ DEPENDENCIES:
   - image_gallery_saver (from `.symlinks/plugins/image_gallery_saver/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - mobpush_plugin (from `.symlinks/plugins/mobpush_plugin/ios`)
+  - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
   - share (from `.symlinks/plugins/share/ios`)
   - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
@@ -70,6 +73,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/image_picker_ios/ios"
   mobpush_plugin:
     :path: ".symlinks/plugins/mobpush_plugin/ios"
+  package_info_plus:
+    :path: ".symlinks/plugins/package_info_plus/ios"
   path_provider_ios:
     :path: ".symlinks/plugins/path_provider_ios/ios"
   share:
@@ -93,6 +98,7 @@ SPEC CHECKSUMS:
   mob_pushsdk: da91cf00e2bc3ac01b5cbd58a204e0a0d1b4c145
   MOBFoundation: 778c8aa4760cece62b8b7725c88ca280b4004801
   mobpush_plugin: cef79d95989d79c71a340fadeecf18bc566c89e0
+  package_info_plus: 6c92f08e1f853dc01228d6f553146438dafcd14e
   path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
   share: 0b2c3e82132f5888bccca3351c504d0003b3b410
   shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad

@@ -5,6 +5,8 @@ import 'package:dun_cookie_flutter/page/setting/main.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 
+import '../../common/tool/package_info.dart';
+
 class DunInfo extends StatelessWidget {
   const DunInfo({Key? key}) : super(key: key);
   static String routerName = "/dunInfo";
@@ -24,10 +26,19 @@ class DunInfo extends StatelessWidget {
               const SizedBox(
                 height: 6,
               ),
-              const Text(
-                "小刻食堂 V${Constant.version}",
-                style: DunStyles.text26C,
-              ),
+              FutureBuilder<String>(
+                  future: PackageInfoPlus.getVersion(),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<String> snapshot) {
+                    if (!snapshot.hasData) {
+                      return Container();
+                    } else {
+                      return Text(
+                        '小刻食堂 Beta V' + snapshot.data!,
+                        style: DunStyles.text26C,
+                      );
+                    }
+                  }),
               const SizedBox(
                 height: 10,
               ),
@@ -46,11 +57,15 @@ class DunInfo extends StatelessWidget {
               const Text(
                 "宣发 By 不到60kg不改名",
               ),
-              const SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               const Text(
                 "欢迎联系我们为小刻食堂添砖加瓦",
               ),
-              const SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               const Text(
                 "欢迎来QQ群【蹲饼组】反馈BUG或提出意见建议",
               ),

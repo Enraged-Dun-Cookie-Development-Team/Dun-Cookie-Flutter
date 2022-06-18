@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
 class Constant {
-  //  版本
-  static const String version = "0.6.1";
-
   //  初始路由
   static const int starRouterIndex = 0;
 

@@ -26,6 +26,8 @@ import 'package:flutter/services.dart';
 import 'package:mobpush_plugin/mobpush_plugin.dart';
 import 'package:provider/provider.dart';
 
+import '../../common/tool/package_info.dart';
+
 class MainScaffold extends StatefulWidget {
   MainScaffold({Key? key}) : super(key: key);
 
@@ -229,18 +231,28 @@ class _MainScaffoldState extends State<MainScaffold> {
                     color: DunColors.DunColor,
                   ),
                   child: Column(
-                    children: const [
-                      Image(
+                    children: [
+                      const Image(
                         image: AssetImage("assets/logo/logo_no_line.png"),
                         width: 100,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
-                      Text(
-                        '小刻食堂 Beta V' + Constant.version,
-                        style: TextStyle(color: Colors.white, fontSize: 18),
-                      ),
+                      FutureBuilder<String>(
+                          future: PackageInfoPlus.getVersion(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<String> snapshot) {
+                            if (!snapshot.hasData) {
+                              return Container();
+                            } else {
+                              return Text(
+                                '小刻食堂 Beta V' + snapshot.data!,
+                                style: const TextStyle(
+                                    color: Colors.white, fontSize: 18),
+                              );
+                            }
+                          }),
                     ],
                   ),
                 ),

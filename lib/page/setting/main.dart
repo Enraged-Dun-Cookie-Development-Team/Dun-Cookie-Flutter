@@ -11,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+import '../../common/tool/package_info.dart';
+
 class DunSetting extends StatefulWidget {
   const DunSetting({Key? key}) : super(key: key);
 
@@ -143,12 +145,12 @@ class _DunSettingState extends State<DunSetting> {
           title: const Text("检测升级"),
           subtitle: const Text("可以试着点点"),
           trailing: const Icon(Icons.arrow_right),
-          onTap: () {
+          onTap: () async {
             DunApp? app = Provider.of<CeobecanteenData>(context, listen: false)
                 .ceobecanteenInfo
                 ?.app;
             if (app?.version != null &&
-                double.parse(app!.version!) > double.parse(Constant.version)) {
+                await PackageInfoPlus.isVersionHigher(app!.version!)) {
               Navigator.pushNamed(context, DunUpdate.routerName,
                   arguments: app);
             } else {
