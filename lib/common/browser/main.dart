@@ -1,4 +1,4 @@
-import 'dart:io';
+import 'dart:io' show Platform;
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/open_app_or_browser.dart';
 import 'package:dun_cookie_flutter/provider/view_webpage_provider.dart';
@@ -18,9 +18,13 @@ class DunWebView extends StatelessWidget {
       child: WillPopScope(
           // 当返回为true时,可以自动返回(flutter帮助我们执行返回操作)
           // 当返回为false时, 自行写返回代码
-          onWillPop: () {
-            return Future.value(true);
-          },
+          // 特殊：iOS 版本需要返回 null，否则会影响 iOS 系统级自动返回
+          // https://github.com/flutter/flutter/issues/14203
+          onWillPop: Platform.isIOS
+              ? null
+              : () {
+                  return Future.value(true);
+                },
           child: DunWebViewMain(url)),
     );
   }
