@@ -40,7 +40,8 @@ class _DunSettingState extends State<DunSetting> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return SingleChildScrollView(
+        child: Column(
       children: [
         const Padding(
           padding: EdgeInsets.all(15.0),
@@ -170,6 +171,6 @@ class _DunSettingState extends State<DunSetting> {
           },
         ),
       ],
-    );
+    ));
   }
 }
