@@ -16,6 +16,7 @@ class DunSetting extends StatefulWidget {
 
   static String routerName = "/setting";
   static bool isPreview = true;
+  static int darkMode = 0;
 
   @override
   State<DunSetting> createState() => _DunSettingState();
@@ -29,6 +30,10 @@ class _DunSettingState extends State<DunSetting> {
           Provider.of<SettingProvider>(context, listen: false)
               .appSetting
               .isPreview!;
+      DunSetting.darkMode = Provider.of<SettingProvider>(context, listen: false)
+              .appSetting
+              .darkMode ??
+          0;
     });
     super.initState();
   }
@@ -59,6 +64,36 @@ class _DunSettingState extends State<DunSetting> {
             Navigator.pushNamed(context, SettingSourceFilter.routerName);
           },
         ),
+        ListTile(
+            title: Text("浅色/深色模式切换"),
+            subtitle: Text("是否跟随系统切换模式"),
+            trailing: DropdownButton<int>(
+                value: DunSetting.darkMode,
+                items: [
+                  DropdownMenuItem(
+                      child: Row(
+                          children: const [Icon(Icons.settings), Text('跟随系统')]),
+                      value: 0),
+                  DropdownMenuItem(
+                      child: Row(
+                          children: const [Icon(Icons.wb_sunny), Text('浅色模式')]),
+                      value: 1),
+                  DropdownMenuItem(
+                      child: Row(children: const [
+                        Icon(Icons.shield_moon),
+                        Text('深色模式')
+                      ]),
+                      value: 2)
+                ],
+                onChanged: (value) {
+                  var settingProvider =
+                      Provider.of<SettingProvider>(context, listen: false);
+                  settingProvider.appSetting.darkMode = value;
+                  settingProvider.saveAppSetting();
+                  setState(() {
+                    DunSetting.darkMode = value ?? 0;
+                  });
+                })),
         ListTile(
           title: const Text("省流模式"),
           subtitle: const Text("列表使用略缩图"),
@@ -108,13 +143,11 @@ class _DunSettingState extends State<DunSetting> {
           subtitle: const Text("可以试着点点"),
           trailing: const Icon(Icons.arrow_right),
           onTap: () {
-            DunApp? app =
-                Provider.of<CeobecanteenData>(context, listen: false)
-                    .ceobecanteenInfo
-                    ?.app;
+            DunApp? app = Provider.of<CeobecanteenData>(context, listen: false)
+                .ceobecanteenInfo
+                ?.app;
             if (app?.version != null &&
-                double.parse(app!.version!) >
-                    double.parse(Constant.version)) {
+                double.parse(app!.version!) > double.parse(Constant.version)) {
               Navigator.pushNamed(context, DunUpdate.routerName,
                   arguments: app);
             } else {

@@ -9,8 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'provider/common_provider.dart';
 
-void main() {
-  runApp(const DunMain());
+void main() async {
   //沉浸式状态栏
   if (Platform.isAndroid) {
     SystemUiOverlayStyle systemUiOverlayStyle = const SystemUiOverlayStyle(
@@ -18,6 +17,7 @@ void main() {
     );
     SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
   }
+  runApp(const DunMain());
 }
 
 class DunMain extends StatefulWidget {
@@ -28,7 +28,6 @@ class DunMain extends StatefulWidget {
 }
 
 class _DunMainState extends State<DunMain> {
-  // int themeIndex = 0;
 
   @override
   void initState() {
@@ -38,24 +37,38 @@ class _DunMainState extends State<DunMain> {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<CommonProvider>(create: (_) => CommonProvider()),
-        ChangeNotifierProvider<SettingProvider>(
-            create: (_) => SettingProvider()),
-        ChangeNotifierProvider<CeobecanteenData>(
-            create: (_) => CeobecanteenData()),
-      ],
-      child: MaterialApp(
-        title: "小刻食堂",
-        routes: DunRouter.routes,
-        builder: (ctx, child) {
-          return child!;
-        },
-        theme: DunTheme.themeList[0],
-        onUnknownRoute: (settings) =>
-            MaterialPageRoute(builder: (context) => DunError(error: "404")),
-        initialRoute: "/",
-      ),
-    );
+        providers: [
+          ChangeNotifierProvider<CommonProvider>(
+              create: (_) => CommonProvider()),
+          ChangeNotifierProvider<SettingProvider>(
+              create: (_) => SettingProvider()),
+          ChangeNotifierProvider<CeobecanteenData>(
+              create: (_) => CeobecanteenData()),
+        ],
+        child: Consumer<SettingProvider>(
+            builder: (context, settingModeProvider, _) {
+          ThemeMode? themeMode;
+
+          if (settingModeProvider.appSetting.darkMode == 1) {
+            themeMode = ThemeMode.light;
+          } else if (settingModeProvider.appSetting.darkMode == 2) {
+            themeMode = ThemeMode.dark;
+          } else {
+            themeMode = null;
+          }
+          return MaterialApp(
+            title: "小刻食堂",
+            routes: DunRouter.routes,
+            builder: (ctx, child) {
+              return child!;
+            },
+            theme: DunTheme.themeList[0],
+            darkTheme: DunTheme.darkThemeList[0],
+            themeMode: themeMode,
+            onUnknownRoute: (settings) =>
+                MaterialPageRoute(builder: (context) => DunError(error: "404")),
+            initialRoute: "/",
+          );
+        }));
   }
 }

@@ -5,7 +5,27 @@ import 'package:flutter/cupertino.dart';
 class SettingProvider with ChangeNotifier {
   SettingProvider();
 
-  late SettingData _settingData;
+  SettingData _settingData = SettingData(
+      checkSource: [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11"
+      ],
+      isPreview: false,
+      shortcutList: [],
+      notOnce: true,
+      rid: "--",
+      darkMode: 0
+  );
 
   SettingData get appSetting {
     return _settingData;
@@ -30,32 +50,9 @@ class SettingProvider with ChangeNotifier {
 
   readAppSetting() async {
     String data = await DunPreferences().getString(key: "settingData");
-    if (data == "") {
-      initAppSetting();
-    } else {
+    if (data != "") {
       _settingData = settingDataFromJson(data);
+      notifyListeners();
     }
-  }
-
-  initAppSetting() {
-    _settingData = SettingData(
-        checkSource: [
-          "0",
-          "1",
-          "2",
-          "3",
-          "4",
-          "5",
-          "6",
-          "7",
-          "8",
-          "9",
-          "10",
-          "11"
-        ],
-        isPreview: true,
-        shortcutList: [],
-        notOnce: true,
-        rid: "--");
   }
 }

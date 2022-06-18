@@ -32,27 +32,54 @@ class DunStyles {
 }
 
 class DunTheme {
-  static final ThemeData _mainTheme = ThemeData(
-    brightness: Brightness.light,
-    primaryColor: DunColors.DunColor,
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ButtonStyle(
-        overlayColor: MaterialStateProperty.all(DunColors.DunPink), // 波纹颜色
-        backgroundColor: MaterialStateProperty.resolveWith(
-          (states) {
-            if (states.contains(MaterialState.pressed)) {
-              return DunColors.DunColorLigth; // 点击颜色
-            }
-            return DunColors.DunColor;
-          },
+  static ThemeData getThemeData(Color color, Brightness brightness) {
+    ThemeData td = ThemeData(colorSchemeSeed: color, brightness: brightness);
+    ThemeData tdlight =
+        ThemeData(colorSchemeSeed: color, brightness: Brightness.light);
+    Color primaryThemeColor = tdlight.primaryColor;
+    Color primaryColor = color;
+    ThemeData rst = td.copyWith(
+      appBarTheme: AppBarTheme(
+        color:
+            brightness == Brightness.light ? primaryColor : primaryThemeColor,
+      ),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          primary: Colors.white,
+          backgroundColor: primaryColor,
         ),
       ),
-    ),
-    appBarTheme: const AppBarTheme(backgroundColor: DunColors.DunColor),
-    splashColor: DunColors.DunPink,
-    colorScheme:
-        ColorScheme.fromSwatch().copyWith(secondary: DunColors.DunColorLigth),
-  );
+    );
+    return rst;
+  }
 
-  static List<ThemeData> themeList = [_mainTheme];
+  // static final ThemeData _mainTheme = ThemeData(
+  //   brightness: Brightness.light,
+  //   primaryColor: DunColors.DunColor,
+  //   elevatedButtonTheme: ElevatedButtonThemeData(
+  //     style: ButtonStyle(
+  //       overlayColor: MaterialStateProperty.all(DunColors.DunPink), // 波纹颜色
+  //       backgroundColor: MaterialStateProperty.resolveWith(
+  //         (states) {
+  //           if (states.contains(MaterialState.pressed)) {
+  //             return DunColors.DunColorLigth; // 点击颜色
+  //           }
+  //           return DunColors.DunColor;
+  //         },
+  //       ),
+  //     ),
+  //   ),
+  //   appBarTheme: const AppBarTheme(backgroundColor: DunColors.DunColor),
+  //   splashColor: DunColors.DunPink,
+  //   colorScheme:
+  //       ColorScheme.fromSwatch().copyWith(secondary: DunColors.DunColorLigth),
+  // );
+
+  static List<ThemeData> themeList = [
+    getThemeData(DunColors.DunColor, Brightness.light)
+  ];
+
+  static List<ThemeData> darkThemeList = [
+    getThemeData(DunColors.DunColor, Brightness.dark)
+  ];
 }

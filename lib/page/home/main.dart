@@ -132,10 +132,11 @@ class _MainScaffoldState extends State<MainScaffold> {
     if (value.app == null) {
       DunToast.showError("资源服务器无法连接");
     } else {
-      if (double.parse(value.app!.version!) > double.parse(Constant.version)) {
-        Navigator.pushNamed(context, DunUpdate.routerName,
-            arguments: value.app);
-      }
+      // TODO: 需要改为获取版本号
+      // if (double.parse(value.app!.version!) > double.parse(Constant.version)) {
+      //   Navigator.pushNamed(context, DunUpdate.routerName,
+      //       arguments: value.app);
+      // }
     }
   }
 
@@ -235,7 +236,7 @@ class _MainScaffoldState extends State<MainScaffold> {
                         height: 5,
                       ),
                       Text(
-                        '小刻食堂 Bate V' + Constant.version,
+                        '小刻食堂 Beta V' + Constant.version,
                         style: TextStyle(color: Colors.white, fontSize: 18),
                       ),
                     ],
