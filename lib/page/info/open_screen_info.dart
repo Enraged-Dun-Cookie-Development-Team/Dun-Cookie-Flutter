@@ -79,7 +79,7 @@ class OpenScreenInfo extends StatelessWidget {
                         DunToast.showInfo("与土豆服务器连接中……");
                         MobpushPlugin.updatePrivacyPermissionStatus(true).then((value) {
                           eventBus.fire(UpdatePrivacyPermissionStatus());
-                          Navigator.pop(context);
+                          Navigator.of(context).pop(true);
                         });
                       },
                       child: const Text("我看完并同意免责声明的内容")),

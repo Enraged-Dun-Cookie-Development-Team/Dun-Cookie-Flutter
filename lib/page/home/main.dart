@@ -86,20 +86,22 @@ class _MainScaffoldState extends State<MainScaffold> {
     var settingData = Provider.of<SettingProvider>(context, listen: false);
     await settingData.readAppSetting();
     Constant.mobRId = settingData.appSetting.rid;
+    bool result = true;
     if (settingData.appSetting.notOnce!) {
-      Navigator.push(context,
+      result = await Navigator.push(context,
           MaterialPageRoute(builder: (context) => const OpenScreenInfo()));
-    } else {
-      // 打开APP 全部拉一次数据
-      await _getData();
-      // 获取CeobecanteenInfo和判断版本
-      await _getCeobecanteenInfoAndCheckVersion();
-      // 动态菜单
-      await _getMenu();
-
-      // 推送变量
-      _initMobPush();
     }
+    if (result != true) return;
+
+    // 打开APP 全部拉一次数据
+    await _getData();
+    // 获取CeobecanteenInfo和判断版本
+    await _getCeobecanteenInfoAndCheckVersion();
+    // 动态菜单
+    await _getMenu();
+
+    // 推送变量
+    _initMobPush();
   }
 
   _initMobPush() async {
