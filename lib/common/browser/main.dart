@@ -71,6 +71,9 @@ class _DunWebViewMainState extends State<DunWebViewMain> {
               if (request.url.startsWith('bilibili://') ||
                   request.url.startsWith('weibo://') ||
                   request.url.startsWith('orpheus://')) {
+                if(Platform.isIOS && request.url.startsWith('weibo://')) {
+                  request.url.replaceFirst('weibo', 'sinaweibo');
+                }
                 OpenAppOrBrowser.openAppUrlScheme(request.url, context);
                 Navigator.pop(context);
                 return NavigationDecision.prevent;
