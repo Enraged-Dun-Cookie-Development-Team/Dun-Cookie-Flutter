@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:animate_do/animate_do.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/time_unit.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
@@ -44,25 +43,21 @@ class ToolCountdown extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+                          const Text("距离"),
+                          const SizedBox(width: 8),
                           Expanded(
                             child: SingleChildScrollView(
                                 child: RichText(
                                   text: TextSpan(
-                                      text: "距离",
-                                      style: DunStyles.text14C,
-                                      children: [
-                                        TextSpan(
-                                          text: info.text!,
-                                          style: const TextStyle(
-                                              color: DunColors.DunColor),
-                                        )
-                                      ]),
+                                    text: info.text!,
+                                    style: const TextStyle(color: DunColors.DunColor),
+                                  ),
                                 ),
-                                scrollDirection: Axis.horizontal),
+                                scrollDirection: Axis.horizontal,
+                                physics: const BouncingScrollPhysics(),
+                            ),
                           ),
-                          const SizedBox(
-                            width: 10,
-                          ),
+                          const SizedBox(width: 8),
                           TimeDiffText(info.time!),
                         ],
                       ),
