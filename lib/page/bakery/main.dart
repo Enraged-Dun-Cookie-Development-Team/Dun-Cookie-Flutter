@@ -55,7 +55,7 @@ class _BakeryState extends State<Bakery> {
         loadDataType = 0;
       });
       eventBus.fire(ChangePopupMenuDownButton(idList: value));
-      _getBakeryInfo(value[0].toString());
+      _getBakeryInfo(value.last);
     }
   }
 
