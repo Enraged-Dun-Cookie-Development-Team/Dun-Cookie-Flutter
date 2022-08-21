@@ -1,8 +1,5 @@
-import 'package:dun_cookie_flutter/common/persistence/main.dart';
-import 'package:dun_cookie_flutter/common/constant/main.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:event_bus/event_bus.dart';
-import 'package:flutter/material.dart';
 
 class CommonEventBus {}
 

@@ -2,7 +2,6 @@ import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
 import 'package:dun_cookie_flutter/provider/setting_provider.dart';
 import 'package:dun_cookie_flutter/model/source_info.dart';
 import 'package:dun_cookie_flutter/provider/common_event_bus.dart';
-import 'package:dun_cookie_flutter/provider/common_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';

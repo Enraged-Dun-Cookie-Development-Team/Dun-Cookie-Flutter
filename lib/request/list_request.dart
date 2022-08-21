@@ -1,7 +1,6 @@
 import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
 import 'package:dun_cookie_flutter/model/source_data.dart';
 import 'package:dun_cookie_flutter/model/source_info.dart';
-import 'package:dun_cookie_flutter/provider/common_event_bus.dart';
 
 import 'main.dart';
 

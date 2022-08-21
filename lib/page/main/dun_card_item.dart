@@ -1,6 +1,4 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:dun_cookie_flutter/common/browser/main.dart';
-import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/open_app_or_browser.dart';
 import 'package:dun_cookie_flutter/model/source_data.dart';
 import 'package:dun_cookie_flutter/page/main/dun_content.dart';

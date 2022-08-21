@@ -1,4 +1,3 @@
-import 'package:dun_cookie_flutter/common/constant/main.dart';
 import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +8,7 @@ import '../../common/tool/package_info.dart';
 class DunUpdate extends StatefulWidget {
   static String routerName = "/update";
 
-  DunUpdate({Key? key}) : super(key: key);
+  const DunUpdate({Key? key}) : super(key: key);
 
   @override
   State<DunUpdate> createState() => _DunUpdateState();
@@ -112,7 +111,7 @@ class _DunUpdateState extends State<DunUpdate> {
         ),
         Text(
           title,
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         Text(
           content,

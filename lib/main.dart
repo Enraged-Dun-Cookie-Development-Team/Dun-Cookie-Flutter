@@ -6,16 +6,24 @@ import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
 import 'package:dun_cookie_flutter/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mobpush_plugin/mobpush_plugin.dart';
 import 'package:provider/provider.dart';
 import 'provider/common_provider.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   //沉浸式状态栏
   if (Platform.isAndroid) {
     SystemUiOverlayStyle systemUiOverlayStyle = const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent, //设置为透明
     );
     SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
+  }
+  if (Platform.isIOS) {
+    MobpushPlugin.setCustomNotification();
+
+    // 开发环境 false, 线上环境 true
+    MobpushPlugin.setAPNsForProduction(true);
   }
   runApp(const DunMain());
 }

@@ -1,7 +1,6 @@
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/model/source_data.dart';
 import 'package:dun_cookie_flutter/provider/common_event_bus.dart';
-import 'package:event_bus/event_bus.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
@@ -31,7 +30,9 @@ class _DunShareImageState extends State<DunShareImage> {
 
   @override
   void initState() {
-    widget._imageList.forEach((element) => _showImageList[element] = true);
+    for (var element in widget._imageList) {
+      _showImageList[element] = true;
+    }
     eventBus.on<DunShareImageIsShare>().listen((event) {
       // Flutter中setState导致的内存泄漏——setState() Unhandled Exception: setState() called after dispose()
       if (mounted) {

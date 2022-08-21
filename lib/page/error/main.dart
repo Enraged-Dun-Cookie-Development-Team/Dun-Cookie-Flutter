@@ -11,7 +11,7 @@ class DunError extends StatelessWidget {
     return Center(
       child: Column(
         children: [
-          Text("错误，请联系我们处理！"),
+          const Text("错误，请联系我们处理！"),
           Text(
             error,
             style: DunStyles.text30C.copyWith(color: Colors.red),

@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DunPreferences {
@@ -14,6 +13,7 @@ class DunPreferences {
 
   Future<bool?> saveBool({key, value}) async {
     await _prefs.then((_) => _.setBool(key, value));
+    return null;
   }
 
   saveDouble({key, value}) async {

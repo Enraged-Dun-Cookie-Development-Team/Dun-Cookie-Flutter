@@ -32,7 +32,7 @@ class BakeryCard extends StatelessWidget {
                 },
                 child: Text(
                   '饼学大厦 #' +
-                      data.id! +
+                      data.id! + '\n' +
                       (data.description! != ""
                           ? "（ver. ${data.description!}）"
                           : ""),

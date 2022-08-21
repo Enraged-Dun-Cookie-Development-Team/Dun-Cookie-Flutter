@@ -1,8 +1,7 @@
-import 'dart:ffi';
 
 class TimeUnit {
   static String timeDiff(
-      {required starTime, endTime = null, isShowSecond = false}) {
+      {required starTime, endTime, isShowSecond = false}) {
     var chinaTime = DateTime.parse(starTime);
     var startDate = changeLocalTime(chinaTime);
     startDate = toUtcChinaTime(startDate);

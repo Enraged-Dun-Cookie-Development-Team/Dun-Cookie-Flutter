@@ -1,7 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:dun_cookie_flutter/common/constant/main.dart';
-import 'package:dun_cookie_flutter/provider/common_event_bus.dart';
-import 'package:provider/provider.dart';
 import 'config.dart';
 
 class HttpClass {
@@ -36,7 +34,7 @@ class HttpClass {
     }
     try {
       dio.interceptors.add(_dInter());
-      print("请求 ${dio.options.baseUrl}$url");
+      // print("请求 ${dio.options.baseUrl}$url");
       Response response = await dio.request(
         url,
         queryParameters: params,

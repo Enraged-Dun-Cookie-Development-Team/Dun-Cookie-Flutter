@@ -68,8 +68,8 @@ class _DunSettingState extends State<DunSetting> {
           },
         ),
         ListTile(
-            title: Text("浅色/深色模式切换"),
-            subtitle: Text("是否跟随系统切换模式"),
+            title: const Text("浅色/深色模式切换"),
+            subtitle: const Text("是否跟随系统切换模式"),
             trailing: DropdownButton<int>(
                 value: DunSetting.darkMode,
                 items: [

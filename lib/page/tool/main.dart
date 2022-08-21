@@ -1,15 +1,10 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:card_swiper/card_swiper.dart';
-import 'package:dun_cookie_flutter/cache/setting_cache.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
-import 'package:dun_cookie_flutter/page/setting/main.dart';
-import 'package:dun_cookie_flutter/page/tool/tool_announcement.dart';
 import 'package:dun_cookie_flutter/page/tool/tool_countdown.dart';
 import 'package:dun_cookie_flutter/page/tool/tool_grid.dart';
 import 'package:dun_cookie_flutter/page/tool/tool_resource.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class DunTool extends StatefulWidget {

@@ -1,11 +1,10 @@
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
 
 class DunTag extends StatelessWidget {
-  DunTag(this.text, {Key? key}) : super(key: key);
+  const DunTag(this.text, {Key? key}) : super(key: key);
 
-  String text;
+  final String text;
 
   @override
   Widget build(BuildContext context) {

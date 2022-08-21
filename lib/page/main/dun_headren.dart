@@ -3,7 +3,6 @@ import 'package:dun_cookie_flutter/model/source_data.dart';
 import 'package:dun_cookie_flutter/model/source_info.dart';
 import 'package:dun_cookie_flutter/page/main/dun_share.dart';
 import 'package:flutter/material.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 
 class DunHead extends StatelessWidget {
   DunHead(this.info, {Key? key, this.isShowQR = false})

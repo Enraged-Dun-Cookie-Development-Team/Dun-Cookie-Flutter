@@ -1,7 +1,5 @@
-import 'package:dun_cookie_flutter/common/constant/main.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
-import 'package:dun_cookie_flutter/page/setting/main.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 

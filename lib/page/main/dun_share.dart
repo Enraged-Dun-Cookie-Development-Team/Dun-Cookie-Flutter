@@ -15,7 +15,7 @@ import 'package:share/share.dart';
 import 'package:widget_to_image/widget_to_image.dart';
 
 class DunWidgetToImage extends StatefulWidget {
-  DunWidgetToImage({Key? key}) : super(key: key);
+  const DunWidgetToImage({Key? key}) : super(key: key);
   static String routeName = "/widgetToImage";
 
   @override

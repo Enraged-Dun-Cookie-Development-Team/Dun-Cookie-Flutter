@@ -3,7 +3,6 @@ import 'package:dun_cookie_flutter/common/tool/open_app_or_browser.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
 
 class ToolVideo extends StatelessWidget {
   ToolVideo(this.videoInfo, {Key? key}) : super(key: key);

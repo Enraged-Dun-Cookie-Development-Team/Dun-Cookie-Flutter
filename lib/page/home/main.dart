@@ -1,24 +1,13 @@
-import 'package:animations/animations.dart';
 import 'package:dun_cookie_flutter/common/constant/main.dart';
-import 'package:dun_cookie_flutter/common/persistence/main.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
-import 'package:dun_cookie_flutter/common/tool/device_info.dart';
 import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
 import 'package:dun_cookie_flutter/common/tool/open_app_or_browser.dart';
-import 'package:dun_cookie_flutter/model/app_bar_Data.dart';
-import 'package:dun_cookie_flutter/model/bakery_data.dart';
-import 'package:dun_cookie_flutter/model/setting_data.dart';
-import 'package:dun_cookie_flutter/page/donate/main.dart';
 import 'package:dun_cookie_flutter/provider/setting_provider.dart';
-import 'package:dun_cookie_flutter/page/home/home_body.dart';
 import 'package:dun_cookie_flutter/page/info/open_screen_info.dart';
-import 'package:dun_cookie_flutter/page/setting/main.dart';
-import 'package:dun_cookie_flutter/page/update/main.dart';
 import 'package:dun_cookie_flutter/provider/common_event_bus.dart';
 import 'package:dun_cookie_flutter/provider/common_provider.dart';
 import 'package:dun_cookie_flutter/router/router.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
-import 'package:dun_cookie_flutter/request/bakery_request.dart';
 import 'package:dun_cookie_flutter/request/info_request.dart';
 import 'package:dun_cookie_flutter/request/list_request.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +18,7 @@ import 'package:provider/provider.dart';
 import '../../common/tool/package_info.dart';
 
 class MainScaffold extends StatefulWidget {
-  MainScaffold({Key? key}) : super(key: key);
+  const MainScaffold({Key? key}) : super(key: key);
 
   @override
   State<MainScaffold> createState() => _MainScaffoldState();

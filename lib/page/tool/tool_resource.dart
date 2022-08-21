@@ -1,5 +1,3 @@
-import 'package:animate_do/animate_do.dart';
-import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/time_unit.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
 import 'package:flutter/material.dart';

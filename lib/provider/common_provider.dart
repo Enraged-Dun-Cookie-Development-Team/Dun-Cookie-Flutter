@@ -1,9 +1,7 @@
 import 'package:dun_cookie_flutter/common/persistence/main.dart';
 import 'package:dun_cookie_flutter/common/constant/main.dart';
-import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/model/bakery_data.dart';
 import 'package:dun_cookie_flutter/model/source_data.dart';
-import 'package:dun_cookie_flutter/provider/common_event_bus.dart';
 import 'package:flutter/material.dart';
 
 class CommonProvider with ChangeNotifier {

@@ -17,16 +17,16 @@ import 'package:flutter/material.dart';
 
 class DunRouter {
   static final Map<String, WidgetBuilder> routes = {
-    "/": (context) => MainScaffold(),
-    Bakery.routeName: (context) => Bakery(),
+    "/": (context) => const MainScaffold(),
+    Bakery.routeName: (context) => const Bakery(),
     DunList.routeName: (context) => const DunList(),
-    DunWidgetToImage.routeName: (context) => DunWidgetToImage(),
+    DunWidgetToImage.routeName: (context) => const DunWidgetToImage(),
     DunWebView.routeName: (context) => DunWebView(),
     DunTool.routeName: (context) => const DunTool(),
     DunSetting.routerName: (context) => const DunSetting(),
     SettingSourceFilter.routerName: (context) => const SettingSourceFilter(),
     DunInfo.routerName: (context) => const DunInfo(),
-    DunUpdate.routerName: (context) => DunUpdate(),
+    DunUpdate.routerName: (context) => const DunUpdate(),
     Donate.routerName: (context) => const Donate(),
     Comics.routerName: (context) => const Comics(),
     UserWan.routerName: (context) => const UserWan(),
@@ -34,7 +34,7 @@ class DunRouter {
 
   /// 侧边菜单固定项目
   static const pageTitles = ["小刻食堂", "蜜饼工坊", "官方漫画", "泰拉每周速递","常用工具", "设置与其他"];
-  static var pages = [const DunList(), Bakery(), const Comics(),const UserWan(), const DunTool(), const DunSetting()];
+  static var pages = [const DunList(), const Bakery(), const Comics(),const UserWan(), const DunTool(), const DunSetting()];
   static const pagesIcon = [
     Image(image:AssetImage("assets/logo/logo_item.png"),height: 30,),
     Image(image:AssetImage("assets/logo/logo_mb.png"),height: 30,),

@@ -10,7 +10,7 @@ import '../../model/bilibili_user_favlist_data.dart';
 import '../Error/main.dart';
 
 class UserWanCard extends StatefulWidget {
-  UserWanCard(this.favData, {Key? key}) : super(key: key);
+  const UserWanCard(this.favData, {Key? key}) : super(key: key);
 
   final FavData favData; // 粗略的数据 只有id
 

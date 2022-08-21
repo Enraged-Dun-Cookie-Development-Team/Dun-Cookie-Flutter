@@ -1,13 +1,9 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:dun_cookie_flutter/common/constant/main.dart';
 import 'package:dun_cookie_flutter/model/source_data.dart';
 import 'package:dun_cookie_flutter/page/comics/comicsCard.dart';
 import 'package:dun_cookie_flutter/page/error/main.dart';
-import 'package:dun_cookie_flutter/provider/setting_provider.dart';
-import 'package:dun_cookie_flutter/provider/common_provider.dart';
 import 'package:dun_cookie_flutter/request/list_request.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class Comics extends StatefulWidget {
   const Comics({Key? key}) : super(key: key);

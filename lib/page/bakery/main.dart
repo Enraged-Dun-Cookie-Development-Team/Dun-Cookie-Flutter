@@ -1,5 +1,4 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:card_swiper/card_swiper.dart';
 import 'package:dun_cookie_flutter/model/bakery_data.dart';
 import 'package:dun_cookie_flutter/page/bakery/bakery_card.dart';
 import 'package:dun_cookie_flutter/provider/common_event_bus.dart';
@@ -12,7 +11,7 @@ import '../../common/tool/open_app_or_browser.dart';
 import '../../request/bakery_request.dart';
 
 class Bakery extends StatefulWidget {
-  Bakery({Key? key}) : super(key: key);
+  const Bakery({Key? key}) : super(key: key);
   static String routeName = "/bakery";
 
   @override

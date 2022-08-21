@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/dun_tag.dart';
@@ -8,7 +7,7 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
 class ComicsCard extends StatefulWidget {
-  ComicsCard(this.sourceData, {Key? key}) : super(key: key);
+  const ComicsCard(this.sourceData, {Key? key}) : super(key: key);
 
   final SourceData sourceData;
 
@@ -53,6 +52,7 @@ class _ComicsCardState extends State<ComicsCard> {
                           height: 220,
                           image: AssetImage("assets/image/load/loading.gif")));
                 }
+                return null;
               },
             ),
             ExpansionPanelList(

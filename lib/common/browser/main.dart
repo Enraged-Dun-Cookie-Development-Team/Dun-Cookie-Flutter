@@ -1,5 +1,4 @@
 import 'dart:io' show Platform;
-import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/open_app_or_browser.dart';
 import 'package:dun_cookie_flutter/provider/view_webpage_provider.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +8,8 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 class DunWebView extends StatelessWidget {
   static String routeName = "/webView";
+
+  const DunWebView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +32,9 @@ class DunWebView extends StatelessWidget {
 }
 
 class DunWebViewMain extends StatefulWidget {
-  DunWebViewMain(this.url, {Key? key}) : super(key: key);
+  const DunWebViewMain(this.url, {Key? key}) : super(key: key);
 
-  String url;
+  final String url;
 
   @override
   State<DunWebViewMain> createState() => _DunWebViewMainState();

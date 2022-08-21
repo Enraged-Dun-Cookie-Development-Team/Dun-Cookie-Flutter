@@ -1,5 +1,4 @@
 import 'package:dun_cookie_flutter/model/source_data.dart';
-import 'package:dun_cookie_flutter/model/source_info.dart';
 import 'package:flutter/material.dart';
 
 class DunContent extends StatelessWidget {
