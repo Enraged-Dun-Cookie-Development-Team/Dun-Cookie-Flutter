@@ -1,11 +1,12 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
+import 'package:dun_cookie_flutter/model/resource_info.dart';
 import 'package:dun_cookie_flutter/model/video_model.dart';
 import 'package:dun_cookie_flutter/page/tool/tool_countdown.dart';
 import 'package:dun_cookie_flutter/page/tool/tool_grid.dart';
 import 'package:dun_cookie_flutter/page/tool/tool_resource.dart';
-import 'package:dun_cookie_flutter/request/video_request.dart';
+import 'package:dun_cookie_flutter/request/tools_api.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -20,14 +21,15 @@ class DunTool extends StatefulWidget {
 class _DunToolState extends State<DunTool> {
   bool? checkedBoxValue = false;
 
+  ResourceInfo? resourceInfo;
   List<VideoModel> videoList = [];
 
   @override
   void initState() {
     super.initState();
-    VideoRequest.getVideoList().then((value) =>
-      setState(() => videoList = value)
-    );
+    ToolsApi.getResourceInfo()
+        .then((value) => setState(() => resourceInfo = value));
+    ToolsApi.getVideoList().then((value) => setState(() => videoList = value));
   }
 
   @override
@@ -54,11 +56,10 @@ class _DunToolState extends State<DunTool> {
                           ],
                         ),
                       // 物资是否开放
-                      ToolResource(ceobecanteenInfo.dayInfo),
+                      ToolResource(resourceInfo?.resources),
                       // 倒计时
-                      if (ceobecanteenInfo.dayInfo != null &&
-                          ceobecanteenInfo.dayInfo!.countdown != null)
-                        ToolCountdown(ceobecanteenInfo.dayInfo!.countdown!),
+                      if (resourceInfo?.countdown != null)
+                        ToolCountdown(resourceInfo?.countdown),
                       // 官方源
                       if (ceobecanteenInfo.sourceInfo != null)
                         ToolGrid(
@@ -73,8 +74,7 @@ class _DunToolState extends State<DunTool> {
                         ),
                       //推荐视频
                       if (videoList.isNotEmpty)
-                        ToolGrid("视频推荐",
-                            type: 1, videoInfo: videoList)
+                        ToolGrid("视频推荐", type: 1, videoInfo: videoList)
                     ],
                   ),
                 )

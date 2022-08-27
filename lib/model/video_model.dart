@@ -4,22 +4,23 @@
 /// author : "杨颜同学"
 /// video_link : "https://www.bilibili.com/video/bv19b4y1v7Wa"
 /// cover_img : "http://i0.hdslb.com/bfs/archive/9315a9911f8af1441854a16c93339926b9c66a8b.jpg@@200w_125h_1c.webp"
-
+/// 常用工具-视频推荐
 class VideoModel {
   VideoModel({
-      String? startTime, 
-      String? overTime, 
-      String? title, 
-      String? author, 
-      String? videoLink, 
-      String? coverImg,}){
+    String? startTime,
+    String? overTime,
+    String? title,
+    String? author,
+    String? videoLink,
+    String? coverImg,
+  }) {
     _startTime = startTime;
     _overTime = overTime;
     _title = title;
     _author = author;
     _videoLink = videoLink;
     _coverImg = coverImg;
-}
+  }
 
   VideoModel.fromJson(dynamic json) {
     _startTime = json['start_time'];
@@ -35,19 +36,22 @@ class VideoModel {
   String? _author;
   String? _videoLink;
   String? _coverImg;
-VideoModel copyWith({  String? startTime,
-  String? overTime,
-  String? title,
-  String? author,
-  String? videoLink,
-  String? coverImg,
-}) => VideoModel(  startTime: startTime ?? _startTime,
-  overTime: overTime ?? _overTime,
-  title: title ?? _title,
-  author: author ?? _author,
-  videoLink: videoLink ?? _videoLink,
-  coverImg: coverImg ?? _coverImg,
-);
+  VideoModel copyWith({
+    String? startTime,
+    String? overTime,
+    String? title,
+    String? author,
+    String? videoLink,
+    String? coverImg,
+  }) =>
+      VideoModel(
+        startTime: startTime ?? _startTime,
+        overTime: overTime ?? _overTime,
+        title: title ?? _title,
+        author: author ?? _author,
+        videoLink: videoLink ?? _videoLink,
+        coverImg: coverImg ?? _coverImg,
+      );
   String? get startTime => _startTime;
   String? get overTime => _overTime;
   String? get title => _title;
@@ -65,5 +69,4 @@ VideoModel copyWith({  String? startTime,
     map['cover_img'] = _coverImg;
     return map;
   }
-
 }

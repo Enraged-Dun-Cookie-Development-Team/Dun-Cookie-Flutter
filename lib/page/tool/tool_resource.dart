@@ -1,13 +1,11 @@
 import 'package:dun_cookie_flutter/common/tool/time_unit.dart';
-import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
+import 'package:dun_cookie_flutter/model/resource_info.dart';
 import 'package:flutter/material.dart';
 
 class ToolResource extends StatelessWidget {
-  ToolResource(DayInfo? dayInfo, {Key? key}) {
-    _resources = dayInfo != null ? dayInfo.resources! : null;
-  }
+  ToolResource(this.resources, {Key? key});
 
-  late final Resources? _resources;
+  final Resources? resources;
   static bool openResources = false;
   static List<Map<String, dynamic>> resourceInfo = [
     {
@@ -69,8 +67,8 @@ class ToolResource extends StatelessWidget {
 //  计算是否开启
   bool resourcesNotToday(List<int> dayList) {
     DateTime dt = TimeUnit.utcChinaNow();
-    if (_resources != null &&
-        TimeUnit.isTimeRange(dt, _resources!.starTime, _resources!.overTime)) {
+    if (resources != null &&
+        TimeUnit.isTimeRange(dt, resources!.startTime, resources!.overTime)) {
       return true;
     }
     int week = dt.weekday;

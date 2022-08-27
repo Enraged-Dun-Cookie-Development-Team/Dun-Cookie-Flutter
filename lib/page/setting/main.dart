@@ -2,6 +2,7 @@ import 'package:dun_cookie_flutter/common/constant/main.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
 import 'package:dun_cookie_flutter/common/tool/open_app_or_browser.dart';
+import 'package:dun_cookie_flutter/common/tool/package_info.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
 import 'package:dun_cookie_flutter/page/setting/setting_info.dart';
 import 'package:dun_cookie_flutter/page/setting/setting_source_filter.dart';
@@ -10,8 +11,6 @@ import 'package:dun_cookie_flutter/provider/setting_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-
-import '../../common/tool/package_info.dart';
 
 class DunSetting extends StatefulWidget {
   const DunSetting({Key? key}) : super(key: key);
