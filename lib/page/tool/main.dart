@@ -1,9 +1,11 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
+import 'package:dun_cookie_flutter/model/video_model.dart';
 import 'package:dun_cookie_flutter/page/tool/tool_countdown.dart';
 import 'package:dun_cookie_flutter/page/tool/tool_grid.dart';
 import 'package:dun_cookie_flutter/page/tool/tool_resource.dart';
+import 'package:dun_cookie_flutter/request/video_request.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,9 +20,14 @@ class DunTool extends StatefulWidget {
 class _DunToolState extends State<DunTool> {
   bool? checkedBoxValue = false;
 
+  List<VideoModel> videoList = [];
+
   @override
   void initState() {
     super.initState();
+    VideoRequest.getVideoList().then((value) =>
+      setState(() => videoList = value)
+    );
   }
 
   @override
@@ -65,9 +72,9 @@ class _DunToolState extends State<DunTool> {
                           linkInfo: ceobecanteenInfo.quickJump,
                         ),
                       //推荐视频
-                      if (ceobecanteenInfo.btnList != null)
+                      if (videoList.isNotEmpty)
                         ToolGrid("视频推荐",
-                            type: 1, videoInfo: ceobecanteenInfo.btnList)
+                            type: 1, videoInfo: videoList)
                     ],
                   ),
                 )

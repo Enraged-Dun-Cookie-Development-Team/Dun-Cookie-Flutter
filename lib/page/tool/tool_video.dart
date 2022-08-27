@@ -1,13 +1,13 @@
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/open_app_or_browser.dart';
-import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
+import 'package:dun_cookie_flutter/model/video_model.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
 class ToolVideo extends StatelessWidget {
   ToolVideo(this.videoInfo, {Key? key}) : super(key: key);
 
-  BtnList videoInfo;
+  VideoModel videoInfo;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class ToolVideo extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(4),
             child: ExtendedImage.network(
-              videoInfo.img!,
+              videoInfo.coverImg!,
               height: 100,
               fit: BoxFit.cover,
             ),
@@ -25,7 +25,7 @@ class ToolVideo extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              videoInfo.name!,
+              videoInfo.title!,
               overflow: TextOverflow.ellipsis,
               maxLines: 3,
               style: DunStyles.text12,
@@ -34,7 +34,7 @@ class ToolVideo extends StatelessWidget {
         ],
       ),
       onTap: () {
-        _openBilibili(videoInfo.url!, context);
+        _openBilibili(videoInfo.videoLink!, context);
       },
     );
   }

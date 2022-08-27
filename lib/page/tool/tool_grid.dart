@@ -1,6 +1,6 @@
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/time_unit.dart';
-import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
+import 'package:dun_cookie_flutter/model/video_model.dart';
 import 'package:dun_cookie_flutter/page/tool/tool_link.dart';
 import 'package:dun_cookie_flutter/page/tool/tool_video.dart';
 import 'package:flutter/material.dart';
@@ -17,14 +17,14 @@ class ToolGrid extends StatelessWidget {
       // 视频信息过滤
       videoInfo = videoInfo!
           .where((element) => TimeUnit.isTimeRange(
-              TimeUnit.utcChinaNow(), element.starTime, element.overTime))
+              TimeUnit.utcChinaNow(), element.startTime, element.overTime))
           .toList();
     }
   }
 
   String title;
   int type; //0 为链接  1为视频
-  List<BtnList>? videoInfo; // 视频数据
+  List<VideoModel>? videoInfo; // 视频数据
   List<dynamic>? linkInfo; // 链接数据
 
   @override
