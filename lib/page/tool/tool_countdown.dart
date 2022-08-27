@@ -2,15 +2,17 @@ import 'dart:async';
 
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/time_unit.dart';
-import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
+import 'package:dun_cookie_flutter/model/resource_info.dart';
 import 'package:flutter/material.dart';
 
 class ToolCountdown extends StatelessWidget {
-  ToolCountdown(List<Countdown> countDown, {Key? key}) {
-    _countDown = countDown.where((timeDM) {
-      return TimeUnit.isTimeRange(
-          TimeUnit.utcChinaNow(), timeDM.starTime, timeDM.overTime);
-    }).toList();
+  ToolCountdown(List<Countdown>? countDown, {Key? key}) {
+    if (countDown != null) {
+      _countDown = countDown.where((timeDM) {
+        return TimeUnit.isTimeRange(
+            TimeUnit.utcChinaNow(), timeDM.startTime, timeDM.overTime);
+      }).toList();
+    }
   }
 
   List<Countdown> _countDown = [];
@@ -34,8 +36,8 @@ class ToolCountdown extends StatelessWidget {
               itemBuilder: (ctx, index) {
                 var info = _countDown[index];
                 return Container(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 6, horizontal: 10),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -47,14 +49,15 @@ class ToolCountdown extends StatelessWidget {
                           const SizedBox(width: 8),
                           Expanded(
                             child: SingleChildScrollView(
-                                child: RichText(
-                                  text: TextSpan(
-                                    text: info.text!,
-                                    style: const TextStyle(color: DunColors.DunColor),
-                                  ),
+                              child: RichText(
+                                text: TextSpan(
+                                  text: info.text!,
+                                  style: const TextStyle(
+                                      color: DunColors.DunColor),
                                 ),
-                                scrollDirection: Axis.horizontal,
-                                physics: const BouncingScrollPhysics(),
+                              ),
+                              scrollDirection: Axis.horizontal,
+                              physics: const BouncingScrollPhysics(),
                             ),
                           ),
                           const SizedBox(width: 8),
@@ -64,8 +67,7 @@ class ToolCountdown extends StatelessWidget {
                       SingleChildScrollView(
                           child: Text(
                             info.remark!,
-                            style:
-                              DunStyles.text14,
+                            style: DunStyles.text14,
                           ),
                           scrollDirection: Axis.horizontal),
                     ],
