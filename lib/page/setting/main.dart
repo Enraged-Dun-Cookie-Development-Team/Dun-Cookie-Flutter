@@ -8,6 +8,7 @@ import 'package:dun_cookie_flutter/page/setting/setting_info.dart';
 import 'package:dun_cookie_flutter/page/setting/setting_source_filter.dart';
 import 'package:dun_cookie_flutter/page/update/main.dart';
 import 'package:dun_cookie_flutter/provider/setting_provider.dart';
+import 'package:dun_cookie_flutter/request/info_request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -145,9 +146,7 @@ class _DunSettingState extends State<DunSetting> {
           subtitle: const Text("可以试着点点"),
           trailing: const Icon(Icons.arrow_right),
           onTap: () async {
-            DunApp? app = Provider.of<CeobecanteenData>(context, listen: false)
-                .ceobecanteenInfo
-                ?.app;
+            DunApp? app = await InfoRequest.getAppVersionInfo();
             if (app?.version != null &&
                 await PackageInfoPlus.isVersionHigher(app!.version!)) {
               Navigator.pushNamed(context, DunUpdate.routerName,

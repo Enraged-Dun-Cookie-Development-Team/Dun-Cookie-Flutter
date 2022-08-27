@@ -2,14 +2,14 @@ import 'package:dun_cookie_flutter/common/constant/main.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
 import 'package:dun_cookie_flutter/common/tool/open_app_or_browser.dart';
-import 'package:dun_cookie_flutter/provider/setting_provider.dart';
+import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
 import 'package:dun_cookie_flutter/page/info/open_screen_info.dart';
 import 'package:dun_cookie_flutter/provider/common_event_bus.dart';
 import 'package:dun_cookie_flutter/provider/common_provider.dart';
-import 'package:dun_cookie_flutter/router/router.dart';
-import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
+import 'package:dun_cookie_flutter/provider/setting_provider.dart';
 import 'package:dun_cookie_flutter/request/info_request.dart';
 import 'package:dun_cookie_flutter/request/list_request.dart';
+import 'package:dun_cookie_flutter/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobpush_plugin/mobpush_plugin.dart';
@@ -122,14 +122,12 @@ class _MainScaffoldState extends State<MainScaffold> {
     CeobecanteenData value = await InfoRequest.getCeobecanteenInfo();
     Provider.of<CeobecanteenData>(context, listen: false)
         .setCeobecanteenInfo(value);
-    if (value.app == null) {
-      DunToast.showError("资源服务器无法连接");
+    DunApp? app = await InfoRequest.getAppVersionInfo();
+    if (app?.version != null &&
+        await PackageInfoPlus.isVersionHigher(app!.version!)) {
+      // TODO: app更新提示弹窗
     } else {
-      // TODO: 需要改为获取版本号
-      // if (double.parse(value.app!.version!) > double.parse(Constant.version)) {
-      //   Navigator.pushNamed(context, DunUpdate.routerName,
-      //       arguments: value.app);
-      // }
+      DunToast.showSuccess("当前版本是最新版本");
     }
   }
 
