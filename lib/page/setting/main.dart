@@ -148,7 +148,7 @@ class _DunSettingState extends State<DunSetting> {
           onTap: () async {
             DunApp? app = await InfoRequest.getAppVersionInfo();
             if (app?.version != null &&
-                await PackageInfoPlus.isVersionHigher(app!.version!)) {
+                await PackageInfoPlus.isVersionHigherThenNow(app!.version!)) {
               Navigator.pushNamed(context, DunUpdate.routerName,
                   arguments: app);
             } else {

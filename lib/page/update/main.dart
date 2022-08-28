@@ -1,4 +1,5 @@
 import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
+import 'package:dun_cookie_flutter/component/group_num_button.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -20,11 +21,12 @@ class _DunUpdateState extends State<DunUpdate> {
   late DunApp dunApp;
 
   isFocusUpdate(DunApp dunApp) async {
-    if (await PackageInfoPlus.isVersionHigher(dunApp.version!) &&
+    if (await PackageInfoPlus.isVersionHigherThenNow(dunApp.version!) &&
         dunApp.update!) {
       return true;
     }
-    if (await PackageInfoPlus.isVersionHigher(dunApp.lastFocusVersion!)) {
+    if (await PackageInfoPlus.isVersionHigherThenNow(
+        dunApp.lastFocusVersion!)) {
       return true;
     }
     return false;
@@ -84,15 +86,7 @@ class _DunUpdateState extends State<DunUpdate> {
                 _content("更新内容", dunApp.description),
                 _content("更新补偿：虚空合成玉*300", "补偿范围：更新前所有小刻食堂用户"),
                 _content("更新地址", "没钱买服务器，请在群里面找群文件"),
-                ElevatedButton(
-                  onPressed: () {
-                    Clipboard.setData(const ClipboardData(text: '362860473'));
-                    DunToast.showSuccess("已复制，来QQ群找我们升级吧！");
-                  },
-                  child: const Text(
-                    "群号：362860473，点击复制",
-                  ),
-                )
+                const GroupNumButton(),
               ],
             ),
           ),

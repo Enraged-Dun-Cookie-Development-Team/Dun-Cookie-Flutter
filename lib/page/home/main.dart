@@ -2,6 +2,7 @@ import 'package:dun_cookie_flutter/common/constant/main.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
 import 'package:dun_cookie_flutter/common/tool/open_app_or_browser.dart';
+import 'package:dun_cookie_flutter/component/group_num_button.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
 import 'package:dun_cookie_flutter/page/info/open_screen_info.dart';
 import 'package:dun_cookie_flutter/provider/common_event_bus.dart';
@@ -14,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobpush_plugin/mobpush_plugin.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../common/tool/package_info.dart';
 
@@ -122,13 +124,61 @@ class _MainScaffoldState extends State<MainScaffold> {
     CeobecanteenData value = await InfoRequest.getCeobecanteenInfo();
     Provider.of<CeobecanteenData>(context, listen: false)
         .setCeobecanteenInfo(value);
-    DunApp? app = await InfoRequest.getAppVersionInfo();
-    if (app?.version != null &&
-        await PackageInfoPlus.isVersionHigher(app!.version!)) {
-      // TODO: app更新提示弹窗
+    if (value.app == null) {
+      DunToast.showError("资源服务器无法连接");
     } else {
-      DunToast.showSuccess("当前版本是最新版本");
+      String nowVersion = await PackageInfoPlus.getVersion();
+      SharedPreferences sp = await SharedPreferences.getInstance();
+      String? lastShowedVersion = sp.getString("update_dialog_showed_version");
+      DunApp? app = await InfoRequest.getAppVersionInfo(version: nowVersion);
+      if (lastShowedVersion == null ||
+          lastShowedVersion != nowVersion &&
+              PackageInfoPlus.isVersionHigher(nowVersion, lastShowedVersion)) {
+        if (app?.version?.isNotEmpty == true &&
+            app?.description?.isNotEmpty == true) {
+          showDialog(
+            context: context,
+            builder: (_) => Dialog(
+              child: _buildVersionUpdateDialog(app?.version, app?.description),
+            ),
+          );
+          sp.setString("update_dialog_showed_version", nowVersion);
+        }
+      }
     }
+  }
+
+  Widget _buildVersionUpdateDialog(String? version, String? description) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.all(Radius.circular(8)),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Center(
+            child: Text(
+              "更新日志",
+              style: TextStyle(
+                color: Colors.orange,
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          const SizedBox(height: 16),
+          Text("版本号：$version"),
+          const SizedBox(height: 8),
+          const Text("本次更新内容："),
+          Text(description ?? ""),
+          const SizedBox(height: 16),
+          const Center(child: GroupNumButton()),
+        ],
+      ),
+    );
   }
 
   List<QuickJump> shortcutMenu = [];

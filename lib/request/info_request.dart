@@ -21,8 +21,13 @@ class InfoRequest {
 
   /// APP版本
   static String appVersionUrl = "/canteen/operate/version/app";
-  static Future<DunApp>? getAppVersionInfo() async {
-    ResponseData response = await HttpClass.get(appVersionUrl, type: 1);
+  static Future<DunApp>? getAppVersionInfo({String? version}) async {
+    Map<String, dynamic> params = {};
+    if (version != null) {
+      params["version"] = version;
+    }
+    ResponseData response =
+        await HttpClass.get(appVersionUrl, params: params, type: 1);
     return DunApp.fromJson(response.data["data"]);
   }
 }
