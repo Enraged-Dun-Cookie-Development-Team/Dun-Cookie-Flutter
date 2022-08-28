@@ -28,6 +28,9 @@ class InfoRequest {
     }
     ResponseData response =
         await HttpClass.get(appVersionUrl, params: params, type: 1);
-    return DunApp.fromJson(response.data["data"]);
+    if (response.data != null) {
+      return DunApp.fromJson(response.data?["data"]);
+    }
+    return Future.value(DunApp());
   }
 }
