@@ -5,6 +5,7 @@ import 'package:dun_cookie_flutter/common/tool/open_app_or_browser.dart';
 import 'package:dun_cookie_flutter/component/group_num_button.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
 import 'package:dun_cookie_flutter/page/info/open_screen_info.dart';
+import 'package:dun_cookie_flutter/page/update/main.dart';
 import 'package:dun_cookie_flutter/provider/common_event_bus.dart';
 import 'package:dun_cookie_flutter/provider/common_provider.dart';
 import 'package:dun_cookie_flutter/provider/setting_provider.dart';
@@ -81,15 +82,17 @@ class _MainScaffoldState extends State<MainScaffold> {
     Constant.mobRId = settingData.appSetting.rid;
     bool result = true;
     if (settingData.appSetting.notOnce!) {
-      result = await Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const OpenScreenInfo()));
+      result = await Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const OpenScreenInfo()));
     }
     if (result != true) return;
 
     // 打开APP 全部拉一次数据
     await _getData();
-    // 获取CeobecanteenInfo和判断版本
-    await _getCeobecanteenInfoAndCheckVersion();
+    // 获取CeobecanteenInfo
+    await _getCeobecanteenInfo();
+    // 判断版本
+    await _checkVersion();
     // 动态菜单
     await _getMenu();
 
@@ -119,27 +122,30 @@ class _MainScaffoldState extends State<MainScaffold> {
     // commonProvider.saveListSourceData(commonProvider.sourceData!);
   }
 
-//  获取info文件并判断文件版本
-  _getCeobecanteenInfoAndCheckVersion() async {
+  // 获取info文件
+  _getCeobecanteenInfo() async {
     CeobecanteenData value = await InfoRequest.getCeobecanteenInfo();
-    Provider.of<CeobecanteenData>(context, listen: false)
-        .setCeobecanteenInfo(value);
-    if (value.app == null) {
-      DunToast.showError("资源服务器无法连接");
+    Provider.of<CeobecanteenData>(context, listen: false).setCeobecanteenInfo(value);
+  }
+
+  // 判断版本号，强制更新&更新日志
+  _checkVersion() async {
+    String nowVersion = await PackageInfoPlus.getVersion();
+    DunApp nowApp = await InfoRequest.getAppVersionInfo(version: nowVersion);
+    DunApp newApp = await InfoRequest.getAppVersionInfo();
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    String? lastShowedVersion = sp.getString("update_dialog_showed_version");
+    if (PackageInfoPlus.isVersionHigher(nowVersion, newApp.lastFocusVersion)) {
+      Navigator.pushNamed(context, DunUpdate.routerName, arguments: newApp);
     } else {
-      String nowVersion = await PackageInfoPlus.getVersion();
-      SharedPreferences sp = await SharedPreferences.getInstance();
-      String? lastShowedVersion = sp.getString("update_dialog_showed_version");
-      DunApp? app = await InfoRequest.getAppVersionInfo(version: nowVersion);
       if (lastShowedVersion == null ||
           lastShowedVersion != nowVersion &&
               PackageInfoPlus.isVersionHigher(nowVersion, lastShowedVersion)) {
-        if (app?.version?.isNotEmpty == true &&
-            app?.description?.isNotEmpty == true) {
+        if (nowApp.version?.isNotEmpty == true && nowApp.description?.isNotEmpty == true) {
           showDialog(
             context: context,
             builder: (_) => Dialog(
-              child: _buildVersionUpdateDialog(app?.version, app?.description),
+              child: _buildVersionUpdateDialog(nowApp.version, nowApp.description),
             ),
           );
           sp.setString("update_dialog_showed_version", nowVersion);
@@ -247,8 +253,7 @@ class _MainScaffoldState extends State<MainScaffold> {
                               bakeryPupopButton = value.toString();
                             });
                             DunToast.showSuccess("获取大厦${value.toString()}");
-                            eventBus.fire(ChangePopupMenuDownButton(
-                                checkId: bakeryPupopButton));
+                            eventBus.fire(ChangePopupMenuDownButton(checkId: bakeryPupopButton));
                           },
                         ),
                       ],
@@ -278,15 +283,13 @@ class _MainScaffoldState extends State<MainScaffold> {
                       ),
                       FutureBuilder<String>(
                           future: PackageInfoPlus.getVersion(),
-                          builder: (BuildContext context,
-                              AsyncSnapshot<String> snapshot) {
+                          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
                             if (!snapshot.hasData) {
                               return Container();
                             } else {
                               return Text(
                                 '小刻食堂 Beta V' + snapshot.data!,
-                                style: const TextStyle(
-                                    color: Colors.white, fontSize: 18),
+                                style: const TextStyle(color: Colors.white, fontSize: 18),
                               );
                             }
                           }),
@@ -300,8 +303,7 @@ class _MainScaffoldState extends State<MainScaffold> {
                       leading: DunRouter.pagesIcon[index],
                       title: Text(DunRouter.pageTitles[index]),
                       onTap: () {
-                        Provider.of<CommonProvider>(context, listen: false)
-                            .setRouterIndex(index);
+                        Provider.of<CommonProvider>(context, listen: false).setRouterIndex(index);
                         Navigator.pop(context);
                       },
                     ),
@@ -350,8 +352,7 @@ class _MainScaffoldState extends State<MainScaffold> {
                             title: Text(shortcutMenu[index].name),
                             onTap: () {
                               Navigator.pop(context);
-                              OpenAppOrBrowser.openUrl(
-                                  shortcutMenu[index].url, context);
+                              OpenAppOrBrowser.openUrl(shortcutMenu[index].url, context);
                             },
                           ),
                         ),
@@ -363,8 +364,7 @@ class _MainScaffoldState extends State<MainScaffold> {
               onWillPop: () async {
                 // 设置的话 退回到主页
                 if (routerIndex == 3) {
-                  Provider.of<CommonProvider>(context, listen: false)
-                      .setRouterIndex(0);
+                  Provider.of<CommonProvider>(context, listen: false).setRouterIndex(0);
                   return false;
                 } else {
                   return doubleClickBack();

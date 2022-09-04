@@ -29,13 +29,9 @@ class _DunSettingState extends State<DunSetting> {
   void initState() {
     setState(() {
       DunSetting.isPreview =
-          Provider.of<SettingProvider>(context, listen: false)
-              .appSetting
-              .isPreview!;
-      DunSetting.darkMode = Provider.of<SettingProvider>(context, listen: false)
-              .appSetting
-              .darkMode ??
-          0;
+          Provider.of<SettingProvider>(context, listen: false).appSetting.isPreview!;
+      DunSetting.darkMode =
+          Provider.of<SettingProvider>(context, listen: false).appSetting.darkMode ?? 0;
     });
     super.initState();
   }
@@ -74,23 +70,14 @@ class _DunSettingState extends State<DunSetting> {
                 value: DunSetting.darkMode,
                 items: [
                   DropdownMenuItem(
-                      child: Row(
-                          children: const [Icon(Icons.settings), Text('跟随系统')]),
-                      value: 0),
+                      child: Row(children: const [Icon(Icons.settings), Text('跟随系统')]), value: 0),
                   DropdownMenuItem(
-                      child: Row(
-                          children: const [Icon(Icons.wb_sunny), Text('浅色模式')]),
-                      value: 1),
+                      child: Row(children: const [Icon(Icons.wb_sunny), Text('浅色模式')]), value: 1),
                   DropdownMenuItem(
-                      child: Row(children: const [
-                        Icon(Icons.shield_moon),
-                        Text('深色模式')
-                      ]),
-                      value: 2)
+                      child: Row(children: const [Icon(Icons.shield_moon), Text('深色模式')]), value: 2)
                 ],
                 onChanged: (value) {
-                  var settingProvider =
-                      Provider.of<SettingProvider>(context, listen: false);
+                  var settingProvider = Provider.of<SettingProvider>(context, listen: false);
                   settingProvider.appSetting.darkMode = value;
                   settingProvider.saveAppSetting();
                   setState(() {
@@ -103,8 +90,7 @@ class _DunSettingState extends State<DunSetting> {
           trailing: Switch(
             value: DunSetting.isPreview,
             onChanged: (value) {
-              var settingProvider =
-                  Provider.of<SettingProvider>(context, listen: false);
+              var settingProvider = Provider.of<SettingProvider>(context, listen: false);
               settingProvider.appSetting.isPreview = value;
               settingProvider.saveAppSetting();
               setState(() {
@@ -131,8 +117,7 @@ class _DunSettingState extends State<DunSetting> {
           subtitle: const Text("欢迎关注我们"),
           trailing: const Icon(Icons.arrow_right),
           onTap: () {
-            OpenAppOrBrowser.openUrl(
-                "https://m.bilibili.com/space/1723599428", context,
+            OpenAppOrBrowser.openUrl("https://m.bilibili.com/space/1723599428", context,
                 appUrlScheme: "bilibili://space/1723599428");
           },
         ),
@@ -147,10 +132,8 @@ class _DunSettingState extends State<DunSetting> {
           trailing: const Icon(Icons.arrow_right),
           onTap: () async {
             DunApp? app = await InfoRequest.getAppVersionInfo();
-            if (app?.version != null &&
-                await PackageInfoPlus.isVersionHigherThenNow(app!.version!)) {
-              Navigator.pushNamed(context, DunUpdate.routerName,
-                  arguments: app);
+            if (app.version != null && await PackageInfoPlus.isVersionHigherThenNow(app.version)) {
+              Navigator.pushNamed(context, DunUpdate.routerName, arguments: app);
             } else {
               DunToast.showSuccess("当前版本是最新版本");
             }

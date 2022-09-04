@@ -21,12 +21,10 @@ class _DunUpdateState extends State<DunUpdate> {
   late DunApp dunApp;
 
   isFocusUpdate(DunApp dunApp) async {
-    if (await PackageInfoPlus.isVersionHigherThenNow(dunApp.version!) &&
-        dunApp.update!) {
+    if (await PackageInfoPlus.isVersionHigherThenNow(dunApp.version) && dunApp.force) {
       return true;
     }
-    if (await PackageInfoPlus.isVersionHigherThenNow(
-        dunApp.lastFocusVersion!)) {
+    if (await PackageInfoPlus.isVersionHigherThenNow(dunApp.lastFocusVersion)) {
       return true;
     }
     return false;
@@ -73,16 +71,13 @@ class _DunUpdateState extends State<DunUpdate> {
                 RichText(
                   text: const TextSpan(children: [
                     TextSpan(text: "感谢您对《小刻食堂》的关注与支持。《小刻食堂》将于现在进行服务器不停机的"),
-                    TextSpan(
-                        text: "客户端更新", style: TextStyle(color: Colors.red)),
-                    TextSpan(
-                        text: "。本次更新不会影响博士正常蹲饼进程，更新结束后，博士只需选择合适时间打开软件即可完成更新。")
+                    TextSpan(text: "客户端更新", style: TextStyle(color: Colors.red)),
+                    TextSpan(text: "。本次更新不会影响博士正常蹲饼进程，更新结束后，博士只需选择合适时间打开软件即可完成更新。")
                   ]),
                 ),
                 _content("版本升级", "$version --> ${dunApp.version.toString()}"),
                 _content("更新时间", "现在"),
-                _content("更新模式", isFocus ? "强制" : "非强制",
-                    color: isFocus ? Colors.red : null),
+                _content("更新模式", isFocus ? "强制" : "非强制", color: isFocus ? Colors.red : null),
                 _content("更新内容", dunApp.description),
                 _content("更新补偿：虚空合成玉*300", "补偿范围：更新前所有小刻食堂用户"),
                 _content("更新地址", "没钱买服务器，请在群里面找群文件"),

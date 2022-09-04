@@ -27,8 +27,7 @@ class _DunToolState extends State<DunTool> {
   @override
   void initState() {
     super.initState();
-    ToolsApi.getResourceInfo()
-        .then((value) => setState(() => resourceInfo = value));
+    ToolsApi.getResourceInfo().then((value) => setState(() => resourceInfo = value));
     ToolsApi.getVideoList().then((value) => setState(() => videoList = value));
   }
 
@@ -45,7 +44,7 @@ class _DunToolState extends State<DunTool> {
                 Expanded(
                   child: ListView(
                     children: [
-                      if (ceobecanteenInfo.app == null)
+                      if (ceobecanteenInfo.list == null)
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: const [
@@ -58,8 +57,7 @@ class _DunToolState extends State<DunTool> {
                       // 物资是否开放
                       ToolResource(resourceInfo?.resources),
                       // 倒计时
-                      if (resourceInfo?.countdown != null)
-                        ToolCountdown(resourceInfo?.countdown),
+                      if (resourceInfo?.countdown != null) ToolCountdown(resourceInfo?.countdown),
                       // 官方源
                       if (ceobecanteenInfo.sourceInfo != null)
                         ToolGrid(
@@ -73,8 +71,7 @@ class _DunToolState extends State<DunTool> {
                           linkInfo: ceobecanteenInfo.quickJump,
                         ),
                       //推荐视频
-                      if (videoList.isNotEmpty)
-                        ToolGrid("视频推荐", type: 1, videoInfo: videoList)
+                      if (videoList.isNotEmpty) ToolGrid("视频推荐", type: 1, videoInfo: videoList)
                     ],
                   ),
                 )

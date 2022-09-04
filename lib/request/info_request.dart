@@ -10,6 +10,7 @@ class InfoRequest {
     return await HttpClass.get(url, type: 2);
   }
 
+  // todo 已废弃
   static Future<CeobecanteenData> getCeobecanteenInfo() async {
     ResponseData response = await _getCeobecanteenInfo();
     if (response.error) {
@@ -21,13 +22,12 @@ class InfoRequest {
 
   /// APP版本
   static String appVersionUrl = "/canteen/operate/version/app";
-  static Future<DunApp>? getAppVersionInfo({String? version}) async {
+  static Future<DunApp> getAppVersionInfo({String? version}) async {
     Map<String, dynamic> params = {};
     if (version != null) {
       params["version"] = version;
     }
-    ResponseData response =
-        await HttpClass.get(appVersionUrl, params: params, type: 1);
+    ResponseData response = await HttpClass.get(appVersionUrl, params: params, type: 1);
     if (response.data != null) {
       return DunApp.fromJson(response.data?["data"]);
     }

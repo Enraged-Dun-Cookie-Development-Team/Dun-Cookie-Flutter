@@ -1,6 +1,5 @@
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
-import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
-import 'package:flutter/services.dart';
+import 'package:dun_cookie_flutter/component/group_num_button.dart';
 import 'package:flutter/material.dart';
 
 import '../../common/tool/package_info.dart';
@@ -26,8 +25,7 @@ class DunInfo extends StatelessWidget {
               ),
               FutureBuilder<String>(
                   future: PackageInfoPlus.getVersion(),
-                  builder:
-                      (BuildContext context, AsyncSnapshot<String> snapshot) {
+                  builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
                     if (!snapshot.hasData) {
                       return Container();
                     } else {
@@ -41,7 +39,7 @@ class DunInfo extends StatelessWidget {
                 height: 10,
               ),
               const Text(
-                "Flutter By 蓝芷怡",
+                "Flutter By 蓝芷怡 & 滑稽",
               ),
               const Text(
                 "NodeJS By 云闪",
@@ -67,15 +65,7 @@ class DunInfo extends StatelessWidget {
               const Text(
                 "欢迎来QQ群【蹲饼组】反馈BUG或提出意见建议",
               ),
-              ElevatedButton(
-                onPressed: () {
-                  Clipboard.setData(const ClipboardData(text: '362860473'));
-                  DunToast.showSuccess("根本难不倒他");
-                },
-                child: const Text(
-                  "群号：362860473，点击复制",
-                ),
-              ),
+              const GroupNumButton(toastContent: "根本难不倒他"),
             ],
           ),
         ),

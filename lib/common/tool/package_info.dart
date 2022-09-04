@@ -7,17 +7,21 @@ class PackageInfoPlus {
     return version;
   }
 
-  static Future<bool> isVersionHigherThenNow(String newVersion) async {
+  static Future<bool> isVersionHigherThenNow(String? newVersion) async {
+    if (newVersion == null) {
+      return true;
+    }
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     String nowVersion = packageInfo.version;
     return isVersionHigher(newVersion, nowVersion);
   }
 
-  static bool isVersionHigher(String newVersion, String nowVersion) {
-    final List<int> newVersionList =
-        newVersion.split(".").map((a) => int.parse(a)).toList();
-    final List<int> versionList =
-        nowVersion.split(".").map((a) => int.parse(a)).toList();
+  static bool isVersionHigher(String? newVersion, String? nowVersion) {
+    if (newVersion == null || nowVersion == null) {
+      return false;
+    }
+    final List<int> newVersionList = newVersion.split(".").map((a) => int.parse(a)).toList();
+    final List<int> versionList = nowVersion.split(".").map((a) => int.parse(a)).toList();
     // 判断lastFocusVersion
     for (var i = 0;
         i <
