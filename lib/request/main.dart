@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:dun_cookie_flutter/common/constant/main.dart';
+
 import 'config.dart';
 
 class HttpClass {
@@ -23,7 +24,7 @@ class HttpClass {
         dio.options.baseUrl = "";
         break;
       case 0:
-        dio.options.baseUrl = HttpConfig.lwtBaseUrl;
+        dio.options.baseUrl = HttpConfig.tempBaseUrl;
         break;
       case 1:
         dio.options.baseUrl = HttpConfig.serverBaseUrl;
@@ -34,7 +35,7 @@ class HttpClass {
     }
     try {
       dio.interceptors.add(_dInter());
-      // print("请求 ${dio.options.baseUrl}$url");
+      print("请求 ${dio.options.baseUrl}$url");
       Response response = await dio.request(
         url,
         queryParameters: params,
