@@ -63,6 +63,7 @@ class _DunToolState extends State<DunTool> {
                         ToolGrid(
                           "饼的发源地",
                           linkInfo: ceobecanteenInfo.sourceInfo,
+                          key: const Key("饼的发源地"),
                         ),
                       // 快捷工具
                       if (ceobecanteenInfo.quickJump != null)
