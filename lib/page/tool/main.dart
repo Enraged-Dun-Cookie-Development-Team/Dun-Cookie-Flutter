@@ -70,6 +70,7 @@ class _DunToolState extends State<DunTool> {
                         ToolGrid(
                           "在线第三方工具",
                           linkInfo: ceobecanteenInfo.quickJump,
+                          key: const Key("在线第三方工具"),
                         ),
                       //推荐视频
                       if (videoList.isNotEmpty) ToolGrid("视频推荐", type: 1, videoInfo: videoList)
