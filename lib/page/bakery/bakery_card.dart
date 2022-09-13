@@ -23,19 +23,17 @@ class BakeryCard extends StatelessWidget {
             children: [
               InkWell(
                 onTap: () {
-                  if (data.cvlink != null && data.cvlink != "") {
+                  if (data.cvLink != null && data.cvLink != "") {
                     OpenAppOrBrowser.openUrl(
-                        "https://www.bilibili.com/read/cv${data.cvlink}",
-                        context,
-                        appUrlScheme: "bilibili://article/${data.cvlink}");
+                        "https://www.bilibili.com/read/cv${data.cvLink}", context,
+                        appUrlScheme: "bilibili://article/${data.cvLink}");
                   }
                 },
                 child: Text(
                   '饼学大厦 #' +
-                      data.id! + '\n' +
-                      (data.description! != ""
-                          ? "（ver. ${data.description!}）"
-                          : ""),
+                      data.id! +
+                      '\n' +
+                      (data.description! != "" ? "（ver. ${data.description!}）" : ""),
                   style: DunStyles.text20C,
                 ),
               ),
