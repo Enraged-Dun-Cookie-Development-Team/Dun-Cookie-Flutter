@@ -55,9 +55,9 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNaacBarState extends State<BottomNavBar> {
-  //点击导航时显示指定内容
+  // 点击导航时显示指定内容
   List<Widget> list = [const MoreListWidget(), const MainListWidget(), const TerminalPageWidget()];
-  //当前点击的导航下标
+  // 当前点击的导航下标
   int _currentController = 1;
   @override
   Widget build(BuildContext context) {
@@ -74,60 +74,84 @@ class _BottomNaacBarState extends State<BottomNavBar> {
       body: Container(
         color: gray_3,
         padding: EdgeInsets.only(top: paddingTop),
-        child: list[_currentController],
+        child: Stack(
+          children: [
+            list[_currentController],
+            ..._buildBottomBar(),
+          ],
+        ),
       ),
-      //浮动按钮代替中间导航按钮
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: GestureDetector(
-        onTap: () => setState(() => _currentController = 1),
+    );
+  }
+
+  List<Widget> _buildBottomBar() {
+    return [
+      Align(
+        alignment: Alignment.bottomCenter,
         child: Container(
-          width: 83,
           height: 83,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(50),
-            border: Border.all(
-              color: yellow,
-              width: 2,
-            ),
-            color: yellow,
-          ),
-          child: Center(
-            child: Image.asset(
-              'assets/icon/main_list_icon.png',
-              width: 57,
-              height: 48,
-            ),
+          color: white,
+          child: Row(
+            children: [
+              Expanded(
+                child: GestureDetector(
+                  onTap: () => setState(() => _currentController = 0),
+                  child: Expanded(
+                    child: Image.asset(
+                      'assets/icon/more_list_icon.png',
+                      width: 30,
+                      height: 30,
+                      color: _currentController == 0 ? yellow : gray_2,
+                    ),
+                  ),
+                ),
+              ),
+              const Expanded(child: SizedBox()),
+              Expanded(
+                child: GestureDetector(
+                  onTap: () => setState(() => _currentController = 2),
+                  child: Expanded(
+                    child: Image.asset(
+                      'assets/icon/terminal_page_icon.png',
+                      width: 30,
+                      height: 30,
+                      color: _currentController == 2 ? yellow : gray_2,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        //当前选中的导航栏
-        currentIndex: _currentController,
-        //点击导航栏触发的事件
-        onTap: (int index) {
-          setState(() {
-            _currentController = index;
-          });
-        },
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-              icon: Image.asset(
-                'assets/icon/more_list_icon.png',
-                width: 30,
-                height: 30,
+      Align(
+        alignment: Alignment.bottomCenter,
+        child: GestureDetector(
+          onTap: () => setState(() => _currentController = 1),
+          child: Container(
+            width: 83,
+            height: 83,
+            margin: const EdgeInsets.only(bottom: 20),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50),
+              border: Border.all(
+                color: yellow,
+                width: 2,
               ),
-              label: "更多"),
-          const BottomNavigationBarItem(icon: Icon(Icons.search), label: ''),
-          BottomNavigationBarItem(
-              icon: Image.asset(
-                'assets/icon/terminal_page_icon.png',
-                width: 30,
-                height: 30,
+              color: _currentController == 1 ? yellow : white,
+            ),
+            child: Center(
+              child: Image.asset(
+                'assets/icon/main_list_icon.png',
+                width: 57,
+                height: 48,
+                color: _currentController == 1 ? white : yellow,
               ),
-              label: "终端"),
-        ],
-      ),
-    );
+            ),
+          ),
+        ),
+      )
+    ];
   }
 }
 
