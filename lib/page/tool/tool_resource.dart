@@ -66,13 +66,12 @@ class ToolResource extends StatelessWidget {
 
 //  计算是否开启
   bool resourcesNotToday(List<int> dayList) {
-    DateTime dt = TimeUnit.utcChinaNow();
     if (resources != null &&
-        TimeUnit.isTimeRange(dt, resources!.startTime, resources!.overTime)) {
+        TimeUnit.isTimeRange(DateTime.now(), resources!.startTime, resources!.overTime)) {
       return true;
     }
-    int week = dt.weekday;
-    if (dt.hour <= 4) {
+    int week = DateTime.now().weekday;
+    if (DateTime.now().hour < 4) {
       week -= 1;
       if (week == 0) {
         week = 7;

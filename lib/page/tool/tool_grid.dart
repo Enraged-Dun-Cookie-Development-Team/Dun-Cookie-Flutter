@@ -16,8 +16,8 @@ class ToolGrid extends StatelessWidget {
     if (videoInfo != null) {
       // 视频信息过滤
       videoInfo = videoInfo!
-          .where((element) => TimeUnit.isTimeRange(
-              TimeUnit.utcChinaNow(), element.startTime, element.overTime))
+          .where((element) =>
+              TimeUnit.isTimeRange(DateTime.now(), element.startTime, element.overTime))
           .toList();
     }
   }
@@ -48,9 +48,7 @@ class ToolGrid extends StatelessWidget {
                 childAspectRatio: type == 0 ? 4 : 1),
             itemBuilder: (ctx, index) {
               return Card(
-                child: type == 0
-                    ? ToolLink(linkInfo![index])
-                    : ToolVideo(videoInfo![index]),
+                child: type == 0 ? ToolLink(linkInfo![index]) : ToolVideo(videoInfo![index]),
               );
             },
           ),

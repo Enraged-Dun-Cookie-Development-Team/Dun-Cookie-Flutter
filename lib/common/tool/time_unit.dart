@@ -1,14 +1,9 @@
-
 class TimeUnit {
-  static String timeDiff(
-      {required starTime, endTime, isShowSecond = false}) {
+  static String timeDiff({required starTime, isShowSecond = false}) {
     var chinaTime = DateTime.parse(starTime);
     var startDate = changeLocalTime(chinaTime);
     startDate = toUtcChinaTime(startDate);
     var endDate = utcChinaNow();
-    if (endTime != null) {
-      endDate = DateTime.parse(endTime).toUtc().add(const Duration(hours: 8));
-    }
     int inSeconds = endDate.difference(startDate).inSeconds.abs();
     var day = (inSeconds / 86400).floor();
     var hour = (inSeconds / 60 / 60 % 24).floor();
@@ -87,7 +82,7 @@ class TimeUnit {
     var timeOffset = chinaTime.timeZoneOffset;
     var minOffset = timeOffset.inMinutes;
     // 根据偏移量调整时间
-    var localTime = chinaTime.add(Duration(minutes: minOffset - 8*60));
+    var localTime = chinaTime.add(Duration(minutes: minOffset - 8 * 60));
 
     return localTime;
   }
