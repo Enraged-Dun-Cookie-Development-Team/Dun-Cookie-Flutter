@@ -36,52 +36,46 @@ class _DunToolState extends State<DunTool> {
     return FadeIn(
       child: Consumer<CeobecanteenData>(
         builder: (context, data, child) {
-          if (data.ceobecanteenInfo != null) {
-            CeobecanteenData ceobecanteenInfo = data.ceobecanteenInfo!;
-            return Column(
-              children: [
-                // ToolAnnouncement(ceobecanteenInfo.list!),
-                Expanded(
-                  child: ListView(
-                    children: [
-                      if (ceobecanteenInfo.list == null)
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Text(
-                              "以下数据为离线数据",
-                              style: DunStyles.text16C,
-                            ),
-                          ],
-                        ),
-                      // 物资是否开放
-                      ToolResource(resourceInfo?.resources),
-                      // 倒计时
-                      if (resourceInfo?.countdown != null) ToolCountdown(resourceInfo?.countdown),
-                      // 官方源
-                      if (ceobecanteenInfo.sourceInfo != null)
-                        ToolGrid(
-                          "饼的发源地",
-                          linkInfo: ceobecanteenInfo.sourceInfo,
-                          key: const Key("饼的发源地"),
-                        ),
-                      // 快捷工具
-                      if (ceobecanteenInfo.quickJump != null)
-                        ToolGrid(
-                          "在线第三方工具",
-                          linkInfo: ceobecanteenInfo.quickJump,
-                          key: const Key("在线第三方工具"),
-                        ),
-                      //推荐视频
-                      if (videoList.isNotEmpty) ToolGrid("视频推荐", type: 1, videoInfo: videoList)
-                    ],
-                  ),
-                )
-              ],
-            );
-          }
-          return const Center(
-            child: Text("正在获取，请稍后"),
+          return Column(
+            children: [
+              // ToolAnnouncement(ceobecanteenInfo.list!),
+              Expanded(
+                child: ListView(
+                  children: [
+                    if (data.list == null)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text(
+                            "以下数据为离线数据",
+                            style: DunStyles.text16C,
+                          ),
+                        ],
+                      ),
+                    // 物资是否开放
+                    ToolResource(resourceInfo?.resources),
+                    // 倒计时
+                    if (resourceInfo?.countdown != null) ToolCountdown(resourceInfo?.countdown),
+                    // 官方源
+                    if (data.sourceInfo != null)
+                      ToolGrid(
+                        "饼的发源地",
+                        linkInfo: data.sourceInfo,
+                        key: const Key("饼的发源地"),
+                      ),
+                    // 快捷工具
+                    if (data.quickJump != null)
+                      ToolGrid(
+                        "在线第三方工具",
+                        linkInfo: data.quickJump,
+                        key: const Key("在线第三方工具"),
+                      ),
+                    //推荐视频
+                    if (videoList.isNotEmpty) ToolGrid("视频推荐", type: 1, videoInfo: videoList)
+                  ],
+                ),
+              )
+            ],
           );
         },
       ),
