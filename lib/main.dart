@@ -60,9 +60,13 @@ class _CeobeCanteenAppState extends State<CeobeCanteenApp> {
         ChangeNotifierProvider<SettingProvider>(create: (_) => SettingProvider()),
         ChangeNotifierProvider<CeobecanteenData>(create: (_) => CeobecanteenData()),
       ],
-      child: const MaterialApp(
+      child: MaterialApp(
         title: '小刻食堂',
-        home: BottomNavBar(),
+        routes: DunRouter.routes,
+        initialRoute: "/home",
+        onUnknownRoute: (settings) => MaterialPageRoute(
+          builder: (context) => DunError(error: "404"),
+        ),
       ),
     );
   }

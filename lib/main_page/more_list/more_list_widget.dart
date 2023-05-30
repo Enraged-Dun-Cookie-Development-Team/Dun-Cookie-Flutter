@@ -1,4 +1,6 @@
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
+import 'package:dun_cookie_flutter/honey_cake_workshop/honey_cake_workshop_page.dart';
+import 'package:dun_cookie_flutter/manga/manga_list.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
 import 'package:dun_cookie_flutter/model/video_model.dart';
 import 'package:dun_cookie_flutter/page/tool/tool_link.dart';
@@ -8,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class MoreListWidget extends StatefulWidget {
-  MoreListWidget({Key? key}) : super(key: key);
+  const MoreListWidget({Key? key}) : super(key: key);
 
   @override
   State<MoreListWidget> createState() => _MoreListWidgetState();
@@ -90,64 +92,97 @@ class _MoreListWidgetState extends State<MoreListWidget> {
     for (int i = 0; i < columnText.length; i++) {
       titleTextList.add(Text(columnText[i], style: const TextStyle(color: white, fontSize: 11)));
     }
-    return Container(
-      margin: const EdgeInsets.fromLTRB(14, 14, 14, 0),
-      height: 140,
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(5)),
-        color: white,
+    return GestureDetector(
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const MangaListPage()),
       ),
-      child: Stack(
-        children: [
-          Container(
-            width: 20,
-            color: gray_1,
-            child: Center(child: Column(mainAxisSize: MainAxisSize.min, children: titleTextList)),
-          ),
-          Container(
-            margin: const EdgeInsets.fromLTRB(15, 6, 0, 0),
-            width: 13,
-            height: 8,
-            color: blue,
-          ),
-        ],
+      child: Container(
+        margin: const EdgeInsets.fromLTRB(14, 14, 14, 0),
+        height: 140,
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(5)),
+          color: white,
+        ),
+        child: Stack(
+          children: [
+            Row(
+              children: [
+                Container(
+                  width: 20,
+                  color: gray_1,
+                  child: Center(
+                      child: Column(mainAxisSize: MainAxisSize.min, children: titleTextList)),
+                ),
+                Expanded(
+                  child: Container(
+                    color: white,
+                    child: const Center(
+                      child: Text("官方漫画"),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Container(
+              margin: const EdgeInsets.fromLTRB(15, 6, 0, 0),
+              width: 13,
+              height: 8,
+              color: blue,
+            ),
+          ],
+        ),
       ),
     );
   }
 
   Widget _buildHoneyCakeWorkshop() {
-    return Container(
-      margin: const EdgeInsets.fromLTRB(14, 14, 14, 0),
-      height: 90,
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(5)),
-        color: white,
+    return GestureDetector(
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const HoneyCakeWorkshopPage()),
       ),
-      child: Column(
-        children: [
-          Container(
-            height: 21,
-            padding: const EdgeInsets.fromLTRB(10, 2, 8, 2),
-            color: gray_1,
-            child: Row(
-              children: [
-                const Text(
-                  "第三方工具 · 罗德岛密饼工坊",
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: white,
+      child: Container(
+        margin: const EdgeInsets.fromLTRB(14, 14, 14, 0),
+        height: 90,
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(5)),
+          color: white,
+        ),
+        child: Column(
+          children: [
+            Container(
+              height: 21,
+              padding: const EdgeInsets.fromLTRB(10, 2, 8, 2),
+              color: gray_1,
+              child: Row(
+                children: [
+                  const Text(
+                    "第三方工具 · 罗德岛密饼工坊",
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: white,
+                    ),
                   ),
-                ),
-                const Expanded(child: SizedBox()),
-                Container(
-                  width: 10,
-                  height: 10,
-                  color: yellow,
-                ),
-              ],
+                  const Expanded(child: SizedBox()),
+                  Container(
+                    width: 10,
+                    height: 10,
+                    color: yellow,
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+            Expanded(
+              child: Container(
+                color: white,
+                child: const Center(
+                  child: Text("罗德岛蜜饼工坊"),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -162,7 +197,7 @@ class _MoreListWidgetState extends State<MoreListWidget> {
         physics: const NeverScrollableScrollPhysics(),
         itemCount: dataList.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
+          crossAxisCount: 2,
           mainAxisSpacing: 2,
           crossAxisSpacing: 2,
           childAspectRatio: 3,
