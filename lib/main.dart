@@ -29,7 +29,8 @@ void main() async {
   //沉浸式状态栏
   if (Platform.isAndroid) {
     SystemUiOverlayStyle systemUiOverlayStyle = const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent, //设置为透明
+      statusBarColor: Colors.transparent, // 状态栏颜色设置为透明
+      statusBarIconBrightness: Brightness.dark, // 状态栏图标文字颜色设置为黑色
     );
     SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
   }
@@ -269,13 +270,6 @@ class _BottomNaacBarState extends State<BottomNavBar> {
 
   @override
   Widget build(BuildContext context) {
-    if (Platform.isAndroid) {
-      SystemUiOverlayStyle systemUiOverlayStyle = const SystemUiOverlayStyle(
-        statusBarColor: Colors.white,
-        statusBarIconBrightness: Brightness.dark,
-      );
-      SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
-    }
     double paddingTop = MediaQuery.of(context).padding.top;
     return Scaffold(
       //页面显示的主体内容
