@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
 
+const Color white = Color(0xFFFFFFFF);
+const Color gray_1 = Color(0xFF707070);
+const Color gray_2 = Color(0xFFB8B8B8);
+const Color gray_3 = Color(0xFFE7E7E7);
+const Color yellow = Color(0xFFFDBA4B);
+const Color blue = Color(0xFF8BDCFF);
+const Color red = Color(0xFFFD3082);
+
 class DunColors {
   static const Color DunColor = Color(0xFFF2AC3C);
   static const Color DunColorLigth = Color.fromARGB(255, 97, 186, 234);
@@ -12,8 +20,7 @@ class DunColors {
   static const Color BakeryColor = Color.fromARGB(255, 245, 130, 32);
   static const Color BakeryColorLigth = Color.fromARGB(255, 230, 132, 56);
   static const Color BakeryColorGrey = Color.fromARGB(255, 170, 172, 183);
-  static const Color BakeryColorComplementary =
-      Color.fromARGB(255, 22, 191, 255);
+  static const Color BakeryColorComplementary = Color.fromARGB(255, 22, 191, 255);
 }
 
 class DunStyles {
@@ -34,14 +41,12 @@ class DunStyles {
 class DunTheme {
   static ThemeData getThemeData(Color color, Brightness brightness) {
     ThemeData td = ThemeData(colorSchemeSeed: color, brightness: brightness);
-    ThemeData tdlight =
-        ThemeData(colorSchemeSeed: color, brightness: Brightness.light);
+    ThemeData tdlight = ThemeData(colorSchemeSeed: color, brightness: Brightness.light);
     Color primaryThemeColor = tdlight.primaryColor;
     Color primaryColor = color;
     ThemeData rst = td.copyWith(
       appBarTheme: AppBarTheme(
-        color:
-            brightness == Brightness.light ? primaryColor : primaryThemeColor,
+        color: brightness == Brightness.light ? primaryColor : primaryThemeColor,
       ),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
@@ -75,11 +80,7 @@ class DunTheme {
   //       ColorScheme.fromSwatch().copyWith(secondary: DunColors.DunColorLigth),
   // );
 
-  static List<ThemeData> themeList = [
-    getThemeData(DunColors.DunColor, Brightness.light)
-  ];
+  static List<ThemeData> themeList = [getThemeData(DunColors.DunColor, Brightness.light)];
 
-  static List<ThemeData> darkThemeList = [
-    getThemeData(DunColors.DunColor, Brightness.dark)
-  ];
+  static List<ThemeData> darkThemeList = [getThemeData(DunColors.DunColor, Brightness.dark)];
 }

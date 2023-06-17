@@ -72,11 +72,11 @@ android {
         }
         debug {
             minifyEnabled true //删除无用代码
-            useProguard true    //代码压缩设置
+            // useProguard true    //代码压缩设置
             shrinkResources true //删除无用资源
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             ndk { //这里要加上，否则debug包会出问题,后面三个为可选，x86建议加上不然部分模拟器回报错
-                abiFilters "armeabi",  "armeabi-v7a" , "arm64-v8a" , "x86"
+                abiFilters "armeabi",  "armeabi-v7a" , "arm64-v8a" , "x86", "x86_64"
             }
         }
     }

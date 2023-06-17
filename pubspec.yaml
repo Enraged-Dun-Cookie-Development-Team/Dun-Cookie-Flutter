@@ -37,11 +37,12 @@ dependencies:
   dio: ^4.0.4
   provider: ^6.0.1
   event_bus: ^2.0.0
-  extended_image: ^6.2.1
+  extended_image: ^8.0.2
   fluttertoast: ^8.0.8
   webview_flutter: ^3.0.0
   qr_flutter: ^4.0.0
-  widget_to_image: ^2.0.0
+#  widget_to_image: ^2.0.0
+  widgets_to_image: ^0.0.2
   image_picker: ^0.8.4+4
   image_gallery_saver: ^1.7.1
   share: ^2.0.4
@@ -53,10 +54,11 @@ dependencies:
   animations: ^2.0.2
   animate_do: ^2.1.0
   flutter_local_notifications: ^9.2.0
-  device_info_plus: ^3.2.1
-  package_info_plus: ^1.4.2
+  device_info_plus: ^9.0.2
+  package_info_plus: ^4.0.2
+  android_id: ^0.3.3
   timelines: ^0.1.0
-  vibration: ^1.7.4-nullsafety.0
+  vibration: ^1.7.7
   mobpush_plugin: ^1.2.1
 
 dev_dependencies:
@@ -83,6 +85,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - assets/icon/
     - assets/logo/
     - assets/sources_logo/
     - assets/image/

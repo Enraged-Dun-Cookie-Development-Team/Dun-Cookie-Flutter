@@ -1,5 +1,4 @@
 import 'package:card_swiper/card_swiper.dart';
-import 'package:dun_cookie_flutter/common/tool/time_unit.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -16,8 +15,6 @@ class ToolAnnouncement extends StatefulWidget {
 class _ToolAnnouncementState extends State<ToolAnnouncement> {
   @override
   void initState() {
-    var a = widget.listData
-        .where((x) => TimeUnit.isTimeRange(null, x.starTime, x.overTime)).toList();
     super.initState();
   }
 

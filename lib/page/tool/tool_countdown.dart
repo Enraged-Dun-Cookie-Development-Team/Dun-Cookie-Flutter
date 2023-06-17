@@ -9,8 +9,7 @@ class ToolCountdown extends StatelessWidget {
   ToolCountdown(List<Countdown>? countDown, {Key? key}) {
     if (countDown != null) {
       _countDown = countDown.where((timeDM) {
-        return TimeUnit.isTimeRange(
-            TimeUnit.utcChinaNow(), timeDM.startTime, timeDM.overTime);
+        return TimeUnit.isTimeRange(DateTime.now(), timeDM.startTime, timeDM.overTime);
       }).toList();
     }
   }
@@ -36,8 +35,7 @@ class ToolCountdown extends StatelessWidget {
               itemBuilder: (ctx, index) {
                 var info = _countDown[index];
                 return Container(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
+                  padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -52,8 +50,7 @@ class ToolCountdown extends StatelessWidget {
                               child: RichText(
                                 text: TextSpan(
                                   text: info.text!,
-                                  style: const TextStyle(
-                                      color: DunColors.DunColor),
+                                  style: const TextStyle(color: DunColors.DunColor),
                                 ),
                               ),
                               scrollDirection: Axis.horizontal,

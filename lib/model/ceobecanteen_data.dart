@@ -16,17 +16,10 @@ import 'package:flutter/cupertino.dart';
 class CeobecanteenData with ChangeNotifier {
   CeobecanteenData({this.list, this.btnList, this.dayInfo, this.logo, this.upgrade});
 
-  CeobecanteenData? _data;
-
   setCeobecanteenInfo(CeobecanteenData data) {
-    data.quickJump = QuickJumpList.quickJump;
-    data.sourceInfo = SourceList.sourceList;
-    _data = data;
+    quickJump = QuickJumpList.quickJump;
+    sourceInfo = SourceList.sourceList;
     notifyListeners();
-  }
-
-  CeobecanteenData? get ceobecanteenInfo {
-    return _data;
   }
 
   CeobecanteenData.fromJson(dynamic json) {

@@ -1,4 +1,5 @@
 PODS:
+  - AEINFoundation (3.2.40)
   - device_info_plus (0.0.1):
     - Flutter
   - Flutter (1.0.0)
@@ -11,27 +12,28 @@ PODS:
     - Flutter
   - image_picker_ios (0.0.1):
     - Flutter
-  - mob_pushsdk (3.0.3):
-    - mob_pushsdk/MobPush (= 3.0.3)
-    - MOBFoundation
-  - mob_pushsdk/MobPush (3.0.3):
-    - MOBFoundation
-  - MOBFoundation (3.2.34)
+  - mob_pushsdk_spec2 (0.0.2):
+    - AEINFoundation
+    - mob_pushsdk_spec2/MobPush (= 0.0.2)
+  - mob_pushsdk_spec2/MobPush (0.0.2):
+    - AEINFoundation
   - mobpush_plugin (1.1.0):
     - Flutter
-    - mob_pushsdk
+    - mob_pushsdk_spec2
   - package_info_plus (0.4.5):
     - Flutter
-  - path_provider_ios (0.0.1):
+  - path_provider_foundation (0.0.1):
     - Flutter
+    - FlutterMacOS
   - share (0.0.1):
     - Flutter
-  - shared_preferences_ios (0.0.1):
+  - shared_preferences_foundation (0.0.1):
     - Flutter
+    - FlutterMacOS
   - Toast (4.0.0)
   - url_launcher_ios (0.0.1):
     - Flutter
-  - vibration (1.7.4-nullsafety.0):
+  - vibration (1.7.5):
     - Flutter
   - webview_flutter_wkwebview (0.0.1):
     - Flutter
@@ -45,17 +47,17 @@ DEPENDENCIES:
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - mobpush_plugin (from `.symlinks/plugins/mobpush_plugin/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
-  - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
+  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - share (from `.symlinks/plugins/share/ios`)
-  - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
+  - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - vibration (from `.symlinks/plugins/vibration/ios`)
   - webview_flutter_wkwebview (from `.symlinks/plugins/webview_flutter_wkwebview/ios`)
 
 SPEC REPOS:
   trunk:
-    - mob_pushsdk
-    - MOBFoundation
+    - AEINFoundation
+    - mob_pushsdk_spec2
     - Toast
 
 EXTERNAL SOURCES:
@@ -75,12 +77,12 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/mobpush_plugin/ios"
   package_info_plus:
     :path: ".symlinks/plugins/package_info_plus/ios"
-  path_provider_ios:
-    :path: ".symlinks/plugins/path_provider_ios/ios"
+  path_provider_foundation:
+    :path: ".symlinks/plugins/path_provider_foundation/darwin"
   share:
     :path: ".symlinks/plugins/share/ios"
-  shared_preferences_ios:
-    :path: ".symlinks/plugins/shared_preferences_ios/ios"
+  shared_preferences_foundation:
+    :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
   url_launcher_ios:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
   vibration:
@@ -89,24 +91,24 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/webview_flutter_wkwebview/ios"
 
 SPEC CHECKSUMS:
-  device_info_plus: e5c5da33f982a436e103237c0c85f9031142abed
-  Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
+  AEINFoundation: e046b5fbe75aaf120a54fdc530b1d62d4ce88dfe
+  device_info_plus: 7545d84d8d1b896cb16a4ff98c19f07ec4b298ea
+  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
-  fluttertoast: 16fbe6039d06a763f3533670197d01fc73459037
+  fluttertoast: fafc4fa4d01a6a9e4f772ecd190ffa525e9e2d9c
   image_gallery_saver: 259eab68fb271cfd57d599904f7acdc7832e7ef2
-  image_picker_ios: b786a5dcf033a8336a657191401bfdf12017dabb
-  mob_pushsdk: da91cf00e2bc3ac01b5cbd58a204e0a0d1b4c145
-  MOBFoundation: 778c8aa4760cece62b8b7725c88ca280b4004801
-  mobpush_plugin: cef79d95989d79c71a340fadeecf18bc566c89e0
-  package_info_plus: 6c92f08e1f853dc01228d6f553146438dafcd14e
-  path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
+  image_picker_ios: 4a8aadfbb6dc30ad5141a2ce3832af9214a705b5
+  mob_pushsdk_spec2: 66f9a531c917f994a3070ceca86e6204f582d64d
+  mobpush_plugin: 9eb0209495f85c89f1ae84e446586de463e5d259
+  package_info_plus: fd030dabf36271f146f1f3beacd48f564b0f17f7
+  path_provider_foundation: eaf5b3e458fc0e5fbb9940fb09980e853fe058b8
   share: 0b2c3e82132f5888bccca3351c504d0003b3b410
-  shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
+  shared_preferences_foundation: e2dae3258e06f44cc55f49d42024fd8dd03c590c
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
-  url_launcher_ios: 839c58cdb4279282219f5e248c3321761ff3c4de
-  vibration: 1ec279c4a1a7a646627b54039d812334b3f1114a
+  url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
+  vibration: 7d883d141656a1c1a6d8d238616b2042a51a1241
   webview_flutter_wkwebview: b7e70ef1ddded7e69c796c7390ee74180182971f
 
-PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
+PODFILE CHECKSUM: ef19549a9bc3046e7bb7d2fab4d021637c0c58a3
 
 COCOAPODS: 1.11.3
