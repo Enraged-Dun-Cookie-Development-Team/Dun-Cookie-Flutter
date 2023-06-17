@@ -145,11 +145,11 @@ class _DunSettingState extends State<DunSetting> {
           color: Colors.black26,
         ),
         ListTile(
-          title: Text(Constant.mobRId == null ? '--' : Constant.mobRId!),
+          title: Text(Constant.mobRId ?? '--'),
           subtitle: const Text("推送ID，收不到推送请复制ID联系我们，没有ID也联系我们"),
           trailing: const Icon(Icons.handyman),
           onTap: () {
-            Clipboard.setData(ClipboardData(text: Constant.mobRId));
+            Clipboard.setData(ClipboardData(text: Constant.mobRId ?? '--'));
             DunToast.showSuccess("已复制");
           },
         ),
