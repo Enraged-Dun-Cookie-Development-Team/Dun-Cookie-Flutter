@@ -12,7 +12,7 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share/share.dart';
-import 'package:widget_to_image/widget_to_image.dart';
+// import 'package:widget_to_image/widget_to_image.dart';
 
 class DunWidgetToImage extends StatefulWidget {
   const DunWidgetToImage({Key? key}) : super(key: key);
@@ -113,7 +113,7 @@ class _DunWidgetToImageState extends State<DunWidgetToImage> {
           top: 5,
           child: SizedBox(
             height: 120,
-            child: QrImage(
+            child: QrImageView(
                 data: sourceData.jumpUrl!,
                 version: QrVersions.auto,
                 gapless: false,
@@ -164,9 +164,10 @@ class _DunWidgetToImageState extends State<DunWidgetToImage> {
 
 //  图片转流
   _widgetToUint8List() async {
-    ByteData byteData =
-        await WidgetToImage.repaintBoundaryToImage(_globalKey, pixelRatio: 2.0);
-    Uint8List pngBytes = byteData.buffer.asUint8List();
+    // ByteData byteData =
+    //     await WidgetToImage.repaintBoundaryToImage(_globalKey, pixelRatio: 2.0);
+    // Uint8List pngBytes = byteData.buffer.asUint8List();
+    Uint8List pngBytes = Uint8List(0);
     return pngBytes;
   }
 

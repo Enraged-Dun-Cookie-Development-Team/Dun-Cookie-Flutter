@@ -130,3 +130,37 @@ class BakeryInfo {
     return map;
   }
 }
+
+/// id : "17"
+/// description : ""
+/// daily : {"datetime":"2022-01-16","info":[{"isTrue":"true","forecast":"<签到服饰>“待晴日”- 深靛"},{"isTrue":"true","forecast":"<签到家具>“ 山中弈 ”&“ 亭上雪"}],"content":"<p>第一天<font color=\"#fdbf22\">平<i>稳落</i>地</font>，不<b>愧</b>是无敌的<strike>banana</strike>老师</p><p>不负<u>饼学大厦</u>的名号，我们的<span style=\"background-color: rgb(224, 59, 59);\">未来一片光明</span>！（挥拳）<span style=\"font-size: 14px;\">😀</span></p>"}
+
+BakeryRecentPredictData bakeryRecentPredictDataFromJson(String str) => BakeryRecentPredictData.fromJson(json.decode(str));
+
+String bakeryRecentPredictDataToJson(BakeryRecentPredictData data) => json.encode(data.toJson());
+
+class BakeryRecentPredictData {
+  BakeryRecentPredictData({
+    this.id,
+    this.description,
+    this.daily,
+  });
+
+  BakeryRecentPredictData.fromJson(dynamic json) {
+    id = json['id'];
+    description = json['description'];
+    description = json['daily'];
+  }
+
+  String? id;
+  String? description;
+  BakeryDaily? daily;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['id'] = id;
+    map['description'] = description;
+    map['daily'] = daily;
+    return map;
+  }
+}

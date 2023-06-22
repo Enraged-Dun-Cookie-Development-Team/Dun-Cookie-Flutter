@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/time_unit.dart';
 import 'package:dun_cookie_flutter/main_page/common_ui/dashed_circle_widget.dart';
@@ -5,10 +7,12 @@ import 'package:dun_cookie_flutter/main_page/common_ui/dashed_line_widget.dart';
 import 'package:dun_cookie_flutter/main_page/terminal_page/ui/item_card_left_widget.dart';
 import 'package:dun_cookie_flutter/main_page/terminal_page/ui/set_up_button_widget.dart';
 import 'package:dun_cookie_flutter/main_page/terminal_page/ui/today_rotation.dart';
+import 'package:dun_cookie_flutter/model/cookie_model.dart';
 import 'package:dun_cookie_flutter/model/resource_info.dart';
 import 'package:dun_cookie_flutter/request/tools_api.dart';
 import 'package:flutter/material.dart';
 
+import '../../request/cookie_request.dart';
 import 'ui/prts_title_widget.dart';
 
 class TerminalPageWidget extends StatefulWidget {
@@ -20,17 +24,19 @@ class TerminalPageWidget extends StatefulWidget {
 
 class _TerminalPageWidgetState extends State<TerminalPageWidget> {
   ResourceInfo? resourceInfo;
+  CookieInfoCountModel? cookieInfoCount;
 
   @override
   void initState() {
     super.initState();
     ToolsApi.getResourceInfo().then((value) => setState(() => resourceInfo = value));
+    CookiesApi.getCookieCountList().then((value) => setState(() => cookieInfoCount = value));
   }
 
   @override
   Widget build(BuildContext context) {
     List<Widget> listWidget = [
-      _buildCakeWarehouse(),
+      _buildCakeWarehouse(cookieInfoCount),
       const SizedBox(height: 15),
       _buildResourceWidget(),
     ];
@@ -57,8 +63,8 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> {
   }
 
   Widget _buildTitle() {
-    return Row(
-      children: const [
+    return const Row(
+      children: [
         Expanded(child: PrtsTitleWidget()),
         SizedBox(width: 8),
         SetUpButtonWidget(),
@@ -66,7 +72,7 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> {
     );
   }
 
-  Widget _buildCakeWarehouse() {
+  Widget _buildCakeWarehouse(CookieInfoCountModel? cookieInfoCount) {
     return SizedBox(
       height: 240,
       child: Column(
@@ -110,11 +116,11 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> {
                     top: 9,
                     child: Container(width: 11, height: 22, color: yellow),
                   ),
-                  Positioned(
+                  const Positioned(
                     left: 24,
                     top: 7,
                     child: Column(
-                      children: const [
+                      children: [
                         Text(
                           "已发现饼的数量",
                           style: TextStyle(
@@ -136,58 +142,82 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
-                          children: const [
-                            Text(
-                              "皮肤",
+                          children: [
+                            const Text(
+                              "皮肤：",
                               style: TextStyle(
                                 fontSize: 12,
                                 color: gray_1,
                               ),
                             ),
-                            SizedBox(width: 6),
-                            DashedLineWidget(width: 51),
+                            const SizedBox(width: 6),
+                            Text(
+                              cookieInfoCount == null ? "·············" : (cookieInfoCount!.skinCount == null ? "·············" : cookieInfoCount!.skinCount.toString() + "个"),
+                              style: const TextStyle(
+                                fontSize: 12,
+                                color: gray_1,
+                              ),
+                            ),
                           ],
                         ),
                         const SizedBox(height: 6),
                         Row(
-                          children: const [
-                            Text(
-                              "角色",
+                          children: [
+                            const Text(
+                              "角色：",
                               style: TextStyle(
                                 fontSize: 12,
                                 color: gray_1,
                               ),
                             ),
-                            SizedBox(width: 6),
-                            DashedLineWidget(width: 51),
+                            const SizedBox(width: 6),
+                            Text(
+                              cookieInfoCount == null ? "·············" : (cookieInfoCount!.operatorCount == null ? "·············" : cookieInfoCount!.operatorCount.toString() + "个"),
+                              style: const TextStyle(
+                                fontSize: 12,
+                                color: gray_1,
+                              ),
+                            ),
                           ],
                         ),
                         const SizedBox(height: 6),
                         Row(
-                          children: const [
-                            Text(
-                              "活动",
+                          children: [
+                            const Text(
+                              "活动：",
                               style: TextStyle(
                                 fontSize: 12,
                                 color: gray_1,
                               ),
                             ),
-                            SizedBox(width: 6),
-                            DashedLineWidget(width: 51),
+                            const SizedBox(width: 6),
+                            Text(
+                              cookieInfoCount == null ? "·············" : (cookieInfoCount!.activityCount == null ? "·············" : cookieInfoCount!.activityCount.toString() + "个"),
+                              style: const TextStyle(
+                                fontSize: 12,
+                                color: gray_1,
+                              ),
+                            ),
                           ],
                         ),
                         const SizedBox(height: 6),
                         Row(
-                          children: const [
-                            Text(
-                              "EP",
+                          children: [
+                            const Text(
+                              "EP：",
                               style: TextStyle(
                                 fontSize: 12,
                                 color: gray_1,
                               ),
                             ),
-                            SizedBox(width: 6),
-                            DashedLineWidget(width: 51),
+                            const SizedBox(width: 6),
+                            Text(
+                              cookieInfoCount == null ? "·············" : (cookieInfoCount!.epCount == null ? "·············" : cookieInfoCount!.epCount.toString() + "个"),
+                              style: const TextStyle(
+                                fontSize: 12,
+                                color: gray_1,
+                              ),
+                            ),
                           ],
                         ),
                       ],
@@ -207,9 +237,9 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> {
                             borderWidth: 154,
                             borderColor: yellow,
                           ),
-                          Center(
+                          const Center(
                             child: Column(
-                              children: const [
+                              children: [
                                 SizedBox(height: 33),
                                 Text(
                                   "HAVE FOUND",
@@ -230,10 +260,10 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> {
                               ],
                             ),
                           ),
-                          const Center(
+                          Center(
                             child: Text(
-                              "12345",
-                              style: TextStyle(
+                              cookieInfoCount?.totalCount?.toString() ?? "----",
+                              style: const TextStyle(
                                 fontSize: 44,
                                 color: gray_1,
                               ),

@@ -1,5 +1,5 @@
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
-import 'package:dun_cookie_flutter/honey_cake_workshop/honey_cake_workshop_page.dart';
+// import 'package:dun_cookie_flutter/honey_cake_workshop/honey_cake_workshop_page.dart';
 import 'package:dun_cookie_flutter/manga/manga_list.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
 import 'package:dun_cookie_flutter/model/video_model.dart';
@@ -138,10 +138,10 @@ class _MoreListWidgetState extends State<MoreListWidget> {
 
   Widget _buildHoneyCakeWorkshop() {
     return GestureDetector(
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const HoneyCakeWorkshopPage()),
-      ),
+      // onTap: () => Navigator.push(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => const HoneyCakeWorkshopPage()),
+      // ),
       child: Container(
         margin: const EdgeInsets.fromLTRB(14, 14, 14, 0),
         height: 90,
