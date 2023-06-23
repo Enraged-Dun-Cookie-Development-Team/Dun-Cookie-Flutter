@@ -36,6 +36,7 @@ class DunStyles {
   static const text18 = TextStyle(fontSize: 18);
   static const text12B = TextStyle(fontSize: 12, color: Colors.black45);
   static const text14B = TextStyle(fontSize: 14, color: Colors.black45);
+  static const text16B = TextStyle(fontSize: 16, color: Colors.black45);
 }
 
 class DunTheme {

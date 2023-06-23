@@ -2,7 +2,9 @@ import 'package:animate_do/animate_do.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/manga/mange_list_card.dart';
 import 'package:dun_cookie_flutter/model/source_data.dart';
+import 'package:dun_cookie_flutter/model/terra_comic_model.dart';
 import 'package:dun_cookie_flutter/page/error/main.dart';
+import 'package:dun_cookie_flutter/request/cookie_request.dart';
 import 'package:dun_cookie_flutter/request/list_request.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +17,7 @@ class MangaListPage extends StatefulWidget {
 }
 
 class _MangaListPageState extends State<MangaListPage> {
-  List<SourceData> comicsList = [];
+  List<TerraComicModel> comicsList = [];
 
   //  加载状态 0一切正常 1正在加载 2加载失败
   int loadDataType = 0;
@@ -58,7 +60,7 @@ class _MangaListPageState extends State<MangaListPage> {
     setState(() {
       loadDataType = 1;
     });
-    var data = await ListRequest.canteenCardList(source: {"source": "8"});
+    var data = await CookiesApi.getTerraComicList();
     if (data.isNotEmpty) {
       setState(() {
         comicsList = data;

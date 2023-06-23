@@ -1,3 +1,5 @@
+import 'package:date_format/date_format.dart';
+
 class TimeUnit {
   static String timeDiff({required starTime, isShowSecond = false}) {
     var chinaTime = DateTime.parse(starTime);
@@ -90,5 +92,15 @@ class TimeUnit {
   // 将当地时间转为UTC时区的中国时间
   static toUtcChinaTime(localTime) {
     return localTime.toUtc().add(const Duration(hours: 8));
+  }
+
+  // 时间戳转本地时间
+  static timestampToDate(int timestamp) {
+    return DateTime.fromMillisecondsSinceEpoch(timestamp);
+  }
+
+  // 时间戳转时间格式YYYY-mm-dd
+  static timestampFormatYMD(int timestamp) {
+    return formatDate(timestampToDate(timestamp), [yyyy, '-', mm, '-', dd]);
   }
 }

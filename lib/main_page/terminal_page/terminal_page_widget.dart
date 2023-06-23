@@ -7,7 +7,7 @@ import 'package:dun_cookie_flutter/main_page/common_ui/dashed_line_widget.dart';
 import 'package:dun_cookie_flutter/main_page/terminal_page/ui/item_card_left_widget.dart';
 import 'package:dun_cookie_flutter/main_page/terminal_page/ui/set_up_button_widget.dart';
 import 'package:dun_cookie_flutter/main_page/terminal_page/ui/today_rotation.dart';
-import 'package:dun_cookie_flutter/model/cookie_model.dart';
+import 'package:dun_cookie_flutter/model/cookie_count_model.dart';
 import 'package:dun_cookie_flutter/model/resource_info.dart';
 import 'package:dun_cookie_flutter/request/tools_api.dart';
 import 'package:flutter/material.dart';
