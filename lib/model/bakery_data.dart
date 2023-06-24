@@ -149,7 +149,9 @@ class BakeryRecentPredictModel {
   BakeryRecentPredictModel.fromJson(dynamic json) {
     id = json['id'];
     description = json['description'];
-    description = json['daily'];
+    if (json['daily'] != null) {
+      daily = BakeryDaily.fromJson(json['daily']);
+    }
   }
 
   String? id;

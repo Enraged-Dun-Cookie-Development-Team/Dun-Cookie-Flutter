@@ -198,8 +198,10 @@ class _MoreListWidgetState extends State<MoreListWidget> {
                                 margin: const EdgeInsets.fromLTRB(11, 0, 0, 0),
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  StringSliceUtil.stringSliceAndMore(terraRecentEpisode!.title!+":"+terraRecentEpisode!.episodeShortTitle!, 7),
+                                  terraRecentEpisode!.title!+":"+terraRecentEpisode!.episodeShortTitle!,
                                   style: const TextStyle(fontSize: 12),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                               ),
                               const SizedBox(
@@ -284,7 +286,10 @@ class _MoreListWidgetState extends State<MoreListWidget> {
         margin: const EdgeInsets.fromLTRB(14, 14, 14, 0),
         height: 90,
         decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(5)),
+          borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(9),
+              bottomRight: Radius.circular(9)
+          ),
           color: white,
         ),
         child: Column(
@@ -313,9 +318,71 @@ class _MoreListWidgetState extends State<MoreListWidget> {
             ),
             Expanded(
               child: Container(
-                color: white,
-                child: const Center(
-                  child: Text("罗德岛蜜饼工坊"),
+                child: bakeryRecentPredict != null ? Row(
+                  children: [
+                    const SizedBox(
+                      width: 13,
+                    ),
+                    ClipOval(
+                      child: Image.asset(
+                        "assets/image/bilibili_up_mbgf.webp",
+                        width: 40,
+                      )
+                    ),
+                    const SizedBox(
+                      width: 18,
+                    ),
+                    Text(
+                      bakeryRecentPredict!.daily!.datetime!,
+                      style: const TextStyle(color: yellow, fontSize: 18)
+                    ),
+                    const SizedBox(
+                      width: 11,
+                    ),
+                    Expanded(
+                        child: Column(
+                          children: [
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              "饼学大厦：${bakeryRecentPredict!.id!}",
+                              style: const TextStyle(
+                                  color: yellow,
+                                  fontSize: 14
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 17, 0),
+                              child: const DashedLineHorizontalWidget(width: 10000,),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              bakeryRecentPredict?.daily?.info?[0].forecast ?? "今日无预测内容",
+                              style: const TextStyle(
+                                  color: yellow,
+                                  fontSize: 14
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                        )
+                    )
+                  ],
+                ) : const Center(child: Text("饼学大厦还未有预测")),
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(9),
+                      bottomRight: Radius.circular(9)
+                  ),
+                  color: white,
                 ),
               ),
             ),
