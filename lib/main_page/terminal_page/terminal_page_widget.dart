@@ -129,7 +129,7 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> {
                           ),
                         ),
                         SizedBox(height: 3),
-                        DashedLineWidget(width: 112),
+                        DashedLineHorizontalWidget(width: 112),
                       ],
                     ),
                   ),
@@ -249,7 +249,7 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> {
                                   ),
                                 ),
                                 SizedBox(height: 60),
-                                DashedLineWidget(width: 68),
+                                DashedLineHorizontalWidget(width: 68),
                                 Text(
                                   "CAKE",
                                   style: TextStyle(

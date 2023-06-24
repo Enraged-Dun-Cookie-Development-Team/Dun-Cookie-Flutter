@@ -53,7 +53,7 @@ class MainListItemCard extends StatelessWidget {
         left: 26,
         top: 60,
         right: 40,
-        child: DashedLineWidget(),
+        child: DashedLineHorizontalWidget(),
       )
     ];
   }

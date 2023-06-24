@@ -56,12 +56,27 @@ class BakeryRequest {
     return await HttpClass.get(url, type: requestType);
   }
 
-  static Future<BakeryRecentPredictData> getMansionRecentPredict() async {
+  static Future<BakeryRecentPredictModel> getMansionRecentPredict() async {
     ResponseData response = await _getBakeryMansionRecentPredict();
     if (response.error) {
-      return BakeryRecentPredictData();
+      return BakeryRecentPredictModel();
     } else {
-      return BakeryRecentPredictData.fromJson(response.data['data']);
+      return BakeryRecentPredictModel.fromJson(response.data['data']);
+    }
+  }
+
+  /// 蜜饼工坊最近一次预测
+  static String bakeryRecentPredictUrl = "/canteen/bakery/mansion/recentPredict";
+  static Future<BakeryRecentPredictModel?> getBakeryRecentPredict() async {
+    ResponseData response = await HttpClass.get(bakeryRecentPredictUrl, type: 1);
+    if (response.error) {
+      return BakeryRecentPredictModel();
+    } else {
+      if (response.data['data'] != null) {
+        return BakeryRecentPredictModel.fromJson(response.data['data']);
+      } else {
+        return null;
+      }
     }
   }
 }

@@ -1,4 +1,5 @@
 import 'package:dun_cookie_flutter/model/Terra_comic_episode_model.dart';
+import 'package:dun_cookie_flutter/model/terra_recent_episode_model.dart';
 import 'package:dun_cookie_flutter/model/terra_comic_model.dart';
 
 import '../model/cookie_count_model.dart';
@@ -68,5 +69,20 @@ class CookiesApi {
       }
     }
     return resultAll;
+  }
+
+  /// 泰拉记事社最近漫画章节
+  static String terraNewestEpisodeUrl = "/canteen/cookie/terraComic/newestEpisode";
+  static Future<TerraRecentEpisodeModel?> getTerraNewestEpisode() async {
+    ResponseData response = await HttpClass.get(terraNewestEpisodeUrl, type: 1);
+    if (response.error) {
+      return TerraRecentEpisodeModel();
+    } else {
+      if (response.data['data'] != null) {
+        return TerraRecentEpisodeModel.fromJson(response.data['data']);
+      } else {
+        return null;
+      }
+    }
   }
 }
