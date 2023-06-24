@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:math' as math;
 
+import '../../common/tool/string_slice.dart';
 import '../../model/bakery_data.dart';
 import '../../model/terra_recent_episode_model.dart';
 import '../../request/bakery_request.dart';
@@ -197,7 +198,7 @@ class _MoreListWidgetState extends State<MoreListWidget> {
                                 margin: const EdgeInsets.fromLTRB(11, 0, 0, 0),
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  terraRecentEpisode!.title!,
+                                  StringSliceUtil.stringSliceAndMore(terraRecentEpisode!.title!+":"+terraRecentEpisode!.episodeShortTitle!, 7),
                                   style: const TextStyle(fontSize: 12),
                                 ),
                               ),
