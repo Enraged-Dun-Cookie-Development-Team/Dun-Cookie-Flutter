@@ -154,7 +154,7 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> {
                             const DashedLineHorizontalWidget(width: 50),
                             const SizedBox(width: 6),
                             Text(
-                              cookieInfoCount?.skinCount == null ? "0" : cookieInfoCount!.skinCount.toString(),
+                              cookieInfoCount?.skinCount?.toString() ?? "0",
                               style: const TextStyle(
                                 fontSize: 12,
                                 color: gray_1,
@@ -176,7 +176,7 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> {
                             const DashedLineHorizontalWidget(width: 50),
                             const SizedBox(width: 6),
                             Text(
-                              cookieInfoCount!.operatorCount == null ? "0" : cookieInfoCount!.operatorCount.toString(),
+                              cookieInfoCount?.operatorCount?.toString() ?? "0",
                               style: const TextStyle(
                                 fontSize: 12,
                                 color: gray_1,
@@ -198,7 +198,7 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> {
                             const DashedLineHorizontalWidget(width: 50),
                             const SizedBox(width: 6),
                             Text(
-                              cookieInfoCount!.activityCount == null ? "0" : cookieInfoCount!.activityCount.toString(),
+                              cookieInfoCount?.activityCount?.toString() ?? "0",
                               style: const TextStyle(
                                 fontSize: 12,
                                 color: gray_1,
@@ -220,7 +220,7 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> {
                             const DashedLineHorizontalWidget(width: 59),
                             const SizedBox(width: 6),
                             Text(
-                              cookieInfoCount!.epCount == null ? "0" : cookieInfoCount!.epCount.toString(),
+                              cookieInfoCount?.epCount?.toString() ?? "0",
                               style: const TextStyle(
                                 fontSize: 12,
                                 color: gray_1,
@@ -270,7 +270,7 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> {
                           ),
                           Center(
                             child: Text(
-                              cookieInfoCount?.totalCount?.toString() ?? "----",
+                              cookieInfoCount?.totalCount?.toString() ?? "-----",
                               style: const TextStyle(
                                 fontSize: 44,
                                 color: gray_1,
