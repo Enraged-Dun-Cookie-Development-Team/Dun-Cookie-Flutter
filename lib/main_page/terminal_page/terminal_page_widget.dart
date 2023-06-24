@@ -144,15 +144,17 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> {
                         Row(
                           children: [
                             const Text(
-                              "皮肤：",
+                              "皮肤",
                               style: TextStyle(
                                 fontSize: 12,
                                 color: gray_1,
                               ),
                             ),
                             const SizedBox(width: 6),
+                            const DashedLineHorizontalWidget(width: 50),
+                            const SizedBox(width: 6),
                             Text(
-                              cookieInfoCount == null ? "·············" : (cookieInfoCount!.skinCount == null ? "·············" : cookieInfoCount!.skinCount.toString() + "个"),
+                              cookieInfoCount?.skinCount == null ? "0" : cookieInfoCount!.skinCount.toString(),
                               style: const TextStyle(
                                 fontSize: 12,
                                 color: gray_1,
@@ -164,15 +166,17 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> {
                         Row(
                           children: [
                             const Text(
-                              "角色：",
+                              "角色",
                               style: TextStyle(
                                 fontSize: 12,
                                 color: gray_1,
                               ),
                             ),
                             const SizedBox(width: 6),
+                            const DashedLineHorizontalWidget(width: 50),
+                            const SizedBox(width: 6),
                             Text(
-                              cookieInfoCount == null ? "·············" : (cookieInfoCount!.operatorCount == null ? "·············" : cookieInfoCount!.operatorCount.toString() + "个"),
+                              cookieInfoCount!.operatorCount == null ? "0" : cookieInfoCount!.operatorCount.toString(),
                               style: const TextStyle(
                                 fontSize: 12,
                                 color: gray_1,
@@ -184,15 +188,17 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> {
                         Row(
                           children: [
                             const Text(
-                              "活动：",
+                              "活动",
                               style: TextStyle(
                                 fontSize: 12,
                                 color: gray_1,
                               ),
                             ),
                             const SizedBox(width: 6),
+                            const DashedLineHorizontalWidget(width: 50),
+                            const SizedBox(width: 6),
                             Text(
-                              cookieInfoCount == null ? "·············" : (cookieInfoCount!.activityCount == null ? "·············" : cookieInfoCount!.activityCount.toString() + "个"),
+                              cookieInfoCount!.activityCount == null ? "0" : cookieInfoCount!.activityCount.toString(),
                               style: const TextStyle(
                                 fontSize: 12,
                                 color: gray_1,
@@ -204,15 +210,17 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> {
                         Row(
                           children: [
                             const Text(
-                              "EP：",
+                              "EP",
                               style: TextStyle(
                                 fontSize: 12,
                                 color: gray_1,
                               ),
                             ),
                             const SizedBox(width: 6),
+                            const DashedLineHorizontalWidget(width: 59),
+                            const SizedBox(width: 6),
                             Text(
-                              cookieInfoCount == null ? "·············" : (cookieInfoCount!.epCount == null ? "·············" : cookieInfoCount!.epCount.toString() + "个"),
+                              cookieInfoCount!.epCount == null ? "0" : cookieInfoCount!.epCount.toString(),
                               style: const TextStyle(
                                 fontSize: 12,
                                 color: gray_1,
