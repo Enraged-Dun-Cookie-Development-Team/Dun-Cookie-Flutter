@@ -317,7 +317,9 @@ class _MoreListWidgetState extends State<MoreListWidget> {
                 child: bakeryRecentPredict != null
                     ? Row(
                         children: [
-                          const SizedBox(width: 13),
+                          const SizedBox(
+                            width: 13,
+                          ),
                           ClipOval(
                               child: Image.asset(
                             "assets/image/bilibili_up_mbgf.webp",
@@ -328,32 +330,64 @@ class _MoreListWidgetState extends State<MoreListWidget> {
                           ),
                           Text(bakeryRecentPredict!.daily!.datetime!,
                               style:
-                                  const TextStyle(color: yellow, fontSize: 18)),
+                                  const TextStyle(color: gray_2, fontSize: 18)),
                           const SizedBox(
                             width: 11,
                           ),
                           Expanded(
                               child: Column(
                             children: [
-                              const SizedBox(height: 8),
+                              const SizedBox(
+                                height: 8,
+                              ),
                               Text(
                                 "饼学大厦：${bakeryRecentPredict!.id!}",
                                 style: const TextStyle(
-                                    color: yellow, fontSize: 14),
+                                    color: gray_2, fontSize: 14),
                               ),
-                              const SizedBox(height: 5),
+                              const SizedBox(
+                                height: 5,
+                              ),
                               Container(
                                 padding: const EdgeInsets.fromLTRB(0, 0, 17, 0),
                                 child: const DashedLineHorizontalWidget(
                                   width: 10000,
                                 ),
                               ),
-                              const SizedBox(height: 5),
+                              const SizedBox(
+                                height: 5,
+                              ),
                               Text(
-                                bakeryRecentPredict?.daily?.info?[0].forecast ??
-                                    "今日无预测内容",
-                                style: const TextStyle(
-                                    color: yellow, fontSize: 14),
+                                bakeryRecentPredict?.daily?.info != null &&
+                                        bakeryRecentPredict!
+                                            .daily!.info!.isNotEmpty
+                                    ? bakeryRecentPredict!
+                                        .daily!.info![0].forecast!
+                                    : "今日无预测内容",
+                                style: (() {
+                                  if (bakeryRecentPredict?.daily?.info !=
+                                          null &&
+                                      bakeryRecentPredict!
+                                          .daily!.info!.isNotEmpty &&
+                                      bakeryRecentPredict?.daily?.info?[0]
+                                              .forecastStatus ==
+                                          "true") {
+                                    return const TextStyle(
+                                        color: yellow, fontSize: 14);
+                                  } else if (bakeryRecentPredict?.daily?.info !=
+                                          null &&
+                                      bakeryRecentPredict!
+                                          .daily!.info!.isNotEmpty &&
+                                      bakeryRecentPredict?.daily?.info?[0]
+                                              .forecastStatus ==
+                                          "false") {
+                                    return const TextStyle(
+                                        color: Color(0xFF620703), fontSize: 14);
+                                  } else {
+                                    return const TextStyle(
+                                        color: gray_2, fontSize: 14);
+                                  }
+                                }()),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
