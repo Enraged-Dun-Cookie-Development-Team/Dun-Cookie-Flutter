@@ -334,7 +334,7 @@ class _MoreListWidgetState extends State<MoreListWidget> {
                     ),
                     Text(
                       bakeryRecentPredict!.daily!.datetime!,
-                      style: const TextStyle(color: yellow, fontSize: 18)
+                      style: const TextStyle(color: gray_2, fontSize: 18)
                     ),
                     const SizedBox(
                       width: 11,
@@ -348,7 +348,7 @@ class _MoreListWidgetState extends State<MoreListWidget> {
                             Text(
                               "饼学大厦：${bakeryRecentPredict!.id!}",
                               style: const TextStyle(
-                                  color: yellow,
+                                  color: gray_2,
                                   fontSize: 14
                               ),
                             ),
@@ -364,10 +364,24 @@ class _MoreListWidgetState extends State<MoreListWidget> {
                             ),
                             Text(
                               bakeryRecentPredict?.daily?.info?[0].forecast ?? "今日无预测内容",
-                              style: const TextStyle(
-                                  color: yellow,
-                                  fontSize: 14
-                              ),
+                              style: (() {
+                                if (bakeryRecentPredict?.daily?.info?[0].forecastStatus == "true") {
+                                  return const TextStyle(
+                                      color: yellow,
+                                      fontSize: 14
+                                  );
+                                } else if (bakeryRecentPredict?.daily?.info?[0].forecastStatus == "false") {
+                                  return const TextStyle(
+                                      color: Color(0xFF620703),
+                                      fontSize: 14
+                                  );
+                                } else {
+                                  return const TextStyle(
+                                      color: gray_2,
+                                      fontSize: 14
+                                  );
+                                }
+                              }()),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
