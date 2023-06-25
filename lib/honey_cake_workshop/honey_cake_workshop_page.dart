@@ -1,4 +1,5 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/model/bakery_data.dart';
 import 'package:dun_cookie_flutter/page/bakery/bakery_card.dart';
 import 'package:dun_cookie_flutter/provider/common_event_bus.dart';
@@ -76,11 +77,11 @@ class _HoneyCakeWorkshopPageState extends State<HoneyCakeWorkshopPage> {
 
   @override
   Widget build(BuildContext context) {
-    double paddingTop = MediaQuery.of(context).padding.top;
     return Scaffold(
+      backgroundColor: gray_3,
+      appBar: AppBar(title: const Text("罗德岛蜜饼工坊")),
       body: Column(
         children: [
-          SizedBox(height: paddingTop),
           Expanded(
             child: Selector<CommonProvider, BakeryData>(
                 builder: (ctx, data, child) {
