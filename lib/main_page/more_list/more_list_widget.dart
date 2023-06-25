@@ -363,14 +363,14 @@ class _MoreListWidgetState extends State<MoreListWidget> {
                               height: 5,
                             ),
                             Text(
-                              bakeryRecentPredict?.daily?.info?[0].forecast ?? "今日无预测内容",
+                              bakeryRecentPredict?.daily?.info != null && bakeryRecentPredict!.daily!.info!.isNotEmpty ? bakeryRecentPredict!.daily!.info![0].forecast! : "今日无预测内容",
                               style: (() {
-                                if (bakeryRecentPredict?.daily?.info?[0].forecastStatus == "true") {
+                                if (bakeryRecentPredict?.daily?.info != null && bakeryRecentPredict!.daily!.info!.isNotEmpty && bakeryRecentPredict?.daily?.info?[0].forecastStatus == "true") {
                                   return const TextStyle(
                                       color: yellow,
                                       fontSize: 14
                                   );
-                                } else if (bakeryRecentPredict?.daily?.info?[0].forecastStatus == "false") {
+                                } else if (bakeryRecentPredict?.daily?.info != null && bakeryRecentPredict!.daily!.info!.isNotEmpty && bakeryRecentPredict?.daily?.info?[0].forecastStatus == "false") {
                                   return const TextStyle(
                                       color: Color(0xFF620703),
                                       fontSize: 14
