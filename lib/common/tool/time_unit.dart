@@ -54,19 +54,19 @@ class TimeUnit {
   static numberToWeek(x) {
     switch (x) {
       case 7:
-        return '周天';
+        return '日';
       case 1:
-        return '周一';
+        return '一';
       case 2:
-        return '周二';
+        return '二';
       case 3:
-        return '周三';
+        return '三';
       case 4:
-        return '周四';
+        return '四';
       case 5:
-        return '周五';
+        return '五';
       case 6:
-        return '周六';
+        return '六';
       default:
         return '无效';
     }

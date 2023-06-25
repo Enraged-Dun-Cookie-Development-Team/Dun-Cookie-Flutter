@@ -292,14 +292,16 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> {
 
   // 资源信息
   Widget _buildResourceWidget() {
+    DateTime dt = TimeUnit.utcChinaNow();
+    int weekDay = dt.weekday;
     return SizedBox(
       height: 97,
       child: Row(
         children: [
-          const ItemCardLeftWidget(
+          ItemCardLeftWidget(
             columnText: "WEEK",
             titleText: "星期",
-            centerText: "三",
+            centerText: TimeUnit.numberToWeek(weekDay),
           ),
           const SizedBox(width: 6),
           Expanded(

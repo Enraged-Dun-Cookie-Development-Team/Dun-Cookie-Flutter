@@ -57,7 +57,7 @@ class ItemCardLeftWidget extends StatelessWidget {
           ),
           Positioned(
             left: 60,
-            top: 29,
+            top: 25,
             child: Text(
               centerText,
               style: const TextStyle(
@@ -66,7 +66,7 @@ class ItemCardLeftWidget extends StatelessWidget {
               ),
             ),
           ),
-          const Positioned(
+          isDays ? const Positioned(
             left: 103,
             top: 65,
             child: Text(
@@ -76,7 +76,7 @@ class ItemCardLeftWidget extends StatelessWidget {
                 fontSize: 16,
               ),
             ),
-          ),
+          ) : Container(),
         ],
       ),
     );
