@@ -295,8 +295,18 @@ class _BottomNaacBarState extends State<BottomNavBar> {
       Align(
         alignment: Alignment.bottomCenter,
         child: Container(
-          height: 83,
-          color: white,
+          height: 60,
+          decoration: const BoxDecoration(
+            color: white,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black38,
+                offset: Offset(0.0,0.0),
+                blurRadius: 15.0,
+                spreadRadius: 1.0,
+              )
+            ]
+          ),
           child: Row(
             children: [
               Expanded(
@@ -337,7 +347,7 @@ class _BottomNaacBarState extends State<BottomNavBar> {
           child: Container(
             width: 83,
             height: 83,
-            margin: const EdgeInsets.only(bottom: 20),
+            margin: const EdgeInsets.only(bottom: 5),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(50),
               border: Border.all(

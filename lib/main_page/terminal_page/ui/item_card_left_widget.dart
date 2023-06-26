@@ -5,16 +5,16 @@ class ItemCardLeftWidget extends StatelessWidget {
   final String columnText;
   final String titleText;
   final String centerText;
+  final String? bottomText;
   final Color labelColor;
-  final bool isDays;
 
   const ItemCardLeftWidget(
       {Key? key,
       required this.columnText,
       required this.titleText,
       required this.centerText,
-      this.labelColor = blue,
-      this.isDays = false})
+      this.bottomText,
+      this.labelColor = blue})
       : super(key: key);
 
   @override
@@ -57,7 +57,7 @@ class ItemCardLeftWidget extends StatelessWidget {
           ),
           Positioned(
             left: 60,
-            top: 25,
+            top: 29,
             child: Text(
               centerText,
               style: const TextStyle(
@@ -66,17 +66,19 @@ class ItemCardLeftWidget extends StatelessWidget {
               ),
             ),
           ),
-          isDays ? const Positioned(
-            left: 103,
-            top: 65,
-            child: Text(
-              '天',
-              style: TextStyle(
-                color: gray_1,
-                fontSize: 16,
-              ),
-            ),
-          ) : Container(),
+          bottomText != null ?
+              Container(
+                alignment: Alignment.bottomRight,
+                padding: const EdgeInsets.fromLTRB(0, 0, 10, 8),
+                child: Text(
+                  bottomText!,
+                  style: const TextStyle(
+                    color: gray_1,
+                    fontSize: 16,
+                  ),
+                ),
+              )
+           : Container(),
         ],
       ),
     );

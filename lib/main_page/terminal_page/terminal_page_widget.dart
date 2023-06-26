@@ -40,10 +40,11 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> {
       const SizedBox(height: 15),
       _buildResourceWidget(),
     ];
-    for (Countdown countdown in resourceInfo?.countdown ?? []) {
+    for (var i = 0; i < (resourceInfo?.countdown?.length ?? 0); i++) {
+      Countdown countdown = resourceInfo!.countdown![i];
       if (TimeUnit.isTimeRange(TimeUnit.utcChinaNow(), countdown.startTime, countdown.overTime)) {
         listWidget.add(const SizedBox(height: 15));
-        listWidget.add(_buildActivityWidget(countdown));
+        listWidget.add(_buildActivityWidget(countdown, i));
       }
     }
     return Padding(
@@ -316,17 +317,44 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> {
   }
 
   // 活动信息
-  Widget _buildActivityWidget(Countdown? countdown) {
+  Widget _buildActivityWidget(Countdown countdown, int index) {
+    var timeDiff = TimeUnit.timeDiffUnit(countdown.time!);
     return SizedBox(
       height: 97,
       child: Row(
         children: [
-          const ItemCardLeftWidget(
-            columnText: "EVENT",
-            titleText: "活动剩余",
-            centerText: "16",
-            labelColor: red,
-            isDays: true,
+          ItemCardLeftWidget(
+            columnText: (() {
+              if (countdown?.countdownType == "banner") {
+                return "BANNER";
+              } else if (countdown?.countdownType == "activity") {
+                return "ACTIVITY";
+              } else if (countdown?.countdownType == "live") {
+                return "LIVE";
+              }else {
+                return "EVENT";
+              }
+            }()),
+            titleText: (() {
+              if (countdown?.countdownType == "banner") {
+                return "卡池剩余";
+              } else if (countdown?.countdownType == "activity") {
+                return "活动剩余";
+              } else if (countdown?.countdownType == "live") {
+                return "直播剩余";
+              } else {
+                return "剩余";
+              }
+            }()),
+            centerText: timeDiff.number.toString(),
+            labelColor: (() {
+              if (index % 2 == 0) {
+                return red;
+              } else {
+                return blue;
+              }
+            }()),
+            bottomText: timeDiff.unit,
           ),
           const SizedBox(width: 6),
           Expanded(

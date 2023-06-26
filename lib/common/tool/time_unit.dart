@@ -20,7 +20,7 @@ class TimeUnit {
 // 时间范围判定
   static bool isTimeRange(time, starTime, endTime) {
     time ??= DateTime.now();
-    var _time = stringOrDateTimeToDateTime(time);
+    var _time = changeLocalTime(stringOrDateTimeToDateTime(time));
     var _starTime = stringOrDateTimeToDateTime(starTime);
     var _endTime = stringOrDateTimeToDateTime(endTime);
     if (_time.isAfter(_starTime) && _time.isBefore(_endTime)) {
@@ -103,4 +103,33 @@ class TimeUnit {
   static timestampFormatYMD(int timestamp) {
     return formatDate(timestampToDate(timestamp), [yyyy, '-', mm, '-', dd]);
   }
+
+  static TimeDiffModel timeDiffUnit(String endTime) {
+    var chinaTime = DateTime.parse(endTime);
+    var startDate = changeLocalTime(chinaTime);
+    startDate = toUtcChinaTime(startDate);
+    var endDate = utcChinaNow();
+    int inSeconds = startDate.difference(endDate).inSeconds;
+    var day = (inSeconds / 86400).floor();
+    var hour = (inSeconds / 60 / 60 % 24).floor();
+    var minute = (inSeconds / 60 % 60).floor();
+    if (inSeconds <= 0) {
+      return TimeDiffModel(number: 0, unit: "秒");
+    } else if (day > 0) {
+      return TimeDiffModel(number: day, unit: "天");
+    } else if (hour > 0) {
+      return TimeDiffModel(number: hour, unit: "小时");
+    } else {
+      return TimeDiffModel(number: minute, unit: "分钟");
+    }
+  }
+}
+
+class TimeDiffModel {
+  int number;
+  String unit;
+  TimeDiffModel({
+    required this.number,
+    required this.unit,
+  });
 }
