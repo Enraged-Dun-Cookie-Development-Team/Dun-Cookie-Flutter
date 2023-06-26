@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/time_unit.dart';
 import 'package:dun_cookie_flutter/main_page/common_ui/dashed_circle_widget.dart';
@@ -10,6 +8,7 @@ import 'package:dun_cookie_flutter/main_page/terminal_page/ui/today_rotation.dar
 import 'package:dun_cookie_flutter/model/cookie_count_model.dart';
 import 'package:dun_cookie_flutter/model/resource_info.dart';
 import 'package:dun_cookie_flutter/request/tools_api.dart';
+import 'package:dun_cookie_flutter/set_up/set_up_page.dart';
 import 'package:flutter/material.dart';
 
 import '../../request/cookie_request.dart';
@@ -29,8 +28,10 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> {
   @override
   void initState() {
     super.initState();
-    ToolsApi.getResourceInfo().then((value) => setState(() => resourceInfo = value));
-    CookiesApi.getCookieCountList().then((value) => setState(() => cookieInfoCount = value));
+    ToolsApi.getResourceInfo()
+        .then((value) => setState(() => resourceInfo = value));
+    CookiesApi.getCookieCountList()
+        .then((value) => setState(() => cookieInfoCount = value));
   }
 
   @override
@@ -42,7 +43,8 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> {
     ];
     for (var i = 0; i < (resourceInfo?.countdown?.length ?? 0); i++) {
       Countdown countdown = resourceInfo!.countdown![i];
-      if (TimeUnit.isTimeRange(TimeUnit.utcChinaNow(), countdown.startTime, countdown.overTime)) {
+      if (TimeUnit.isTimeRange(
+          TimeUnit.utcChinaNow(), countdown.startTime, countdown.overTime)) {
         listWidget.add(const SizedBox(height: 15));
         listWidget.add(_buildActivityWidget(countdown, i));
       }
@@ -64,11 +66,17 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> {
   }
 
   Widget _buildTitle() {
-    return const Row(
+    return Row(
       children: [
-        Expanded(child: PrtsTitleWidget()),
-        SizedBox(width: 8),
-        SetUpButtonWidget(),
+        const Expanded(child: PrtsTitleWidget()),
+        const SizedBox(width: 8),
+        GestureDetector(
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const SetUpPage()),
+          ),
+          child: const SetUpButtonWidget(),
+        ),
       ],
     );
   }
@@ -271,7 +279,8 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> {
                           ),
                           Center(
                             child: Text(
-                              cookieInfoCount?.totalCount?.toString() ?? "-----",
+                              cookieInfoCount?.totalCount?.toString() ??
+                                  "-----",
                               style: const TextStyle(
                                 fontSize: 44,
                                 color: gray_1,
@@ -325,22 +334,22 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> {
         children: [
           ItemCardLeftWidget(
             columnText: (() {
-              if (countdown?.countdownType == "banner") {
+              if (countdown.countdownType == "banner") {
                 return "BANNER";
-              } else if (countdown?.countdownType == "activity") {
+              } else if (countdown.countdownType == "activity") {
                 return "ACTIVITY";
-              } else if (countdown?.countdownType == "live") {
+              } else if (countdown.countdownType == "live") {
                 return "LIVE";
-              }else {
+              } else {
                 return "EVENT";
               }
             }()),
             titleText: (() {
-              if (countdown?.countdownType == "banner") {
+              if (countdown.countdownType == "banner") {
                 return "卡池剩余";
-              } else if (countdown?.countdownType == "activity") {
+              } else if (countdown.countdownType == "activity") {
                 return "活动剩余";
-              } else if (countdown?.countdownType == "live") {
+              } else if (countdown.countdownType == "live") {
                 return "直播剩余";
               } else {
                 return "剩余";
@@ -364,8 +373,8 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(countdown?.text ?? ""),
-                    Text(countdown?.remark ?? ""),
+                    Text(countdown.text ?? ""),
+                    Text(countdown.remark ?? ""),
                   ],
                 ),
               ),
