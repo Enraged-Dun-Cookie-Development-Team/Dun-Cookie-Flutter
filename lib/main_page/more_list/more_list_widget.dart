@@ -171,7 +171,6 @@ class _MoreListWidgetState extends State<MoreListWidget> {
                               const SizedBox(width: 13),
                               const DashedLineVerticalWidget(height: 100),
                               const SizedBox(width: 13),
-                              // TODO: 这边如果不用expanded的话, 没办法统一从左开始，不知道为什么
                               Expanded(
                                 child: Column(
                                   children: [
@@ -181,9 +180,7 @@ class _MoreListWidgetState extends State<MoreListWidget> {
                                       const Text("最近更新",
                                           style: TextStyle(fontSize: 12)),
                                     ]),
-                                    const SizedBox(
-                                      height: 8,
-                                    ),
+                                    const SizedBox(height: 8),
                                     Container(
                                       margin: const EdgeInsets.fromLTRB(
                                           11, 0, 0, 0),
@@ -198,17 +195,13 @@ class _MoreListWidgetState extends State<MoreListWidget> {
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                     ),
-                                    const SizedBox(
-                                      height: 8,
-                                    ),
+                                    const SizedBox(height: 8),
                                     Row(children: [
                                       _buildBlueSquare(),
                                       const Text("更新日期",
                                           style: TextStyle(fontSize: 12)),
                                     ]),
-                                    const SizedBox(
-                                      height: 8,
-                                    ),
+                                    const SizedBox(height: 8),
                                     Container(
                                       margin: const EdgeInsets.fromLTRB(
                                           11, 0, 0, 0),
