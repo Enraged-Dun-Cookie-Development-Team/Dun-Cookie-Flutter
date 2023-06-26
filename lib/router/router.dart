@@ -5,7 +5,6 @@ import 'package:dun_cookie_flutter/page/Error/main.dart';
 import 'package:dun_cookie_flutter/page/bakery/main.dart';
 import 'package:dun_cookie_flutter/page/comics/main.dart';
 import 'package:dun_cookie_flutter/page/donate/main.dart';
-import 'package:dun_cookie_flutter/page/home/main.dart';
 import 'package:dun_cookie_flutter/page/main/dun_list.dart';
 import 'package:dun_cookie_flutter/page/main/dun_share.dart';
 import 'package:dun_cookie_flutter/page/setting/main.dart';
@@ -18,8 +17,7 @@ import 'package:flutter/material.dart';
 
 class DunRouter {
   static final Map<String, WidgetBuilder> routes = {
-    "/": (context) => const MainScaffold(),
-    "/home": (context) => const BottomNavBar(),
+    "/": (context) => const BottomNavBar(),
     Bakery.routeName: (context) => const Bakery(),
     DunList.routeName: (context) => const DunList(),
     DunWidgetToImage.routeName: (context) => const DunWidgetToImage(),
@@ -79,7 +77,8 @@ class DunRouter {
       if (settings.arguments != null) {
         // 如果传了参数
         return MaterialPageRoute(
-            builder: (context) => pageBuilder(context, arguments: settings.arguments));
+            builder: (context) =>
+                pageBuilder(context, arguments: settings.arguments));
       } else {
         // 没有传参数
         return MaterialPageRoute(builder: (context) => pageBuilder(context));

@@ -8,7 +8,6 @@ import 'package:dun_cookie_flutter/main_page/more_list/more_list_widget.dart';
 import 'package:dun_cookie_flutter/main_page/terminal_page/terminal_page_widget.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
 import 'package:dun_cookie_flutter/page/Error/main.dart';
-import 'package:dun_cookie_flutter/page/info/open_screen_info.dart';
 import 'package:dun_cookie_flutter/page/update/main.dart';
 import 'package:dun_cookie_flutter/provider/setting_provider.dart';
 import 'package:dun_cookie_flutter/request/info_request.dart';
@@ -64,7 +63,7 @@ class _CeobeCanteenAppState extends State<CeobeCanteenApp> {
       child: MaterialApp(
         title: '小刻食堂',
         routes: DunRouter.routes,
-        initialRoute: "/home",
+        initialRoute: "/",
         onUnknownRoute: (settings) => MaterialPageRoute(
           builder: (context) => DunError(error: "404"),
         ),
@@ -85,40 +84,15 @@ class _BottomNaacBarState extends State<BottomNavBar> {
   /// ===========================先把旧代码copy过来start====================================
   @override
   void initState() {
-    _init();
+    // _init();
     super.initState();
   }
 
-  _init() async {
-    // 初始化设置
-    _readData();
-  }
+  _init() async {}
 
   List<PopupMenuItem<String>> bakeryPopupButtonList = [];
 
   String bakeryPupopButton = "";
-
-  _readData() async {
-    var settingData = Provider.of<SettingProvider>(context, listen: false);
-    await settingData.readAppSetting();
-    Constant.mobRId = settingData.appSetting.rid;
-    bool result = true;
-    if (settingData.appSetting.notOnce!) {
-      result = await Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const OpenScreenInfo()));
-    }
-    if (result != true) return;
-
-    // 打开APP 全部拉一次数据
-    await _getData();
-    // 获取CeobecanteenInfo
-    await _getCeobecanteenInfo();
-    // 判断版本
-    await _checkVersion();
-
-    // 推送变量
-    _initMobPush();
-  }
 
   _initMobPush() async {
     //获取注册的设备id， 这个可以不初始化
@@ -214,7 +188,7 @@ class _BottomNaacBarState extends State<BottomNavBar> {
 
   // 点击导航时显示指定内容
   List<Widget> list = [
-    MoreListWidget(),
+    const MoreListWidget(),
     const MainListWidget(),
     const TerminalPageWidget()
   ];
