@@ -77,4 +77,6 @@ class ResponseData {
   bool error = false;
   dynamic data;
   String msg = "";
+
+  bool isSuccess() => msg == "Operate Success";
 }

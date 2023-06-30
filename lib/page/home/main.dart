@@ -82,15 +82,13 @@ class _MainScaffoldState extends State<MainScaffold> {
     Constant.mobRId = settingData.appSetting.rid;
     bool result = true;
     if (settingData.appSetting.notOnce!) {
-      result = await Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const OpenScreenInfo()));
+      result = await Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const OpenScreenInfo()));
     }
     if (result != true) return;
 
     // 打开APP 全部拉一次数据
     await _getData();
-    // 获取CeobecanteenInfo
-    await _getCeobecanteenInfo();
     // 判断版本
     await _checkVersion();
     // 动态菜单
@@ -122,12 +120,6 @@ class _MainScaffoldState extends State<MainScaffold> {
     // commonProvider.saveListSourceData(commonProvider.sourceData!);
   }
 
-  // 获取info文件
-  _getCeobecanteenInfo() async {
-    CeobecanteenData value = await InfoRequest.getCeobecanteenInfo();
-    Provider.of<CeobecanteenData>(context, listen: false).setCeobecanteenInfo(value);
-  }
-
   // 判断版本号，强制更新&更新日志
   _checkVersion() async {
     String nowVersion = await PackageInfoPlus.getVersion();
@@ -141,11 +133,13 @@ class _MainScaffoldState extends State<MainScaffold> {
       if (lastShowedVersion == null ||
           lastShowedVersion != nowVersion &&
               PackageInfoPlus.isVersionHigher(nowVersion, lastShowedVersion)) {
-        if (nowApp.version?.isNotEmpty == true && nowApp.description?.isNotEmpty == true) {
+        if (nowApp.version?.isNotEmpty == true &&
+            nowApp.description?.isNotEmpty == true) {
           showDialog(
             context: context,
             builder: (_) => Dialog(
-              child: _buildVersionUpdateDialog(nowApp.version, nowApp.description),
+              child:
+                  _buildVersionUpdateDialog(nowApp.version, nowApp.description),
             ),
           );
           sp.setString("update_dialog_showed_version", nowVersion);
@@ -191,7 +185,8 @@ class _MainScaffoldState extends State<MainScaffold> {
 
   _getMenu() async {
     shortcutMenu = [];
-    CeobecanteenData ceobecanteenData = Provider.of<CeobecanteenData>(context, listen: false);
+    CeobecanteenData ceobecanteenData =
+        Provider.of<CeobecanteenData>(context, listen: false);
     var settingProvider = Provider.of<SettingProvider>(context, listen: false);
     var shortcutList = settingProvider.appSetting.shortcutList;
     if (ceobecanteenData.quickJump != null) {
@@ -252,7 +247,8 @@ class _MainScaffoldState extends State<MainScaffold> {
                               bakeryPupopButton = value.toString();
                             });
                             DunToast.showSuccess("获取大厦${value.toString()}");
-                            eventBus.fire(ChangePopupMenuDownButton(checkId: bakeryPupopButton));
+                            eventBus.fire(ChangePopupMenuDownButton(
+                                checkId: bakeryPupopButton));
                           },
                         ),
                       ],
@@ -282,13 +278,15 @@ class _MainScaffoldState extends State<MainScaffold> {
                       ),
                       FutureBuilder<String>(
                           future: PackageInfoPlus.getVersion(),
-                          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                          builder: (BuildContext context,
+                              AsyncSnapshot<String> snapshot) {
                             if (!snapshot.hasData) {
                               return Container();
                             } else {
                               return Text(
                                 '小刻食堂 Beta V' + snapshot.data!,
-                                style: const TextStyle(color: Colors.white, fontSize: 18),
+                                style: const TextStyle(
+                                    color: Colors.white, fontSize: 18),
                               );
                             }
                           }),
@@ -302,7 +300,8 @@ class _MainScaffoldState extends State<MainScaffold> {
                       leading: DunRouter.pagesIcon[index],
                       title: Text(DunRouter.pageTitles[index]),
                       onTap: () {
-                        Provider.of<CommonProvider>(context, listen: false).setRouterIndex(index);
+                        Provider.of<CommonProvider>(context, listen: false)
+                            .setRouterIndex(index);
                         Navigator.pop(context);
                       },
                     ),
@@ -351,7 +350,8 @@ class _MainScaffoldState extends State<MainScaffold> {
                             title: Text(shortcutMenu[index].name),
                             onTap: () {
                               Navigator.pop(context);
-                              OpenAppOrBrowser.openUrl(shortcutMenu[index].url, context);
+                              OpenAppOrBrowser.openUrl(
+                                  shortcutMenu[index].url, context);
                             },
                           ),
                         ),
@@ -363,7 +363,8 @@ class _MainScaffoldState extends State<MainScaffold> {
               onWillPop: () async {
                 // 设置的话 退回到主页
                 if (routerIndex == 3) {
-                  Provider.of<CommonProvider>(context, listen: false).setRouterIndex(0);
+                  Provider.of<CommonProvider>(context, listen: false)
+                      .setRouterIndex(0);
                   return false;
                 } else {
                   return doubleClickBack();

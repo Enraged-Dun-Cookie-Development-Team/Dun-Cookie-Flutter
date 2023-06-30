@@ -7,11 +7,12 @@ import 'package:dun_cookie_flutter/main_page/main_list/main_list_widget.dart';
 import 'package:dun_cookie_flutter/main_page/more_list/more_list_widget.dart';
 import 'package:dun_cookie_flutter/main_page/terminal_page/terminal_page_widget.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
+import 'package:dun_cookie_flutter/model/user_settings.dart';
 import 'package:dun_cookie_flutter/page/Error/main.dart';
+import 'package:dun_cookie_flutter/page/info/open_screen_info.dart';
 import 'package:dun_cookie_flutter/page/update/main.dart';
 import 'package:dun_cookie_flutter/provider/setting_provider.dart';
 import 'package:dun_cookie_flutter/request/info_request.dart';
-import 'package:dun_cookie_flutter/request/list_request.dart';
 import 'package:dun_cookie_flutter/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -84,15 +85,29 @@ class _BottomNaacBarState extends State<BottomNavBar> {
   /// ===========================先把旧代码copy过来start====================================
   @override
   void initState() {
-    // _init();
+    _init();
     super.initState();
   }
 
-  _init() async {}
+  _init() async {
+    // 初始化设置
+    _readData();
+  }
 
-  List<PopupMenuItem<String>> bakeryPopupButtonList = [];
+  _readData() async {
+    var settingData = Provider.of<SettingProvider>(context, listen: false);
+    await settingData.readAppSetting();
+    Constant.mobRId = settingData.appSetting.rid;
+    bool result = true;
+    if (settingData.appSetting.notOnce!) {
+      result = await Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const OpenScreenInfo()));
+    }
+    if (!result) return;
 
-  String bakeryPupopButton = "";
+    // 推送变量
+    _initMobPush();
+  }
 
   _initMobPush() async {
     //获取注册的设备id， 这个可以不初始化
@@ -106,21 +121,9 @@ class _BottomNaacBarState extends State<BottomNavBar> {
     setState(() {
       Constant.mobRId = regId;
     });
-  }
 
-  _getData() async {
-    var settingData = Provider.of<SettingProvider>(context, listen: false);
-    var commonProvider = Provider.of<CommonProvider>(context, listen: false);
-    commonProvider.sourceData = await ListRequest.canteenCardList(
-        source: {"source": settingData.appSetting.checkSource!.join("_")});
-    // commonProvider.saveListSourceData(commonProvider.sourceData!);
-  }
-
-  // 获取info文件
-  _getCeobecanteenInfo() async {
-    CeobecanteenData value = await InfoRequest.getCeobecanteenInfo();
-    Provider.of<CeobecanteenData>(context, listen: false)
-        .setCeobecanteenInfo(value);
+    await InfoRequest.createUser(regId);
+    UserSettings userSettings = await InfoRequest.getUserSettings();
   }
 
   // 判断版本号，强制更新&更新日志
@@ -184,11 +187,30 @@ class _BottomNaacBarState extends State<BottomNavBar> {
     );
   }
 
+  List<QuickJump> shortcutMenu = [];
+
+  _getMenu() async {
+    shortcutMenu = [];
+    var ceobecanteenData = Provider.of<CeobecanteenData>(context);
+    var settingProvider = Provider.of<SettingProvider>(context);
+    var shortcutList = settingProvider.appSetting.shortcutList;
+    if (ceobecanteenData.quickJump != null) {
+      for (var element in ceobecanteenData.quickJump!) {
+        if (shortcutList!.contains(element.name)) {
+          shortcutMenu.add(element);
+        }
+      }
+    }
+    setState(() {
+      shortcutMenu = shortcutMenu;
+    });
+  }
+
   /// ===========================先把旧代码copy过来end====================================
 
   // 点击导航时显示指定内容
   List<Widget> list = [
-    const MoreListWidget(),
+    MoreListWidget(),
     const MainListWidget(),
     const TerminalPageWidget()
   ];
