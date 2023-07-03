@@ -1,5 +1,8 @@
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
+import 'package:dun_cookie_flutter/set_up/set_up_datasource_page.dart';
 import 'package:flutter/material.dart';
+
+import '../provider/setting_provider.dart';
 
 class SetUpPage extends StatefulWidget {
   const SetUpPage({Key? key}) : super(key: key);
@@ -84,37 +87,41 @@ class _SetUpPageState extends State<SetUpPage> {
   }
 
   Widget _buildCakeSource() {
-    return const Row(
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+    return GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(context, SetUpDatasource.routerName);
+        },
+        child: const Row(
           children: [
-            SizedBox(height: 7),
-            Text(
-              "饼来源",
-              style: TextStyle(
-                color: gray_1,
-                fontSize: 16,
-              ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: 7),
+                Text(
+                  "饼来源",
+                  style: TextStyle(
+                    color: gray_1,
+                    fontSize: 16,
+                  ),
+                ),
+                SizedBox(height: 2),
+                Text(
+                  "选择勾选来源，最少选择一个",
+                  style: TextStyle(
+                    color: gray_subtitle,
+                    fontSize: 11,
+                  ),
+                ),
+                SizedBox(height: 7),
+              ],
             ),
-            SizedBox(height: 2),
-            Text(
-              "选择勾选来源，最少选择一个",
-              style: TextStyle(
-                color: gray_subtitle,
-                fontSize: 11,
-              ),
+            Expanded(child: SizedBox()),
+            Icon(
+              Icons.arrow_forward_ios_rounded,
+              size: 15,
             ),
-            SizedBox(height: 7),
           ],
-        ),
-        Expanded(child: SizedBox()),
-        Icon(
-          Icons.arrow_forward_ios_rounded,
-          size: 15,
-        ),
-      ],
-    );
+        ));
   }
 
   Widget _buildThemeColorSwitch() {

@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:dun_cookie_flutter/model/user_settings.dart';
+
 /// checkSource : ["0","1"]
 /// isPreview : false
 /// shortcutList : ["12345","12345"]
@@ -16,7 +18,8 @@ class SettingData {
       this.shortcutList,
       this.notOnce,
       this.rid,
-      this.darkMode});
+      this.darkMode,
+      this.datasourceSetting});
 
   SettingData.fromJson(dynamic json) {
     checkSource =
@@ -27,6 +30,7 @@ class SettingData {
     shortcutList =
         json['shortcutList'] != null ? json['shortcutList'].cast<String>() : [];
     darkMode = json['darkMode'];
+    datasourceSetting = json['datasourceSetting'];
   }
 
   List<String>? checkSource; // 设定的类别
@@ -34,7 +38,8 @@ class SettingData {
   bool? notOnce; //  是否为第一次进入(同意软件协议) true第一次（同意）
   List<String>? shortcutList; // 快捷方式
   String? rid;
-  int? darkMode; //深色模式 定义在 common/constant/main.dart中
+  int? darkMode; //深色模式 定义在 common/consta
+  UserDatasourceSettings? datasourceSetting;// nt/main.dart中
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -44,6 +49,7 @@ class SettingData {
     map['notOnce'] = notOnce;
     map['rid'] = rid;
     map['darkMode'] = darkMode;
+    map['datasourceSetting'] = datasourceSetting;
     return map;
   }
 }

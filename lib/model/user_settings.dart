@@ -1,13 +1,13 @@
 /// datasource_config : ["sunt et est quis","cupidatat elit veniam mollit"]
 /// datasource_comb_id : "7"
 
-class UserSettings {
-  UserSettings({
+class UserDatasourceSettings {
+  UserDatasourceSettings({
     this.datasourceConfig,
     this.datasourceCombId,
   });
 
-  UserSettings.fromJson(dynamic json) {
+  UserDatasourceSettings.fromJson(dynamic json) {
     datasourceConfig = json['datasource_config'] != null
         ? json['datasource_config'].cast<String>()
         : [];

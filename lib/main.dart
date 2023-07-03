@@ -123,7 +123,8 @@ class _BottomNaacBarState extends State<BottomNavBar> {
     });
 
     await InfoRequest.createUser(regId);
-    UserSettings userSettings = await InfoRequest.getUserSettings();
+    UserDatasourceSettings userSettings = await InfoRequest.getUserDatasourceSettings();
+    settingData.saveDatasourceSetting(userSettings);
   }
 
   // 判断版本号，强制更新&更新日志

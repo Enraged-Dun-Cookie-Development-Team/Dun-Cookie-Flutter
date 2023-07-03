@@ -21,17 +21,17 @@ class InfoRequest {
   static const String _createUserUrl = "/canteen/user/createUser";
   static Future<bool> createUser(String? mobId) async {
     ResponseData res =
-        await HttpClass.post(_createUserUrl, data: {"mob_id": mobId}, type: 1);
+        await HttpClass.post(_createUserUrl, params: {"mob_id": mobId}, type: 1);
     return Future.value(res.isSuccess());
   }
 
-  /// 根据mobId获取用户配置
-  static const String _userSettingsUrl = "/canteen/user/datasourceConfig";
-  static Future<UserSettings> getUserSettings() async {
-    ResponseData response = await HttpClass.get(_userSettingsUrl, type: 1);
+  /// 根据mobId获取用户数据源配置
+  static const String _userDatasourceSettingsUrl = "/canteen/user/datasourceConfig";
+  static Future<UserDatasourceSettings> getUserDatasourceSettings() async {
+    ResponseData response = await HttpClass.get(_userDatasourceSettingsUrl, type: 1);
     if (response.data != null) {
-      return UserSettings.fromJson(response.data?["data"]);
+      return UserDatasourceSettings.fromJson(response.data?["data"]);
     }
-    return Future.value(UserSettings());
+    return Future.value(UserDatasourceSettings());
   }
 }

@@ -1,5 +1,6 @@
 import 'package:dun_cookie_flutter/common/persistence/main.dart';
 import 'package:dun_cookie_flutter/model/setting_data.dart';
+import 'package:dun_cookie_flutter/model/user_settings.dart';
 import 'package:flutter/cupertino.dart';
 
 class SettingProvider with ChangeNotifier {
@@ -24,7 +25,8 @@ class SettingProvider with ChangeNotifier {
       shortcutList: [],
       notOnce: true,
       rid: "--",
-      darkMode: 0
+      darkMode: 0,
+      datasourceSetting: null
   );
 
   SettingData get appSetting {
@@ -39,6 +41,11 @@ class SettingProvider with ChangeNotifier {
 
   saveRid(rid) {
     _settingData.rid = rid;
+    saveAppSetting();
+  }
+
+  saveDatasourceSetting(UserDatasourceSettings datasourceSetting) {
+    _settingData.datasourceSetting = datasourceSetting;
     saveAppSetting();
   }
 
