@@ -16,6 +16,7 @@ class HttpClass {
     String url, {
     String method = "get",
     Map<String, dynamic>? params,
+    data,
     int? type,
   }) async {
     final options = Options(method: method);
@@ -34,11 +35,15 @@ class HttpClass {
         break;
     }
     try {
+      dio.options.headers.addAll({
+        "mob-id": Constant.mobRId,
+      });
       dio.interceptors.add(_dInter());
       print("请求 ${dio.options.baseUrl}$url");
       Response response = await dio.request(
         url,
         queryParameters: params,
+        data: data,
         options: options,
       );
       return ResponseData(false, response.data, "");
@@ -66,8 +71,10 @@ class HttpClass {
     return _request(url, params: params, type: type);
   }
 
-  static Future post(String url, {Map<String, dynamic>? params, type = 0}) {
-    return _request(url, method: "post", params: params, type: type);
+  static Future post(String url,
+      {Map<String, dynamic>? params, data, type = 0}) {
+    return _request(url,
+        method: "post", params: params, data: data, type: type);
   }
 }
 
