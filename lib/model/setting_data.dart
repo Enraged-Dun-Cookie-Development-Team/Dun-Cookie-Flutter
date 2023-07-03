@@ -30,7 +30,7 @@ class SettingData {
     shortcutList =
         json['shortcutList'] != null ? json['shortcutList'].cast<String>() : [];
     darkMode = json['darkMode'];
-    datasourceSetting = json['datasourceSetting'];
+    datasourceSetting = json['datasourceSetting'] != null ? UserDatasourceSettings.fromJson(json['datasourceSetting']) : null;
   }
 
   List<String>? checkSource; // 设定的类别

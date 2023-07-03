@@ -1,12 +1,13 @@
 import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
 import 'package:dun_cookie_flutter/provider/setting_provider.dart';
-import 'package:dun_cookie_flutter/model/source_info.dart';
 import 'package:dun_cookie_flutter/provider/common_event_bus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+import '../model/Config_datasource_model.dart';
 import '../model/user_settings.dart';
+import '../request/base_config_request.dart';
 import '../request/info_request.dart';
 
 class SetUpDatasource extends StatefulWidget {
@@ -20,24 +21,30 @@ class SetUpDatasource extends StatefulWidget {
 
 class _SetUpDatasourceState extends State<SetUpDatasource> {
   // 获取所有数据源列表列表
-  List<String> allDatasouces = SourceList.sourceList;
+  List<ConfigDatasourceModel> allDatasouces = [];
   // 获取用户数据源
   List<String> userDatasourceUuids = [];
 
   _getAllDatasource() async {
-
+    var datasources = await BaseConfigRequest.getConfigDatasource();
+    setState(() {
+      allDatasouces = datasources;
+    });
   }
 
   _getUserDatasource(SettingProvider settingData) async {
     UserDatasourceSettings userSettings = await InfoRequest.getUserDatasourceSettings();
     settingData.saveDatasourceSetting(userSettings);
-    userDatasourceUuids = settingData.appSetting.datasourceSetting!.datasourceConfig!;
+    setState(() {
+      userDatasourceUuids = settingData.appSetting.datasourceSetting!.datasourceConfig!;
+    });
   }
 
   @override
-  void initState() async {
+  void initState() {
+    _getAllDatasource();
     var settingData = Provider.of<SettingProvider>(context, listen: false);
-    if (settingData.appSetting.datasourceSetting == null) {
+    if (settingData.appSetting.datasourceSetting?.datasourceConfig == null) {
       _getUserDatasource(settingData);
     } else {
       userDatasourceUuids = settingData.appSetting.datasourceSetting!.datasourceConfig!;
@@ -63,25 +70,26 @@ class _SetUpDatasourceState extends State<SetUpDatasource> {
             // 不知道为什么prev 恒等于 next 等个老师傅解释
               shouldRebuild: (prev, next) => true,
               // shouldRebuild: (prev, next) => prev != next,
-              builder: (ctx, checkSource, child) {
+              builder: (ctx, userDatasourceUuids, child) {
                 return Column(
                   children: List.generate(
-                    list.length,
+                    allDatasouces.length,
                         (index) {
-                      String priority = list[index].priority.toString();
+                      String uuid = allDatasouces[index].uniqueId!;
+                      print(userDatasourceUuids);
                       return ListTile(
-                        title: Text(list[index].title),
+                        title: Text(allDatasouces[index].nickname!),
                         leading: ClipRRect(
                           borderRadius: BorderRadius.circular(4),
-                          child: Image.asset(
-                            list[index].icon,
+                          child: Image.network(
+                            allDatasouces[index].avatar!,
                             width: 30,
                           ),
                         ),
                         trailing: Switch(
-                          value: checkSource.contains(priority),
+                          value: userDatasourceUuids.contains(uuid),
                           onChanged: (value) {
-                            if (!value && checkSource.length == 1) {
+                            if (!value && userDatasourceUuids.length == 1) {
                               DunToast.showError("至少关注一个哦");
                             } else {
                               var settingProvider =
@@ -89,12 +97,10 @@ class _SetUpDatasourceState extends State<SetUpDatasource> {
                                   listen: false);
                               if (value) {
                                 // 添加当前
-                                settingProvider.appSetting.checkSource!
-                                    .add(priority);
+                                userDatasourceUuids.add(uuid);
                               } else {
                                 // 删除当前
-                                settingProvider.appSetting.checkSource!
-                                    .remove(priority);
+                                userDatasourceUuids.remove(uuid);
                               }
                               settingProvider.saveAppSetting();
                             }
@@ -106,7 +112,7 @@ class _SetUpDatasourceState extends State<SetUpDatasource> {
                 );
               },
               selector: (ctx, settingProvider) {
-                return settingProvider.appSetting.checkSource!;
+                return userDatasourceUuids!;
               }),
         ),
       ),

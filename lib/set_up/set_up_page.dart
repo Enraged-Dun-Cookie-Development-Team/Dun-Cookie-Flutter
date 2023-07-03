@@ -41,7 +41,7 @@ class _SetUpPageState extends State<SetUpPage> {
               padding: const EdgeInsets.symmetric(horizontal: 12),
               child: Column(
                 children: [
-                  _buildCakeSource(),
+                  _buildCakeSource(context),
                   _buildLine(),
                   _buildThemeColorSwitch(),
                   _buildLine(),
@@ -86,11 +86,12 @@ class _SetUpPageState extends State<SetUpPage> {
     );
   }
 
-  Widget _buildCakeSource() {
+  Widget _buildCakeSource(BuildContext context) {
     return GestureDetector(
-        onTap: () {
-          Navigator.pushNamed(context, SetUpDatasource.routerName);
-        },
+        onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const SetUpDatasource()),
+        ),
         child: const Row(
           children: [
             Column(

@@ -38,7 +38,6 @@ class HttpClass {
       dio.options.headers.addAll({
         "mob-id": Constant.mobRId,
       });
-      dio.interceptors.add(_dInter());
       print("请求 ${dio.options.baseUrl}$url");
       Response response = await dio.request(
         url,
