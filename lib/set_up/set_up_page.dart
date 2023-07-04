@@ -88,6 +88,7 @@ class _SetUpPageState extends State<SetUpPage> {
 
   Widget _buildCakeSource(BuildContext context) {
     return GestureDetector(
+        // TODO: 只有文字地方点击跳转有效
         onTap: () => Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const SetUpDatasource()),
