@@ -21,7 +21,7 @@ class InfoRequest {
   static const String _createUserUrl = "/canteen/user/createUser";
   static Future<bool> createUser(String? mobId) async {
     ResponseData res =
-        await HttpClass.post(_createUserUrl, params: {"mob_id": mobId}, type: 1);
+        await HttpClass.post(_createUserUrl, data: {"mob_id": mobId}, type: 1);
     return Future.value(res.isSuccess());
   }
 

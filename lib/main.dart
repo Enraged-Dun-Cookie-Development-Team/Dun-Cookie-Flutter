@@ -102,6 +102,8 @@ class _BottomNaacBarState extends State<BottomNavBar> {
     if (settingData.appSetting.notOnce!) {
       result = await Navigator.push(context,
           MaterialPageRoute(builder: (context) => const OpenScreenInfo()));
+
+      print(result);
     }
     if (!result) return;
 
@@ -110,6 +112,7 @@ class _BottomNaacBarState extends State<BottomNavBar> {
   }
 
   _initMobPush() async {
+    print("进入initMobPush");
     //获取注册的设备id， 这个可以不初始化
     Map<String, dynamic> ridMap = await MobpushPlugin.getRegistrationId();
     String regId = ridMap['res'].toString();
@@ -122,7 +125,20 @@ class _BottomNaacBarState extends State<BottomNavBar> {
       Constant.mobRId = regId;
     });
 
-    await InfoRequest.createUser(regId);
+    var success = false;
+    var retry = 0;
+    while (true) {
+      success = await InfoRequest.createUser(regId);
+      if (success) {
+        break;
+      }
+      retry += 1;
+      if (retry > 3) {
+        break;
+      }
+      var duration = const Duration(seconds: 1);
+      sleep(duration);
+    }
     UserDatasourceSettings userSettings = await InfoRequest.getUserDatasourceSettings();
     settingData.saveDatasourceSetting(userSettings);
   }

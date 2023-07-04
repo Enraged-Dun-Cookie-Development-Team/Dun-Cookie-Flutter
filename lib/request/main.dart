@@ -84,5 +84,5 @@ class ResponseData {
   dynamic data;
   String msg = "";
 
-  bool isSuccess() => msg == "Operate Success";
+  bool isSuccess() => msg == "";
 }
