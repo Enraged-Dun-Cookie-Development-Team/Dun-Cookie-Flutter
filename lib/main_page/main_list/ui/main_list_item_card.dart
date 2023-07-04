@@ -1,12 +1,14 @@
+
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
+import 'package:dun_cookie_flutter/common/tool/time_unit.dart';
 import 'package:dun_cookie_flutter/main_page/common_ui/dashed_line_widget.dart';
 import 'package:dun_cookie_flutter/main_page/main_list/ui/images_widget.dart';
 import 'package:dun_cookie_flutter/model/setting_data.dart';
-import 'package:dun_cookie_flutter/model/source_data.dart';
+import 'package:dun_cookie_flutter/model/cookie_main_list_model.dart';
 import 'package:flutter/material.dart';
 
 class MainListItemCard extends StatelessWidget {
-  final SourceData? data;
+  final Cookies? data;
   final SettingData? settingData;
   const MainListItemCard({required this.data, required this.settingData, Key? key})
       : super(key: key);
@@ -62,8 +64,14 @@ class MainListItemCard extends StatelessWidget {
     return Positioned(
       left: 26,
       top: 11,
-      child: Image.asset(
-        data?.sourceInfo?.icon ?? 'assets/icon/main_list_icon.png',
+      child: data?.icon != null ? Image.network(
+        data!.icon!,
+        width: 38,
+        height: 38,
+        fit: BoxFit.cover,
+        alignment: Alignment.topLeft,
+      ) : Image.asset(
+        "assets/image/load/loading.gif",
         width: 38,
         height: 38,
         fit: BoxFit.cover,
@@ -77,7 +85,7 @@ class MainListItemCard extends StatelessWidget {
       left: 70,
       top: 11,
       child: Text(
-        data?.sourceInfo?.title ?? '',
+        data?.datasource ?? '',
         style: const TextStyle(
           fontSize: 15,
           color: yellow,
@@ -87,11 +95,19 @@ class MainListItemCard extends StatelessWidget {
   }
 
   Widget _buildTime() {
+    String timestamp = "";
+    if (data?.timestamp?.platformPrecision == null || data!.timestamp!.platformPrecision! == "none") {
+      timestamp = "";
+    } else if (data!.timestamp!.platformPrecision! == "second" || data!.timestamp!.platformPrecision! == "ms") {
+      timestamp = TimeUnit.timestampFormatYMDHNS(data!.timestamp!.platform!);
+    } else {
+      timestamp = TimeUnit.timestampFormatYMD(data!.timestamp!.platform!);
+    }
     return Positioned(
       left: 70,
       top: 32,
       child: Text(
-        data?.timeForDisplay ?? '',
+        timestamp,
         style: const TextStyle(
           fontSize: 13,
           color: gray_2,
@@ -102,15 +118,15 @@ class MainListItemCard extends StatelessWidget {
 
   Widget _buildContent() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(14, 73, 14, 0),
+      padding: const EdgeInsets.fromLTRB(26, 73, 26, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            data?.content ?? '',
+            data?.defaultCookie?.text ?? '',
             style: const TextStyle(
               color: gray_2,
-              fontSize: 11,
+              fontSize: 12,
             ),
           ),
           ImageWidget(

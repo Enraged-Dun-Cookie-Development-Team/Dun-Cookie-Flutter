@@ -44,6 +44,11 @@ class SettingProvider with ChangeNotifier {
     saveAppSetting();
   }
 
+  saveIsPreview(isPreview) {
+    _settingData.isPreview = isPreview;
+    saveAppSetting();
+  }
+
   saveDatasourceSetting(UserDatasourceSettings datasourceSetting) {
     _settingData.datasourceSetting = datasourceSetting;
     saveAppSetting();

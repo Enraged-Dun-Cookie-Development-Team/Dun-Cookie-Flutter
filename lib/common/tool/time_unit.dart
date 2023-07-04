@@ -103,6 +103,10 @@ class TimeUnit {
   static timestampFormatYMD(int timestamp) {
     return formatDate(timestampToDate(timestamp), [yyyy, '-', mm, '-', dd]);
   }
+  // 时间戳转时间格式YYYY-mm-dd hh:nn:ss
+  static timestampFormatYMDHNS(int timestamp) {
+    return formatDate(timestampToDate(timestamp), [yyyy, '-', mm, '-', dd, " ", hh, ":", nn, ":", ss]);
+  }
 
   static TimeDiffModel timeDiffUnit(String endTime) {
     var chinaTime = DateTime.parse(endTime);

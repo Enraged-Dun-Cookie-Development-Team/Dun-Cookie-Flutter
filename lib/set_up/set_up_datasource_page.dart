@@ -93,9 +93,6 @@ class _SetUpDatasourceState extends State<SetUpDatasource> {
                             if (!value && userDatasourceUuids.length == 1) {
                               DunToast.showError("至少关注一个哦");
                             } else {
-                              var settingProvider =
-                              Provider.of<SettingProvider>(context,
-                                  listen: false);
                               if (value) {
                                 // 添加当前
                                 userDatasourceUuids.add(uuid);
@@ -103,7 +100,6 @@ class _SetUpDatasourceState extends State<SetUpDatasource> {
                                 // 删除当前
                                 userDatasourceUuids.remove(uuid);
                               }
-                              settingProvider.saveAppSetting();
                             }
                           },
                         ),

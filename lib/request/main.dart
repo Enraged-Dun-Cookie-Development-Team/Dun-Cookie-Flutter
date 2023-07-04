@@ -33,6 +33,12 @@ class HttpClass {
       case 2:
         dio.options.baseUrl = HttpConfig.ceobecanteenBaseUrl;
         break;
+      case 3:
+        dio.options.baseUrl = HttpConfig.serveCdnBaseUrl;
+        break;
+      case 4:
+        dio.options.baseUrl = HttpConfig.cdnBaseUrl;
+        break;
     }
     try {
       dio.options.headers.addAll({

@@ -1,6 +1,7 @@
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/set_up/set_up_datasource_page.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../provider/setting_provider.dart';
 
@@ -13,8 +14,11 @@ class SetUpPage extends StatefulWidget {
 }
 
 class _SetUpPageState extends State<SetUpPage> {
+  late SettingProvider settingData;
   @override
   void initState() {
+    settingData =
+      Provider.of<SettingProvider>(context, listen: false);
     super.initState();
   }
 
@@ -187,8 +191,12 @@ class _SetUpPageState extends State<SetUpPage> {
         ),
         const Expanded(child: SizedBox()),
         Switch(
-          value: true,
-          onChanged: (isCheck) {},
+          value: settingData.appSetting.isPreview!,
+          onChanged: (isPreview) {
+            // 这里不知道为什么点不动
+            settingData.appSetting.isPreview = !isPreview;
+            settingData.saveAppSetting();
+          },
         ),
       ],
     );

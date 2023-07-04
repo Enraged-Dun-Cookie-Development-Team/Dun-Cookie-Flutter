@@ -1,36 +1,44 @@
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/view_image_main.dart';
+import 'package:dun_cookie_flutter/model/cookie_main_list_model.dart';
 import 'package:dun_cookie_flutter/model/setting_data.dart';
 import 'package:dun_cookie_flutter/model/source_data.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
 class ImageWidget extends StatelessWidget {
-  final SourceData? data;
+  final Cookies? data;
   final SettingData? settingData;
   const ImageWidget({required this.data, required this.settingData, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    if (data == null || data?.hasImage != true) {
+    if (data == null || data?.defaultCookie?.images == null) {
       return const SizedBox();
     }
     return Container(
       alignment: Alignment.center,
-      child: data?.isMultiImage == true ? _multiImage(context) : _oneImage(context),
-      padding: const EdgeInsets.all(10),
+      child: data!.defaultCookie!.images!.length > 1 ? _multiImage(context) : _oneImage(context),
+      padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
     );
   }
 
   List<String> _checkIsPreview(isOneImage) {
-    if (settingData?.isPreview == true && data?.previewList?.isNotEmpty == true) {
+    if (settingData?.isPreview == true && data?.defaultCookie?.images?.isNotEmpty == true) {
+      List<String> previewList = [];
       // 如果有略缩图且开启了略缩图开关
-      return data!.previewList!;
+      for (var img in data!.defaultCookie!.images!) {
+        previewList.add(img.compressUrl!);
+      }
+      return previewList;
     }
-    if (isOneImage) {
-      return [data!.coverImage!];
-    } else {
-      return data!.imageList!;
+    else {
+      List<String> originList = [];
+      // 如果有略缩图且开启了略缩图开关
+      for (var img in data!.defaultCookie!.images!) {
+        originList.add(img.originUrl!);
+      }
+      return originList;
     }
   }
 
@@ -110,11 +118,15 @@ class ImageWidget extends StatelessWidget {
                 context,
                 PageRouteBuilder(
                   pageBuilder: (ctx, anim1, anim2) {
+                    List<String> imgList = [];
+                    for (var img in data!.defaultCookie!.images!) {
+                      imgList.add(img.originUrl!);
+                    }
                     return FadeTransition(
                       opacity: anim1,
                       child: ViewImageExtendedImage(
-                          text: data!.content!,
-                          imageList: data!.isMultiImage ? data!.imageList : [data!.coverImage!],
+                          text: data!.defaultCookie!.text!,
+                          imageList: imgList,
                           currentIndex: index),
                     );
                   },
@@ -122,7 +134,7 @@ class ImageWidget extends StatelessWidget {
               );
             },
             child: Hero(
-              tag: data!.isMultiImage ? data!.imageList![index] : data!.coverImage!,
+              tag: data!.defaultCookie!.images![index].originUrl!,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(4),
                 child: ExtendedRawImage(

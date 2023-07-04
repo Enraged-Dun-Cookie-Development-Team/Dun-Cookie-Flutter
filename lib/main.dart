@@ -98,12 +98,10 @@ class _BottomNaacBarState extends State<BottomNavBar> {
     var settingData = Provider.of<SettingProvider>(context, listen: false);
     await settingData.readAppSetting();
     Constant.mobRId = settingData.appSetting.rid;
-    bool result = true;
+    bool result = false;
     if (settingData.appSetting.notOnce!) {
       result = await Navigator.push(context,
           MaterialPageRoute(builder: (context) => const OpenScreenInfo()));
-
-      print(result);
     }
     if (!result) return;
 
@@ -112,7 +110,6 @@ class _BottomNaacBarState extends State<BottomNavBar> {
   }
 
   _initMobPush() async {
-    print("进入initMobPush");
     //获取注册的设备id， 这个可以不初始化
     Map<String, dynamic> ridMap = await MobpushPlugin.getRegistrationId();
     String regId = ridMap['res'].toString();
@@ -227,7 +224,7 @@ class _BottomNaacBarState extends State<BottomNavBar> {
 
   // 点击导航时显示指定内容
   List<Widget> list = [
-    MoreListWidget(),
+    const MoreListWidget(),
     const MainListWidget(),
     const TerminalPageWidget()
   ];
