@@ -105,6 +105,8 @@ class _BottomNaacBarState extends State<BottomNavBar> {
     }
     if (!result) return;
 
+    _checkVersion();
+
     // 推送变量
     _initMobPush();
   }
@@ -136,7 +138,8 @@ class _BottomNaacBarState extends State<BottomNavBar> {
       var duration = const Duration(seconds: 1);
       sleep(duration);
     }
-    UserDatasourceSettings userSettings = await InfoRequest.getUserDatasourceSettings();
+    UserDatasourceSettings userSettings =
+        await InfoRequest.getUserDatasourceSettings();
     settingData.saveDatasourceSetting(userSettings);
   }
 
@@ -202,23 +205,6 @@ class _BottomNaacBarState extends State<BottomNavBar> {
   }
 
   List<QuickJump> shortcutMenu = [];
-
-  _getMenu() async {
-    shortcutMenu = [];
-    var ceobecanteenData = Provider.of<CeobecanteenData>(context);
-    var settingProvider = Provider.of<SettingProvider>(context);
-    var shortcutList = settingProvider.appSetting.shortcutList;
-    if (ceobecanteenData.quickJump != null) {
-      for (var element in ceobecanteenData.quickJump!) {
-        if (shortcutList!.contains(element.name)) {
-          shortcutMenu.add(element);
-        }
-      }
-    }
-    setState(() {
-      shortcutMenu = shortcutMenu;
-    });
-  }
 
   /// ===========================先把旧代码copy过来end====================================
 
