@@ -46,6 +46,7 @@ class _MoreListWidgetState extends State<MoreListWidget> {
   @override
   Widget build(BuildContext context) {
     ceobecanteenData = Provider.of<CeobecanteenData>(context);
+    ceobecanteenData?.setCeobecanteenInfo();
     return ListView(
       padding: const EdgeInsets.fromLTRB(0, 14, 0, 150),
       children: [

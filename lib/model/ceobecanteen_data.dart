@@ -16,7 +16,7 @@ import 'package:flutter/cupertino.dart';
 class CeobecanteenData with ChangeNotifier {
   CeobecanteenData({this.list, this.btnList, this.dayInfo, this.logo, this.upgrade});
 
-  setCeobecanteenInfo(CeobecanteenData data) {
+  setCeobecanteenInfo() {
     quickJump = QuickJumpList.quickJump;
     sourceInfo = SourceList.sourceList;
     notifyListeners();
