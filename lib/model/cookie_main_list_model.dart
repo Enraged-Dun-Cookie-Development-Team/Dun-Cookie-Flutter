@@ -18,6 +18,17 @@
 ///         "https://i0.hdslb.com/bfs/new_dyn/5e3d3309568ee22bf184191008eed185161775300.gif",
 ///         "https://i0.hdslb.com/bfs/new_dyn/32577be3c9e37532b2abaa937134af50161775300.gif"
 ///       ]
+///     },
+///     "item": {
+///       "id": "814046214396837987",
+///       "url": "https://t.bilibili.com/814046214396837987",
+///       "type": "DYNAMIC_TYPE_DRAW",
+///       "is_top": false,
+///       "is_retweeted": false
+///     },
+///     "source": {
+///       "type": "weibo:dynamic-by-uid",
+///       "data": "6279793937",
 ///     }
 ///   }
 /// ],
@@ -83,7 +94,6 @@ class DefaultCookie {
   }
 }
 
-///   {
 ///     "datasource": "明日方舟-B站",
 ///     "icon": "http://test-cdn.ceobecanteen.top/data-source-avatar/43adadbd-b2cf-4f79-8f3d-33429e0cb534",
 ///     "timestamp": {
@@ -107,14 +117,19 @@ class DefaultCookie {
 ///       "type": "DYNAMIC_TYPE_DRAW",
 ///       "is_top": false,
 ///       "is_retweeted": false
+///     },
+///     "source": {
+///       "type": "weibo:dynamic-by-uid",
+///       "data": "6279793937",
 ///     }
-///   }
 class Cookies {
   Cookies({
     this.datasource,
     this.icon,
     this.timestamp,
-    this.defaultCookie,});
+    this.defaultCookie,
+    this.item,
+    this.source});
 
   Cookies.fromJson(dynamic json) {
     datasource = json['datasource'];
@@ -123,6 +138,7 @@ class Cookies {
     timestamp = json['timestamp'] != null ? Timestamp.fromJson(json['timestamp']) : null;
     defaultCookie = json['default_cookie'] != null ? DefaultCookie.fromJson(json['default_cookie']) : null;
     item = json['item'] != null ? Item.fromJson(json['item']) : null;
+    source = json['source'] != null ? Source.fromJson(json['source']) : null;
   }
   String? datasource;
   String? icon;
@@ -130,6 +146,7 @@ class Cookies {
   Timestamp? timestamp;
   DefaultCookie? defaultCookie;
   Item? item;
+  Source? source;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -139,16 +156,15 @@ class Cookies {
     map['timestamp'] = timestamp != null ? timestamp!.toJson() : null;
     map['default_cookie'] = defaultCookie != null ? defaultCookie!.toJson() : null;
     map['item'] = item != null ? item!.toJson() : null;
+    map['source'] = item != null ? source!.toJson() : null;
 
     return map;
   }
 }
 
-///     "timestamp": {
-///       "platform": 1668567695000,
-///       "platformPrecision": "second",
-///       "fetcher": 1669529505515
-///     }
+/// "platform": 1668567695000,
+/// "platformPrecision": "second",
+/// "fetcher": 1669529505515
 class Timestamp {
   Timestamp({
     this.platform,
@@ -215,6 +231,28 @@ class Item {
     final map = <String, dynamic>{};
     map['id'] = id;
     map['compress_url'] = url;
+    return map;
+  }
+}
+
+/// "type": "weibo:dynamic-by-uid",
+/// "data": "6279793937",
+class Source {
+  Source({
+    this.type,
+    this.data,});
+
+  Source.fromJson(dynamic json) {
+    type = json['type'];
+    data = json['data'];
+  }
+  String? type;
+  String? data;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['type'] = type;
+    map['data'] = data;
     return map;
   }
 }
