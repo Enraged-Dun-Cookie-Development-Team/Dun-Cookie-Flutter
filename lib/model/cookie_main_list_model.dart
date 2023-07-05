@@ -4,7 +4,6 @@
 ///   {
 ///     "datasource": "明日方舟-B站",
 ///     "icon": "http://test-cdn.ceobecanteen.top/data-source-avatar/43adadbd-b2cf-4f79-8f3d-33429e0cb534",
-///     "jump_url": "https://t.bilibili.com/728981771380588569",
 ///     "timestamp": {
 ///       "platform": 1668567695000,
 ///       "platformPrecision": "second",
@@ -87,7 +86,6 @@ class DefaultCookie {
 ///   {
 ///     "datasource": "明日方舟-B站",
 ///     "icon": "http://test-cdn.ceobecanteen.top/data-source-avatar/43adadbd-b2cf-4f79-8f3d-33429e0cb534",
-///     "jump_url": "https://t.bilibili.com/728981771380588569",
 ///     "timestamp": {
 ///       "platform": 1668567695000,
 ///       "platformPrecision": "second",
@@ -103,12 +101,18 @@ class DefaultCookie {
 ///         "https://i0.hdslb.com/bfs/new_dyn/32577be3c9e37532b2abaa937134af50161775300.gif"
 ///       ]
 ///     }
+///     "item": {
+///       "id": "814046214396837987",
+///       "url": "https://t.bilibili.com/814046214396837987",
+///       "type": "DYNAMIC_TYPE_DRAW",
+///       "is_top": false,
+///       "is_retweeted": false
+///     }
 ///   }
 class Cookies {
   Cookies({
     this.datasource,
     this.icon,
-    this.jumpUrl,
     this.timestamp,
     this.defaultCookie,});
 
@@ -118,12 +122,14 @@ class Cookies {
     jumpUrl = json['jump_url'];
     timestamp = json['timestamp'] != null ? Timestamp.fromJson(json['timestamp']) : null;
     defaultCookie = json['default_cookie'] != null ? DefaultCookie.fromJson(json['default_cookie']) : null;
+    item = json['item'] != null ? Item.fromJson(json['item']) : null;
   }
   String? datasource;
   String? icon;
   String? jumpUrl;
   Timestamp? timestamp;
   DefaultCookie? defaultCookie;
+  Item? item;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -132,6 +138,7 @@ class Cookies {
     map['jump_url'] = jumpUrl;
     map['timestamp'] = timestamp != null ? timestamp!.toJson() : null;
     map['default_cookie'] = defaultCookie != null ? defaultCookie!.toJson() : null;
+    map['item'] = item != null ? item!.toJson() : null;
 
     return map;
   }
@@ -183,6 +190,31 @@ class CookieImage {
     final map = <String, dynamic>{};
     map['origin_url'] = originUrl;
     map['compress_url'] = compressUrl;
+    return map;
+  }
+}
+
+/// "id": "814046214396837987",
+/// "url": "https://t.bilibili.com/814046214396837987",
+/// "type": "DYNAMIC_TYPE_DRAW",
+/// "is_top": false,
+/// "is_retweeted": false
+class Item {
+  Item({
+    this.id,
+    this.url,});
+
+  Item.fromJson(dynamic json) {
+    id = json['id'];
+    url = json['url'];
+  }
+  String? id;
+  String? url;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['id'] = id;
+    map['compress_url'] = url;
     return map;
   }
 }
