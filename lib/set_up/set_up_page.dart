@@ -17,8 +17,7 @@ class _SetUpPageState extends State<SetUpPage> {
   late SettingProvider settingData;
   @override
   void initState() {
-    settingData =
-      Provider.of<SettingProvider>(context, listen: false);
+    settingData = Provider.of<SettingProvider>(context, listen: false);
     super.initState();
   }
 
@@ -92,11 +91,11 @@ class _SetUpPageState extends State<SetUpPage> {
 
   Widget _buildCakeSource(BuildContext context) {
     return GestureDetector(
-        // TODO: 只有文字地方点击跳转有效
+        behavior: HitTestBehavior.opaque,
         onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const SetUpDatasource()),
-        ),
+              context,
+              MaterialPageRoute(builder: (context) => const SetUpDatasource()),
+            ),
         child: const Row(
           children: [
             Column(

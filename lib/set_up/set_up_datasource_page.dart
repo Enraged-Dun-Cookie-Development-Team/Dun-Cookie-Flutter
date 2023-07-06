@@ -1,11 +1,13 @@
+import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
-import 'package:dun_cookie_flutter/provider/setting_provider.dart';
+import 'package:dun_cookie_flutter/model/config_datasource_model.dart';
 import 'package:dun_cookie_flutter/provider/common_event_bus.dart';
+import 'package:dun_cookie_flutter/provider/setting_provider.dart';
+import 'package:dun_cookie_flutter/set_up/set_up_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-import '../model/Config_datasource_model.dart';
 import '../model/user_settings.dart';
 import '../request/base_config_request.dart';
 import '../request/info_request.dart';
@@ -20,6 +22,7 @@ class SetUpDatasource extends StatefulWidget {
 }
 
 class _SetUpDatasourceState extends State<SetUpDatasource> {
+  late SettingProvider settingData;
   // 获取所有数据源列表列表
   List<ConfigDatasourceModel> allDatasouces = [];
   // 获取用户数据源
@@ -33,29 +36,30 @@ class _SetUpDatasourceState extends State<SetUpDatasource> {
   }
 
   _getUserDatasource(SettingProvider settingData) async {
-    UserDatasourceSettings userSettings = await InfoRequest.getUserDatasourceSettings();
+    UserDatasourceSettings userSettings =
+        await InfoRequest.getUserDatasourceSettings();
     settingData.saveDatasourceSetting(userSettings);
     setState(() {
-      userDatasourceUuids = settingData.appSetting.datasourceSetting!.datasourceConfig!;
+      userDatasourceUuids =
+          settingData.appSetting.datasourceSetting!.datasourceConfig!;
     });
   }
 
   @override
   void initState() {
     _getAllDatasource();
-    var settingData = Provider.of<SettingProvider>(context, listen: false);
+    settingData = Provider.of<SettingProvider>(context, listen: false);
     if (settingData.appSetting.datasourceSetting?.datasourceConfig == null) {
       _getUserDatasource(settingData);
-    } else {
-      userDatasourceUuids = settingData.appSetting.datasourceSetting!.datasourceConfig!;
     }
+    userDatasourceUuids
+        .addAll(settingData.appSetting.datasourceSetting!.datasourceConfig!);
     // 获取已保存的数据
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: 退出的时候调用接口上传配置，如果成功就正常退出，失败弹出方框，让用户选择“不保存退出”或“留在此页”
     return WillPopScope(
       onWillPop: () async {
         eventBus.fire(ChangeSourceBus());
@@ -66,51 +70,55 @@ class _SetUpDatasourceState extends State<SetUpDatasource> {
           title: const Text("饼来源"),
           systemOverlayStyle: SystemUiOverlayStyle.light,
         ),
-        body: SingleChildScrollView(
-          child: Selector<SettingProvider, List<String>>(
-            // 不知道为什么prev 恒等于 next 等个老师傅解释
-              shouldRebuild: (prev, next) => true,
-              // shouldRebuild: (prev, next) => prev != next,
-              builder: (ctx, userDatasourceUuids, child) {
-                return Column(
-                  children: List.generate(
-                    allDatasouces.length,
-                        (index) {
-                      String uuid = allDatasouces[index].uniqueId!;
-                      print(userDatasourceUuids);
-                      return ListTile(
-                        title: Text(allDatasouces[index].nickname!),
-                        leading: ClipRRect(
-                          borderRadius: BorderRadius.circular(4),
-                          child: Image.network(
-                            allDatasouces[index].avatar!,
-                            width: 30,
-                          ),
-                        ),
-                        trailing: Switch(
-                          value: userDatasourceUuids.contains(uuid),
-                          onChanged: (value) {
-                            if (!value && userDatasourceUuids.length == 1) {
-                              DunToast.showError("至少关注一个哦");
-                            } else {
-                              if (value) {
-                                // 添加当前
-                                userDatasourceUuids.add(uuid);
-                              } else {
-                                // 删除当前
-                                userDatasourceUuids.remove(uuid);
-                              }
-                            }
-                          },
-                        ),
-                      );
-                    },
-                  ),
-                );
-              },
-              selector: (ctx, settingProvider) {
-                return userDatasourceUuids!;
-              }),
+        body: Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                itemBuilder: (context, index) => SetUpItem(
+                  userSelectedList: userDatasourceUuids,
+                  data: allDatasouces[index],
+                ),
+                itemCount: allDatasouces.length,
+              ),
+            ),
+            _buildSaveButton(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSaveButton() {
+    return GestureDetector(
+      onTap: () async {
+        bool saveSucceed =
+            await BaseConfigRequest.updateDataSource(userDatasourceUuids);
+        if (saveSucceed) {
+          DunToast.showInfo("保存成功");
+          settingData.appSetting.datasourceSetting!.datasourceConfig!.clear();
+          settingData.appSetting.datasourceSetting!.datasourceConfig!
+              .addAll(userDatasourceUuids);
+        } else {
+          DunToast.showInfo("保存失败");
+        }
+      },
+      child: Container(
+        color: white,
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+        child: Container(
+          height: 40,
+          decoration: BoxDecoration(
+            color: Colors.blue,
+            borderRadius: BorderRadius.circular(4),
+          ),
+          child: const Center(
+              child: Text(
+            "保存",
+            style: TextStyle(
+              color: white,
+              fontSize: 16,
+            ),
+          )),
         ),
       ),
     );

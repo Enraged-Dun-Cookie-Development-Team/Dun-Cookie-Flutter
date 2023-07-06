@@ -1,5 +1,4 @@
-
-import '../model/Config_datasource_model.dart';
+import '../model/config_datasource_model.dart';
 import 'main.dart';
 
 class BaseConfigRequest {
@@ -13,7 +12,9 @@ class BaseConfigRequest {
       return _responseDataToConfigDatasourceListData(response);
     }
   }
-  static List<ConfigDatasourceModel> _responseDataToConfigDatasourceListData(ResponseData request) {
+
+  static List<ConfigDatasourceModel> _responseDataToConfigDatasourceListData(
+      ResponseData request) {
     List<ConfigDatasourceModel> resultAll = [];
     if (request.data is Map) {
       Map map = request.data;
@@ -25,5 +26,16 @@ class BaseConfigRequest {
       }
     }
     return resultAll;
+  }
+
+  static const String updateDataSourceUrl =
+      "/canteen/user/updateDatasourceConfig";
+  static Future<bool> updateDataSource(List<String> list) async {
+    ResponseData response = await HttpClass.post(updateDataSourceUrl,
+        data: {
+          "datasource_push": list,
+        },
+        type: 1);
+    return response.isSuccess();
   }
 }
