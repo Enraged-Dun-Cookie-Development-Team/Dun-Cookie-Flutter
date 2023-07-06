@@ -95,9 +95,7 @@ class _SetUpDatasourceState extends State<SetUpDatasource> {
             await BaseConfigRequest.updateDataSource(userDatasourceUuids);
         if (saveSucceed) {
           DunToast.showInfo("保存成功");
-          settingData.appSetting.datasourceSetting!.datasourceConfig!.clear();
-          settingData.appSetting.datasourceSetting!.datasourceConfig!
-              .addAll(userDatasourceUuids);
+          _getUserDatasource(settingData);
         } else {
           DunToast.showInfo("保存失败");
         }
