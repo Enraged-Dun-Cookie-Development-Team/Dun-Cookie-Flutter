@@ -14,7 +14,7 @@ class OpenAppOrBrowser {
         DunToast.showError("没有检测到APP，正在打开网页");
         Navigator.pushNamed(ctx, DunWebView.routeName, arguments: url);
       }
-    } else {
+    } else if (url != "") {
       Navigator.pushNamed(ctx, DunWebView.routeName, arguments: url);
     }
   }

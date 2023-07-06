@@ -7,6 +7,8 @@ import 'package:dun_cookie_flutter/model/setting_data.dart';
 import 'package:dun_cookie_flutter/model/cookie_main_list_model.dart';
 import 'package:flutter/material.dart';
 
+import '../../../common/tool/open_app_or_browser.dart';
+
 class MainListItemCard extends StatelessWidget {
   final Cookies? data;
   final SettingData? settingData;
@@ -15,18 +17,21 @@ class MainListItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return GestureDetector(
+      onTap: () => _goSource(context, data!.source!.type!, data!.item!.id!, data!.item!.url!),
+      child: Container(
       margin: const EdgeInsets.only(top: 12),
       color: white,
-      child: Stack(
-        children: [
-          ..._buildBg(),
-          _buildIcon(),
-          _buildTitle(),
-          _buildTime(),
-          _buildContent(),
-        ],
-      ),
+        child: Stack(
+          children: [
+            ..._buildBg(),
+            _buildIcon(),
+            _buildTitle(),
+            _buildTime(),
+            _buildContent(context),
+          ],
+        ),
+      )
     );
   }
 
@@ -116,25 +121,42 @@ class MainListItemCard extends StatelessWidget {
     );
   }
 
-  Widget _buildContent() {
+  Widget _buildContent(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(26, 73, 26, 0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            data?.defaultCookie?.text ?? '',
-            style: const TextStyle(
-              color: gray_2,
-              fontSize: 12,
+        padding: const EdgeInsets.fromLTRB(26, 73, 26, 0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              data?.defaultCookie?.text ?? '',
+              style: const TextStyle(
+                color: gray_2,
+                fontSize: 12,
+              ),
             ),
-          ),
-          ImageWidget(
-            data: data,
-            settingData: settingData,
-          ),
-        ],
-      ),
-    );
+            ImageWidget(
+              data: data,
+              settingData: settingData,
+            ),
+          ],
+        ),
+      );
+  }
+
+  // 浏览器打开
+  void _goSource(BuildContext context, String type, String id, String url) {
+    String appUrl = "";
+    if (type == "bilibili:dynamic-by-uid") {
+      // bilibili
+      appUrl = "bilibili://following/detail/$id";
+    } else if (type == "weibo:dynamic-by-uid") {
+      // weibo
+      appUrl = "sinaweibo://detail?mblogid=$id";
+    } else if (type == "netease-cloud-music:albums-by-artist") {
+      // 网易云音乐
+      appUrl = "orpheus://album/$id";
+    }
+    // Navigator.pushNamed(context, DunWebView.routeName, arguments: url);
+    OpenAppOrBrowser.openUrl(url, context, appUrlScheme: appUrl);
   }
 }
