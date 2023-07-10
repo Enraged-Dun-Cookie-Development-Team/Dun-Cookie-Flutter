@@ -94,14 +94,17 @@ class _SetUpDatasourceState extends State<SetUpDatasource> {
     Platform("netease-cloud-music", "网易云音乐"),
     Platform("arknights-game", "明日方舟游戏内"),
     Platform("arknights-website", "明日方舟网站"),
+    Platform("", "其他"),
   ];
 
   Widget _buildBody() {
+    Set<String?> isInit = {};
     List<Widget> body = [];
     for (var platform in platformList) {
       List<Widget> list = [];
       for (var model in allDatasouces) {
-        if (model.platform == platform.id) {
+        if (isInit.contains(model.uniqueId)) continue;
+        if (model.platform == platform.id || platform.name == "其他") {
           if (list.isNotEmpty) {
             list.add(const Divider(
               height: 1,
@@ -113,6 +116,7 @@ class _SetUpDatasourceState extends State<SetUpDatasource> {
             userSelectedList: userDatasourceUuids,
             data: model,
           ));
+          isInit.add(model.uniqueId);
         }
       }
       if (list.isNotEmpty) {
@@ -149,6 +153,7 @@ class _SetUpDatasourceState extends State<SetUpDatasource> {
         ));
       }
     }
+
     body.add(const SizedBox(height: 10));
     return Column(children: body);
   }
