@@ -3,6 +3,7 @@ import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
 import 'package:dun_cookie_flutter/model/config_datasource_model.dart';
 import 'package:dun_cookie_flutter/provider/common_event_bus.dart';
 import 'package:dun_cookie_flutter/provider/setting_provider.dart';
+import 'package:dun_cookie_flutter/set_up/platform.dart';
 import 'package:dun_cookie_flutter/set_up/set_up_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -73,12 +74,11 @@ class _SetUpDatasourceState extends State<SetUpDatasource> {
         body: Column(
           children: [
             Expanded(
-              child: ListView.builder(
-                itemBuilder: (context, index) => SetUpItem(
-                  userSelectedList: userDatasourceUuids,
-                  data: allDatasouces[index],
+              child: Container(
+                color: gray_3,
+                child: SingleChildScrollView(
+                  child: _buildBody(),
                 ),
-                itemCount: allDatasouces.length,
               ),
             ),
             _buildSaveButton(),
@@ -86,6 +86,71 @@ class _SetUpDatasourceState extends State<SetUpDatasource> {
         ),
       ),
     );
+  }
+
+  static List<Platform> platformList = [
+    Platform("bilibili", "B站"),
+    Platform("weibo", "微博"),
+    Platform("netease-cloud-music", "网易云音乐"),
+    Platform("arknights-game", "明日方舟游戏内"),
+    Platform("arknights-website", "明日方舟网站"),
+  ];
+
+  Widget _buildBody() {
+    List<Widget> body = [];
+    for (var platform in platformList) {
+      List<Widget> list = [];
+      for (var model in allDatasouces) {
+        if (model.platform == platform.id) {
+          if (list.isNotEmpty) {
+            list.add(const Divider(
+              height: 1,
+              indent: 7,
+              endIndent: 7,
+            ));
+          }
+          list.add(SetUpItem(
+            userSelectedList: userDatasourceUuids,
+            data: model,
+          ));
+        }
+      }
+      if (list.isNotEmpty) {
+        body.add(Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(13, 10, 0, 10),
+              child: Text(
+                platform.name,
+                style: const TextStyle(
+                  color: Color(0xFF969696),
+                  fontSize: 14,
+                ),
+              ),
+            ),
+            Container(
+              margin: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+              decoration: const BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Color(0x29000000),
+                    offset: Offset(0, 3),
+                    blurRadius: 3,
+                  ),
+                ],
+                color: white,
+              ),
+              child: Column(
+                children: list,
+              ),
+            ),
+          ],
+        ));
+      }
+    }
+    body.add(const SizedBox(height: 10));
+    return Column(children: body);
   }
 
   Widget _buildSaveButton() {
