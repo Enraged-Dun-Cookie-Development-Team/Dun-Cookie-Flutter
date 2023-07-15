@@ -46,7 +46,7 @@ class _SetUpPageState extends State<SetUpPage> {
                 children: [
                   _buildCakeSource(context),
                   _buildLine(),
-                  _buildThemeColorSwitch(),
+                  // _buildThemeColorSwitch(),
                   _buildLine(),
                   _buildSaveFlow(),
                 ],
@@ -192,9 +192,9 @@ class _SetUpPageState extends State<SetUpPage> {
         Switch(
           value: settingData.appSetting.isPreview!,
           onChanged: (isPreview) {
-            // 这里不知道为什么点不动
-            settingData.appSetting.isPreview = !isPreview;
+            settingData.appSetting.isPreview = isPreview;
             settingData.saveAppSetting();
+            setState(() {});
           },
         ),
       ],

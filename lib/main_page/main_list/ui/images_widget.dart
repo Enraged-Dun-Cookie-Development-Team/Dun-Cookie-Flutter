@@ -25,11 +25,7 @@ class ImageWidget extends StatelessWidget {
 
   List<String> _checkIsPreview(isOneImage) {
     if (settingData?.isPreview == true && data?.defaultCookie?.images?.isNotEmpty == true) {
-      List<String> previewList = [];
-      // 如果有略缩图且开启了略缩图开关
-      for (var img in data!.defaultCookie!.images!) {
-        previewList.add(img.compressUrl!);
-      }
+      List<String> previewList = _getPreviewList(data!);
       return previewList;
     }
     else {
@@ -40,6 +36,27 @@ class ImageWidget extends StatelessWidget {
       }
       return originList;
     }
+  }
+
+  /// 适配各端获取预览图
+  List<String> _getPreviewList(Cookies data) {
+    List<String> previewList = [];
+    for (var img in data.defaultCookie!.images!) {
+      if (img.compressUrl != null) {
+        previewList.add(img.compressUrl!);
+      } else if (data.source!.type! == "bilibili:dynamic-by-uid") {
+        if (data.defaultCookie!.images!.length == 1) {
+          previewList.add(img.originUrl!+"@573w_358h_1e_1c_!web-dynamic.webp");
+        } else {
+          previewList.add(img.originUrl!+"@416w_416h_1e_1c_!web-dynamic.webp");
+        }
+      } else if (data.source!.type! == "netease-cloud-music:albums-by-artist") {
+        previewList.add(img.originUrl!+"?param=416x416");
+      } else {
+        previewList.add(img.originUrl!);
+      }
+    }
+    return previewList;
   }
 
   /// 一张图
@@ -137,13 +154,17 @@ class ImageWidget extends StatelessWidget {
               tag: data!.defaultCookie!.images![index].originUrl!,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(4),
-                child: ExtendedRawImage(
-                  height: 300,
-                  width: double.infinity,
-                  alignment: Alignment.topCenter,
-                  fit: BoxFit.cover,
-                  image: state.extendedImageInfo?.image,
-                ),
+                child: Container(
+                  constraints: const BoxConstraints(maxHeight: 400),
+                  child: ExtendedRawImage(
+                    // height: 300,
+                    width: double.infinity,
+                    alignment: Alignment.topCenter,
+                    fit: BoxFit.cover,
+                    image: state.extendedImageInfo?.image,
+                  ),
+                )
+
               ),
             ),
           );
