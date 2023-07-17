@@ -254,13 +254,11 @@ class _BottomNaacBarState extends State<BottomNavBar> {
               Expanded(
                 child: GestureDetector(
                   onTap: () => setState(() => _currentController = 0),
-                  child: Expanded(
-                    child: Image.asset(
-                      'assets/icon/more_list_icon.png',
-                      width: 30,
-                      height: 30,
-                      color: _currentController == 0 ? yellow : gray_2,
-                    ),
+                  child: Image.asset(
+                    'assets/icon/more_list_icon.png',
+                    width: 30,
+                    height: 30,
+                    color: _currentController == 0 ? yellow : gray_2,
                   ),
                 ),
               ),
@@ -268,13 +266,11 @@ class _BottomNaacBarState extends State<BottomNavBar> {
               Expanded(
                 child: GestureDetector(
                   onTap: () => setState(() => _currentController = 2),
-                  child: Expanded(
-                    child: Image.asset(
-                      'assets/icon/terminal_page_icon.png',
-                      width: 30,
-                      height: 30,
-                      color: _currentController == 2 ? yellow : gray_2,
-                    ),
+                  child: Image.asset(
+                    'assets/icon/terminal_page_icon.png',
+                    width: 30,
+                    height: 30,
+                    color: _currentController == 2 ? yellow : gray_2,
                   ),
                 ),
               ),
