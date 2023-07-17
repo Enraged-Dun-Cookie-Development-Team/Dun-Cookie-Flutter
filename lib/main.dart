@@ -8,7 +8,7 @@ import 'package:dun_cookie_flutter/main_page/more_list/more_list_widget.dart';
 import 'package:dun_cookie_flutter/main_page/terminal_page/terminal_page_widget.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
 import 'package:dun_cookie_flutter/model/user_settings.dart';
-import 'package:dun_cookie_flutter/page/Error/main.dart';
+import 'package:dun_cookie_flutter/page/error/main.dart';
 import 'package:dun_cookie_flutter/page/info/open_screen_info.dart';
 import 'package:dun_cookie_flutter/page/update/main.dart';
 import 'package:dun_cookie_flutter/provider/setting_provider.dart';
