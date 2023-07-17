@@ -4,6 +4,7 @@ import 'package:dun_cookie_flutter/main_page/common_ui/container_with_label.dart
 import 'package:dun_cookie_flutter/main_page/main_list/ui/main_list_item_card.dart';
 import 'package:dun_cookie_flutter/model/source_data.dart';
 import 'package:dun_cookie_flutter/request/cdn_datasource_request.dart';
+import 'package:dun_cookie_flutter/request/cookie_request.dart';
 import 'package:dun_cookie_flutter/request/list_request.dart';
 import 'package:dun_cookie_flutter/request/serve_cdn_cookie_request.dart';
 import 'package:flutter/cupertino.dart';
@@ -26,9 +27,15 @@ class _MainListWidgetState extends State<MainListWidget> {
   SettingData? settingData;
   List<Cookies>? data;
   String? nextPageId;
+  List<Cookies>? tempData;
+  String? tempNextPageId;
   NewestCookieIdModel? newestCookieId;
+  bool searchStatue = false; // 搜索状态
+  bool offstage = false; // 搜索清空显示
   /// 滚动控制器
   ScrollController _scrollController = ScrollController();
+  ///监听TextField内容变化
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
@@ -45,14 +52,29 @@ class _MainListWidgetState extends State<MainListWidget> {
         _loadMore();
       }
     });
+    _searchController.addListener(() {
+      bool isNotEmpty = _searchController.text.isNotEmpty;
+      offstage = !isNotEmpty;
+      if (!isNotEmpty && searchStatue) {
+        _cancelSearch();
+      }
+    });
     super.initState();
   }
 
   /// 上拉加载更多
   _loadMore() async {
-    var cookiesResp = await ServeCdnCookieApi.getCdnCookieMainList(settingData!.datasourceSetting!.datasourceCombId!, nextPageId!, newestCookieId!.updateCookieId);
-    data!.addAll(cookiesResp.cookies!);
-    nextPageId = cookiesResp.nextPageId;
+    if (searchStatue) {
+      var searchText = _searchController.text;
+      var cookiesResp = await CookiesApi.getCookieSearchList(settingData!.datasourceSetting!.datasourceCombId!, searchText, nextPageId!);
+      data!.addAll(cookiesResp.cookies!);
+      nextPageId = cookiesResp.nextPageId;
+    } else {
+      var cookiesResp = await ServeCdnCookieApi.getCdnCookieMainList(settingData!.datasourceSetting!.datasourceCombId!, nextPageId!, newestCookieId!.updateCookieId);
+      data!.addAll(cookiesResp.cookies!);
+      nextPageId = cookiesResp.nextPageId;
+    }
+
 
     setState(() {
     });
@@ -68,20 +90,67 @@ class _MainListWidgetState extends State<MainListWidget> {
   }
 
   /// 下拉刷新回调方法
-  Future<Null> _onRefresh() async {
+  Future<void> _onRefresh() async {
     var newestIdResp = await CdnCookieApi.getCdnNewestCookieId(settingData!.datasourceSetting!.datasourceCombId!);
     if (newestIdResp.updateCookieId == newestCookieId?.updateCookieId && newestIdResp.cookieId == newestCookieId?.cookieId) {
-      return null;
+      return;
     }
     newestCookieId = newestIdResp;
-    var cookiesResp = await ServeCdnCookieApi.getCdnCookieMainList(settingData!.datasourceSetting!.datasourceCombId!, newestCookieId!.cookieId!, newestCookieId!.updateCookieId);
-    data = cookiesResp.cookies;
-    nextPageId = cookiesResp.nextPageId;
+    if (searchStatue) {
+      var searchText = _searchController.text;
+      var cookiesResp = await CookiesApi.getCookieSearchList(settingData!.datasourceSetting!.datasourceCombId!, searchText, null);
+      data = cookiesResp.cookies;
+      nextPageId = cookiesResp.nextPageId;
+      var cookiesMainResp = await ServeCdnCookieApi.getCdnCookieMainList(settingData!.datasourceSetting!.datasourceCombId!, newestCookieId!.cookieId!, newestCookieId!.updateCookieId);
+      tempData = cookiesMainResp.cookies;
+      tempNextPageId = cookiesMainResp.nextPageId;
+    } else {
+      var cookiesResp = await ServeCdnCookieApi.getCdnCookieMainList(settingData!.datasourceSetting!.datasourceCombId!, newestCookieId!.cookieId!, newestCookieId!.updateCookieId);
+      data = cookiesResp.cookies;
+      nextPageId = cookiesResp.nextPageId;
+    }
+
 
     /// 更新状态
     setState(() {
     });
-    return null;
+    return;
+  }
+
+  // 处理搜索请求
+  void _handleSearch() async {
+    var searchText = _searchController.text;
+    if (searchText == "") {
+      return;
+    }
+    var cookiesResp = await CookiesApi.getCookieSearchList(settingData!.datasourceSetting!.datasourceCombId!, searchText, null);
+    /// 当前不在搜索状态，将主列表值放入临时
+    if (!searchStatue) {
+      tempData = data;
+      tempNextPageId = nextPageId;
+    }
+    data = cookiesResp.cookies;
+    nextPageId = cookiesResp.nextPageId;
+    searchStatue = true;
+
+    _scrollController.animateTo(0, duration: const Duration(milliseconds: 1), curve: Curves.linear);
+    /// 更新状态
+    setState(() {
+    });
+  }
+
+  void _cancelSearch() {
+    data = tempData;
+    nextPageId = tempNextPageId;
+    searchStatue = false;
+    tempData = [];
+    tempNextPageId = null;
+
+    _scrollController.animateTo(0, duration: const Duration(milliseconds: 1), curve: Curves.linear);
+
+    /// 更新状态
+    setState(() {
+    });
   }
 
   @override
@@ -99,18 +168,49 @@ class _MainListWidgetState extends State<MainListWidget> {
                 padding: EdgeInsets.zero,
                 shrinkWrap: true,
                 itemBuilder: (BuildContext context, int index) {
-                  return MainListItemCard(
+                  return index == data!.length? (nextPageId == null ? const Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 10, bottom: 30),
+                      child: Text(
+                        "已经没有饼了，小刻很满足！！！",
+                        style: TextStyle(color: gray_1),
+                      ),
+                    ),
+                  ) : const Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 10, bottom: 30),
+                      child: Text(
+                        "精美的加载动画",
+                        style: TextStyle(color: gray_1),
+                      ),
+                    ),
+                  )) : MainListItemCard(
                     data: data![index],
                     settingData: settingData,
                   );
                 },
-                itemCount: data!.length,
-              ) : Center(
+                itemCount: data!.length + 1,
+
+              ): Center(
                 child: Image.asset("assets/image/load/loading.gif"),
               ),
             )
           ),
+          Container(
+            height: 50,
+          )
         ],
+      ),
+    );
+  }
+  Widget buildSliverList([int count = 5]) {
+    return SliverFixedExtentList(
+      itemExtent: 50,
+      delegate: SliverChildBuilderDelegate(
+            (context, index) {
+          return ListTile(title: Text('$index'));
+        },
+        childCount: count,
       ),
     );
   }
@@ -136,11 +236,57 @@ class _MainListWidgetState extends State<MainListWidget> {
                 Expanded(
                   child: Container(
                     color: white,
+                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    child: TextField(
+                      controller: _searchController,
+                      decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          hintText: '搜索：皮肤',
+                         ),
+                      maxLines: 1,
+                      textInputAction: TextInputAction.search,
+                      onSubmitted: (_) {
+                        _handleSearch();
+                      },
+                    ),
+
+                  ),
+                ),
+                Offstage(
+                  offstage: offstage,
+                  child: GestureDetector(
+                    onTap: () => {_searchController.clear()},
+                    child: Container(
+                      color: white,
+                      height: 42,
+                      child: Image.asset(
+                        "assets/icon/close.png",
+                        width: 16,
+                        height: 16,
+                      ),
+                    )
                   ),
                 ),
                 Container(
+                  width: 5,
+                  color: white,
+                ),
+                Container(
                   width: 44,
+                  height: 42,
                   color: gray_1,
+                  child: GestureDetector(
+                    onTap: () => {
+                      _handleSearch()
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      child: Image.asset(
+                        "assets/icon/search.png",
+                        color: yellow,
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),

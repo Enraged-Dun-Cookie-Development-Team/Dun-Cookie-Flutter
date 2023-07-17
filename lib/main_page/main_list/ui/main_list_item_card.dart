@@ -5,6 +5,7 @@ import 'package:dun_cookie_flutter/main_page/common_ui/dashed_line_widget.dart';
 import 'package:dun_cookie_flutter/main_page/main_list/ui/images_widget.dart';
 import 'package:dun_cookie_flutter/model/setting_data.dart';
 import 'package:dun_cookie_flutter/model/cookie_main_list_model.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../common/tool/open_app_or_browser.dart';
@@ -69,8 +70,13 @@ class MainListItemCard extends StatelessWidget {
     return Positioned(
       left: 26,
       top: 11,
-      child: data?.icon != null ? Image.network(
+      child: data?.icon != null ? ExtendedImage.network(
         data!.icon!,
+        handleLoadingProgress: true,
+        clearMemoryCacheIfFailed: true,
+        clearMemoryCacheWhenDispose: false,
+        mode: ExtendedImageMode.gesture,
+        cache: true,
         width: 38,
         height: 38,
         fit: BoxFit.cover,
