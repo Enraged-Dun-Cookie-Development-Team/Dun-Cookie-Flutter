@@ -11,6 +11,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../common/tool/debounce_throttle.dart';
 import '../../model/cookie_main_list_model.dart';
 import '../../model/newest_cookie_id_model.dart';
 import '../../model/setting_data.dart';
@@ -31,7 +32,7 @@ class _MainListWidgetState extends State<MainListWidget> {
   String? tempNextPageId;
   NewestCookieIdModel? newestCookieId;
   bool searchStatue = false; // 搜索状态
-  bool offstage = false; // 搜索清空显示
+  bool offstage = true; // 隐藏搜索清空
   /// 滚动控制器
   ScrollController _scrollController = ScrollController();
   ///监听TextField内容变化
@@ -42,22 +43,34 @@ class _MainListWidgetState extends State<MainListWidget> {
     settingData = Provider.of<SettingProvider>(context, listen: false).appSetting;
     fetchData();
     /// 为滚动控制器添加监听
+
     _scrollController.addListener(() {
       /// _scrollController.position.pixels 是当前像素点位置
       /// _scrollController.position.maxScrollExtent 当前列表最大可滚动位置
       /// 如果二者相等 , 那么就触发上拉加载更多机制
-      if (nextPageId != null && _scrollController.position.pixels ==
-          _scrollController.position.maxScrollExtent) {
-        /// 触发上拉加载更多机制
-        _loadMore();
-      }
+      var debounce = EventFilter.debounce("main_list_page", (){
+        if (nextPageId != null && _scrollController.position.maxScrollExtent - _scrollController.position.pixels < 40
+            ) {
+          /// 触发上拉加载更多机制
+          _loadMore();
+        }
+      },
+      duration: const Duration(milliseconds: 200));
+      debounce();
     });
     _searchController.addListener(() {
-      bool isNotEmpty = _searchController.text.isNotEmpty;
-      offstage = !isNotEmpty;
-      if (!isNotEmpty && searchStatue) {
-        _cancelSearch();
-      }
+      var debounce = EventFilter.debounce("list_search_word", (){
+        bool isNotEmpty = _searchController.text.isNotEmpty;
+        if(offstage == isNotEmpty) {
+          offstage = !isNotEmpty;
+          setState(() {});
+        }
+        if (!isNotEmpty && searchStatue) {
+          _cancelSearch();
+        }
+      },
+      duration: const Duration(milliseconds: 100));
+      debounce();
     });
     super.initState();
   }
