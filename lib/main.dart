@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
@@ -104,8 +105,14 @@ class _BottomNaacBarState extends State<BottomNavBar> {
 
     if (settingData.appSetting.notOnce!) {
       bool result = false;
-      result = await Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const OpenScreenInfo()));
+      final completer = Completer<bool>();
+      // 延迟到下一帧执行
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => const OpenScreenInfo()))
+        .then((value) => completer.complete(value));
+      });
+      result = await completer.future;
       if (!result) return;
     }
 
