@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
 import 'package:dun_cookie_flutter/provider/common_event_bus.dart';
@@ -7,8 +9,44 @@ import 'package:flutter/services.dart';
 import 'package:mobpush_plugin/mobpush_plugin.dart';
 import 'package:provider/provider.dart';
 
+import '../../common/constant/main.dart';
+import '../../model/user_settings.dart';
+import '../../request/info_request.dart';
+
 class OpenScreenInfo extends StatelessWidget {
   const OpenScreenInfo({Key? key}) : super(key: key);
+
+  /// 注册mobid，并且与后端注册
+  _initMobPush(SettingProvider settingData) async {
+    //获取注册的设备id， 这个可以不初始化
+    Map<String, dynamic> ridMap = await MobpushPlugin.getRegistrationId();
+    String regId = ridMap['res'].toString();
+    if (settingData.appSetting.rid != regId) {
+      settingData.saveRid(regId);
+    }
+    print('RID: ' + regId);
+    // FIXME: 不要在这里调用 setState()，因为本函数可能在 build() 开始之前调用，导致异常
+
+    Constant.mobRId = regId;
+
+    var success = false;
+    var retry = 0;
+    while (true) {
+      success = await InfoRequest.createUser(regId);
+      if (success) {
+        break;
+      }
+      retry += 1;
+      if (retry > 3) {
+        break;
+      }
+      var duration = const Duration(seconds: 1);
+      sleep(duration);
+    }
+    UserDatasourceSettings userSettings =
+    await InfoRequest.getUserDatasourceSettings();
+    settingData.saveDatasourceSetting(userSettings);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,16 +109,17 @@ class OpenScreenInfo extends StatelessWidget {
                     height: 6,
                   ),
                   ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
                         var settingData =
                             Provider.of<SettingProvider>(context, listen: false);
-                        settingData.appSetting.notOnce = false;
-                        settingData.saveAppSetting();
                         DunToast.showInfo("与土豆服务器连接中……");
                         MobpushPlugin.updatePrivacyPermissionStatus(true).then((value) {
                           eventBus.fire(UpdatePrivacyPermissionStatus());
-                          Navigator.of(context).pop(true);
                         });
+                        await _initMobPush(settingData);
+                        settingData.appSetting.notOnce = false;
+                        settingData.saveAppSetting();
+                        Navigator.of(context).pop(true);
                       },
                       child: const Text("我看完并同意免责声明的内容")),
                   const SizedBox(

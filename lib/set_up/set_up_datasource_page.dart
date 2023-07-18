@@ -24,8 +24,10 @@ class SetUpDatasource extends StatefulWidget {
 
 class _SetUpDatasourceState extends State<SetUpDatasource> {
   late SettingProvider settingData;
+
   // 获取所有数据源列表列表
   List<ConfigDatasourceModel> allDatasouces = [];
+
   // 获取用户数据源
   List<String> userDatasourceUuids = [];
 
@@ -68,8 +70,19 @@ class _SetUpDatasourceState extends State<SetUpDatasource> {
       },
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.white,
+          leading: IconButton(
+              icon: const Icon(Icons.arrow_back_ios),
+              onPressed: () => {Navigator.of(context).pop('刷新')}),
+          leadingWidth: 50,
+          iconTheme: const IconThemeData(
+            color: DunColors.DunColor,
+          ),
+          titleTextStyle:
+              const TextStyle(color: DunColors.DunColor, fontSize: 20),
+          titleSpacing: 0,
+          elevation: 0,
           title: const Text("饼来源"),
-          systemOverlayStyle: SystemUiOverlayStyle.light,
         ),
         body: Column(
           children: [
@@ -138,7 +151,7 @@ class _SetUpDatasourceState extends State<SetUpDatasource> {
               decoration: const BoxDecoration(
                 boxShadow: [
                   BoxShadow(
-                    color: Color(0x29000000),
+                    color: DunColors.DunColor,
                     offset: Offset(0, 3),
                     blurRadius: 3,
                   ),
@@ -176,7 +189,7 @@ class _SetUpDatasourceState extends State<SetUpDatasource> {
         child: Container(
           height: 40,
           decoration: BoxDecoration(
-            color: Colors.blue,
+            color: DunColors.DunColor,
             borderRadius: BorderRadius.circular(4),
           ),
           child: const Center(

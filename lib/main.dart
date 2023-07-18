@@ -117,42 +117,6 @@ class _BottomNaacBarState extends State<BottomNavBar> {
     }
 
     _checkVersion();
-
-    // 推送变量
-    _initMobPush();
-  }
-
-  _initMobPush() async {
-    //获取注册的设备id， 这个可以不初始化
-    Map<String, dynamic> ridMap = await MobpushPlugin.getRegistrationId();
-    String regId = ridMap['res'].toString();
-    var settingData = Provider.of<SettingProvider>(context, listen: false);
-    if (settingData.appSetting.rid != regId) {
-      settingData.saveRid(regId);
-    }
-    print('RID: ' + regId);
-    // FIXME: 不要在这里调用 setState()，因为本函数可能在 build() 开始之前调用，导致异常
-    setState(() {
-      Constant.mobRId = regId;
-    });
-
-    var success = false;
-    var retry = 0;
-    while (true) {
-      success = await InfoRequest.createUser(regId);
-      if (success) {
-        break;
-      }
-      retry += 1;
-      if (retry > 3) {
-        break;
-      }
-      var duration = const Duration(seconds: 1);
-      sleep(duration);
-    }
-    UserDatasourceSettings userSettings =
-        await InfoRequest.getUserDatasourceSettings();
-    settingData.saveDatasourceSetting(userSettings);
   }
 
   // 判断版本号，强制更新&更新日志

@@ -36,6 +36,8 @@ class _SetUpItemState extends State<SetUpItem> {
           Text(widget.data.nickname ?? ""),
           const Expanded(child: SizedBox()),
           Checkbox(
+            //数据源页复选框
+            activeColor: DunColors.DunColor,
             value: isChecked,
             onChanged: (value) {
               if (value != true && widget.userSelectedList.length == 1) {
