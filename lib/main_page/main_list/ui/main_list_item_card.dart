@@ -157,8 +157,34 @@ class MainListItemCard extends StatelessWidget {
                 fontSize: 12,
               ),
             ),
+            data?.item?.retweeted != null ? Container(
+              padding: const EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                  border: Border.all(
+                      color: Colors.black38,
+                      width: 1
+                  )
+              ),
+              child: Column(
+                children: [
+                  Text(
+                    "转发自：" + (data?.item?.retweeted?.authorName ?? "") + "\n" + (data?.item?.retweeted?.text ?? ''),
+                    style: const TextStyle(
+                      color: gray_2,
+                      fontSize: 12,
+                    ),
+                  ),
+                  ImageWidget(
+                    data: data?.item?.retweeted?.images,
+                    sourceType: data?.source?.type,
+                    settingData: settingData,
+                  )
+                ],
+              )
+            ): Container(),
             ImageWidget(
-              data: data,
+              data: data?.defaultCookie?.images,
+              sourceType: data?.source?.type,
               settingData: settingData,
             ),
           ],
