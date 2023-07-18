@@ -1,4 +1,4 @@
-import 'package:dun_cookie_flutter/model/Terra_comic_episode_model.dart';
+import 'package:dun_cookie_flutter/model/terra_comic_episode_model.dart';
 import 'package:dun_cookie_flutter/model/terra_recent_episode_model.dart';
 import 'package:dun_cookie_flutter/model/terra_comic_model.dart';
 

@@ -1,7 +1,7 @@
 import 'package:dun_cookie_flutter/common/browser/main.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/main.dart';
-import 'package:dun_cookie_flutter/page/Error/main.dart';
+import 'package:dun_cookie_flutter/page/error/main.dart';
 import 'package:dun_cookie_flutter/page/bakery/main.dart';
 import 'package:dun_cookie_flutter/page/comics/main.dart';
 import 'package:dun_cookie_flutter/page/donate/main.dart';

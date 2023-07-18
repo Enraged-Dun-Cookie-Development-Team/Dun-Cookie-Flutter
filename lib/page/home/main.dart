@@ -78,7 +78,6 @@ class _MainScaffoldState extends State<MainScaffold> {
 
   _readData() async {
     var settingData = Provider.of<SettingProvider>(context, listen: false);
-    await settingData.readAppSetting();
     Constant.mobRId = settingData.appSetting.rid;
     bool result = true;
     if (settingData.appSetting.notOnce!) {

@@ -2,7 +2,7 @@ import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/dun_tag.dart';
 import 'package:dun_cookie_flutter/common/tool/open_app_or_browser.dart';
 import 'package:dun_cookie_flutter/common/tool/time_unit.dart';
-import 'package:dun_cookie_flutter/model/Terra_comic_episode_model.dart';
+import 'package:dun_cookie_flutter/model/terra_comic_episode_model.dart';
 import 'package:dun_cookie_flutter/model/source_data.dart';
 import 'package:dun_cookie_flutter/model/terra_comic_model.dart';
 import 'package:dun_cookie_flutter/request/cookie_request.dart';

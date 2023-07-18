@@ -4,10 +4,10 @@ import 'package:dun_cookie_flutter/request/user_request.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
-import '../../common/tool/open_app_or_browser.dart';
-import '../../model/bilibili_favorites_data.dart';
-import '../../model/bilibili_user_favlist_data.dart';
-import '../Error/main.dart';
+import 'package:dun_cookie_flutter/common/tool/open_app_or_browser.dart';
+import 'package:dun_cookie_flutter/model/bilibili_favorites_data.dart';
+import 'package:dun_cookie_flutter/model/bilibili_user_favlist_data.dart';
+import 'package:dun_cookie_flutter/page/error/main.dart';
 
 class UserWanCard extends StatefulWidget {
   const UserWanCard(this.favData, {Key? key}) : super(key: key);

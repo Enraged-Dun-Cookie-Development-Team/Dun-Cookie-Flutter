@@ -8,7 +8,7 @@ import 'package:dun_cookie_flutter/main_page/more_list/more_list_widget.dart';
 import 'package:dun_cookie_flutter/main_page/terminal_page/terminal_page_widget.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
 import 'package:dun_cookie_flutter/model/user_settings.dart';
-import 'package:dun_cookie_flutter/page/Error/main.dart';
+import 'package:dun_cookie_flutter/page/error/main.dart';
 import 'package:dun_cookie_flutter/page/info/open_screen_info.dart';
 import 'package:dun_cookie_flutter/page/update/main.dart';
 import 'package:dun_cookie_flutter/provider/setting_provider.dart';
@@ -25,6 +25,11 @@ import 'provider/common_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  earlyInit().then((_) => runApp(const CeobeCanteenApp()));
+}
+
+Future<void> earlyInit() async {
   //沉浸式状态栏
   if (Platform.isAndroid) {
     SystemUiOverlayStyle systemUiOverlayStyle = const SystemUiOverlayStyle(
@@ -33,14 +38,15 @@ void main() async {
     );
     SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
   }
+
   if (Platform.isIOS) {
-    MobpushPlugin.setCustomNotification();
+    await MobpushPlugin.setCustomNotification();
 
     // 开发环境 false, 线上环境 true
-    MobpushPlugin.setAPNsForProduction(true);
+    await MobpushPlugin.setAPNsForProduction(true);
   }
-  runApp(const CeobeCanteenApp());
-  // runApp(const DunMain());
+
+  await SettingProvider.getInstance().readAppSetting();
 }
 
 class CeobeCanteenApp extends StatefulWidget {
@@ -56,10 +62,8 @@ class _CeobeCanteenAppState extends State<CeobeCanteenApp> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<CommonProvider>(create: (_) => CommonProvider()),
-        ChangeNotifierProvider<SettingProvider>(
-            create: (_) => SettingProvider()),
-        ChangeNotifierProvider<CeobecanteenData>(
-            create: (_) => CeobecanteenData()),
+        ChangeNotifierProvider.value(value: SettingProvider.getInstance()),
+        ChangeNotifierProvider<CeobecanteenData>(create: (_) => CeobecanteenData()),
       ],
       child: MaterialApp(
         title: '小刻食堂',
@@ -96,14 +100,14 @@ class _BottomNaacBarState extends State<BottomNavBar> {
 
   _readData() async {
     var settingData = Provider.of<SettingProvider>(context, listen: false);
-    await settingData.readAppSetting();
     Constant.mobRId = settingData.appSetting.rid;
-    bool result = false;
+
     if (settingData.appSetting.notOnce!) {
-      result = await Navigator.push(context,
-          MaterialPageRoute(builder: (context) => const OpenScreenInfo()));
+      bool result = false;
+      result = await Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const OpenScreenInfo()));
+      if (!result) return;
     }
-    if (!result) return;
 
     _checkVersion();
 
@@ -120,6 +124,7 @@ class _BottomNaacBarState extends State<BottomNavBar> {
       settingData.saveRid(regId);
     }
     print('RID: ' + regId);
+    // FIXME: 不要在这里调用 setState()，因为本函数可能在 build() 开始之前调用，导致异常
     setState(() {
       Constant.mobRId = regId;
     });
@@ -156,13 +161,11 @@ class _BottomNaacBarState extends State<BottomNavBar> {
       if (lastShowedVersion == null ||
           lastShowedVersion != nowVersion &&
               PackageInfoPlus.isVersionHigher(nowVersion, lastShowedVersion)) {
-        if (nowApp.version?.isNotEmpty == true &&
-            nowApp.description?.isNotEmpty == true) {
+        if (nowApp.version?.isNotEmpty == true && nowApp.description?.isNotEmpty == true) {
           showDialog(
             context: context,
             builder: (_) => Dialog(
-              child:
-                  _buildVersionUpdateDialog(nowApp.version, nowApp.description),
+              child: _buildVersionUpdateDialog(nowApp.version, nowApp.description),
             ),
           );
           sp.setString("update_dialog_showed_version", nowVersion);
@@ -209,11 +212,8 @@ class _BottomNaacBarState extends State<BottomNavBar> {
   /// ===========================先把旧代码copy过来end====================================
 
   // 点击导航时显示指定内容
-  List<Widget> list = [
-    const MoreListWidget(),
-    const MainListWidget(),
-    const TerminalPageWidget()
-  ];
+  List<Widget> list = [const MoreListWidget(), const MainListWidget(), const TerminalPageWidget()];
+
   // 当前点击的导航下标
   int _currentController = 1;
 
@@ -225,11 +225,21 @@ class _BottomNaacBarState extends State<BottomNavBar> {
       body: Container(
         color: gray_3,
         padding: EdgeInsets.only(top: paddingTop),
-        child: Stack(
-          children: [
-            list[_currentController],
-            ..._buildBottomBar(),
-          ],
+        child: Selector<SettingProvider, bool>(
+          selector: (context, provider) => provider.appSetting.datasourceSetting != null,
+          builder: (_, isDatasourceAvailable, __) {
+            // TODO: 也可以传递 loading 布尔参数给子控件，让子控件自己显示进度条
+            // 相应的，子控件的载入过程应该推迟到 didUpdateWidget() 时
+            if (!isDatasourceAvailable) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            return Stack(
+              children: [
+                list[_currentController],
+                ..._buildBottomBar(),
+              ],
+            );
+          },
         ),
       ),
     );
@@ -254,13 +264,11 @@ class _BottomNaacBarState extends State<BottomNavBar> {
               Expanded(
                 child: GestureDetector(
                   onTap: () => setState(() => _currentController = 0),
-                  child: Expanded(
-                    child: Image.asset(
-                      'assets/icon/more_list_icon.png',
-                      width: 30,
-                      height: 30,
-                      color: _currentController == 0 ? yellow : gray_2,
-                    ),
+                  child: Image.asset(
+                    'assets/icon/more_list_icon.png',
+                    width: 30,
+                    height: 30,
+                    color: _currentController == 0 ? yellow : gray_2,
                   ),
                 ),
               ),
@@ -268,13 +276,11 @@ class _BottomNaacBarState extends State<BottomNavBar> {
               Expanded(
                 child: GestureDetector(
                   onTap: () => setState(() => _currentController = 2),
-                  child: Expanded(
-                    child: Image.asset(
-                      'assets/icon/terminal_page_icon.png',
-                      width: 30,
-                      height: 30,
-                      color: _currentController == 2 ? yellow : gray_2,
-                    ),
+                  child: Image.asset(
+                    'assets/icon/terminal_page_icon.png',
+                    width: 30,
+                    height: 30,
+                    color: _currentController == 2 ? yellow : gray_2,
                   ),
                 ),
               ),
@@ -330,15 +336,11 @@ class _DunMainState extends State<DunMain> {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
-          ChangeNotifierProvider<CommonProvider>(
-              create: (_) => CommonProvider()),
-          ChangeNotifierProvider<SettingProvider>(
-              create: (_) => SettingProvider()),
-          ChangeNotifierProvider<CeobecanteenData>(
-              create: (_) => CeobecanteenData()),
+          ChangeNotifierProvider<CommonProvider>(create: (_) => CommonProvider()),
+          ChangeNotifierProvider.value(value: SettingProvider.getInstance()),
+          ChangeNotifierProvider<CeobecanteenData>(create: (_) => CeobecanteenData()),
         ],
-        child: Consumer<SettingProvider>(
-            builder: (context, settingModeProvider, _) {
+        child: Consumer<SettingProvider>(builder: (context, settingModeProvider, _) {
           ThemeMode? themeMode;
 
           if (settingModeProvider.appSetting.darkMode == 1) {

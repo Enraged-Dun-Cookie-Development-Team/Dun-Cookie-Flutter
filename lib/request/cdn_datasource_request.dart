@@ -1,4 +1,4 @@
-import 'package:dun_cookie_flutter/model/Cookie_main_list_model.dart';
+import 'package:dun_cookie_flutter/model/cookie_main_list_model.dart';
 import 'package:dun_cookie_flutter/model/newest_cookie_id_model.dart';
 
 import 'main.dart';
