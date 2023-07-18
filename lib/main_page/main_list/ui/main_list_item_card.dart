@@ -9,6 +9,7 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../common/tool/open_app_or_browser.dart';
+import 'cookie_share.dart';
 
 class MainListItemCard extends StatelessWidget {
   final Cookies? data;
@@ -29,6 +30,7 @@ class MainListItemCard extends StatelessWidget {
             _buildIcon(),
             _buildTitle(),
             _buildTime(),
+            _buildShareIcon(context),
             _buildContent(context),
           ],
         ),
@@ -124,6 +126,21 @@ class MainListItemCard extends StatelessWidget {
           color: gray_2,
         ),
       ),
+    );
+  }
+
+  Widget _buildShareIcon(BuildContext context) {
+    return Positioned(
+        right: 10,
+        top: 6,
+        child:IconButton(
+          iconSize: 18,
+          icon: const Icon(Icons.share),
+          onPressed: () {
+            Navigator.pushNamed(context, CookieWidgetToImage.routeName,
+                arguments: data);
+          },
+        ),
     );
   }
 
