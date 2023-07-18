@@ -101,6 +101,7 @@ class _MainListWidgetState extends State<MainListWidget> {
     var cookiesResp = await ServeCdnCookieApi.getCdnCookieMainList(settingData!.datasourceSetting!.datasourceCombId!, newestCookieId!.cookieId!, newestCookieId!.updateCookieId);
     data = cookiesResp.cookies;
     nextPageId = cookiesResp.nextPageId;
+    // FIXME: 不要在这里调用 setState()，因为本函数可能在 build() 开始之前调用，导致异常
     setState(() {});
   }
 

@@ -4,7 +4,16 @@ import 'package:dun_cookie_flutter/model/user_settings.dart';
 import 'package:flutter/cupertino.dart';
 
 class SettingProvider with ChangeNotifier {
-  SettingProvider();
+  static final _instance = SettingProvider._();
+
+  SettingProvider._();
+
+  /// Get a global instance of [SettingsProvider].
+  ///
+  /// Never use it anywhere expect [main.dart], where we put it into a [ChangeNotifierProvider] on the top
+  /// of widget tree.
+  /// If you need to get access to a [SettingsProvider], call [context.read<SettingsProvider>()] instead.
+  factory SettingProvider.getInstance() => _instance;
 
   SettingData _settingData = SettingData(
       checkSource: [
@@ -36,7 +45,6 @@ class SettingProvider with ChangeNotifier {
   set appSetting(SettingData settingData) {
     _settingData = settingData;
     saveAppSetting();
-    notifyListeners();
   }
 
   saveRid(rid) {
