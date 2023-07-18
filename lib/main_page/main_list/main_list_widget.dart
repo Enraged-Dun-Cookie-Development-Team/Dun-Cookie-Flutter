@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../common/tool/debounce_throttle.dart';
+import '../../common/tool/dun_toast.dart';
 import '../../model/cookie_main_list_model.dart';
 import '../../model/newest_cookie_id_model.dart';
 import '../../model/setting_data.dart';
@@ -33,6 +34,7 @@ class _MainListWidgetState extends State<MainListWidget> {
   NewestCookieIdModel? newestCookieId;
   bool searchStatue = false; // 搜索状态
   bool offstage = true; // 隐藏搜索清空
+  bool isAllowRefresh = true; // 运行刷新
   /// 滚动控制器
   ScrollController _scrollController = ScrollController();
   ///监听TextField内容变化
@@ -104,6 +106,20 @@ class _MainListWidgetState extends State<MainListWidget> {
 
   /// 下拉刷新回调方法
   Future<void> _onRefresh() async {
+    if (isAllowRefresh) {
+      await _getRefreshData();
+      isAllowRefresh = false;
+      Future.delayed(const Duration(seconds: 10), () {
+        isAllowRefresh = true;
+      });
+    } else {
+      DunToast.showError("小刻别急！！！");
+    }
+
+  }
+
+  /// 下拉刷新获取数据
+  Future<void> _getRefreshData() async {
     var newestIdResp = await CdnCookieApi.getCdnNewestCookieId(settingData!.datasourceSetting!.datasourceCombId!);
     if (newestIdResp.updateCookieId == newestCookieId?.updateCookieId && newestIdResp.cookieId == newestCookieId?.cookieId) {
       return;
