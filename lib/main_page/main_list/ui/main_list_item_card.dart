@@ -159,12 +159,7 @@ class MainListItemCard extends StatelessWidget {
             ),
             data?.item?.retweeted != null ? Container(
               padding: const EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                  border: Border.all(
-                      color: Colors.black38,
-                      width: 1
-                  )
-              ),
+              color: gray_4,
               child: Column(
                 children: [
                   Text(
@@ -187,6 +182,9 @@ class MainListItemCard extends StatelessWidget {
               sourceType: data?.source?.type,
               settingData: settingData,
             ),
+            SizedBox(
+              height: 10,
+            )
           ],
         ),
       );

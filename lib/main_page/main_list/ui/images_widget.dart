@@ -20,7 +20,7 @@ class ImageWidget extends StatelessWidget {
     return Container(
       alignment: Alignment.center,
       child: data!.length > 1 ? _multiImage(context) : _oneImage(context),
-      padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+      padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
     );
   }
 
