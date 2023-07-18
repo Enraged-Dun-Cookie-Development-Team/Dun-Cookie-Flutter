@@ -7,31 +7,32 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
 class ImageWidget extends StatelessWidget {
-  final Cookies? data;
+  final List<CookieImage>? data;
+  final String? sourceType;
   final SettingData? settingData;
-  const ImageWidget({required this.data, required this.settingData, Key? key}) : super(key: key);
+  const ImageWidget({required this.data, required this.sourceType, required this.settingData, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    if (data == null || data?.defaultCookie?.images == null) {
+    if (data == null) {
       return const SizedBox();
     }
     return Container(
       alignment: Alignment.center,
-      child: data!.defaultCookie!.images!.length > 1 ? _multiImage(context) : _oneImage(context),
-      padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+      child: data!.length > 1 ? _multiImage(context) : _oneImage(context),
+      padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
     );
   }
 
   List<String> _checkIsPreview(isOneImage) {
-    if (settingData?.isPreview == true && data?.defaultCookie?.images?.isNotEmpty == true) {
-      List<String> previewList = _getPreviewList(data!);
+    if (settingData?.isPreview == true && data?.isNotEmpty == true) {
+      List<String> previewList = _getPreviewList(data!, sourceType!);
       return previewList;
     }
     else {
       List<String> originList = [];
       // 如果有略缩图且开启了略缩图开关
-      for (var img in data!.defaultCookie!.images!) {
+      for (var img in data!) {
         originList.add(img.originUrl!);
       }
       return originList;
@@ -39,18 +40,18 @@ class ImageWidget extends StatelessWidget {
   }
 
   /// 适配各端获取预览图
-  List<String> _getPreviewList(Cookies data) {
+  List<String> _getPreviewList(List<CookieImage> data, String sourceType) {
     List<String> previewList = [];
-    for (var img in data.defaultCookie!.images!) {
+    for (var img in data) {
       if (img.compressUrl != null) {
         previewList.add(img.compressUrl!);
-      } else if (data.source!.type! == "bilibili:dynamic-by-uid") {
-        if (data.defaultCookie!.images!.length == 1) {
+      } else if (sourceType == "bilibili:dynamic-by-uid") {
+        if (data.length == 1) {
           previewList.add(img.originUrl!+"@573w_358h_1e_1c_!web-dynamic.webp");
         } else {
           previewList.add(img.originUrl!+"@416w_416h_1e_1c_!web-dynamic.webp");
         }
-      } else if (data.source!.type! == "netease-cloud-music:albums-by-artist") {
+      } else if (sourceType == "netease-cloud-music:albums-by-artist") {
         previewList.add(img.originUrl!+"?param=416x416");
       } else {
         previewList.add(img.originUrl!);
@@ -136,13 +137,13 @@ class ImageWidget extends StatelessWidget {
                 PageRouteBuilder(
                   pageBuilder: (ctx, anim1, anim2) {
                     List<String> imgList = [];
-                    for (var img in data!.defaultCookie!.images!) {
+                    for (var img in data!) {
                       imgList.add(img.originUrl!);
                     }
                     return FadeTransition(
                       opacity: anim1,
                       child: ViewImageExtendedImage(
-                          text: data!.defaultCookie!.text!,
+                          text: "",
                           imageList: imgList,
                           currentIndex: index),
                     );
@@ -151,7 +152,7 @@ class ImageWidget extends StatelessWidget {
               );
             },
             child: Hero(
-              tag: data!.defaultCookie!.images![index].originUrl!,
+              tag: data![index].originUrl!,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(4),
                 child: Container(

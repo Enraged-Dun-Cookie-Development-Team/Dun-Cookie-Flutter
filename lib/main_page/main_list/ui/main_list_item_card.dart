@@ -5,9 +5,11 @@ import 'package:dun_cookie_flutter/main_page/common_ui/dashed_line_widget.dart';
 import 'package:dun_cookie_flutter/main_page/main_list/ui/images_widget.dart';
 import 'package:dun_cookie_flutter/model/setting_data.dart';
 import 'package:dun_cookie_flutter/model/cookie_main_list_model.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../common/tool/open_app_or_browser.dart';
+import 'cookie_share.dart';
 
 class MainListItemCard extends StatelessWidget {
   final Cookies? data;
@@ -28,6 +30,7 @@ class MainListItemCard extends StatelessWidget {
             _buildIcon(),
             _buildTitle(),
             _buildTime(),
+            _buildShareIcon(context),
             _buildContent(context),
           ],
         ),
@@ -69,8 +72,13 @@ class MainListItemCard extends StatelessWidget {
     return Positioned(
       left: 26,
       top: 11,
-      child: data?.icon != null ? Image.network(
+      child: data?.icon != null ? ExtendedImage.network(
         data!.icon!,
+        handleLoadingProgress: true,
+        clearMemoryCacheIfFailed: true,
+        clearMemoryCacheWhenDispose: false,
+        mode: ExtendedImageMode.gesture,
+        cache: true,
         width: 38,
         height: 38,
         fit: BoxFit.cover,
@@ -121,6 +129,21 @@ class MainListItemCard extends StatelessWidget {
     );
   }
 
+  Widget _buildShareIcon(BuildContext context) {
+    return Positioned(
+        right: 10,
+        top: 6,
+        child:IconButton(
+          iconSize: 18,
+          icon: const Icon(Icons.share),
+          onPressed: () {
+            Navigator.pushNamed(context, CookieWidgetToImage.routeName,
+                arguments: data);
+          },
+        ),
+    );
+  }
+
   Widget _buildContent(BuildContext context) {
     return Padding(
         padding: const EdgeInsets.fromLTRB(26, 73, 26, 0),
@@ -134,10 +157,34 @@ class MainListItemCard extends StatelessWidget {
                 fontSize: 12,
               ),
             ),
+            data?.item?.retweeted != null ? Container(
+              padding: const EdgeInsets.all(5),
+              color: gray_4,
+              child: Column(
+                children: [
+                  Text(
+                    "转发自：" + (data?.item?.retweeted?.authorName ?? "") + "\n" + (data?.item?.retweeted?.text ?? ''),
+                    style: const TextStyle(
+                      color: gray_2,
+                      fontSize: 12,
+                    ),
+                  ),
+                  ImageWidget(
+                    data: data?.item?.retweeted?.images,
+                    sourceType: data?.source?.type,
+                    settingData: settingData,
+                  )
+                ],
+              )
+            ): Container(),
             ImageWidget(
-              data: data,
+              data: data?.defaultCookie?.images,
+              sourceType: data?.source?.type,
               settingData: settingData,
             ),
+            SizedBox(
+              height: 10,
+            )
           ],
         ),
       );

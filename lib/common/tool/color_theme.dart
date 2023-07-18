@@ -4,6 +4,7 @@ const Color white = Color(0xFFFFFFFF);
 const Color gray_1 = Color(0xFF707070);
 const Color gray_2 = Color(0xFF676767);
 const Color gray_3 = Color(0xFFE7E7E7);
+const Color gray_4 = Color(0xFFE9E9E9);
 const Color gray_subtitle = Color(0xFFB8B8B8);
 const Color yellow = Color(0xFFFDBA4B);
 const Color blue = Color(0xFF8BDCFF);

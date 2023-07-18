@@ -2,6 +2,7 @@ import 'package:dun_cookie_flutter/model/terra_comic_episode_model.dart';
 import 'package:dun_cookie_flutter/model/terra_recent_episode_model.dart';
 import 'package:dun_cookie_flutter/model/terra_comic_model.dart';
 
+import '../model/cookie_main_list_model.dart';
 import '../model/cookie_count_model.dart';
 import 'main.dart';
 
@@ -83,6 +84,26 @@ class CookiesApi {
       } else {
         return null;
       }
+    }
+  }
+
+  /// 饼搜索列表
+  static String cookieSearchList = "/canteen/cookie/search/list";
+  static Future<CookieMainListModel> getCookieSearchList(
+      String combId, String searchWord, String? cookieId) async {
+    Map<String, dynamic> map = {
+      "datasource_comb_id": combId,
+      "search_word": searchWord,
+    };
+    if (cookieId?.isNotEmpty == true) {
+      map["cookie_id"] = cookieId;
+    }
+    ResponseData response =
+    await HttpClass.get(cookieSearchList, params: map, type: 1);
+    if (response.error) {
+      return CookieMainListModel();
+    } else {
+      return CookieMainListModel.fromJson(response.data['data']);
     }
   }
 }

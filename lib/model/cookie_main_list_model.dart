@@ -218,19 +218,23 @@ class CookieImage {
 class Item {
   Item({
     this.id,
-    this.url,});
+    this.url,
+    this.retweeted});
 
   Item.fromJson(dynamic json) {
     id = json['id'];
     url = json['url'];
+    retweeted = json['retweeted'] != null ? Retweeted.fromJson(json['retweeted']) : null;
   }
   String? id;
   String? url;
+  Retweeted? retweeted;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = id;
     map['compress_url'] = url;
+    map['retweeted'] = retweeted != null ? retweeted!.toJson() : null;
     return map;
   }
 }
@@ -256,3 +260,49 @@ class Source {
     return map;
   }
 }
+
+/// "author_name": "明日方舟",
+/// "author_avatar": "url",
+/// "default_cookie": {
+///    "text": "【新增服饰】\n//灵巧侍者 - 耶拉\nEPOQUE系列新款/灵巧侍者。耶拉在萨维尔衣匠处定制的衣物，由于耶拉本人的巧妙点子与设计者的奇思妙想，成衣产生了预料之外的效果。\n_____________\n如果不是耶拉在定制衣物前看了点维多利亚传统童话故事，初雪或许捕捉不到银灰那饱含疑惑的皱眉瞬间。若是问耶拉自己的感想？她玩得很开心。",
+///    "images": [
+///       "https://i0.hdslb.com/bfs/new_dyn/84eee24c70e47f7f7990c72e5cbbba92161775300.png",
+///       "https://i0.hdslb.com/bfs/new_dyn/73f9e54e3c7914e79e577257c88c4942161775300.gif",
+///       "https://i0.hdslb.com/bfs/new_dyn/884a2e9e2e84faa4cfc6bf7d5c80ee78161775300.gif",
+///       "https://i0.hdslb.com/bfs/new_dyn/5e3d3309568ee22bf184191008eed185161775300.gif",
+///       "https://i0.hdslb.com/bfs/new_dyn/32577be3c9e37532b2abaa937134af50161775300.gif"
+///    ]
+/// }
+class Retweeted {
+  Retweeted({
+    this.authorName,
+    this.authorAvatar,
+    this.text,
+    this.images,});
+
+  Retweeted.fromJson(dynamic json) {
+    authorName = json['author_name'];
+    authorAvatar = json['author_avatar'];
+    text = json['text'];
+    if (json['images'] != null) {
+      images = [];
+      json['images'].forEach((v) {
+        images!.add(CookieImage.fromJson(v));
+      });
+    }
+  }
+  String? authorName;
+  String? authorAvatar;
+  String? text;
+  List<CookieImage>? images;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['author_name'] = authorName;
+    map['author_avatar'] = authorAvatar;
+    map['text'] = text;
+    map['images'] = images;
+    return map;
+  }
+}
+

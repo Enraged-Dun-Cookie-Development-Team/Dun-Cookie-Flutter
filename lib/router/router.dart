@@ -15,6 +15,8 @@ import 'package:dun_cookie_flutter/page/update/main.dart';
 import 'package:dun_cookie_flutter/page/user_Wan/main.dart';
 import 'package:flutter/material.dart';
 
+import '../main_page/main_list/ui/cookie_share.dart';
+
 class DunRouter {
   static final Map<String, WidgetBuilder> routes = {
     "/": (context) => const BottomNavBar(),
@@ -30,6 +32,7 @@ class DunRouter {
     Donate.routerName: (context) => const Donate(),
     Comics.routerName: (context) => const Comics(),
     UserWan.routerName: (context) => const UserWan(),
+    CookieWidgetToImage.routeName: (context) => const CookieWidgetToImage(),
   };
 
   /// 侧边菜单固定项目
