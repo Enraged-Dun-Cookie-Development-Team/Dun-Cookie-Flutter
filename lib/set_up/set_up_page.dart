@@ -25,7 +25,24 @@ class _SetUpPageState extends State<SetUpPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: gray_3,
-      appBar: AppBar(title: const Text("设置&其他")),
+      appBar: AppBar(
+          //设置&其他页面
+          backgroundColor: Colors.white,
+
+          leading: IconButton(
+              icon: const Icon(Icons.arrow_back_ios),
+              onPressed: () => {Navigator.of(context).pop('刷新')}),
+          leadingWidth: 50,
+          iconTheme: const IconThemeData(
+            color: DunColors.DunColor,
+          ),
+
+          titleTextStyle:
+          const TextStyle(color: DunColors.DunColor, fontSize: 20),
+          titleSpacing: 0,
+
+          title: const Text("设置&其他")
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
         child: Column(

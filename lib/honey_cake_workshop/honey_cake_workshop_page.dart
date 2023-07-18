@@ -79,7 +79,20 @@ class _HoneyCakeWorkshopPageState extends State<HoneyCakeWorkshopPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: gray_3,
-      appBar: AppBar(title: const Text("罗德岛蜜饼工坊")),
+      appBar: AppBar(
+        //蜜饼工坊页面
+          backgroundColor: Colors.white,
+          leading: IconButton(
+              icon: const Icon(Icons.arrow_back_ios),
+              onPressed: () => {Navigator.of(context).pop('刷新')}),
+          leadingWidth: 50,
+          iconTheme: const IconThemeData(
+            color: DunColors.DunColor,
+          ),
+          titleTextStyle:
+              const TextStyle(color: DunColors.DunColor, fontSize: 20),
+          titleSpacing: 0,
+          title: const Text("罗德岛蜜饼工坊")),
       body: Column(
         children: [
           Expanded(

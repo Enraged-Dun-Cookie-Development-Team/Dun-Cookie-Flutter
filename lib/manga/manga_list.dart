@@ -30,7 +30,24 @@ class _MangaListPageState extends State<MangaListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: gray_3,
-      appBar: AppBar(title: const Text("官方漫画")),
+      appBar: AppBar(
+        //官方漫画页面
+        backgroundColor: Colors.white,
+
+        leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios),
+            onPressed: () => {Navigator.of(context).pop('刷新')}),
+        leadingWidth: 50,
+        iconTheme: const IconThemeData(
+          color: DunColors.DunColor,
+        ),
+
+        titleTextStyle:
+        const TextStyle(color: DunColors.DunColor, fontSize: 20),
+        titleSpacing: 0,
+
+        title: const Text("官方漫画"),
+      ),
       body: Container(
         color: gray_3,
         child: loadDataType == 0
