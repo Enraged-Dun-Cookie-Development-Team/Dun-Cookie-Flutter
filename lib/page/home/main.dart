@@ -217,6 +217,20 @@ class _MainScaffoldState extends State<MainScaffold> {
       builder: (ctx, routerIndex, child) {
         return Scaffold(
           appBar: AppBar(
+            backgroundColor: Colors.white,
+
+            leading: IconButton(
+                icon: const Icon(Icons.arrow_back_ios),
+                onPressed: () => {Navigator.of(context).pop('刷新')}),
+            leadingWidth: 50,
+            iconTheme: const IconThemeData(
+              color: DunColors.DunColor,
+            ),
+
+            titleTextStyle:
+            const TextStyle(color: DunColors.DunColor, fontSize: 20),
+            titleSpacing: 0,
+
             title: Row(
               children: [Text(DunRouter.pageTitles[routerIndex])],
             ),
