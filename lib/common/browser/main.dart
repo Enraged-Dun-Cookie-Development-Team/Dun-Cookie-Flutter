@@ -6,6 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
+import '../tool/color_theme.dart';
+
 class DunWebView extends StatelessWidget {
   static String routeName = "/webView";
 
@@ -53,15 +55,25 @@ class _DunWebViewMainState extends State<DunWebViewMain> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        //友站链接
+        backgroundColor: Colors.white,//背景颜色
+        leading: IconButton(//左侧按钮
+            icon: const Icon(Icons.arrow_back_ios),
+            onPressed: () => {Navigator.of(context).pop('刷新')}),
+        leadingWidth: 50,//按钮宽度
+        iconTheme: const IconThemeData(//按钮样式
+          color: DunColors.DunColor,
+        ),
+        titleTextStyle://文字样式
+        const TextStyle(color: DunColors.DunColor, fontSize: 20),
+        titleSpacing: 0,//文字和按钮间距
+
         title: Consumer<ViewWebPageProvider>(
           builder: (ctx, data, child) {
             return Text(data.title);
           },
         ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
+
         systemOverlayStyle: SystemUiOverlayStyle.light,
       ),
       body: Consumer<ViewWebPageProvider>(
