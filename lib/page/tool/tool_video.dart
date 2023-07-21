@@ -27,9 +27,20 @@ class ToolVideo extends StatelessWidget {
             child: Text(
               videoInfo.title!,
               overflow: TextOverflow.ellipsis,
-              maxLines: 3,
+              maxLines: 2,
               style: DunStyles.text12,
             ),
+          ),
+          Expanded(
+              child: Container(
+                alignment: Alignment.bottomRight,
+                padding: const EdgeInsets.only(right: 10.0, bottom: 5.0),
+                child: Text(
+                  videoInfo.author!,
+                  maxLines: 1,
+                  style: DunStyles.text12,
+                ),
+              )
           )
         ],
       ),
