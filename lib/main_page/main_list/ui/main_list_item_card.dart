@@ -2,6 +2,7 @@
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/time_unit.dart';
 import 'package:dun_cookie_flutter/main_page/common_ui/dashed_line_widget.dart';
+import 'package:dun_cookie_flutter/main_page/main_list/ui/expandable_text.dart';
 import 'package:dun_cookie_flutter/main_page/main_list/ui/images_widget.dart';
 import 'package:dun_cookie_flutter/model/setting_data.dart';
 import 'package:dun_cookie_flutter/model/cookie_main_list_model.dart';
@@ -150,7 +151,7 @@ class MainListItemCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            ExpandableText(
               data?.defaultCookie?.text ?? '',
               style: const TextStyle(
                 color: gray_2,
@@ -162,7 +163,7 @@ class MainListItemCard extends StatelessWidget {
               color: gray_4,
               child: Column(
                 children: [
-                  Text(
+                  ExpandableText(
                     "转发自：" + (data?.item?.retweeted?.authorName ?? "") + "\n" + (data?.item?.retweeted?.text ?? ''),
                     style: const TextStyle(
                       color: gray_2,
