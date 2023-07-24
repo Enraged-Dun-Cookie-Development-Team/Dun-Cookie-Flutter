@@ -161,7 +161,7 @@ class _CookieWidgetToImageState extends State<CookieWidgetToImage> {
     final size = MediaQuery.of(context).size;
     return Container(
       width: size.width,
-      child: ExpandableText(cookieText,noExpandButton: true,expandLimit: 36,),
+      child: ExpandableText(cookieText,noExpandButton: true,expandLimit: 36,overflow: TextOverflow.ellipsis,),
       padding: const EdgeInsets.all(10),
     );
   }

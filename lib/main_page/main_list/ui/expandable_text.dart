@@ -5,8 +5,9 @@ class ExpandableText extends StatefulWidget {
   final bool noExpandButton;
   final TextStyle? style;
   final int expandLimit;
+  final TextOverflow overflow;
 
-  const ExpandableText(this.text, {Key? key, this.style, this.expandLimit = 16,this.noExpandButton=false})
+  const ExpandableText(this.text, {Key? key, this.style, this.expandLimit = 16,this.noExpandButton=false,this.overflow= TextOverflow.fade})
       : super(key: key);
 
   @override
@@ -28,7 +29,7 @@ class _ExpandableTextState extends State<ExpandableText> {
           widget.text,
           style: widget.style,
           maxLines: isExpand ? null : widget.expandLimit,
-          overflow: TextOverflow.fade,
+          overflow: widget.overflow,
         ),
         if (needExpand)
           GestureDetector(
