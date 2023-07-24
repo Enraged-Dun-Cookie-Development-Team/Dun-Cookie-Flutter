@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 
 class ExpandableText extends StatefulWidget {
   final String text;
+  final bool noExpandButton;
   final TextStyle? style;
   final int expandLimit;
 
-  const ExpandableText(this.text, {Key? key, this.style, this.expandLimit = 20})
+  const ExpandableText(this.text, {Key? key, this.style, this.expandLimit = 16,this.noExpandButton=false})
       : super(key: key);
 
   @override
@@ -17,18 +18,8 @@ class _ExpandableTextState extends State<ExpandableText> {
 
   @override
   Widget build(BuildContext context) {
-    final key = GlobalKey();
-    final box = key.currentContext?.findRenderObject() as RenderBox?;
-    final bool needExpand;
-    if (box == null) {
-      needExpand = true;
-    } else {
-      final width = box.size.width;
-      final text = TextPainter(
-          text: TextSpan(text: widget.text), maxLines: widget.expandLimit);
-      text.layout(maxWidth: width);
-      needExpand = text.didExceedMaxLines;
-    }
+    final needExpand = (widget.text.split('\n').length > widget.expandLimit ||
+        widget.text.length > widget.expandLimit * 32) && !widget.noExpandButton;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
