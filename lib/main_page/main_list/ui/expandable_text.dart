@@ -21,21 +21,26 @@ class ExpandableText extends StatefulWidget {
 
 class _ExpandableTextState extends State<ExpandableText> {
   bool isExpand = false;
-   bool needExpand=true;
+  bool needExpand = true;
+  double? lastWidth;
+
   final GlobalKey globalKey = GlobalKey();
 
-  _checkNeedExpand(_){
-    if(globalKey.currentContext != null){
-
-    var width = globalKey.currentContext!.size!.width;
-    var render = TextPainter(
-      text: TextSpan(text: widget.text,style: widget.style),
-      maxLines: widget.expandLimit,
-      textDirection: TextDirection.ltr
-    );
+  _checkNeedExpand(_) {
+    if (globalKey.currentContext != null) {
+      var width = globalKey.currentContext!.size!.width;
+      // 宽度无变化，不变
+      if (lastWidth != null && lastWidth == width) {
+        return;
+      }
+      var render = TextPainter(
+          text: TextSpan(text: widget.text, style: widget.style),
+          maxLines: widget.expandLimit,
+          textDirection: TextDirection.ltr);
       render.layout(maxWidth: width);
 
       needExpand = render.didExceedMaxLines;
+      lastWidth = width;
     }
   }
 
