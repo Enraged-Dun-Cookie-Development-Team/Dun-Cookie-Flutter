@@ -7,7 +7,12 @@ class ExpandableText extends StatefulWidget {
   final int expandLimit;
   final TextOverflow overflow;
 
-  const ExpandableText(this.text, {Key? key, this.style, this.expandLimit = 16,this.noExpandButton=false,this.overflow= TextOverflow.fade})
+  const ExpandableText(this.text,
+      {Key? key,
+      this.style,
+      this.expandLimit = 16,
+      this.noExpandButton = false,
+      this.overflow = TextOverflow.fade})
       : super(key: key);
 
   @override
@@ -16,12 +21,21 @@ class ExpandableText extends StatefulWidget {
 
 class _ExpandableTextState extends State<ExpandableText> {
   bool isExpand = false;
+  late final bool needExpand;
+
+  @override
+  void initState() {
+    super.initState();
+
+    final probablyLines = widget.text
+        .split('\n')
+        .map((e) => e.length ~/ 32 + 1)
+        .reduce((value, element) => value + element);
+    needExpand = probablyLines > widget.expandLimit && !widget.noExpandButton;
+  }
 
   @override
   Widget build(BuildContext context) {
-    final needExpand = (widget.text.split('\n').length > widget.expandLimit ||
-        widget.text.length > widget.expandLimit * 32) && !widget.noExpandButton;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
