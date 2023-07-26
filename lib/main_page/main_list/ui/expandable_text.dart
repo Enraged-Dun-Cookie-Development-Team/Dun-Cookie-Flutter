@@ -7,7 +7,7 @@ class ExpandableText extends StatefulWidget {
   final int expandLimit;
   final TextOverflow overflow;
 
-  const ExpandableText(this.text,
+  ExpandableText(this.text,
       {Key? key,
       this.style,
       this.expandLimit = 16,
@@ -21,22 +21,40 @@ class ExpandableText extends StatefulWidget {
 
 class _ExpandableTextState extends State<ExpandableText> {
   bool isExpand = false;
-  late final bool needExpand;
+   bool needExpand=true;
+  final GlobalKey globalKey = GlobalKey();
+
+  _checkNeedExpand(_){
+    if(globalKey.currentContext != null){
+
+    var width = globalKey.currentContext!.size!.width;
+    var render = TextPainter(
+      text: TextSpan(text: widget.text,style: widget.style),
+      maxLines: widget.expandLimit,
+      textDirection: TextDirection.ltr
+    );
+      render.layout(maxWidth: width);
+
+      needExpand = render.didExceedMaxLines;
+    }
+  }
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    WidgetsBinding.instance.addPostFrameCallback(_checkNeedExpand);
+    super.didChangeDependencies();
+  }
 
-    final probablyLines = widget.text
-        .split('\n')
-        .map((e) => e.length ~/ 32 + 1)
-        .reduce((value, element) => value + element);
-    needExpand = probablyLines > widget.expandLimit && !widget.noExpandButton;
+  @override
+  void didUpdateWidget(covariant ExpandableText oldWidget) {
+    WidgetsBinding.instance.addPostFrameCallback(_checkNeedExpand);
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      key: globalKey,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
