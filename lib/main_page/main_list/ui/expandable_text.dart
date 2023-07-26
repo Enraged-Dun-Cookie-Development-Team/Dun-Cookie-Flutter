@@ -39,8 +39,10 @@ class _ExpandableTextState extends State<ExpandableText> {
           textDirection: TextDirection.ltr);
       render.layout(maxWidth: width);
 
-      needExpand = render.didExceedMaxLines;
-      lastWidth = width;
+      setState(() {
+        needExpand = render.didExceedMaxLines;
+        lastWidth = width;
+      });
     }
   }
 
