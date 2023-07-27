@@ -1,11 +1,14 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
+import 'dart:ui' as ui show Image, ImageByteFormat, window;
+
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
 import 'package:dun_cookie_flutter/model/cookie_main_list_model.dart';
-import 'package:dun_cookie_flutter/model/source_data.dart';
 import 'package:dun_cookie_flutter/provider/common_event_bus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -13,7 +16,6 @@ import 'package:share/share.dart';
 
 import 'cookie_head.dart';
 import 'cookie_share_image.dart';
-import 'package:widget_to_image/widget_to_image.dart';
 
 class CookieWidgetToImage extends StatefulWidget {
   const CookieWidgetToImage({Key? key}) : super(key: key);
@@ -80,7 +82,8 @@ class _CookieWidgetToImageState extends State<CookieWidgetToImage> {
                             width: size.width,
                             child: _stackHear(sourceData),
                           ),
-                          _buildContent(context, sourceData.defaultCookie?.text ?? ""),
+                          _buildContent(
+                              context, sourceData.defaultCookie?.text ?? ""),
                           // 卡片图片
                           CookieShareImage(data: sourceData),
                         ],
@@ -108,18 +111,20 @@ class _CookieWidgetToImageState extends State<CookieWidgetToImage> {
       clipBehavior: Clip.none,
       children: [
         // 二维码
-        sourceData.item?.url != null ? Positioned(
-          right: 5,
-          top: 5,
-          child: SizedBox(
-            height: 120,
-            child: QrImageView(
-                data: sourceData.item!.url!,
-                version: QrVersions.auto,
-                gapless: false,
-                foregroundColor: DunColors.DunColor),
-          ),
-        ) : Container(),
+        sourceData.item?.url != null
+            ? Positioned(
+                right: 5,
+                top: 5,
+                child: SizedBox(
+                  height: 120,
+                  child: QrImageView(
+                      data: sourceData.item!.url!,
+                      version: QrVersions.auto,
+                      gapless: false,
+                      foregroundColor: DunColors.DunColor),
+                ),
+              )
+            : Container(),
         // 小刻食堂标题
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -173,21 +178,16 @@ class _CookieWidgetToImageState extends State<CookieWidgetToImage> {
 
 //  图片转流
   _widgetToUint8List() async {
-    // // WidgetsToImageController to access widget
-    // WidgetsToImageController controller = WidgetsToImageController();
-    // // to save image bytes of widget
-    // Uint8List? bytes;
-    //
-    // WidgetsToImage(
-    //   controller: controller,
-    //   child: _globalKey,
-    // );
-    // final bytes = await controller.capture();
-    ByteData byteData =
-        await WidgetToImage.repaintBoundaryToImage(_globalKey, pixelRatio: 2.0);
-    Uint8List pngBytes = byteData.buffer.asUint8List();
-    // Uint8List pngBytes = Uint8List(0);
-    return pngBytes;
+    Completer<Uint8List> completer = Completer();
+
+    RenderRepaintBoundary render =
+        _globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+    ui.Image image =
+        await render.toImage(pixelRatio: ui.window.devicePixelRatio);
+    ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    completer.complete(byteData?.buffer.asUint8List());
+
+    return completer.future;
   }
 
 //图片保存

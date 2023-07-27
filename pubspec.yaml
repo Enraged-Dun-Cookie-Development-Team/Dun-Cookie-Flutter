@@ -42,7 +42,7 @@ dependencies:
   webview_flutter: ^3.0.0
   qr_flutter: ^4.0.0
 
-  widget_to_image: ^2.0.0
+#  widget_to_image: ^2.0.0
 #  widgets_to_image: ^0.0.2
   image_picker: ^0.8.4+4
   image_gallery_saver: ^1.7.1
