@@ -40,7 +40,7 @@ class _ExpandableTextState extends State<ExpandableText> {
       render.layout(maxWidth: width);
 
       setState(() {
-        needExpand = render.didExceedMaxLines;
+        needExpand = render.didExceedMaxLines && !widget.noExpandButton;
         lastWidth = width;
       });
     }
@@ -68,8 +68,10 @@ class _ExpandableTextState extends State<ExpandableText> {
           widget.text,
           style: widget.style,
           maxLines: isExpand ? null : widget.expandLimit,
-          overflow: widget.overflow,
+          overflow:  widget.overflow == TextOverflow.ellipsis? TextOverflow.clip : widget.overflow,
         ),
+        if(widget.overflow == TextOverflow.ellipsis)
+          Text("...",style: widget.style,),
         if (needExpand)
           GestureDetector(
             onTap: () {
