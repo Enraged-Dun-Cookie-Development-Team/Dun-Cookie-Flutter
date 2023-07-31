@@ -21,7 +21,7 @@ class ExpandableText extends StatefulWidget {
 
 class _ExpandableTextState extends State<ExpandableText> {
   bool isExpand = false;
-  bool isOverflow = true;
+  bool isOverflow = false;
   double? lastWidth;
 
   final GlobalKey globalKey = GlobalKey();
@@ -48,9 +48,7 @@ class _ExpandableTextState extends State<ExpandableText> {
 
   @override
   void didChangeDependencies() {
-    if (!widget.noExpandButton) {
-      WidgetsBinding.instance.addPostFrameCallback(_checkNeedExpand);
-    }
+    WidgetsBinding.instance.addPostFrameCallback(_checkNeedExpand);
     super.didChangeDependencies();
   }
 
