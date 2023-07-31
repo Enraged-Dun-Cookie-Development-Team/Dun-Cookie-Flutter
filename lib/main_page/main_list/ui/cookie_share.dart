@@ -5,6 +5,7 @@ import 'dart:ui' as ui show Image, ImageByteFormat, window;
 
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
+import 'package:dun_cookie_flutter/main_page/main_list/ui/expandable_text.dart';
 import 'package:dun_cookie_flutter/model/cookie_main_list_model.dart';
 import 'package:dun_cookie_flutter/provider/common_event_bus.dart';
 import 'package:flutter/material.dart';
@@ -166,7 +167,7 @@ class _CookieWidgetToImageState extends State<CookieWidgetToImage> {
     final size = MediaQuery.of(context).size;
     return Container(
       width: size.width,
-      child: Text(cookieText),
+      child: ExpandableText(cookieText,noExpandButton: true,expandLimit: 36,overflow: TextOverflow.ellipsis,),
       padding: const EdgeInsets.all(10),
     );
   }
