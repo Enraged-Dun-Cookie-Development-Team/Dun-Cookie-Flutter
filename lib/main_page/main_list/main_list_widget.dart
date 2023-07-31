@@ -99,6 +99,11 @@ class _MainListWidgetState extends State<MainListWidget> {
     var newestIdResp = await CdnCookieApi.getCdnNewestCookieId(settingData!.datasourceSetting!.datasourceCombId!);
     newestCookieId = newestIdResp;
     var cookiesResp = await ServeCdnCookieApi.getCdnCookieMainList(settingData!.datasourceSetting!.datasourceCombId!, newestCookieId!.cookieId!, newestCookieId!.updateCookieId);
+    // 如果请求失败，updateId让它为空再请求一次
+    if (cookiesResp.cookies == null) {
+      cookiesResp = await ServeCdnCookieApi.getCdnCookieMainList(settingData!.datasourceSetting!.datasourceCombId!, newestCookieId!.cookieId!, null);
+      newestCookieId?.updateCookieId = null;
+    }
     data = cookiesResp.cookies;
     nextPageId = cookiesResp.nextPageId;
     // FIXME: 不要在这里调用 setState()，因为本函数可能在 build() 开始之前调用，导致异常
@@ -136,6 +141,11 @@ class _MainListWidgetState extends State<MainListWidget> {
       tempNextPageId = cookiesMainResp.nextPageId;
     } else {
       var cookiesResp = await ServeCdnCookieApi.getCdnCookieMainList(settingData!.datasourceSetting!.datasourceCombId!, newestCookieId!.cookieId!, newestCookieId!.updateCookieId);
+      // 如果请求失败，updateId让它为空再请求一次
+      if (cookiesResp.cookies == null) {
+        cookiesResp = await ServeCdnCookieApi.getCdnCookieMainList(settingData!.datasourceSetting!.datasourceCombId!, newestCookieId!.cookieId!, null);
+        newestCookieId?.updateCookieId = null;
+      }
       data = cookiesResp.cookies;
       nextPageId = cookiesResp.nextPageId;
     }
