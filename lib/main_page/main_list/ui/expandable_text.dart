@@ -7,7 +7,7 @@ class ExpandableText extends StatefulWidget {
   final int expandLimit;
   final TextOverflow overflow;
 
-  ExpandableText(this.text,
+  const ExpandableText(this.text,
       {Key? key,
       this.style,
       this.expandLimit = 16,
@@ -21,7 +21,7 @@ class ExpandableText extends StatefulWidget {
 
 class _ExpandableTextState extends State<ExpandableText> {
   bool isExpand = false;
-  bool needExpand = true;
+  bool isOverflow = true;
   double? lastWidth;
 
   final GlobalKey globalKey = GlobalKey();
@@ -40,7 +40,7 @@ class _ExpandableTextState extends State<ExpandableText> {
       render.layout(maxWidth: width);
 
       setState(() {
-        needExpand = render.didExceedMaxLines && !widget.noExpandButton;
+        isOverflow = render.didExceedMaxLines;
         lastWidth = width;
       });
     }
@@ -48,13 +48,17 @@ class _ExpandableTextState extends State<ExpandableText> {
 
   @override
   void didChangeDependencies() {
-    WidgetsBinding.instance.addPostFrameCallback(_checkNeedExpand);
+    if (!widget.noExpandButton) {
+      WidgetsBinding.instance.addPostFrameCallback(_checkNeedExpand);
+    }
     super.didChangeDependencies();
   }
 
   @override
   void didUpdateWidget(covariant ExpandableText oldWidget) {
-    WidgetsBinding.instance.addPostFrameCallback(_checkNeedExpand);
+    if (!widget.noExpandButton) {
+      WidgetsBinding.instance.addPostFrameCallback(_checkNeedExpand);
+    }
     super.didUpdateWidget(oldWidget);
   }
 
@@ -68,11 +72,13 @@ class _ExpandableTextState extends State<ExpandableText> {
           widget.text,
           style: widget.style,
           maxLines: isExpand ? null : widget.expandLimit,
-          overflow:  widget.overflow == TextOverflow.ellipsis? TextOverflow.clip : widget.overflow,
+          overflow: widget.overflow == TextOverflow.ellipsis
+              ? TextOverflow.clip
+              : widget.overflow,
         ),
-        if(widget.overflow == TextOverflow.ellipsis)
-          Text("...",style: widget.style,),
-        if (needExpand)
+        if (widget.overflow == TextOverflow.ellipsis && isOverflow)
+          Text("...", style: widget.style),
+        if (isOverflow && !widget.noExpandButton)
           GestureDetector(
             onTap: () {
               setState(() {
