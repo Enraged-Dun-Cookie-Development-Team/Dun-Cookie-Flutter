@@ -1,4 +1,5 @@
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
+import 'package:dun_cookie_flutter/set_up/donation_page.dart';
 import 'package:dun_cookie_flutter/set_up/set_up_datasource_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -28,7 +29,6 @@ class _SetUpPageState extends State<SetUpPage> {
       appBar: AppBar(
           //设置&其他页面
           backgroundColor: Colors.white,
-
           leading: IconButton(
               icon: const Icon(Icons.arrow_back_ios),
               onPressed: () => {Navigator.of(context).pop('刷新')}),
@@ -36,13 +36,10 @@ class _SetUpPageState extends State<SetUpPage> {
           iconTheme: const IconThemeData(
             color: DunColors.DunColor,
           ),
-
           titleTextStyle:
-          const TextStyle(color: DunColors.DunColor, fontSize: 20),
+              const TextStyle(color: DunColors.DunColor, fontSize: 20),
           titleSpacing: 0,
-
-          title: const Text("设置&其他")
-      ),
+          title: const Text("设置&其他")),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
         child: Column(
@@ -90,6 +87,8 @@ class _SetUpPageState extends State<SetUpPage> {
                   _buildFollowOnBilibili(),
                   _buildLine(),
                   _buildCheckUpgrade(),
+                  _buildLine(),
+                  _buildDonation(),
                 ],
               ),
             ),
@@ -290,6 +289,41 @@ class _SetUpPageState extends State<SetUpPage> {
         ),
         SizedBox(height: 7),
       ],
+    );
+  }
+
+  Widget _buildDonation() {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const DonationPage()),
+      ),
+      child: const SizedBox(
+        width: double.infinity,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 7),
+            Text(
+              "支持我们",
+              style: TextStyle(
+                color: gray_1,
+                fontSize: 16,
+              ),
+            ),
+            SizedBox(height: 2),
+            Text(
+              "捐赠渠道",
+              style: TextStyle(
+                color: gray_subtitle,
+                fontSize: 11,
+              ),
+            ),
+            SizedBox(height: 7),
+          ],
+        ),
+      ),
     );
   }
 }
