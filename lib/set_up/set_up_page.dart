@@ -1,4 +1,5 @@
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
+import 'package:dun_cookie_flutter/common/tool/open_app_or_browser.dart';
 import 'package:dun_cookie_flutter/set_up/donation_page.dart';
 import 'package:dun_cookie_flutter/set_up/set_up_datasource_page.dart';
 import 'package:flutter/material.dart';
@@ -82,9 +83,9 @@ class _SetUpPageState extends State<SetUpPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildAboutUs(),
+                  _buildAboutUs(context),
                   _buildLine(),
-                  _buildFollowOnBilibili(),
+                  _buildFollowOnBilibili(context),
                   _buildLine(),
                   _buildCheckUpgrade(),
                   _buildLine(),
@@ -217,53 +218,67 @@ class _SetUpPageState extends State<SetUpPage> {
     );
   }
 
-  Widget _buildAboutUs() {
-    return const Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(height: 7),
-        Text(
-          "关于我们",
-          style: TextStyle(
-            color: gray_1,
-            fontSize: 16,
-          ),
+  Widget _buildAboutUs(BuildContext context) {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () => OpenAppOrBrowser.openQQGroup(context),
+      child: const SizedBox(
+        width: double.infinity,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 7),
+            Text(
+              "关于我们",
+              style: TextStyle(
+                color: gray_1,
+                fontSize: 16,
+              ),
+            ),
+            SizedBox(height: 2),
+            Text(
+              "建议反馈 BUG提交 吹水扯淡",
+              style: TextStyle(
+                color: gray_subtitle,
+                fontSize: 11,
+              ),
+            ),
+            SizedBox(height: 7),
+          ],
         ),
-        SizedBox(height: 2),
-        Text(
-          "建议反馈 BUG提交 吹水扯淡",
-          style: TextStyle(
-            color: gray_subtitle,
-            fontSize: 11,
-          ),
-        ),
-        SizedBox(height: 7),
-      ],
+      ),
     );
   }
 
-  Widget _buildFollowOnBilibili() {
-    return const Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(height: 7),
-        Text(
-          "关注b站账号",
-          style: TextStyle(
-            color: gray_1,
-            fontSize: 16,
-          ),
+  Widget _buildFollowOnBilibili(BuildContext context) {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () => OpenAppOrBrowser.followInBilibili(context),
+      child: const SizedBox(
+        width: double.infinity,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 7),
+            Text(
+              "关注b站账号",
+              style: TextStyle(
+                color: gray_1,
+                fontSize: 16,
+              ),
+            ),
+            SizedBox(height: 2),
+            Text(
+              "欢迎关注我们",
+              style: TextStyle(
+                color: gray_subtitle,
+                fontSize: 11,
+              ),
+            ),
+            SizedBox(height: 7),
+          ],
         ),
-        SizedBox(height: 2),
-        Text(
-          "欢迎关注我们",
-          style: TextStyle(
-            color: gray_subtitle,
-            fontSize: 11,
-          ),
-        ),
-        SizedBox(height: 7),
-      ],
+      ),
     );
   }
 
