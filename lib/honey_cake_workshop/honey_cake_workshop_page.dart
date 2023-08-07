@@ -80,7 +80,7 @@ class _HoneyCakeWorkshopPageState extends State<HoneyCakeWorkshopPage> {
     return Scaffold(
       backgroundColor: gray_3,
       appBar: AppBar(
-        //蜜饼工坊页面
+          //蜜饼工坊页面
           backgroundColor: Colors.white,
           leading: IconButton(
               icon: const Icon(Icons.arrow_back_ios),
@@ -126,15 +126,19 @@ class _HoneyCakeWorkshopPageState extends State<HoneyCakeWorkshopPage> {
               return commonProvider.bakeryData;
             }),
           ),
-          Container(
-            padding: const EdgeInsets.all(8),
-            height: 60,
-            child: ElevatedButton(
-              onPressed: () {
-                OpenAppOrBrowser.openUrl(
-                    "https://m.bilibili.com/space/8412516", context,
-                    appUrlScheme: "bilibili://space/8412516");
-              },
+          GestureDetector(
+            onTap: () {
+              OpenAppOrBrowser.openUrl(
+                  "https://m.bilibili.com/space/8412516", context,
+                  appUrlScheme: "bilibili://space/8412516");
+            },
+            child: Container(
+              height: 40,
+              margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              decoration: BoxDecoration(
+                color: DunColors.DunColor,
+                borderRadius: BorderRadius.circular(4),
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -145,10 +149,14 @@ class _HoneyCakeWorkshopPageState extends State<HoneyCakeWorkshopPage> {
                       height: 24,
                     ),
                   ),
-                  const SizedBox(
-                    width: 10,
+                  const SizedBox(width: 10),
+                  const Text(
+                    "前往 罗德岛蜜饼工坊 的B站空间",
+                    style: TextStyle(
+                      color: white,
+                      fontSize: 14,
+                    ),
                   ),
-                  const Text("前往 罗德岛蜜饼工坊 的B站空间"),
                 ],
               ),
             ),
