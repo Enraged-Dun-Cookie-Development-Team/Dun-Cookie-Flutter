@@ -167,7 +167,12 @@ class _CookieWidgetToImageState extends State<CookieWidgetToImage> {
     final size = MediaQuery.of(context).size;
     return Container(
       width: size.width,
-      child: ExpandableText(cookieText,noExpandButton: true,expandLimit: 36,overflow: TextOverflow.ellipsis,),
+      child: ExpandableText(
+        cookieText,
+        noExpandButton: true,
+        expandLimit: 36,
+        overflow: TextOverflow.ellipsis,
+      ),
       padding: const EdgeInsets.all(10),
     );
   }
@@ -178,9 +183,10 @@ class _CookieWidgetToImageState extends State<CookieWidgetToImage> {
   }
 
 //  图片转流
-  _widgetToUint8List() async {
+  Future<Uint8List> _widgetToUint8List() async {
+    await Future.delayed(
+        const Duration(milliseconds: 100)); // 让后续的代码异步执行，因为要先等UI变完再生成图片
     Completer<Uint8List> completer = Completer();
-
     RenderRepaintBoundary render =
         _globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
     ui.Image image =

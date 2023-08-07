@@ -1,13 +1,13 @@
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/model/cookie_main_list_model.dart';
-import 'package:dun_cookie_flutter/model/source_data.dart';
 import 'package:dun_cookie_flutter/provider/common_event_bus.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
 class CookieShareImage extends StatefulWidget {
   CookieShareImage({Key? key, required this.data}) : super(key: key) {
-    _hasImage = (data.defaultCookie?.images != null && data.defaultCookie!.images!.isNotEmpty);
+    _hasImage = (data.defaultCookie?.images != null &&
+        data.defaultCookie!.images!.isNotEmpty);
     _imageList = [];
     if (_hasImage) {
       for (var image in data.defaultCookie!.images!) {
