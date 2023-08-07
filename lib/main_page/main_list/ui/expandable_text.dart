@@ -67,7 +67,7 @@ class _ExpandableTextState extends State<ExpandableText> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          widget.text,
+          widget.text.replaceAll('[图片]', ''),
           style: widget.style,
           maxLines: isExpand ? null : widget.expandLimit,
           overflow: widget.overflow == TextOverflow.ellipsis
