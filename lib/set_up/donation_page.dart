@@ -1,8 +1,11 @@
 import 'package:dun_cookie_flutter/common/browser/main.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
+import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
 import 'package:dun_cookie_flutter/common/tool/open_app_or_browser.dart';
 import 'package:dun_cookie_flutter/provider/common_event_bus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
 
 class DonationPage extends StatelessWidget {
   const DonationPage({Key? key}) : super(key: key);
@@ -131,39 +134,59 @@ class DonationPage extends StatelessWidget {
               Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                      color: Colors.white,
-                    ),
-                    child: const Column(
-                      children: [
-                        Image(
-                          image: AssetImage("assets/image/wechat_new.jpg"),
-                          width: 100,
-                        ),
-                        SizedBox(height: 4),
-                        Text("微信"),
-                      ],
+                  GestureDetector(
+                    onTap: () => DunToast.showInfo("长按保存二维码"),
+                    onLongPress: () async {
+                      final ByteData bytes =
+                          await rootBundle.load("assets/image/wechat_new.jpg");
+                      await ImageGallerySaver.saveImage(
+                          bytes.buffer.asUint8List());
+                      DunToast.showInfo("保存成功!");
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                        color: Colors.white,
+                      ),
+                      child: const Column(
+                        children: [
+                          Image(
+                            image: AssetImage("assets/image/wechat_new.jpg"),
+                            width: 100,
+                          ),
+                          SizedBox(height: 4),
+                          Text("微信"),
+                        ],
+                      ),
                     ),
                   ),
                   const SizedBox(width: 16),
-                  Container(
-                    padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                      color: Colors.white,
-                    ),
-                    child: const Column(
-                      children: [
-                        Image(
-                          image: AssetImage("assets/image/zfb_new.jpg"),
-                          width: 100,
-                        ),
-                        SizedBox(height: 4),
-                        Text("支付宝"),
-                      ],
+                  GestureDetector(
+                    onTap: () => DunToast.showInfo("长按保存二维码"),
+                    onLongPress: () async {
+                      final ByteData bytes =
+                          await rootBundle.load("assets/image/zfb_new.jpg");
+                      await ImageGallerySaver.saveImage(
+                          bytes.buffer.asUint8List());
+                      DunToast.showInfo("保存成功!");
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                        color: Colors.white,
+                      ),
+                      child: const Column(
+                        children: [
+                          Image(
+                            image: AssetImage("assets/image/zfb_new.jpg"),
+                            width: 100,
+                          ),
+                          SizedBox(height: 4),
+                          Text("支付宝"),
+                        ],
+                      ),
                     ),
                   ),
                 ],
