@@ -23,7 +23,9 @@ class _HoneyCakeWorkshopPageState extends State<HoneyCakeWorkshopPage> {
   //  加载状态 0一切正常 1正在加载 2加载失败
   int loadDataType = 0;
 
-  _getBakeryInfo(id) async {
+  List<String> bakeryMansionIdList = [];
+
+  _getBakeryInfo(String? id) async {
     setState(() {
       loadDataType = 1;
     });
@@ -45,8 +47,8 @@ class _HoneyCakeWorkshopPageState extends State<HoneyCakeWorkshopPage> {
     setState(() {
       loadDataType = 1;
     });
-    List<String> value = await BakeryRequest.getBakeryMansionIdList();
-    if (value.isEmpty) {
+    bakeryMansionIdList = await BakeryRequest.getBakeryMansionIdList();
+    if (bakeryMansionIdList.isEmpty) {
       setState(() {
         loadDataType = 2;
       });
@@ -55,8 +57,8 @@ class _HoneyCakeWorkshopPageState extends State<HoneyCakeWorkshopPage> {
       setState(() {
         loadDataType = 0;
       });
-      eventBus.fire(ChangePopupMenuDownButton(idList: value));
-      _getBakeryInfo(value.last);
+      eventBus.fire(ChangePopupMenuDownButton(idList: bakeryMansionIdList));
+      _getBakeryInfo(bakeryMansionIdList.last);
     }
   }
 
@@ -80,19 +82,50 @@ class _HoneyCakeWorkshopPageState extends State<HoneyCakeWorkshopPage> {
     return Scaffold(
       backgroundColor: gray_3,
       appBar: AppBar(
-          //蜜饼工坊页面
-          backgroundColor: Colors.white,
-          leading: IconButton(
-              icon: const Icon(Icons.arrow_back_ios),
-              onPressed: () => {Navigator.of(context).pop('刷新')}),
-          leadingWidth: 50,
-          iconTheme: const IconThemeData(
-            color: DunColors.DunColor,
+        //蜜饼工坊页面
+        backgroundColor: Colors.white,
+        leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios),
+            onPressed: () => {Navigator.of(context).pop('刷新')}),
+        leadingWidth: 50,
+        iconTheme: const IconThemeData(
+          color: DunColors.DunColor,
+        ),
+        titleTextStyle:
+            const TextStyle(color: DunColors.DunColor, fontSize: 20),
+        titleSpacing: 0,
+        title: const Text("罗德岛蜜饼工坊"),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: bakeryMansionIdList.isNotEmpty
+                ? SizedBox(
+                    width: 80,
+                    // 下拉列表框选版本
+                    child: DropdownButtonFormField<String>(
+                      isExpanded: true,
+                      decoration: const InputDecoration(
+                        enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: DunColors.DunColor, width: 1.5)),
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: DunColors.DunColor, width: 1.5)),
+                      ),
+                      value: bakeryMansionIdList.last,
+                      // 选择回调
+                      onChanged: (String? value) => _getBakeryInfo(value),
+                      // 传入可选的数组
+                      items: bakeryMansionIdList
+                          .map(
+                              (e) => DropdownMenuItem(value: e, child: Text(e)))
+                          .toList(),
+                    ),
+                  )
+                : const SizedBox(),
           ),
-          titleTextStyle:
-              const TextStyle(color: DunColors.DunColor, fontSize: 20),
-          titleSpacing: 0,
-          title: const Text("罗德岛蜜饼工坊")),
+        ],
+      ),
       body: Column(
         children: [
           Expanded(
