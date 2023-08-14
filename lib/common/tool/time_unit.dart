@@ -105,7 +105,7 @@ class TimeUnit {
   }
   // 时间戳转时间格式YYYY-mm-dd hh:nn:ss
   static timestampFormatYMDHNS(int timestamp) {
-    return formatDate(timestampToDate(timestamp), [yyyy, '-', mm, '-', dd, " ", hh, ":", nn, ":", ss]);
+    return formatDate(timestampToDate(timestamp), [yyyy, '-', mm, '-', dd, " ", HH, ":", nn, ":", ss]);
   }
 
   static TimeDiffModel timeDiffUnit(String endTime) {
