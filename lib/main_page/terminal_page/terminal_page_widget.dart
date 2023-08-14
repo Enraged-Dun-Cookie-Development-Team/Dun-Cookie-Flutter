@@ -7,11 +7,11 @@ import 'package:dun_cookie_flutter/main_page/terminal_page/ui/set_up_button_widg
 import 'package:dun_cookie_flutter/main_page/terminal_page/ui/today_rotation.dart';
 import 'package:dun_cookie_flutter/model/cookie_count_model.dart';
 import 'package:dun_cookie_flutter/model/resource_info.dart';
+import 'package:dun_cookie_flutter/request/cookie_request.dart';
 import 'package:dun_cookie_flutter/request/tools_api.dart';
 import 'package:dun_cookie_flutter/set_up/set_up_page.dart';
 import 'package:flutter/material.dart';
 
-import '../../request/cookie_request.dart';
 import 'ui/prts_title_widget.dart';
 
 class TerminalPageWidget extends StatefulWidget {
@@ -49,8 +49,9 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> {
         listWidget.add(_buildActivityWidget(countdown, i));
       }
     }
+    listWidget.add(const SizedBox(height: 40));
     return Padding(
-      padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
+      padding: const EdgeInsets.fromLTRB(12, 12, 12, 60),
       child: Column(
         children: [
           _buildTitle(),
