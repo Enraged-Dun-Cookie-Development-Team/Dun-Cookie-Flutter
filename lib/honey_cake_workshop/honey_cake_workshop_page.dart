@@ -1,15 +1,14 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
+import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
+import 'package:dun_cookie_flutter/common/tool/open_app_or_browser.dart';
 import 'package:dun_cookie_flutter/model/bakery_data.dart';
 import 'package:dun_cookie_flutter/page/bakery/bakery_card.dart';
 import 'package:dun_cookie_flutter/provider/common_event_bus.dart';
 import 'package:dun_cookie_flutter/provider/common_provider.dart';
+import 'package:dun_cookie_flutter/request/bakery_request.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../common/tool/dun_toast.dart';
-import '../../common/tool/open_app_or_browser.dart';
-import '../../request/bakery_request.dart';
 
 class HoneyCakeWorkshopPage extends StatefulWidget {
   const HoneyCakeWorkshopPage({Key? key}) : super(key: key);
@@ -133,9 +132,7 @@ class _HoneyCakeWorkshopPageState extends State<HoneyCakeWorkshopPage> {
                 builder: (ctx, data, child) {
               if (loadDataType == 2) {
                 return GestureDetector(
-                  onTap: () {
-                    _getBakeryMansionIdList();
-                  },
+                  onTap: () => _getBakeryMansionIdList(),
                   child: const Center(
                     child: Image(
                       image: AssetImage("assets/image/load/bakery_error.png"),
@@ -159,42 +156,46 @@ class _HoneyCakeWorkshopPageState extends State<HoneyCakeWorkshopPage> {
               return commonProvider.bakeryData;
             }),
           ),
-          GestureDetector(
-            onTap: () {
-              OpenAppOrBrowser.openUrl(
-                  "https://m.bilibili.com/space/8412516", context,
-                  appUrlScheme: "bilibili://space/8412516");
-            },
-            child: Container(
-              height: 40,
-              margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-              decoration: BoxDecoration(
-                color: DunColors.DunColor,
-                borderRadius: BorderRadius.circular(4),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: const Image(
-                      image: AssetImage("assets/image/bilibili_up_mbgf.webp"),
-                      height: 24,
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  const Text(
-                    "前往 罗德岛蜜饼工坊 的B站空间",
-                    style: TextStyle(
-                      color: white,
-                      fontSize: 14,
-                    ),
-                  ),
-                ],
+          _buildBottomButton(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBottomButton() {
+    return GestureDetector(
+      onTap: () {
+        OpenAppOrBrowser.openUrl(
+            "https://m.bilibili.com/space/8412516", context,
+            appUrlScheme: "bilibili://space/8412516");
+      },
+      child: Container(
+        height: 40,
+        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+        decoration: BoxDecoration(
+          color: DunColors.DunColor,
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: const Image(
+                image: AssetImage("assets/image/bilibili_up_mbgf.webp"),
+                height: 24,
               ),
             ),
-          ),
-        ],
+            const SizedBox(width: 10),
+            const Text(
+              "前往 罗德岛蜜饼工坊 的B站空间",
+              style: TextStyle(
+                color: white,
+                fontSize: 14,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

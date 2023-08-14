@@ -7,9 +7,9 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:timelines/timelines.dart';
 
 class BakeryCard extends StatelessWidget {
-  BakeryCard(this.data, {Key? key}) : super(key: key);
+  const BakeryCard(this.data, {Key? key}) : super(key: key);
 
-  BakeryData data;
+  final BakeryData data;
 
   @override
   Widget build(BuildContext context) {
@@ -25,26 +25,48 @@ class BakeryCard extends StatelessWidget {
                 onTap: () {
                   if (data.cvLink != null && data.cvLink != "") {
                     OpenAppOrBrowser.openUrl(
-                        "https://www.bilibili.com/read/cv${data.cvLink}", context,
+                        "https://www.bilibili.com/read/cv${data.cvLink}",
+                        context,
                         appUrlScheme: "bilibili://article/${data.cvLink}");
                   }
                 },
-                child: Text(
-                  '饼学大厦 #' +
-                      data.id! +
-                      '\n' +
-                      (data.description! != "" ? "（ver. ${data.description!}）" : ""),
-                  style: DunStyles.text20C,
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          '饼学大厦 #' + (data.id ?? ''),
+                          style: DunStyles.text20C,
+                        ),
+                        const SizedBox(width: 8),
+                        const Image(
+                          image: AssetImage("assets/sources_logo/bili.ico"),
+                          height: 20,
+                        ),
+                        const SizedBox(width: 2),
+                        const Text(
+                          "Bilibili专栏",
+                          style: TextStyle(
+                            color: DunColors.DunColorBlue,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      data.description! != ""
+                          ? "（ver. ${data.description ?? ''}）"
+                          : "",
+                      style: DunStyles.text20C,
+                    ),
+                  ],
                 ),
               ),
               Text(
                 "${data.createTime!}发布 ${data.createTime == null ? "暂未修改" : "于${data.modifyTime}修改"}",
                 style: DunStyles.text12B,
               ),
-              // const Text(
-              //   "以下为示例样式，非最终样式，蜜饼工坊，敬请期待",
-              //   style: DunStyles.text12,
-              // ),
             ],
           ),
           const SizedBox(
