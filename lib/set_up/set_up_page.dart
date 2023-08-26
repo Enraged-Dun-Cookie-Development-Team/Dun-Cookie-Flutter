@@ -1,11 +1,16 @@
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/open_app_or_browser.dart';
+import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
 import 'package:dun_cookie_flutter/set_up/donation_page.dart';
 import 'package:dun_cookie_flutter/set_up/set_up_datasource_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../common/tool/dun_toast.dart';
+import '../common/tool/package_info.dart';
+import '../page/update/main.dart';
 import '../provider/setting_provider.dart';
+import '../request/info_request.dart';
 
 class SetUpPage extends StatefulWidget {
   const SetUpPage({Key? key}) : super(key: key);
@@ -16,11 +21,21 @@ class SetUpPage extends StatefulWidget {
 }
 
 class _SetUpPageState extends State<SetUpPage> {
+  String version = '0.0.0';
   late SettingProvider settingData;
+
+  void init() async {
+    version = await PackageInfoPlus.getVersion();
+    setState(() {
+      version = version;
+    });
+  }
+
   @override
   void initState() {
     settingData = Provider.of<SettingProvider>(context, listen: false);
     super.initState();
+    init();
   }
 
   @override
@@ -283,27 +298,44 @@ class _SetUpPageState extends State<SetUpPage> {
   }
 
   Widget _buildCheckUpgrade() {
-    return const Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(height: 7),
-        Text(
-          "检测升级",
-          style: TextStyle(
-            color: gray_1,
-            fontSize: 16,
-          ),
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () async {
+        DunApp? app = await InfoRequest.getAppVersionInfo();
+        if (app.version != null &&
+            await PackageInfoPlus.isVersionHigherThenNow(app.version)) {
+          //跳转更新
+          DunToast.showInfo("当前版本已过时，为您跳转到更新页面");
+          Navigator.pushNamed(context, DunUpdate.routerName, arguments: app);
+        } else {
+          DunToast.showSuccess("当前版本是最新版本");
+        }
+      },
+      child: SizedBox(
+        width: double.infinity,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 7),
+            Text(
+              "检查更新",
+              style: TextStyle(
+                color: gray_1,
+                fontSize: 16,
+              ),
+            ),
+            SizedBox(height: 2),
+            Text(
+              version,
+              style: TextStyle(
+                color: gray_subtitle,
+                fontSize: 11,
+              ),
+            ),
+            SizedBox(height: 7),
+          ],
         ),
-        SizedBox(height: 2),
-        Text(
-          "可以试着点点",
-          style: TextStyle(
-            color: gray_subtitle,
-            fontSize: 11,
-          ),
-        ),
-        SizedBox(height: 7),
-      ],
+      ),
     );
   }
 

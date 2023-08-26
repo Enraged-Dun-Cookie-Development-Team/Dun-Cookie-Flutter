@@ -4,6 +4,7 @@ import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../common/tool/color_theme.dart';
 import '../../common/tool/package_info.dart';
 
 class DunUpdate extends StatefulWidget {
@@ -58,6 +59,24 @@ class _DunUpdateState extends State<DunUpdate> {
       },
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.white,
+          leading: IconButton(
+              icon: const Icon(Icons.arrow_back_ios),
+              onPressed: (){
+                if(isFocus) {
+                  DunToast.showInfo("这波啊，是强制更新");
+                }else{
+                  Navigator.of(context).pop('刷新');
+                }
+              }
+              ),
+          leadingWidth: 50,
+          iconTheme: const IconThemeData(
+            color: DunColors.DunColor,
+          ),
+          titleTextStyle:
+          const TextStyle(color: DunColors.DunColor, fontSize: 20),
+          titleSpacing: 0,
           automaticallyImplyLeading: isFocus ? false : true,
           title: const Text("[公告]不停机客户端更新公告"),
           systemOverlayStyle: SystemUiOverlayStyle.light,

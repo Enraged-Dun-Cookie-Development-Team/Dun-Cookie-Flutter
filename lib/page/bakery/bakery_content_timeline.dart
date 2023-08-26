@@ -2,6 +2,8 @@ import 'package:dun_cookie_flutter/model/bakery_data.dart';
 import 'package:flutter/material.dart';
 import 'package:timelines/timelines.dart';
 
+import '../../common/tool/color_theme.dart';
+
 class ContentTimeLine extends StatelessWidget {
   ContentTimeLine(this.infoList, {Key? key}) : super(key: key);
 
@@ -25,9 +27,9 @@ class ContentTimeLine extends StatelessWidget {
               ),
             );
           } else {
-            return OutlinedDotIndicator(
-              borderWidth: 1.0,
-              color: Theme.of(context).primaryColor,
+            return const OutlinedDotIndicator(
+              borderWidth: 1.5,
+              color: DunColors.DunColor,
             );
           }
         },

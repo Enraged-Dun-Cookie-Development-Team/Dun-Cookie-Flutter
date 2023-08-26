@@ -18,6 +18,7 @@ import 'package:dun_cookie_flutter/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobpush_plugin/mobpush_plugin.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -114,6 +115,13 @@ class _BottomNaacBarState extends State<BottomNavBar> {
       });
       result = await completer.future;
       if (!result) return;
+
+      if (await Permission.notification.request().isGranted) {
+        // Either the permission was already granted before or the user just granted it.
+        var status = await Permission.notification.status;
+        print("Permission: "+status.toString());
+      }
+
     }
 
     _checkVersion();

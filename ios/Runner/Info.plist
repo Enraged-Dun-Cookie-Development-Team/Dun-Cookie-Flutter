@@ -42,6 +42,8 @@
 	<string>6652363189e64cf91ef668da35d01267</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>小刻食堂需要相册权限，才能选择图片。</string>
+	<key>PermissionGroupNotification</key>
+    <string>小刻食堂需要通知权限，才能推送饼。</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
