@@ -22,7 +22,9 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'Dialog/UpdataDialog.dart';
 import 'common/constant/main.dart';
+import 'dialog/UpdataInfoDialog.dart';
 import 'provider/common_provider.dart';
 
 void main() async {
@@ -65,7 +67,8 @@ class _CeobeCanteenAppState extends State<CeobeCanteenApp> {
       providers: [
         ChangeNotifierProvider<CommonProvider>(create: (_) => CommonProvider()),
         ChangeNotifierProvider.value(value: SettingProvider.getInstance()),
-        ChangeNotifierProvider<CeobecanteenData>(create: (_) => CeobecanteenData()),
+        ChangeNotifierProvider<CeobecanteenData>(
+            create: (_) => CeobecanteenData()),
       ],
       child: MaterialApp(
         title: '小刻食堂',
@@ -103,50 +106,59 @@ class _BottomNaacBarState extends State<BottomNavBar> {
   _readData() async {
     var settingData = Provider.of<SettingProvider>(context, listen: false);
     Constant.mobRId = settingData.appSetting.rid;
-
-    if (settingData.appSetting.notOnce!) {
+    bool? notOnce = settingData.appSetting.notOnce;
+    if (notOnce!) {
       bool result = false;
       final completer = Completer<bool>();
       // 延迟到下一帧执行
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const OpenScreenInfo()))
-        .then((value) => completer.complete(value));
+        Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const OpenScreenInfo()))
+            .then((value) => completer.complete(value));
       });
       result = await completer.future;
       if (!result) return;
-
+      //申请权限
       if (await Permission.notification.request().isGranted) {
         // Either the permission was already granted before or the user just granted it.
         var status = await Permission.notification.status;
-        print("Permission: "+status.toString());
+        print("Permission: " + status.toString());
       }
-
     }
-
-    _checkVersion();
+    _checkVersion(notOnce);
   }
 
   // 判断版本号，强制更新&更新日志
-  _checkVersion() async {
+  _checkVersion(bool notOnce) async {
     String nowVersion = await PackageInfoPlus.getVersion();
     DunApp nowApp = await InfoRequest.getAppVersionInfo(version: nowVersion);
     DunApp newApp = await InfoRequest.getAppVersionInfo();
     SharedPreferences sp = await SharedPreferences.getInstance();
     String? lastShowedVersion = sp.getString("update_dialog_showed_version");
+    if (notOnce) {
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (_) => UpdataDialog(
+              oldVersion: nowApp.version,
+              version: newApp.version,
+              description: nowApp.description));
+    }
     if (PackageInfoPlus.isVersionHigher(nowVersion, newApp.lastFocusVersion)) {
       Navigator.pushNamed(context, DunUpdate.routerName, arguments: newApp);
     } else {
       if (lastShowedVersion == null ||
           lastShowedVersion != nowVersion &&
               PackageInfoPlus.isVersionHigher(nowVersion, lastShowedVersion)) {
-        if (nowApp.version?.isNotEmpty == true && nowApp.description?.isNotEmpty == true) {
+        if (nowApp.version?.isNotEmpty == true &&
+            nowApp.description?.isNotEmpty == true) {
           showDialog(
-            context: context,
-            builder: (_) => Dialog(
-              child: _buildVersionUpdateDialog(nowApp.version, nowApp.description),
-            ),
-          );
+              context: context,
+              barrierDismissible: false,
+              builder: (_) => UpdataDialog(
+                  oldVersion: nowApp.version,
+                  version: newApp.version,
+                  description: nowApp.description));
           sp.setString("update_dialog_showed_version", nowVersion);
         }
       }
@@ -191,7 +203,11 @@ class _BottomNaacBarState extends State<BottomNavBar> {
   /// ===========================先把旧代码copy过来end====================================
 
   // 点击导航时显示指定内容
-  List<Widget> list = [const MoreListWidget(), const MainListWidget(), const TerminalPageWidget()];
+  List<Widget> list = [
+    const MoreListWidget(),
+    const MainListWidget(),
+    const TerminalPageWidget()
+  ];
 
   // 当前点击的导航下标
   int _currentController = 1;
@@ -205,7 +221,8 @@ class _BottomNaacBarState extends State<BottomNavBar> {
         color: gray_3,
         padding: EdgeInsets.only(top: paddingTop),
         child: Selector<SettingProvider, bool>(
-          selector: (context, provider) => provider.appSetting.datasourceSetting != null,
+          selector: (context, provider) =>
+              provider.appSetting.datasourceSetting != null,
           builder: (_, isDatasourceAvailable, __) {
             // TODO: 也可以传递 loading 布尔参数给子控件，让子控件自己显示进度条
             // 相应的，子控件的载入过程应该推迟到 didUpdateWidget() 时
@@ -315,11 +332,14 @@ class _DunMainState extends State<DunMain> {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
-          ChangeNotifierProvider<CommonProvider>(create: (_) => CommonProvider()),
+          ChangeNotifierProvider<CommonProvider>(
+              create: (_) => CommonProvider()),
           ChangeNotifierProvider.value(value: SettingProvider.getInstance()),
-          ChangeNotifierProvider<CeobecanteenData>(create: (_) => CeobecanteenData()),
+          ChangeNotifierProvider<CeobecanteenData>(
+              create: (_) => CeobecanteenData()),
         ],
-        child: Consumer<SettingProvider>(builder: (context, settingModeProvider, _) {
+        child: Consumer<SettingProvider>(
+            builder: (context, settingModeProvider, _) {
           ThemeMode? themeMode;
 
           if (settingModeProvider.appSetting.darkMode == 1) {
