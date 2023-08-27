@@ -22,7 +22,8 @@ class _DunUpdateState extends State<DunUpdate> {
   late DunApp dunApp;
 
   isFocusUpdate(DunApp dunApp) async {
-    if (await PackageInfoPlus.isVersionHigherThenNow(dunApp.version) && dunApp.force) {
+    if (await PackageInfoPlus.isVersionHigherThenNow(dunApp.version) &&
+        dunApp.force) {
       return true;
     }
     if (await PackageInfoPlus.isVersionHigherThenNow(dunApp.lastFocusVersion)) {
@@ -58,49 +59,60 @@ class _DunUpdateState extends State<DunUpdate> {
         return true;
       },
       child: Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.white,
           leading: IconButton(
               icon: const Icon(Icons.arrow_back_ios),
-              onPressed: (){
-                if(isFocus) {
+              onPressed: () {
+                if (isFocus) {
                   DunToast.showInfo("这波啊，是强制更新");
-                }else{
+                } else {
                   Navigator.of(context).pop('刷新');
                 }
-              }
-              ),
-          leadingWidth: 50,
+              }),
           iconTheme: const IconThemeData(
             color: DunColors.DunColor,
           ),
+          centerTitle: true,
           titleTextStyle:
-          const TextStyle(color: DunColors.DunColor, fontSize: 20),
-          titleSpacing: 0,
-          automaticallyImplyLeading: isFocus ? false : true,
-          title: const Text("[公告]不停机客户端更新公告"),
-          systemOverlayStyle: SystemUiOverlayStyle.light,
+              const TextStyle(color: DunColors.DunColor, fontSize: 20),
+          title: const Text("检查更新"),
+          elevation: 0,
         ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.only(left: 15,right: 15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                RichText(
-                  text: const TextSpan(children: [
-                    TextSpan(text: "感谢您对《小刻食堂》的关注与支持。《小刻食堂》将于现在进行服务器不停机的"),
-                    TextSpan(text: "客户端更新", style: TextStyle(color: Colors.red)),
-                    TextSpan(text: "。本次更新不会影响博士正常蹲饼进程，更新结束后，博士只需选择合适时间打开软件即可完成更新。")
-                  ]),
-                ),
+
                 _content("版本升级", "$version --> ${dunApp.version.toString()}"),
-                _content("更新时间", "现在"),
-                _content("更新模式", isFocus ? "强制" : "非强制", color: isFocus ? Colors.red : null),
+                _content("更新模式", isFocus ? "强制" : "非强制",
+                    color: isFocus ? Colors.red : Colors.black),
                 _content("更新内容", dunApp.description),
-                _content("更新补偿：虚空合成玉*300", "补偿范围：更新前所有小刻食堂用户"),
-                _content("更新地址", "没钱买服务器，请在群里面找群文件"),
-                const GroupNumButton(),
+                const SizedBox(
+                  height: 30,
+                ),
+                const Text(
+                  "更新地址",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  padding: const EdgeInsets.only(left: 20,right: 20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _DownloadButton("github", ""),
+                      _DownloadButton("kgithub", ""),
+                      _DownloadButton("百度云", ""),
+                    ],
+                  ),
+                )
               ],
             ),
           ),
@@ -126,6 +138,20 @@ class _DunUpdateState extends State<DunUpdate> {
           style: TextStyle(color: color),
         ),
       ],
+    );
+  }
+
+  _DownloadButton(address, url) {
+    return ElevatedButton(
+      style: ButtonStyle(
+        backgroundColor: MaterialStateProperty.all(DunColors.DunColor),
+      ),
+      onPressed: () {
+        //跳转到更新地址
+      },
+      child: Text(
+        address,
+      ),
     );
   }
 }

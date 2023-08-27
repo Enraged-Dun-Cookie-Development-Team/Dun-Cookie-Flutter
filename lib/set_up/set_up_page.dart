@@ -309,6 +309,7 @@ class _SetUpPageState extends State<SetUpPage> {
           Navigator.pushNamed(context, DunUpdate.routerName, arguments: app);
         } else {
           DunToast.showSuccess("当前版本是最新版本");
+          Navigator.pushNamed(context, DunUpdate.routerName, arguments: app);
         }
       },
       child: SizedBox(

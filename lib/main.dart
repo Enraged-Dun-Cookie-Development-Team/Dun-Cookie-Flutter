@@ -138,9 +138,7 @@ class _BottomNaacBarState extends State<BottomNavBar> {
     if (notOnce) {
       showDialog(
           context: context,
-          barrierDismissible: false,
-          builder: (_) => UpdataDialog(
-              oldVersion: nowApp.version,
+          builder: (_) => UpdataInfoDialog(
               version: newApp.version,
               description: nowApp.description));
     }
