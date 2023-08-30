@@ -1,5 +1,4 @@
 import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
-import 'package:dun_cookie_flutter/component/group_num_button.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,20 +20,9 @@ class _DunUpdateState extends State<DunUpdate> {
   String version = '0.0.0';
   late DunApp dunApp;
 
-  isFocusUpdate(DunApp dunApp) async {
-    if (await PackageInfoPlus.isVersionHigherThenNow(dunApp.version) &&
-        dunApp.force) {
-      return true;
-    }
-    if (await PackageInfoPlus.isVersionHigherThenNow(dunApp.lastFocusVersion)) {
-      return true;
-    }
-    return false;
-  }
-
   void init() async {
     version = await PackageInfoPlus.getVersion();
-    isFocus = await isFocusUpdate(dunApp);
+    isFocus = PackageInfoPlus.isVersionHigher(dunApp.lastFocusVersion, version);
     setState(() {
       version = version;
       isFocus = isFocus;
@@ -86,7 +74,6 @@ class _DunUpdateState extends State<DunUpdate> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
                 _content("版本升级", "$version --> ${dunApp.version.toString()}"),
                 _content("更新模式", isFocus ? "强制" : "非强制",
                     color: isFocus ? Colors.red : Colors.black),
@@ -147,7 +134,7 @@ class _DunUpdateState extends State<DunUpdate> {
         backgroundColor: MaterialStateProperty.all(DunColors.DunColor),
       ),
       onPressed: () {
-        //跳转到更新地址
+        //跳转到更新网页
       },
       child: Text(
         address,

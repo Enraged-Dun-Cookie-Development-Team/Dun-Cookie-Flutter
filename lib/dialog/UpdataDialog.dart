@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -7,10 +9,10 @@ import '../request/info_request.dart';
 
 class UpdataDialog extends Dialog {
   final String? oldVersion; //旧版本
-  final String? version; //新版本
-  final String? description; //更新内容
+  final DunApp? newApp; //新版本
+  final bool? isFocus; //强制更新
 
-  UpdataDialog({this.oldVersion,this.version,this.description});
+  UpdataDialog({this.oldVersion, this.newApp, this.isFocus});
 
   @override
   Widget build(BuildContext context) {
@@ -46,35 +48,53 @@ class UpdataDialog extends Dialog {
           ),
           SizedBox(
             child: Container(
-                padding: const EdgeInsets.only(top:8, left: 20),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                    "$oldVersion --> $version",
-                      style: const TextStyle(
-                        fontSize: 13,
+              constraints: BoxConstraints(
+                  maxWidth: MediaQuery.of(context).size.width * 0.85,
+                  maxHeight: MediaQuery.of(context).size.width * 0.5),
+              padding: const EdgeInsets.only(top: 8, left: 15, right: 5),
+              child: Scrollbar(
+                thumbVisibility: true,
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        isFocus! ? "强制更新" : "非强制更新",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                          color: isFocus! ? Colors.red : Colors.black,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 10),
-                    const Text(
-                      "更新内容",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
+                      const SizedBox(height: 3),
+                      Text(
+                        "$oldVersion —> ${newApp?.version}",
+                        style: const TextStyle(
+                          fontSize: 13,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      description ?? "",
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: gray_1,
+                      const SizedBox(height: 6),
+                      const Text(
+                        "更新内容",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                        ),
                       ),
-                    ),
-                  ],
-                )),
+                      const SizedBox(height: 3),
+                      Text(
+                        newApp?.description ?? "",
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: gray_1,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ),
           SizedBox(
             child: Container(
@@ -93,23 +113,21 @@ class UpdataDialog extends Dialog {
                           TextButton(
                             onPressed: () {
                               _confirmCallBack(context);
-                              Navigator.of(context).pop();
                             },
                             child: const Text(
-                              '升级',
+                              '更新',
                               style: TextStyle(fontSize: 17),
                             ),
                           ),
                           const VerticalDivider(
                             color: Colors.grey,
-                            width: 1,
+                            width: 2,
                           ),
                           TextButton(
                               onPressed: () {
                                 _cancelCallBack(context);
-                                Navigator.of(context).pop();
                               },
-                              child: const Text('暂不升级',
+                              child: Text(isFocus! ? "退出" : "暂不更新",
                                   style: TextStyle(fontSize: 17))),
                         ],
                       ),
@@ -123,11 +141,15 @@ class UpdataDialog extends Dialog {
   }
 
   Future<void> _confirmCallBack(BuildContext context) async {
-    DunApp? app = await InfoRequest.getAppVersionInfo();
-    Navigator.pushNamed(context, DunUpdate.routerName, arguments: app);
+    Navigator.pushNamed(context, DunUpdate.routerName, arguments: newApp);
+    Navigator.of(context).pop();
   }
 
   void _cancelCallBack(BuildContext context) {
-
+    if (isFocus!) {
+      exit(0);
+    }else{
+      Navigator.of(context).pop();
+    }
   }
 }

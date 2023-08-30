@@ -124,7 +124,7 @@ class OpenScreenInfo extends StatelessWidget {
                       style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all(gray_3)),
                       onPressed: () {
-                        SystemNavigator.pop();
+                        exit(0);
                       },
                       child: const Text(
                         "我不同意",

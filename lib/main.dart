@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/package_info.dart';
 import 'package:dun_cookie_flutter/component/group_num_button.dart';
+import 'package:dun_cookie_flutter/dialog/ToSettingDialog.dart';
 import 'package:dun_cookie_flutter/main_page/main_list/main_list_widget.dart';
 import 'package:dun_cookie_flutter/main_page/more_list/more_list_widget.dart';
 import 'package:dun_cookie_flutter/main_page/terminal_page/terminal_page_widget.dart';
@@ -119,81 +120,55 @@ class _BottomNaacBarState extends State<BottomNavBar> {
       result = await completer.future;
       if (!result) return;
       //申请权限
-      if (await Permission.notification.request().isGranted) {
-        // Either the permission was already granted before or the user just granted it.
-        var status = await Permission.notification.status;
-        print("Permission: " + status.toString());
-      }
+      Permission.notification.request();
     }
-    _checkVersion(notOnce);
-  }
-
-  // 判断版本号，强制更新&更新日志
-  _checkVersion(bool notOnce) async {
-    String nowVersion = await PackageInfoPlus.getVersion();
-    DunApp nowApp = await InfoRequest.getAppVersionInfo(version: nowVersion);
-    DunApp newApp = await InfoRequest.getAppVersionInfo();
-    SharedPreferences sp = await SharedPreferences.getInstance();
-    String? lastShowedVersion = sp.getString("update_dialog_showed_version");
+    _checkVersion();
+    //安卓提醒锁后台
     if (notOnce) {
       showDialog(
           context: context,
-          builder: (_) => UpdataInfoDialog(
-              version: newApp.version,
-              description: nowApp.description));
-    }
-    if (PackageInfoPlus.isVersionHigher(nowVersion, newApp.lastFocusVersion)) {
-      Navigator.pushNamed(context, DunUpdate.routerName, arguments: newApp);
-    } else {
-      if (lastShowedVersion == null ||
-          lastShowedVersion != nowVersion &&
-              PackageInfoPlus.isVersionHigher(nowVersion, lastShowedVersion)) {
-        if (nowApp.version?.isNotEmpty == true &&
-            nowApp.description?.isNotEmpty == true) {
-          showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (_) => UpdataDialog(
-                  oldVersion: nowApp.version,
-                  version: newApp.version,
-                  description: nowApp.description));
-          sp.setString("update_dialog_showed_version", nowVersion);
-        }
-      }
+          barrierDismissible: false,
+          builder: (_) => ToSettingDialog());
     }
   }
 
-  Widget _buildVersionUpdateDialog(String? version, String? description) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(8)),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Center(
-            child: Text(
-              "更新日志",
-              style: TextStyle(
-                color: Colors.orange,
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-          const SizedBox(height: 16),
-          Text("版本号：$version"),
-          const SizedBox(height: 8),
-          const Text("本次更新内容："),
-          Text(description ?? ""),
-          const SizedBox(height: 16),
-          const Center(child: GroupNumButton()),
-        ],
-      ),
-    );
+  // 判断版本号，强制更新&更新日志
+  _checkVersion() async {
+    String nowVersion = await PackageInfoPlus.getVersion();
+    DunApp newApp = await InfoRequest.getAppVersionInfo();
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    String? lastShowedVersion = sp.getString("update_dialog_showed_version");
+    if (nowVersion != lastShowedVersion) {
+      DunApp nowApp = await InfoRequest.getAppVersionInfo(version: nowVersion);
+      showDialog(
+          context: context,
+          builder: (_) => UpdataInfoDialog(
+                version: nowApp.version,
+                description: nowApp.description,
+              ));
+      sp.setString("update_dialog_showed_version", nowVersion);
+    }
+    if (PackageInfoPlus.isVersionHigher(newApp.lastFocusVersion, nowVersion)) {
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (_) => UpdataDialog(
+                oldVersion: nowVersion,
+                newApp: newApp,
+                isFocus: true,
+              ));
+
+    } else if (PackageInfoPlus.isVersionHigher(newApp.version, nowVersion)) {
+       showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (_) => UpdataDialog(
+                oldVersion: nowVersion,
+                newApp: newApp,
+                isFocus: false,
+              )
+      );
+    }
   }
 
   List<QuickJump> shortcutMenu = [];
