@@ -4,6 +4,7 @@ import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
 import 'package:dun_cookie_flutter/provider/common_event_bus.dart';
 import 'package:dun_cookie_flutter/provider/setting_provider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobpush_plugin/mobpush_plugin.dart';
@@ -13,22 +14,39 @@ import '../../common/constant/main.dart';
 import '../../model/user_settings.dart';
 import '../../request/info_request.dart';
 
-class OpenScreenInfo extends StatelessWidget {
+class OpenScreenInfo extends StatefulWidget {
   const OpenScreenInfo({Key? key}) : super(key: key);
 
+  @override
+  State<OpenScreenInfo> createState() => _OpenScreenInfoState();
+}
+
+class _OpenScreenInfoState extends State<OpenScreenInfo> {
+  @override
+  void initState() {
+    _initMobPush();
+  }
+
   /// 注册mobid，并且与后端注册
-  _initMobPush(SettingProvider settingData) async {
+  _initMobPush() async {
+    MobpushPlugin.updatePrivacyPermissionStatus(true).then((value) {
+      eventBus.fire(UpdatePrivacyPermissionStatus());
+    });
     //获取注册的设备id， 这个可以不初始化
     Map<String, dynamic> ridMap = await MobpushPlugin.getRegistrationId();
     String regId = ridMap['res'].toString();
+
+    print('RID: ' + regId);
+
+    Constant.mobRId = regId;
+  }
+
+  _registerMobPush(SettingProvider settingData) async {
+    var regId = Constant.mobRId;
     if (settingData.appSetting.rid != regId) {
       settingData.saveRid(regId);
     }
-    print('RID: ' + regId);
-    // FIXME: 不要在这里调用 setState()，因为本函数可能在 build() 开始之前调用，导致异常
-
-    Constant.mobRId = regId;
-
+    print('MobID: ' + regId!);
     var success = false;
     var retry = 0;
     while (true) {
@@ -41,7 +59,7 @@ class OpenScreenInfo extends StatelessWidget {
         break;
       }
       var duration = const Duration(seconds: 1);
-      sleep(duration);
+      await Future.delayed(duration);
     }
     UserDatasourceSettings userSettings =
         await InfoRequest.getUserDatasourceSettings();
@@ -87,6 +105,25 @@ class OpenScreenInfo extends StatelessWidget {
                     style: DunStyles.text14C.copyWith(color: Colors.red),
                   ),
                   const SizedBox(
+                    height: 3,
+                  ),
+                  const Text(
+                    "这是一个测试版本，功能不完整，bug也会有，很可怕吗？是的很可怕！所以怕的博士建议卸载APP，当然也没有那么可怕，毕竟当前的功能也就那么点，bug也不会很刺激，至少在开发阶段没见过闪退什么的。",
+                  ),
+                  const SizedBox(
+                    height: 3,
+                  ),
+                  const Text(
+                    "这个版本的发布的主要目的是测试服务器的稳定性，注意：当前的版本不包含推送的功能！需要进入APP进行手动下拉刷新查看，剩下的为数不多的功能就自己探索吧！",
+                  ),
+                  const SizedBox(
+                    height: 6,
+                  ),
+                  Text(
+                    "第一次写移动端，请不要催更，如果有问题，在设置里面有反馈方法",
+                    style: DunStyles.text14C.copyWith(color: Colors.red),
+                  ),
+                  const SizedBox(
                     height: 6,
                   ),
                   const SizedBox(
@@ -107,11 +144,7 @@ class OpenScreenInfo extends StatelessWidget {
                         var settingData = Provider.of<SettingProvider>(context,
                             listen: false);
                         DunToast.showInfo("与土豆服务器连接中……");
-                        MobpushPlugin.updatePrivacyPermissionStatus(true)
-                            .then((value) {
-                          eventBus.fire(UpdatePrivacyPermissionStatus());
-                        });
-                        await _initMobPush(settingData);
+                        await _registerMobPush(settingData);
                         settingData.appSetting.notOnce = false;
                         settingData.saveAppSetting();
                         Navigator.of(context).pop(true);

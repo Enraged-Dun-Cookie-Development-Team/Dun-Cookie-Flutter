@@ -22,6 +22,7 @@ class InfoRequest {
   static Future<bool> createUser(String? mobId) async {
     ResponseData res =
         await HttpClass.post(_createUserUrl, data: {"mob_id": mobId}, type: 1);
+
     return Future.value(res.isSuccess());
   }
 
