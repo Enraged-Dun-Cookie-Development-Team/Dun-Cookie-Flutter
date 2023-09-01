@@ -94,7 +94,7 @@ class _MoreListWidgetState extends State<MoreListWidget> {
                 margin: const EdgeInsets.only(bottom: 6),
                 width: 17,
                 height: 10,
-                color: gray_2,
+                color: yellow,
               ),
             ),
           ],

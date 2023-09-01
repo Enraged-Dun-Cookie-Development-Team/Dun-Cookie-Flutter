@@ -4,8 +4,10 @@ import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
 import 'package:dun_cookie_flutter/set_up/donation_page.dart';
 import 'package:dun_cookie_flutter/set_up/set_up_datasource_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+import '../common/constant/main.dart';
 import '../common/tool/dun_toast.dart';
 import '../common/tool/package_info.dart';
 import '../page/update/main.dart';
@@ -105,6 +107,8 @@ class _SetUpPageState extends State<SetUpPage> {
                   _buildCheckUpgrade(),
                   _buildLine(),
                   _buildDonation(),
+                  _buildLine(),
+                  _buildMobId(),
                 ],
               ),
             ),
@@ -369,6 +373,41 @@ class _SetUpPageState extends State<SetUpPage> {
               ),
             ),
             SizedBox(height: 7),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMobId() {
+    return InkWell(
+      onTap: () {
+        Clipboard.setData(ClipboardData(text: Constant.mobRId ?? '--'));
+        DunToast.showSuccess("已复制");
+      },
+      highlightColor: Colors.blue,
+      child: SizedBox(
+        width: double.infinity,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 7),
+            Text(
+              Constant.mobRId ?? "--",
+              style: const TextStyle(
+                color: gray_1,
+                fontSize: 16,
+              ),
+            ),
+            const SizedBox(height: 2),
+            const Text(
+              "推送ID，收不到推送请点击复制ID联系我们，没有ID也联系我们",
+              style: TextStyle(
+                color: gray_subtitle,
+                fontSize: 11,
+              ),
+            ),
+            const SizedBox(height: 7),
           ],
         ),
       ),
