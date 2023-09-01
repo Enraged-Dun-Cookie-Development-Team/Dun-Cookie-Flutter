@@ -123,13 +123,6 @@ class _BottomNaacBarState extends State<BottomNavBar> {
       Permission.notification.request();
     }
     _checkVersion();
-    //安卓提醒锁后台
-    if (notOnce) {
-      showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (_) => ToSettingDialog());
-    }
   }
 
   // 判断版本号，强制更新&更新日志

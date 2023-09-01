@@ -11,6 +11,7 @@ import 'package:mobpush_plugin/mobpush_plugin.dart';
 import 'package:provider/provider.dart';
 
 import '../../common/constant/main.dart';
+import '../../dialog/ToSettingDialog.dart';
 import '../../model/user_settings.dart';
 import '../../request/info_request.dart';
 
@@ -141,6 +142,10 @@ class _OpenScreenInfoState extends State<OpenScreenInfo> {
                           backgroundColor:
                               MaterialStateProperty.all(DunColors.DunColor)),
                       onPressed: () async {
+                        await showDialog(
+                            context: this.context,
+                            barrierDismissible: false,
+                            builder: (_) => ToSettingDialog());
                         var settingData = Provider.of<SettingProvider>(context,
                             listen: false);
                         DunToast.showInfo("与土豆服务器连接中……");
