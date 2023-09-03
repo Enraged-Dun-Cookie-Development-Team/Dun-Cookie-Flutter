@@ -22,7 +22,7 @@ class _DunUpdateState extends State<DunUpdate> {
 
   void init() async {
     version = await PackageInfoPlus.getVersion();
-    isFocus = PackageInfoPlus.isVersionHigher(dunApp.lastFocusVersion, version);
+    isFocus = PackageInfoPlus.isVersionHigher(dunApp.lastForceVersion, version);
     setState(() {
       version = version;
       isFocus = isFocus;
