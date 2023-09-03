@@ -45,10 +45,10 @@ Future<void> earlyInit() async {
   }
 
   if (Platform.isIOS) {
-    await MobpushPlugin.setCustomNotification();
+    MobpushPlugin.setCustomNotification();
 
     // 开发环境 false, 线上环境 true
-    await MobpushPlugin.setAPNsForProduction(true);
+    MobpushPlugin.setAPNsForProduction(true);
   }
 
   await SettingProvider.getInstance().readAppSetting();
