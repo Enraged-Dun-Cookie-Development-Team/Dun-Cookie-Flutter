@@ -51,7 +51,7 @@ class ResourceInfo {
 /// time : "2022-02-17 03:59:59"
 /// start_time : "2022-02-03 04:00:00"
 /// over_time : "2022-02-17 03:59:59"
-
+/// countdown_type : "banner"
 class Countdown {
   Countdown({
     String? text,
@@ -59,12 +59,14 @@ class Countdown {
     String? time,
     String? startTime,
     String? overTime,
+    String? countdownType,
   }) {
     _text = text;
     _remark = remark;
     _time = time;
     _startTime = startTime;
     _overTime = overTime;
+    _countdownType = countdownType;
   }
 
   Countdown.fromJson(dynamic json) {
@@ -73,18 +75,21 @@ class Countdown {
     _time = json['time'];
     _startTime = json['start_time'];
     _overTime = json['over_time'];
+    _countdownType = json['countdown_type'];
   }
   String? _text;
   String? _remark;
   String? _time;
   String? _startTime;
   String? _overTime;
+  String? _countdownType;
   Countdown copyWith({
     String? text,
     String? remark,
     String? time,
     String? startTime,
     String? overTime,
+    String? countdownType,
   }) =>
       Countdown(
         text: text ?? _text,
@@ -92,12 +97,14 @@ class Countdown {
         time: time ?? _time,
         startTime: startTime ?? _startTime,
         overTime: overTime ?? _overTime,
+        countdownType: countdownType ?? _countdownType,
       );
   String? get text => _text;
   String? get remark => _remark;
   String? get time => _time;
   String? get startTime => _startTime;
   String? get overTime => _overTime;
+  String? get countdownType => _countdownType;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -106,6 +113,7 @@ class Countdown {
     map['time'] = _time;
     map['start_time'] = _startTime;
     map['over_time'] = _overTime;
+    map['countdown_type'] = _countdownType;
     return map;
   }
 }

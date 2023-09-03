@@ -1,31 +1,40 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/package_info.dart';
 import 'package:dun_cookie_flutter/component/group_num_button.dart';
+import 'package:dun_cookie_flutter/dialog/ToSettingDialog.dart';
 import 'package:dun_cookie_flutter/main_page/main_list/main_list_widget.dart';
 import 'package:dun_cookie_flutter/main_page/more_list/more_list_widget.dart';
 import 'package:dun_cookie_flutter/main_page/terminal_page/terminal_page_widget.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
-import 'package:dun_cookie_flutter/page/Error/main.dart';
+import 'package:dun_cookie_flutter/model/user_settings.dart';
+import 'package:dun_cookie_flutter/page/error/main.dart';
 import 'package:dun_cookie_flutter/page/info/open_screen_info.dart';
 import 'package:dun_cookie_flutter/page/update/main.dart';
-import 'package:dun_cookie_flutter/provider/common_event_bus.dart';
 import 'package:dun_cookie_flutter/provider/setting_provider.dart';
 import 'package:dun_cookie_flutter/request/info_request.dart';
-import 'package:dun_cookie_flutter/request/list_request.dart';
 import 'package:dun_cookie_flutter/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobpush_plugin/mobpush_plugin.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'Dialog/UpdataDialog.dart';
 import 'common/constant/main.dart';
+import 'dialog/UpdataInfoDialog.dart';
 import 'provider/common_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  earlyInit().then((_) => runApp(const CeobeCanteenApp()));
+}
+
+Future<void> earlyInit() async {
   //沉浸式状态栏
   if (Platform.isAndroid) {
     SystemUiOverlayStyle systemUiOverlayStyle = const SystemUiOverlayStyle(
@@ -34,14 +43,15 @@ void main() async {
     );
     SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
   }
+
   if (Platform.isIOS) {
-    MobpushPlugin.setCustomNotification();
+    await MobpushPlugin.setCustomNotification();
 
     // 开发环境 false, 线上环境 true
-    MobpushPlugin.setAPNsForProduction(true);
+    await MobpushPlugin.setAPNsForProduction(true);
   }
-  runApp(const CeobeCanteenApp());
-  // runApp(const DunMain());
+
+  await SettingProvider.getInstance().readAppSetting();
 }
 
 class CeobeCanteenApp extends StatefulWidget {
@@ -57,13 +67,14 @@ class _CeobeCanteenAppState extends State<CeobeCanteenApp> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<CommonProvider>(create: (_) => CommonProvider()),
-        ChangeNotifierProvider<SettingProvider>(create: (_) => SettingProvider()),
-        ChangeNotifierProvider<CeobecanteenData>(create: (_) => CeobecanteenData()),
+        ChangeNotifierProvider.value(value: SettingProvider.getInstance()),
+        ChangeNotifierProvider<CeobecanteenData>(
+            create: (_) => CeobecanteenData()),
       ],
       child: MaterialApp(
         title: '小刻食堂',
         routes: DunRouter.routes,
-        initialRoute: "/home",
+        initialRoute: "/",
         onUnknownRoute: (settings) => MaterialPageRoute(
           builder: (context) => DunError(error: "404"),
         ),
@@ -89,186 +100,81 @@ class _BottomNaacBarState extends State<BottomNavBar> {
   }
 
   _init() async {
-    // 初始化监听事件
-    _initEventBus();
     // 初始化设置
     _readData();
   }
 
-  List<PopupMenuItem<String>> bakeryPopupButtonList = [];
-
-  String bakeryPupopButton = "";
-
-  _initEventBus() {
-    // 获取设备ID
-    eventBus.on<ChangeSourceBus>().listen((event) {
-      _getData();
-    });
-    // 获取设备ID
-    eventBus.on<ChangeMenu>().listen((event) {
-      _getMenu();
-    });
-    // 同意隐私授权后执行
-    eventBus.on<UpdatePrivacyPermissionStatus>().listen((event) async {
-      await _initMobPush();
-      _readData();
-    });
-    // 动态改变饼组下拉数据
-    eventBus.on<ChangePopupMenuDownButton>().listen((event) {
-      if (event.idList != null) {
-        bakeryPopupButtonList = [];
-        for (var element in event.idList!) {
-          bakeryPopupButtonList.insert(
-            0,
-            PopupMenuItem<String>(
-              value: element,
-              child: Text(
-                element,
-                style: const TextStyle(color: DunColors.DunColor),
-              ),
-            ),
-          );
-        }
-        bakeryPopupButtonList = bakeryPopupButtonList;
-        bakeryPupopButton = bakeryPopupButtonList[0].value!;
-      }
-    });
-  }
-
   _readData() async {
     var settingData = Provider.of<SettingProvider>(context, listen: false);
-    await settingData.readAppSetting();
     Constant.mobRId = settingData.appSetting.rid;
-    bool result = true;
-    if (settingData.appSetting.notOnce!) {
-      result = await Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const OpenScreenInfo()));
+    bool? notOnce = settingData.appSetting.notOnce;
+    if (notOnce!) {
+      bool result = false;
+      final completer = Completer<bool>();
+      // 延迟到下一帧执行
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const OpenScreenInfo()))
+            .then((value) => completer.complete(value));
+      });
+      result = await completer.future;
+      if (!result) return;
+      //申请权限
+      Permission.notification.request();
     }
-    if (result != true) return;
-
-    // 打开APP 全部拉一次数据
-    await _getData();
-    // 获取CeobecanteenInfo
-    await _getCeobecanteenInfo();
-    // 判断版本
-    await _checkVersion();
-    // 动态菜单
-    await _getMenu();
-
-    // 推送变量
-    _initMobPush();
-  }
-
-  _initMobPush() async {
-    //获取注册的设备id， 这个可以不初始化
-    Map<String, dynamic> ridMap = await MobpushPlugin.getRegistrationId();
-    String regId = ridMap['res'].toString();
-    var settingData = Provider.of<SettingProvider>(context, listen: false);
-    if (settingData.appSetting.rid != regId) {
-      settingData.saveRid(regId);
-    }
-    print('RID: ' + regId);
-    setState(() {
-      Constant.mobRId = regId;
-    });
-  }
-
-  _getData() async {
-    var settingData = Provider.of<SettingProvider>(context, listen: false);
-    var commonProvider = Provider.of<CommonProvider>(context, listen: false);
-    commonProvider.sourceData = await ListRequest.canteenCardList(
-        source: {"source": settingData.appSetting.checkSource!.join("_")});
-    // commonProvider.saveListSourceData(commonProvider.sourceData!);
-  }
-
-  // 获取info文件
-  _getCeobecanteenInfo() async {
-    CeobecanteenData value = await InfoRequest.getCeobecanteenInfo();
-    Provider.of<CeobecanteenData>(context, listen: false).setCeobecanteenInfo(value);
+    _checkVersion();
   }
 
   // 判断版本号，强制更新&更新日志
   _checkVersion() async {
     String nowVersion = await PackageInfoPlus.getVersion();
-    DunApp nowApp = await InfoRequest.getAppVersionInfo(version: nowVersion);
     DunApp newApp = await InfoRequest.getAppVersionInfo();
     SharedPreferences sp = await SharedPreferences.getInstance();
     String? lastShowedVersion = sp.getString("update_dialog_showed_version");
-    if (PackageInfoPlus.isVersionHigher(nowVersion, newApp.lastFocusVersion)) {
-      Navigator.pushNamed(context, DunUpdate.routerName, arguments: newApp);
-    } else {
-      if (lastShowedVersion == null ||
-          lastShowedVersion != nowVersion &&
-              PackageInfoPlus.isVersionHigher(nowVersion, lastShowedVersion)) {
-        if (nowApp.version?.isNotEmpty == true && nowApp.description?.isNotEmpty == true) {
-          showDialog(
-            context: context,
-            builder: (_) => Dialog(
-              child: _buildVersionUpdateDialog(nowApp.version, nowApp.description),
-            ),
-          );
-          sp.setString("update_dialog_showed_version", nowVersion);
-        }
-      }
+    if (nowVersion != lastShowedVersion) {
+      DunApp nowApp = await InfoRequest.getAppVersionInfo(version: nowVersion);
+      showDialog(
+          context: context,
+          builder: (_) => UpdataInfoDialog(
+                version: nowApp.version,
+                description: nowApp.description,
+              ));
+      sp.setString("update_dialog_showed_version", nowVersion);
     }
-  }
+    if (PackageInfoPlus.isVersionHigher(newApp.lastFocusVersion, nowVersion)) {
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (_) => UpdataDialog(
+                oldVersion: nowVersion,
+                newApp: newApp,
+                isFocus: true,
+              ));
 
-  Widget _buildVersionUpdateDialog(String? version, String? description) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(8)),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Center(
-            child: Text(
-              "更新日志",
-              style: TextStyle(
-                color: Colors.orange,
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-          const SizedBox(height: 16),
-          Text("版本号：$version"),
-          const SizedBox(height: 8),
-          const Text("本次更新内容："),
-          Text(description ?? ""),
-          const SizedBox(height: 16),
-          const Center(child: GroupNumButton()),
-        ],
-      ),
-    );
+    } else if (PackageInfoPlus.isVersionHigher(newApp.version, nowVersion)) {
+       showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (_) => UpdataDialog(
+                oldVersion: nowVersion,
+                newApp: newApp,
+                isFocus: false,
+              )
+      );
+    }
   }
 
   List<QuickJump> shortcutMenu = [];
 
-  _getMenu() async {
-    shortcutMenu = [];
-    var ceobecanteenData = Provider.of<CeobecanteenData>(context);
-    var settingProvider = Provider.of<SettingProvider>(context);
-    var shortcutList = settingProvider.appSetting.shortcutList;
-    if (ceobecanteenData.quickJump != null) {
-      for (var element in ceobecanteenData.quickJump!) {
-        if (shortcutList!.contains(element.name)) {
-          shortcutMenu.add(element);
-        }
-      }
-    }
-    setState(() {
-      shortcutMenu = shortcutMenu;
-    });
-  }
-
   /// ===========================先把旧代码copy过来end====================================
 
   // 点击导航时显示指定内容
-  List<Widget> list = [MoreListWidget(), const MainListWidget(), const TerminalPageWidget()];
+  List<Widget> list = [
+    const MoreListWidget(),
+    const MainListWidget(),
+    const TerminalPageWidget()
+  ];
+
   // 当前点击的导航下标
   int _currentController = 1;
 
@@ -280,11 +186,22 @@ class _BottomNaacBarState extends State<BottomNavBar> {
       body: Container(
         color: gray_3,
         padding: EdgeInsets.only(top: paddingTop),
-        child: Stack(
-          children: [
-            list[_currentController],
-            ..._buildBottomBar(),
-          ],
+        child: Selector<SettingProvider, bool>(
+          selector: (context, provider) =>
+              provider.appSetting.datasourceSetting != null,
+          builder: (_, isDatasourceAvailable, __) {
+            // TODO: 也可以传递 loading 布尔参数给子控件，让子控件自己显示进度条
+            // 相应的，子控件的载入过程应该推迟到 didUpdateWidget() 时
+            if (!isDatasourceAvailable) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            return Stack(
+              children: [
+                list[_currentController],
+                ..._buildBottomBar(),
+              ],
+            );
+          },
         ),
       ),
     );
@@ -295,20 +212,25 @@ class _BottomNaacBarState extends State<BottomNavBar> {
       Align(
         alignment: Alignment.bottomCenter,
         child: Container(
-          height: 83,
-          color: white,
+          height: 60,
+          decoration: const BoxDecoration(color: white, boxShadow: [
+            BoxShadow(
+              color: Colors.black38,
+              offset: Offset(0.0, 0.0),
+              blurRadius: 15.0,
+              spreadRadius: 1.0,
+            )
+          ]),
           child: Row(
             children: [
               Expanded(
                 child: GestureDetector(
                   onTap: () => setState(() => _currentController = 0),
-                  child: Expanded(
-                    child: Image.asset(
-                      'assets/icon/more_list_icon.png',
-                      width: 30,
-                      height: 30,
-                      color: _currentController == 0 ? yellow : gray_2,
-                    ),
+                  child: Image.asset(
+                    'assets/icon/more_list_icon.png',
+                    width: 30,
+                    height: 30,
+                    color: _currentController == 0 ? yellow : gray_2,
                   ),
                 ),
               ),
@@ -316,13 +238,11 @@ class _BottomNaacBarState extends State<BottomNavBar> {
               Expanded(
                 child: GestureDetector(
                   onTap: () => setState(() => _currentController = 2),
-                  child: Expanded(
-                    child: Image.asset(
-                      'assets/icon/terminal_page_icon.png',
-                      width: 30,
-                      height: 30,
-                      color: _currentController == 2 ? yellow : gray_2,
-                    ),
+                  child: Image.asset(
+                    'assets/icon/terminal_page_icon.png',
+                    width: 30,
+                    height: 30,
+                    color: _currentController == 2 ? yellow : gray_2,
                   ),
                 ),
               ),
@@ -337,7 +257,7 @@ class _BottomNaacBarState extends State<BottomNavBar> {
           child: Container(
             width: 83,
             height: 83,
-            margin: const EdgeInsets.only(bottom: 20),
+            margin: const EdgeInsets.only(bottom: 5),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(50),
               border: Border.all(
@@ -378,11 +298,14 @@ class _DunMainState extends State<DunMain> {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
-          ChangeNotifierProvider<CommonProvider>(create: (_) => CommonProvider()),
-          ChangeNotifierProvider<SettingProvider>(create: (_) => SettingProvider()),
-          ChangeNotifierProvider<CeobecanteenData>(create: (_) => CeobecanteenData()),
+          ChangeNotifierProvider<CommonProvider>(
+              create: (_) => CommonProvider()),
+          ChangeNotifierProvider.value(value: SettingProvider.getInstance()),
+          ChangeNotifierProvider<CeobecanteenData>(
+              create: (_) => CeobecanteenData()),
         ],
-        child: Consumer<SettingProvider>(builder: (context, settingModeProvider, _) {
+        child: Consumer<SettingProvider>(
+            builder: (context, settingModeProvider, _) {
           ThemeMode? themeMode;
 
           if (settingModeProvider.appSetting.darkMode == 1) {

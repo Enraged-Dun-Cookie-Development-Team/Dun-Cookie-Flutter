@@ -1,11 +1,10 @@
 import 'package:dun_cookie_flutter/common/browser/main.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/main.dart';
-import 'package:dun_cookie_flutter/page/Error/main.dart';
+import 'package:dun_cookie_flutter/page/error/main.dart';
 import 'package:dun_cookie_flutter/page/bakery/main.dart';
 import 'package:dun_cookie_flutter/page/comics/main.dart';
 import 'package:dun_cookie_flutter/page/donate/main.dart';
-import 'package:dun_cookie_flutter/page/home/main.dart';
 import 'package:dun_cookie_flutter/page/main/dun_list.dart';
 import 'package:dun_cookie_flutter/page/main/dun_share.dart';
 import 'package:dun_cookie_flutter/page/setting/main.dart';
@@ -16,10 +15,11 @@ import 'package:dun_cookie_flutter/page/update/main.dart';
 import 'package:dun_cookie_flutter/page/user_Wan/main.dart';
 import 'package:flutter/material.dart';
 
+import '../main_page/main_list/ui/cookie_share.dart';
+
 class DunRouter {
   static final Map<String, WidgetBuilder> routes = {
-    "/": (context) => const MainScaffold(),
-    "/home": (context) => const BottomNavBar(),
+    "/": (context) => const BottomNavBar(),
     Bakery.routeName: (context) => const Bakery(),
     DunList.routeName: (context) => const DunList(),
     DunWidgetToImage.routeName: (context) => const DunWidgetToImage(),
@@ -32,6 +32,7 @@ class DunRouter {
     Donate.routerName: (context) => const Donate(),
     Comics.routerName: (context) => const Comics(),
     UserWan.routerName: (context) => const UserWan(),
+    CookieWidgetToImage.routeName: (context) => const CookieWidgetToImage(),
   };
 
   /// 侧边菜单固定项目
@@ -79,7 +80,8 @@ class DunRouter {
       if (settings.arguments != null) {
         // 如果传了参数
         return MaterialPageRoute(
-            builder: (context) => pageBuilder(context, arguments: settings.arguments));
+            builder: (context) =>
+                pageBuilder(context, arguments: settings.arguments));
       } else {
         // 没有传参数
         return MaterialPageRoute(builder: (context) => pageBuilder(context));

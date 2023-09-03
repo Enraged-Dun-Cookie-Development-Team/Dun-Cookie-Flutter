@@ -5,8 +5,11 @@ import 'package:dun_cookie_flutter/main_page/common_ui/dashed_line_widget.dart';
 import 'package:dun_cookie_flutter/main_page/terminal_page/ui/item_card_left_widget.dart';
 import 'package:dun_cookie_flutter/main_page/terminal_page/ui/set_up_button_widget.dart';
 import 'package:dun_cookie_flutter/main_page/terminal_page/ui/today_rotation.dart';
+import 'package:dun_cookie_flutter/model/cookie_count_model.dart';
 import 'package:dun_cookie_flutter/model/resource_info.dart';
+import 'package:dun_cookie_flutter/request/cookie_request.dart';
 import 'package:dun_cookie_flutter/request/tools_api.dart';
+import 'package:dun_cookie_flutter/set_up/set_up_page.dart';
 import 'package:flutter/material.dart';
 
 import 'ui/prts_title_widget.dart';
@@ -20,28 +23,35 @@ class TerminalPageWidget extends StatefulWidget {
 
 class _TerminalPageWidgetState extends State<TerminalPageWidget> {
   ResourceInfo? resourceInfo;
+  CookieInfoCountModel? cookieInfoCount;
 
   @override
   void initState() {
     super.initState();
-    ToolsApi.getResourceInfo().then((value) => setState(() => resourceInfo = value));
+    ToolsApi.getResourceInfo()
+        .then((value) => setState(() => resourceInfo = value));
+    CookiesApi.getCookieCountList()
+        .then((value) => setState(() => cookieInfoCount = value));
   }
 
   @override
   Widget build(BuildContext context) {
     List<Widget> listWidget = [
-      _buildCakeWarehouse(),
+      _buildCakeWarehouse(cookieInfoCount),
       const SizedBox(height: 15),
       _buildResourceWidget(),
     ];
-    for (Countdown countdown in resourceInfo?.countdown ?? []) {
-      if (TimeUnit.isTimeRange(TimeUnit.utcChinaNow(), countdown.startTime, countdown.overTime)) {
+    for (var i = 0; i < (resourceInfo?.countdown?.length ?? 0); i++) {
+      Countdown countdown = resourceInfo!.countdown![i];
+      if (TimeUnit.isTimeRange(
+          TimeUnit.utcChinaNow(), countdown.startTime, countdown.overTime)) {
         listWidget.add(const SizedBox(height: 15));
-        listWidget.add(_buildActivityWidget(countdown));
+        listWidget.add(_buildActivityWidget(countdown, i));
       }
     }
+    listWidget.add(const SizedBox(height: 40));
     return Padding(
-      padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
+      padding: const EdgeInsets.fromLTRB(12, 12, 12, 60),
       child: Column(
         children: [
           _buildTitle(),
@@ -58,15 +68,21 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> {
 
   Widget _buildTitle() {
     return Row(
-      children: const [
-        Expanded(child: PrtsTitleWidget()),
-        SizedBox(width: 8),
-        SetUpButtonWidget(),
+      children: [
+        const Expanded(child: PrtsTitleWidget()),
+        const SizedBox(width: 8),
+        GestureDetector(
+          onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const SetUpPage()),
+          ),
+          child: const SetUpButtonWidget(),
+        ),
       ],
     );
   }
 
-  Widget _buildCakeWarehouse() {
+  Widget _buildCakeWarehouse(CookieInfoCountModel? cookieInfoCount) {
     return SizedBox(
       height: 240,
       child: Column(
@@ -110,11 +126,11 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> {
                     top: 9,
                     child: Container(width: 11, height: 22, color: yellow),
                   ),
-                  Positioned(
+                  const Positioned(
                     left: 24,
                     top: 7,
                     child: Column(
-                      children: const [
+                      children: [
                         Text(
                           "已发现饼的数量",
                           style: TextStyle(
@@ -123,7 +139,7 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> {
                           ),
                         ),
                         SizedBox(height: 3),
-                        DashedLineWidget(width: 112),
+                        DashedLineHorizontalWidget(width: 112),
                       ],
                     ),
                   ),
@@ -136,58 +152,90 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
-                          children: const [
-                            Text(
+                          children: [
+                            const Text(
                               "皮肤",
                               style: TextStyle(
                                 fontSize: 12,
                                 color: gray_1,
                               ),
                             ),
-                            SizedBox(width: 6),
-                            DashedLineWidget(width: 51),
+                            const SizedBox(width: 6),
+                            const DashedLineHorizontalWidget(width: 50),
+                            const SizedBox(width: 6),
+                            Text(
+                              cookieInfoCount?.skinCount?.toString() ?? "0",
+                              style: const TextStyle(
+                                fontSize: 12,
+                                color: gray_1,
+                              ),
+                            ),
                           ],
                         ),
                         const SizedBox(height: 6),
                         Row(
-                          children: const [
-                            Text(
+                          children: [
+                            const Text(
                               "角色",
                               style: TextStyle(
                                 fontSize: 12,
                                 color: gray_1,
                               ),
                             ),
-                            SizedBox(width: 6),
-                            DashedLineWidget(width: 51),
+                            const SizedBox(width: 6),
+                            const DashedLineHorizontalWidget(width: 50),
+                            const SizedBox(width: 6),
+                            Text(
+                              cookieInfoCount?.operatorCount?.toString() ?? "0",
+                              style: const TextStyle(
+                                fontSize: 12,
+                                color: gray_1,
+                              ),
+                            ),
                           ],
                         ),
                         const SizedBox(height: 6),
                         Row(
-                          children: const [
-                            Text(
+                          children: [
+                            const Text(
                               "活动",
                               style: TextStyle(
                                 fontSize: 12,
                                 color: gray_1,
                               ),
                             ),
-                            SizedBox(width: 6),
-                            DashedLineWidget(width: 51),
+                            const SizedBox(width: 6),
+                            const DashedLineHorizontalWidget(width: 50),
+                            const SizedBox(width: 6),
+                            Text(
+                              cookieInfoCount?.activityCount?.toString() ?? "0",
+                              style: const TextStyle(
+                                fontSize: 12,
+                                color: gray_1,
+                              ),
+                            ),
                           ],
                         ),
                         const SizedBox(height: 6),
                         Row(
-                          children: const [
-                            Text(
+                          children: [
+                            const Text(
                               "EP",
                               style: TextStyle(
                                 fontSize: 12,
                                 color: gray_1,
                               ),
                             ),
-                            SizedBox(width: 6),
-                            DashedLineWidget(width: 51),
+                            const SizedBox(width: 6),
+                            const DashedLineHorizontalWidget(width: 59),
+                            const SizedBox(width: 6),
+                            Text(
+                              cookieInfoCount?.epCount?.toString() ?? "0",
+                              style: const TextStyle(
+                                fontSize: 12,
+                                color: gray_1,
+                              ),
+                            ),
                           ],
                         ),
                       ],
@@ -207,9 +255,9 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> {
                             borderWidth: 154,
                             borderColor: yellow,
                           ),
-                          Center(
+                          const Center(
                             child: Column(
-                              children: const [
+                              children: [
                                 SizedBox(height: 33),
                                 Text(
                                   "HAVE FOUND",
@@ -219,7 +267,7 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> {
                                   ),
                                 ),
                                 SizedBox(height: 60),
-                                DashedLineWidget(width: 68),
+                                DashedLineHorizontalWidget(width: 68),
                                 Text(
                                   "CAKE",
                                   style: TextStyle(
@@ -230,10 +278,11 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> {
                               ],
                             ),
                           ),
-                          const Center(
+                          Center(
                             child: Text(
-                              "12345",
-                              style: TextStyle(
+                              cookieInfoCount?.totalCount?.toString() ??
+                                  "-----",
+                              style: const TextStyle(
                                 fontSize: 44,
                                 color: gray_1,
                               ),
@@ -254,14 +303,16 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> {
 
   // 资源信息
   Widget _buildResourceWidget() {
+    DateTime dt = TimeUnit.utcChinaNow();
+    int weekDay = dt.weekday;
     return SizedBox(
       height: 97,
       child: Row(
         children: [
-          const ItemCardLeftWidget(
+          ItemCardLeftWidget(
             columnText: "WEEK",
             titleText: "星期",
-            centerText: "三",
+            centerText: TimeUnit.numberToWeek(weekDay),
           ),
           const SizedBox(width: 6),
           Expanded(
@@ -276,17 +327,44 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> {
   }
 
   // 活动信息
-  Widget _buildActivityWidget(Countdown? countdown) {
+  Widget _buildActivityWidget(Countdown countdown, int index) {
+    var timeDiff = TimeUnit.timeDiffUnit(countdown.time!);
     return SizedBox(
       height: 97,
       child: Row(
         children: [
-          const ItemCardLeftWidget(
-            columnText: "EVENT",
-            titleText: "活动剩余",
-            centerText: "16",
-            labelColor: red,
-            isDays: true,
+          ItemCardLeftWidget(
+            columnText: (() {
+              if (countdown.countdownType == "banner") {
+                return "BANNER";
+              } else if (countdown.countdownType == "activity") {
+                return "ACTIVITY";
+              } else if (countdown.countdownType == "live") {
+                return "LIVE";
+              } else {
+                return "EVENT";
+              }
+            }()),
+            titleText: (() {
+              if (countdown.countdownType == "banner") {
+                return "卡池剩余";
+              } else if (countdown.countdownType == "activity") {
+                return "活动剩余";
+              } else if (countdown.countdownType == "live") {
+                return "直播剩余";
+              } else {
+                return "剩余";
+              }
+            }()),
+            centerText: timeDiff.number.toString(),
+            labelColor: (() {
+              if (index % 2 == 0) {
+                return red;
+              } else {
+                return blue;
+              }
+            }()),
+            bottomText: timeDiff.unit,
           ),
           const SizedBox(width: 6),
           Expanded(
@@ -296,8 +374,8 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(countdown?.text ?? ""),
-                    Text(countdown?.remark ?? ""),
+                    Text(countdown.text ?? ""),
+                    Text(countdown.remark ?? ""),
                   ],
                 ),
               ),

@@ -1,14 +1,18 @@
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/dun_tag.dart';
 import 'package:dun_cookie_flutter/common/tool/open_app_or_browser.dart';
+import 'package:dun_cookie_flutter/common/tool/time_unit.dart';
+import 'package:dun_cookie_flutter/model/terra_comic_episode_model.dart';
 import 'package:dun_cookie_flutter/model/source_data.dart';
+import 'package:dun_cookie_flutter/model/terra_comic_model.dart';
+import 'package:dun_cookie_flutter/request/cookie_request.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
 class MangaListCard extends StatefulWidget {
-  const MangaListCard(this.sourceData, {Key? key}) : super(key: key);
+  const MangaListCard(this.comicModel, {Key? key}) : super(key: key);
 
-  final SourceData sourceData;
+  final TerraComicModel comicModel;
 
   @override
   State<MangaListCard> createState() => _MangaListCardState();
@@ -16,11 +20,10 @@ class MangaListCard extends StatefulWidget {
 
 class _MangaListCardState extends State<MangaListCard> {
   bool _isExpanded = false;
-  var episodes = [];
+  List<TerraComicEpisodeModel> episodes = [];
 
   @override
   void initState() {
-    episodes = widget.sourceData.componentData!['episodes'];
     super.initState();
   }
 
@@ -29,7 +32,10 @@ class _MangaListCardState extends State<MangaListCard> {
     return Card(
       margin: const EdgeInsets.all(10),
       child: GestureDetector(
-        onTap: () {
+        onTap: () async {
+          if(!_isExpanded && episodes.isEmpty) {
+            episodes = await CookiesApi.getTerraComicEpisodeList(widget.comicModel.comic!);
+          }
           setState(() {
             _isExpanded = !_isExpanded;
           });
@@ -37,7 +43,7 @@ class _MangaListCardState extends State<MangaListCard> {
         child: Column(
           children: [
             ExtendedImage.network(
-              widget.sourceData.coverImage!,
+              widget.comicModel.cover!,
               fit: BoxFit.cover,
               handleLoadingProgress: true,
               clearMemoryCacheIfFailed: true,
@@ -55,7 +61,10 @@ class _MangaListCardState extends State<MangaListCard> {
             ),
             ExpansionPanelList(
               elevation: 0,
-              expansionCallback: (panelIndex, isExpanded) {
+              expansionCallback: (panelIndex, isExpanded) async {
+                if(!isExpanded && episodes.isEmpty) {
+                  episodes = await CookiesApi.getTerraComicEpisodeList(widget.comicModel.comic!);
+                }
                 setState(() {
                   _isExpanded = !isExpanded;
                 });
@@ -66,7 +75,7 @@ class _MangaListCardState extends State<MangaListCard> {
                     return Container(
                       alignment: Alignment.centerLeft,
                       margin: const EdgeInsets.only(left: 10),
-                      child: Text("共${episodes.length}章，最新于${widget.sourceData.timeForDisplay}更新"),
+                      child: Text("共${widget.comicModel.count}章，最新于${TimeUnit.timestampFormatYMD(widget.comicModel.updateTime!)}更新"),
                     );
                   },
                   body: Padding(
@@ -76,10 +85,10 @@ class _MangaListCardState extends State<MangaListCard> {
                       children: [
                         Row(
                           children: List.generate(
-                              widget.sourceData.componentData!['keywords'].length, (index) {
+                              widget.comicModel.keywords?.length ?? 0, (index) {
                             return Container(
                               margin: const EdgeInsets.only(right: 5),
-                              child: DunTag(widget.sourceData.componentData!['keywords'][index]),
+                              child: DunTag(widget.comicModel.keywords![index]),
                             );
                           }),
                         ),
@@ -87,13 +96,20 @@ class _MangaListCardState extends State<MangaListCard> {
                           height: 6,
                         ),
                         Text(
-                          widget.sourceData.content ?? "",
+                          widget.comicModel.title ?? "",
                           style: DunStyles.text16,
                         ),
                         const SizedBox(
                           height: 6,
                         ),
-                        Text(widget.sourceData.componentData!['introduction'],
+                        widget.comicModel.subtitle == "" ? Container() : Text(
+                          widget.comicModel.subtitle ?? "",
+                          style: DunStyles.text16B,
+                        ),
+                        widget.comicModel.subtitle == "" ? Container() : const SizedBox(
+                          height: 6,
+                        ),
+                        Text(widget.comicModel.introduction ?? "",
                             style: DunStyles.text14B),
                         const SizedBox(
                           height: 6,
@@ -104,7 +120,7 @@ class _MangaListCardState extends State<MangaListCard> {
                             return GestureDetector(
                               onTap: () {
                                 OpenAppOrBrowser.openUrl(
-                                    "https://terra-historicus.hypergryph.com/comic/${widget.sourceData.componentData!['cid']}/episode/${episodes[index]['cid']}",
+                                    episodes[index].jumpUrl ?? "",
                                     context);
                               },
                               child: Container(
@@ -114,7 +130,8 @@ class _MangaListCardState extends State<MangaListCard> {
                                     border: Border.all(color: DunColors.DunColor),
                                     borderRadius: BorderRadius.circular(5)),
                                 child: Text(
-                                    "${episodes[index]["shortTitle"] == null ? "" : episodes[index]["shortTitle"] + ":"}${episodes[index]["title"]}"),
+                                    episodes[index].shortTitle ?? "",
+                                )
                               ),
                             );
                           }),

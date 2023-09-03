@@ -1,36 +1,38 @@
-import 'dart:math';
-
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
+import 'package:dun_cookie_flutter/model/user_settings.dart';
 import 'package:dun_cookie_flutter/request/main.dart';
 
 class InfoRequest {
-  static _getCeobecanteenInfo() async {
-    final url = "/canteen/info?${Random().nextInt(100000).toString()}";
-    print("请求info数据");
-    return await HttpClass.get(url, type: 2);
-  }
-
-  // todo 已废弃
-  static Future<CeobecanteenData> getCeobecanteenInfo() async {
-    ResponseData response = await _getCeobecanteenInfo();
-    if (response.error) {
-      return CeobecanteenData();
-    } else {
-      return CeobecanteenData.fromJson(response.data);
-    }
-  }
-
   /// APP版本
-  static String appVersionUrl = "/canteen/operate/version/app";
+  static const String _appVersionUrl = "/canteen/operate/version/app";
   static Future<DunApp> getAppVersionInfo({String? version}) async {
     Map<String, dynamic> params = {};
     if (version != null) {
       params["version"] = version;
     }
-    ResponseData response = await HttpClass.get(appVersionUrl, params: params, type: 1);
+    ResponseData response =
+        await HttpClass.get(_appVersionUrl, params: params, type: 1);
     if (response.data != null) {
       return DunApp.fromJson(response.data?["data"]);
     }
     return Future.value(DunApp());
+  }
+
+  static const String _createUserUrl = "/canteen/user/createUser";
+  static Future<bool> createUser(String? mobId) async {
+    ResponseData res =
+        await HttpClass.post(_createUserUrl, data: {"mob_id": mobId}, type: 1);
+
+    return Future.value(res.isSuccess());
+  }
+
+  /// 根据mobId获取用户数据源配置
+  static const String _userDatasourceSettingsUrl = "/canteen/user/datasourceConfig";
+  static Future<UserDatasourceSettings> getUserDatasourceSettings() async {
+    ResponseData response = await HttpClass.get(_userDatasourceSettingsUrl, type: 1);
+    if (response.data != null) {
+      return UserDatasourceSettings.fromJson(response.data?["data"]);
+    }
+    return Future.value(UserDatasourceSettings());
   }
 }

@@ -18,16 +18,13 @@ class SetUpButtonWidget extends StatelessWidget {
           Expanded(
             child: Container(
               color: Colors.white,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(width: 19, height: 3, color: gray_1),
-                  const SizedBox(height: 5),
-                  Container(width: 19, height: 3, color: gray_1),
-                  const SizedBox(height: 5),
-                  Container(width: 19, height: 3, color: gray_1),
-                ],
-              ),
+              child: Container(
+                padding: const EdgeInsets.all(5),
+                child: Image.asset(
+                  "assets/icon/settings.png"
+                ),
+              )
+              
             ),
           ),
           Container(

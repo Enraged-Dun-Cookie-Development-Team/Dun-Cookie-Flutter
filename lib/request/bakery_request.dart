@@ -49,4 +49,34 @@ class BakeryRequest {
       return BakeryData.fromJson(response.data['data']);
     }
   }
+
+  static _getBakeryMansionRecentPredict() async {
+    const url = "/canteen/bakery/mansion/recentPredict";
+    print("获取饼学大厦最近一次预测信息");
+    return await HttpClass.get(url, type: requestType);
+  }
+
+  static Future<BakeryRecentPredictModel> getMansionRecentPredict() async {
+    ResponseData response = await _getBakeryMansionRecentPredict();
+    if (response.error) {
+      return BakeryRecentPredictModel();
+    } else {
+      return BakeryRecentPredictModel.fromJson(response.data['data']);
+    }
+  }
+
+  /// 蜜饼工坊最近一次预测
+  static String bakeryRecentPredictUrl = "/canteen/bakery/mansion/recentPredict";
+  static Future<BakeryRecentPredictModel?> getBakeryRecentPredict() async {
+    ResponseData response = await HttpClass.get(bakeryRecentPredictUrl, type: 1);
+    if (response.error) {
+      return BakeryRecentPredictModel();
+    } else {
+      if (response.data['data'] != null) {
+        return BakeryRecentPredictModel.fromJson(response.data['data']);
+      } else {
+        return null;
+      }
+    }
+  }
 }

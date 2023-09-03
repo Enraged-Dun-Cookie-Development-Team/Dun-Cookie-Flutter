@@ -14,12 +14,10 @@ import 'package:flutter/cupertino.dart';
 /// testNotUpdate : false
 
 class CeobecanteenData with ChangeNotifier {
-  CeobecanteenData({this.list, this.btnList, this.dayInfo, this.logo, this.upgrade});
-
-  setCeobecanteenInfo(CeobecanteenData data) {
+  CeobecanteenData(
+      {this.list, this.btnList, this.dayInfo, this.logo, this.upgrade}) {
     quickJump = QuickJumpList.quickJump;
     sourceInfo = SourceList.sourceList;
-    notifyListeners();
   }
 
   CeobecanteenData.fromJson(dynamic json) {
@@ -35,9 +33,11 @@ class CeobecanteenData with ChangeNotifier {
         btnList?.add(BtnList.fromJson(v));
       });
     }
-    dayInfo = json['dayInfo'] != null ? DayInfo.fromJson(json['dayInfo']) : null;
+    dayInfo =
+        json['dayInfo'] != null ? DayInfo.fromJson(json['dayInfo']) : null;
     logo = json['logo'];
-    upgrade = json['upgrade'] != null ? Upgrade.fromJson(json['upgrade']) : null;
+    upgrade =
+        json['upgrade'] != null ? Upgrade.fromJson(json['upgrade']) : null;
   }
 
   List<AnnouncementList>? list;
@@ -150,7 +150,9 @@ class DayInfo {
   });
 
   DayInfo.fromJson(dynamic json) {
-    resources = json['resources'] != null ? Resources.fromJson(json['resources']) : null;
+    resources = json['resources'] != null
+        ? Resources.fromJson(json['resources'])
+        : null;
     if (json['countdown'] != null) {
       countdown = [];
       json['countdown'].forEach((v) {
@@ -301,7 +303,8 @@ class BtnList {
 /// overTime : "2022-01-14 03:59:59"
 /// notice : false
 
-AnnouncementList listFromJson(String str) => AnnouncementList.fromJson(json.decode(str));
+AnnouncementList listFromJson(String str) =>
+    AnnouncementList.fromJson(json.decode(str));
 
 String listToJson(AnnouncementList data) => json.encode(data.toJson());
 
@@ -349,25 +352,34 @@ class QuickJumpList {
   static get quickJump {
     _quickJump = [];
 
-    _quickJump.add(
-        QuickJump("https://prts.wiki/w/%E9%A6%96%E9%A1%B5", "PRTS.Wiki", "assets/link/akwiki.png"));
-    _quickJump.add(QuickJump("https://map.ark-nights.com", "PRTS.Map", "assets/link/akmap.ico"));
-    _quickJump
-        .add(QuickJump("https://penguin-stats.cn/", "企鹅物流", "assets/link/penguin_stats_logo.webp"));
-    _quickJump.add(QuickJump("https://arkn.lolicon.app/", "明日方舟工具箱", "assets/link/arktools.png"));
-    _quickJump.add(QuickJump("https://opssr.net/", "源石作战室", "assets/link/yszzs.png"));
-    _quickJump.add(QuickJump("https://kokodayo.fun/", "Kokodayo", "assets/link/kkdy.png"));
-    _quickJump.add(QuickJump("https://aog.wiki/", "刷素材一图流", "assets/link/akgraph.ico"));
-    _quickJump
-        .add(QuickJump("https://viktorlab.cn/akdata/dps/", "Arknight DPS", "assets/link/dps.ico"));
+    _quickJump.add(QuickJump("https://prts.wiki/w/%E9%A6%96%E9%A1%B5",
+        "PRTS.Wiki", "assets/link/akwiki.png"));
     _quickJump.add(QuickJump(
-        "https://arknightscommunity.drblack-system.com/", "泰拉通讯枢纽", "assets/link/tltxsn.png"));
+        "https://map.ark-nights.com", "PRTS.Map", "assets/link/akmap.ico"));
+    _quickJump.add(QuickJump("https://penguin-stats.cn/", "企鹅物流",
+        "assets/link/penguin_stats_logo.webp"));
+    _quickJump.add(QuickJump(
+        "https://arkn.lolicon.app/", "明日方舟工具箱", "assets/link/arktools.png"));
+    _quickJump
+        .add(QuickJump("https://opssr.net/", "源石作战室", "assets/link/yszzs.png"));
+    _quickJump.add(
+        QuickJump("https://kokodayo.fun/", "Kokodayo", "assets/link/kkdy.png"));
+    _quickJump.add(
+        QuickJump("https://aog.wiki/", "刷素材一图流", "assets/link/akgraph.ico"));
+    _quickJump.add(QuickJump("https://viktorlab.cn/akdata/dps/", "Arknight DPS",
+        "assets/link/dps.ico"));
+    _quickJump.add(QuickJump("https://arknightscommunity.drblack-system.com/",
+        "泰拉通讯枢纽", "assets/link/tltxsn.png"));
     return _quickJump;
   }
 }
 
 class DunApp {
-  DunApp({this.lastFocusVersion, this.force = false, this.version, this.description});
+  DunApp(
+      {this.lastFocusVersion,
+      this.force = false,
+      this.version,
+      this.description});
 
   DunApp.fromJson(dynamic json) {
     lastFocusVersion = json['last_focus_version'];
