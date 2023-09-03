@@ -126,7 +126,7 @@ class _MainScaffoldState extends State<MainScaffold> {
     DunApp newApp = await InfoRequest.getAppVersionInfo();
     SharedPreferences sp = await SharedPreferences.getInstance();
     String? lastShowedVersion = sp.getString("update_dialog_showed_version");
-    if (PackageInfoPlus.isVersionHigher(nowVersion, newApp.lastFocusVersion)) {
+    if (PackageInfoPlus.isVersionHigher(nowVersion, newApp.lastForceVersion)) {
       Navigator.pushNamed(context, DunUpdate.routerName, arguments: newApp);
     } else {
       if (lastShowedVersion == null ||

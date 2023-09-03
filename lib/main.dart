@@ -141,7 +141,7 @@ class _BottomNaacBarState extends State<BottomNavBar> {
               ));
       sp.setString("update_dialog_showed_version", nowVersion);
     }
-    if (PackageInfoPlus.isVersionHigher(newApp.lastFocusVersion, nowVersion)) {
+    if (PackageInfoPlus.isVersionHigher(newApp.lastForceVersion, nowVersion)) {
       showDialog(
           context: context,
           barrierDismissible: false,
