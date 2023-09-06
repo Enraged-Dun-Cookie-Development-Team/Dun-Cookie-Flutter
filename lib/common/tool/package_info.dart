@@ -22,7 +22,7 @@ class PackageInfoPlus {
     }
     final List<int> newVersionList = newVersion.split(".").map((a) => int.parse(a)).toList();
     final List<int> versionList = nowVersion.split(".").map((a) => int.parse(a)).toList();
-    // 判断lastFocusVersion
+    // 判断lastForceVersion
     for (var i = 0;
         i <
             (versionList.length < newVersionList.length

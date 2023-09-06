@@ -376,26 +376,26 @@ class QuickJumpList {
 
 class DunApp {
   DunApp(
-      {this.lastFocusVersion,
+      {this.lastForceVersion,
       this.force = false,
       this.version,
       this.description});
 
   DunApp.fromJson(dynamic json) {
-    lastFocusVersion = json['last_focus_version'];
+    lastForceVersion = json['last_force_version'];
     force = json['force'];
     version = json['version'];
     description = json['description'];
   }
 
-  String? lastFocusVersion;
+  String? lastForceVersion;
   bool force = false;
   String? version;
   String? description;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['last_focus_version'] = lastFocusVersion;
+    map['last_force_version'] = lastForceVersion;
     map['force'] = force;
     map['version'] = version;
     map['description'] = description;
