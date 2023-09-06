@@ -375,23 +375,33 @@ class QuickJumpList {
 }
 
 class DunApp {
-  DunApp(
-      {this.lastForceVersion,
-      this.force = false,
-      this.version,
-      this.description});
+  DunApp({
+    this.lastForceVersion,
+    this.force = false,
+    this.version,
+    this.description,
+    this.apk,
+    this.spare_apk,
+    this.baidu,
+  });
 
   DunApp.fromJson(dynamic json) {
     lastForceVersion = json['last_force_version'];
     force = json['force'];
     version = json['version'];
     description = json['description'];
+    apk = json['apk'];
+    spare_apk = json["spare_apk"];
+    baidu = json["baidu"];
   }
 
   String? lastForceVersion;
   bool force = false;
   String? version;
   String? description;
+  String? apk;
+  String? spare_apk;
+  String? baidu;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

@@ -95,9 +95,9 @@ class _DunUpdateState extends State<DunUpdate> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      _DownloadButton("github", ""),
-                      _DownloadButton("kgithub", ""),
-                      _DownloadButton("百度云", ""),
+                      _DownloadButton("github", dunApp.apk),
+                      _DownloadButton("kgithub", dunApp.spare_apk),
+                      _DownloadButton("百度云", dunApp.baidu),
                     ],
                   ),
                 )
