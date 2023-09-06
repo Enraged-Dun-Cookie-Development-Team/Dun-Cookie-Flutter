@@ -4,7 +4,6 @@ import 'package:dun_cookie_flutter/main.dart';
 import 'package:dun_cookie_flutter/page/error/main.dart';
 import 'package:dun_cookie_flutter/page/bakery/main.dart';
 import 'package:dun_cookie_flutter/page/comics/main.dart';
-import 'package:dun_cookie_flutter/page/donate/main.dart';
 import 'package:dun_cookie_flutter/page/main/dun_list.dart';
 import 'package:dun_cookie_flutter/page/main/dun_share.dart';
 import 'package:dun_cookie_flutter/page/setting/main.dart';
@@ -29,7 +28,6 @@ class DunRouter {
     SettingSourceFilter.routerName: (context) => const SettingSourceFilter(),
     DunInfo.routerName: (context) => const DunInfo(),
     DunUpdate.routerName: (context) => const DunUpdate(),
-    Donate.routerName: (context) => const Donate(),
     Comics.routerName: (context) => const Comics(),
     UserWan.routerName: (context) => const UserWan(),
     CookieWidgetToImage.routeName: (context) => const CookieWidgetToImage(),

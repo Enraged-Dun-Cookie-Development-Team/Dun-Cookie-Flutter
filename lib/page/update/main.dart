@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../common/tool/color_theme.dart';
+import '../../common/tool/open_app_or_browser.dart';
 import '../../common/tool/package_info.dart';
 
 class DunUpdate extends StatefulWidget {
@@ -70,7 +71,7 @@ class _DunUpdateState extends State<DunUpdate> {
         ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.only(left: 15,right: 15),
+            padding: const EdgeInsets.only(left: 15, right: 15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -89,7 +90,7 @@ class _DunUpdateState extends State<DunUpdate> {
                   height: 10,
                 ),
                 Container(
-                  padding: const EdgeInsets.only(left: 20,right: 20),
+                  padding: const EdgeInsets.only(left: 20, right: 20),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -133,8 +134,9 @@ class _DunUpdateState extends State<DunUpdate> {
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all(DunColors.DunColor),
       ),
-      onPressed: () {
+      onPressed: () async {
         //跳转到更新网页
+        OpenAppOrBrowser.openUrl(url, context);
       },
       child: Text(
         address,

@@ -106,25 +106,6 @@ class _OpenScreenInfoState extends State<OpenScreenInfo> {
                     style: DunStyles.text14C.copyWith(color: Colors.red),
                   ),
                   const SizedBox(
-                    height: 3,
-                  ),
-                  const Text(
-                    "这是一个测试版本，功能不完整，bug也会有，很可怕吗？是的很可怕！所以怕的博士建议卸载APP，当然也没有那么可怕，毕竟当前的功能也就那么点，bug也不会很刺激，至少在开发阶段没见过闪退什么的。",
-                  ),
-                  const SizedBox(
-                    height: 3,
-                  ),
-                  const Text(
-                    "这个版本的发布的主要目的是测试服务器的稳定性，注意：当前的版本不包含推送的功能！需要进入APP进行手动下拉刷新查看，剩下的为数不多的功能就自己探索吧！",
-                  ),
-                  const SizedBox(
-                    height: 6,
-                  ),
-                  Text(
-                    "第一次写移动端，请不要催更，如果有问题，在设置里面有反馈方法",
-                    style: DunStyles.text14C.copyWith(color: Colors.red),
-                  ),
-                  const SizedBox(
                     height: 6,
                   ),
                   const SizedBox(

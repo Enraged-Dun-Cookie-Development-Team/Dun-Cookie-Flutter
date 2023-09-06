@@ -1,7 +1,6 @@
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/open_app_or_browser.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
-import 'package:dun_cookie_flutter/set_up/donation_page.dart';
 import 'package:dun_cookie_flutter/set_up/set_up_datasource_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -343,10 +342,10 @@ class _SetUpPageState extends State<SetUpPage> {
   Widget _buildDonation() {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const DonationPage()),
-      ),
+      onTap: () async {
+        //网页跳转
+        OpenAppOrBrowser.openUrl("https://www.ceobecanteen.top/#/#mo-sponsor",context);
+      },
       child: const SizedBox(
         width: double.infinity,
         child: Column(
