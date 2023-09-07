@@ -48,12 +48,12 @@ class UpdataDialog extends Dialog {
           ),
           SizedBox(
             child: Container(
+              width: MediaQuery.of(context).size.width * 0.85,
               constraints: BoxConstraints(
-                  maxWidth: MediaQuery.of(context).size.width * 0.85,
                   maxHeight: MediaQuery.of(context).size.width * 0.5),
               padding: const EdgeInsets.only(top: 8, left: 15, right: 5),
               child: Scrollbar(
-                thumbVisibility: true,
+                thumbVisibility: false,
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -72,6 +72,7 @@ class UpdataDialog extends Dialog {
                         "$oldVersion —> ${newApp?.version}",
                         style: const TextStyle(
                           fontSize: 13,
+                          color: gray_1,
                         ),
                       ),
                       const SizedBox(height: 6),
@@ -86,7 +87,7 @@ class UpdataDialog extends Dialog {
                       Text(
                         newApp?.description ?? "",
                         style: const TextStyle(
-                          fontSize: 12,
+                          fontSize: 13,
                           color: gray_1,
                         ),
                       ),
@@ -103,6 +104,7 @@ class UpdataDialog extends Dialog {
                   children: [
                     const Divider(
                       color: Colors.grey,
+                      thickness: 1.2,
                       height: 2,
                     ),
                     SizedBox(
@@ -115,13 +117,14 @@ class UpdataDialog extends Dialog {
                               _confirmCallBack(context);
                             },
                             child: const Text(
-                              '更新',
+                              '前往更新',
                               style: TextStyle(fontSize: 17),
                             ),
                           ),
                           const VerticalDivider(
                             color: Colors.grey,
-                            width: 2,
+                            thickness: 0.9,
+                            width: 1,
                           ),
                           TextButton(
                               onPressed: () {

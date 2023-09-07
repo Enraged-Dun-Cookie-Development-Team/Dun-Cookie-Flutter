@@ -18,7 +18,7 @@ class ToSettingDialog extends Dialog {
       curentTimer--;
       content = "我知道了($curentTimer)";
       if (curentTimer == 0) {
-        content = "  我知道了 ";
+        content = "我知道了    ";
         _timer.cancel();
         disable = false;
       }
@@ -34,7 +34,10 @@ class ToSettingDialog extends Dialog {
 
   _buildToSettingDialog(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.8,
+      width: MediaQuery
+          .of(context)
+          .size
+          .width * 0.8,
       padding: const EdgeInsets.only(top: 8, bottom: 2),
       decoration: const BoxDecoration(
         color: Colors.white,
@@ -50,40 +53,43 @@ class ToSettingDialog extends Dialog {
               fontSize: 20,
             ),
           ),
-          const Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "为了能稳定及时的推送新饼，需要：",
-                style: TextStyle(
-                  fontSize: 16,
+          Container(
+            padding: const EdgeInsets.only(left: 10,right: 10),
+            child: const Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "为了能稳定及时的推送新饼，需要：",
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
                 ),
-              ),
-              Text(
-                "1. 锁定应用后台，不被系统杀死",
-                style: TextStyle(
-                  fontSize: 16,
+                Text(
+                  " 1.锁定应用后台，不被系统杀死",
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
                 ),
-              ),
-              Text(
-                "2. 若有省点策略，设置为无限制",
-                style: TextStyle(
-                  fontSize: 16,
+                Text(
+                  " 2.若有省点策略，设置为无限制",
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
                 ),
-              ),
-              Text(
-                "3. 检查通知权限有无打开",
-                style: TextStyle(
-                  fontSize: 16,
+                Text(
+                  " 3.检查通知权限有无打开",
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
                 ),
-              ),
-              Text(
-                "4. 设置完上诉，关闭小刻食堂后台再打开",
-                style: TextStyle(
-                  fontSize: 16,
+                Text(
+                  " 4.设置完上诉，关闭小刻食堂后台再打开",
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           SizedBox(
             child: Container(
@@ -106,7 +112,7 @@ class ToSettingDialog extends Dialog {
                               Navigator.of(context).pop();
                             },
                             child: const Text(
-                              '  前往设置  ',
+                              '   前往设置',
                               style: TextStyle(fontSize: 17),
                             ),
                           ),
@@ -123,13 +129,13 @@ class ToSettingDialog extends Dialog {
                                   onPressed: disable
                                       ? null
                                       : () {
-                                          Navigator.of(context).pop();
-                                        },
+                                    Navigator.of(context).pop();
+                                  },
                                   child: Text(content,
                                       style: TextStyle(
                                         fontSize: 17,
                                         color:
-                                            disable ? Colors.grey : Colors.blue,
+                                        disable ? Colors.grey : Colors.blue,
                                       )));
                             },
                           ),

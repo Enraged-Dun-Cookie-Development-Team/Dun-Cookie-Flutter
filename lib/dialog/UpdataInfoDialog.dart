@@ -45,8 +45,14 @@ class UpdataInfoDialog extends Dialog {
           ),
           SizedBox(
             child: Container(
-                padding: const EdgeInsets.only(top: 8, left: 20),
-                child: Column(
+              width: MediaQuery.of(context).size.width * 0.85,
+              constraints: BoxConstraints(
+                  maxHeight: MediaQuery.of(context).size.width * 0.5),
+              padding: const EdgeInsets.only(top: 8, left: 15, right: 5),
+              child: Scrollbar(
+                thumbVisibility: false,
+                child: SingleChildScrollView(
+                    child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -74,6 +80,8 @@ class UpdataInfoDialog extends Dialog {
                     ),
                   ],
                 )),
+              ),
+            ),
           ),
         ],
       ),

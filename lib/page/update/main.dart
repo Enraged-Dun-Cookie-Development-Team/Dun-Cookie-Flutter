@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
 import 'package:flutter/material.dart';
@@ -75,7 +77,31 @@ class _DunUpdateState extends State<DunUpdate> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _content("版本升级", "$version --> ${dunApp.version.toString()}"),
+                Row(
+                  children: [
+                    const Image(
+                      image: AssetImage("assets/logo/logo_no_line.png"),
+                      width: 50,
+                    ),
+                    const SizedBox(width: 13),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "当前版本",
+                          style: TextStyle(
+                            fontSize: 15,
+                          ),
+                        ),
+                        Text(
+                          version.toString(),
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                _content("新版本", "${dunApp.version.toString()}"),
                 _content("更新模式", isFocus ? "强制" : "非强制",
                     color: isFocus ? Colors.red : Colors.black),
                 _content("更新内容", dunApp.description),
@@ -89,18 +115,7 @@ class _DunUpdateState extends State<DunUpdate> {
                 const SizedBox(
                   height: 10,
                 ),
-                Container(
-                  padding: const EdgeInsets.only(left: 20, right: 20),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      _DownloadButton("github", dunApp.apk),
-                      _DownloadButton("kgithub", dunApp.spare_apk),
-                      _DownloadButton("百度云", dunApp.baidu),
-                    ],
-                  ),
-                )
+                _DownloadRes(),
               ],
             ),
           ),
@@ -115,7 +130,7 @@ class _DunUpdateState extends State<DunUpdate> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(
-          height: 30,
+          height: 25,
         ),
         Text(
           title,
@@ -127,6 +142,45 @@ class _DunUpdateState extends State<DunUpdate> {
         ),
       ],
     );
+  }
+
+  _DownloadRes() {
+    if (Platform.isAndroid) {
+      return Container(
+        padding: const EdgeInsets.only(left: 20, right: 20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _DownloadButton("github", dunApp.apk),
+            _DownloadButton("kgithub", dunApp.spare_apk),
+            _DownloadButton("百度云", dunApp.baidu),
+          ],
+        ),
+      );
+    } else if (Platform.isIOS) {
+      return Container(
+        padding: const EdgeInsets.only(left: 20, right: 20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(DunColors.DunColor),
+              ),
+              onPressed: () async {
+                //跳转到更新网页
+                OpenAppOrBrowser.openAppUrlScheme("", context);
+              },
+              child: const Text(
+                "应用商店",
+              ),
+            )
+          ],
+        ),
+      );
+    }
   }
 
   _DownloadButton(address, url) {
