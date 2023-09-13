@@ -363,8 +363,6 @@ class QuickJumpList {
     _quickJump
         .add(QuickJump("https://opssr.net/", "源石作战室", "assets/link/yszzs.png"));
     _quickJump.add(
-        QuickJump("https://kokodayo.fun/", "Kokodayo", "assets/link/kkdy.png"));
-    _quickJump.add(
         QuickJump("https://aog.wiki/", "刷素材一图流", "assets/link/akgraph.ico"));
     _quickJump.add(QuickJump("https://viktorlab.cn/akdata/dps/", "Arknight DPS",
         "assets/link/dps.ico"));

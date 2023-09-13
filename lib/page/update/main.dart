@@ -171,7 +171,7 @@ class _DunUpdateState extends State<DunUpdate> {
               ),
               onPressed: () async {
                 //跳转到更新网页
-                OpenAppOrBrowser.openAppUrlScheme("", context);
+                OpenAppOrBrowser.openAppUrlScheme("https://apps.apple.com/cn/app/%E5%B0%8F%E5%88%BB%E9%A3%9F%E5%A0%82/id1629917304", context);
               },
               child: const Text(
                 "应用商店",
