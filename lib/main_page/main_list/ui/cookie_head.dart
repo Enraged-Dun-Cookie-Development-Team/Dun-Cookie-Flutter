@@ -1,8 +1,7 @@
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/model/cookie_main_list_model.dart';
-import 'package:dun_cookie_flutter/model/source_data.dart';
-import 'package:dun_cookie_flutter/model/source_info.dart';
 import 'package:dun_cookie_flutter/page/main/dun_share.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../common/tool/time_unit.dart';
@@ -34,12 +33,17 @@ class CookieHead extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(8),
-                child: Image.network(
+                child: ExtendedImage.network(
                   info.icon!,
                   width: 40,
                   height: 40,
                   fit: BoxFit.cover,
                   alignment: Alignment.topLeft,
+                  handleLoadingProgress: true,
+                  clearMemoryCacheIfFailed: true,
+                  clearMemoryCacheWhenDispose: false,
+                  mode: ExtendedImageMode.gesture,
+                  cache: true,
                 ),
               ),
               const SizedBox(
