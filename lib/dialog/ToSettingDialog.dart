@@ -18,7 +18,7 @@ class ToSettingDialog extends Dialog {
       curentTimer--;
       content = "我知道了($curentTimer)";
       if (curentTimer == 0) {
-        content = "我知道了    ";
+        content = "我知道了";
         _timer.cancel();
         disable = false;
       }
@@ -34,11 +34,8 @@ class ToSettingDialog extends Dialog {
 
   _buildToSettingDialog(BuildContext context) {
     return Container(
-      width: MediaQuery
-          .of(context)
-          .size
-          .width * 0.8,
-      padding: const EdgeInsets.only(top: 8, bottom: 2),
+      width: MediaQuery.of(context).size.width * 0.8,
+      padding: const EdgeInsets.only(top: 20),
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -54,36 +51,12 @@ class ToSettingDialog extends Dialog {
             ),
           ),
           Container(
-            padding: const EdgeInsets.only(left: 10,right: 10),
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
             child: const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "为了能稳定及时的推送新饼，需要：",
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
-                Text(
-                  " 1.锁定应用后台，不被系统杀死",
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
-                Text(
-                  " 2.若有省点策略，设置为无限制",
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
-                Text(
-                  " 3.检查通知权限有无打开",
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
-                Text(
-                  " 4.设置完上诉，关闭小刻食堂后台再打开",
+                  "为了能稳定及时的推送新饼，需要：\n\n1. 锁定应用后台，不被系统杀死\n2. 若有省电策略，设置为无限制\n3. 检查通知权限有无打开\n4. 完成上述设置后，重新启动小刻食堂",
                   style: TextStyle(
                     fontSize: 16,
                   ),
@@ -106,22 +79,24 @@ class ToSettingDialog extends Dialog {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          TextButton(
+                          Expanded(
+                              child: TextButton(
                             onPressed: () {
                               openAppSettings();
                               Navigator.of(context).pop();
                             },
                             child: const Text(
-                              '   前往设置',
-                              style: TextStyle(fontSize: 17),
+                              '前往设置',
+                              style: TextStyle(
+                                  fontSize: 17, color: DunColors.DunColor),
                             ),
-                          ),
+                          )),
                           const VerticalDivider(
                             color: Colors.grey,
                             width: 1,
                             thickness: 1,
                           ),
-                          StatefulBuilder(
+                          Expanded(child: StatefulBuilder(
                             builder:
                                 (BuildContext context, StateSetter setState) {
                               aState = setState;
@@ -129,16 +104,17 @@ class ToSettingDialog extends Dialog {
                                   onPressed: disable
                                       ? null
                                       : () {
-                                    Navigator.of(context).pop();
-                                  },
+                                          Navigator.of(context).pop();
+                                        },
                                   child: Text(content,
                                       style: TextStyle(
                                         fontSize: 17,
-                                        color:
-                                        disable ? Colors.grey : Colors.blue,
+                                        color: disable
+                                            ? Colors.grey
+                                            : DunColors.DunColor,
                                       )));
                             },
-                          ),
+                          )),
                         ],
                       ),
                     )

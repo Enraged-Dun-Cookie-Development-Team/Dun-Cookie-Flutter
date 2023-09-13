@@ -279,6 +279,7 @@ class _MainListWidgetState extends State<MainListWidget> {
                     padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                     child: TextField(
                       controller: _searchController,
+                      cursorColor: DunColors.DunColor,
                       decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: '搜索：皮肤',

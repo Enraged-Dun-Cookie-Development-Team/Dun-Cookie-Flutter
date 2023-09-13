@@ -28,7 +28,7 @@ class DunToast {
     Fluttertoast.showToast(
         msg: text,
         textColor: Colors.white,
-        backgroundColor: Colors.green,
+        backgroundColor: DunColors.DunColor,
         fontSize: _fontsize);
   }
 
