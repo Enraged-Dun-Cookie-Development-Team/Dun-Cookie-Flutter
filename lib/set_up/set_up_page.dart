@@ -45,6 +45,7 @@ class _SetUpPageState extends State<SetUpPage> {
       backgroundColor: gray_3,
       appBar: AppBar(
           //设置&其他页面
+          // elevation: 0,
           backgroundColor: Colors.white,
           leading: IconButton(
               icon: const Icon(Icons.arrow_back_ios),
@@ -78,7 +79,7 @@ class _SetUpPageState extends State<SetUpPage> {
                   _buildCakeSource(context),
                   _buildLine(),
                   // _buildThemeColorSwitch(),
-                  _buildLine(),
+                  // _buildLine(),
                   _buildSaveFlow(),
                 ],
               ),

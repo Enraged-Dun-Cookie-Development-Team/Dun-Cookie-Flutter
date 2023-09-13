@@ -10,7 +10,13 @@ class ImageWidget extends StatelessWidget {
   final List<CookieImage>? data;
   final String? sourceType;
   final SettingData? settingData;
-  const ImageWidget({required this.data, required this.sourceType, required this.settingData, Key? key}) : super(key: key);
+
+  const ImageWidget(
+      {required this.data,
+      required this.sourceType,
+      required this.settingData,
+      Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +34,7 @@ class ImageWidget extends StatelessWidget {
     if (settingData?.isPreview == true && data?.isNotEmpty == true) {
       List<String> previewList = _getPreviewList(data!, sourceType!);
       return previewList;
-    }
-    else {
+    } else {
       List<String> originList = [];
       // 如果有略缩图且开启了略缩图开关
       for (var img in data!) {
@@ -47,12 +52,14 @@ class ImageWidget extends StatelessWidget {
         previewList.add(img.compressUrl!);
       } else if (sourceType == "bilibili:dynamic-by-uid") {
         if (data.length == 1) {
-          previewList.add(img.originUrl!+"@573w_358h_1e_1c_!web-dynamic.webp");
+          previewList
+              .add(img.originUrl! + "@573w_358h_1e_1c_!web-dynamic.webp");
         } else {
-          previewList.add(img.originUrl!+"@416w_416h_1e_1c_!web-dynamic.webp");
+          previewList
+              .add(img.originUrl! + "@416w_416h_1e_1c_!web-dynamic.webp");
         }
       } else if (sourceType == "netease-cloud-music:albums-by-artist") {
-        previewList.add(img.originUrl!+"?param=416x416");
+        previewList.add(img.originUrl! + "?param=416x416");
       } else {
         previewList.add(img.originUrl!);
       }
@@ -63,7 +70,7 @@ class ImageWidget extends StatelessWidget {
   /// 一张图
   _oneImage(BuildContext context) {
     var imageList = _checkIsPreview(true);
-    return _kazeFadeImage(context, imageList[0]);
+    return _kazeFadeImage(context, imageList[0], true);
   }
 
   /// 多张图
@@ -83,6 +90,7 @@ class ImageWidget extends StatelessWidget {
         return _kazeFadeImage(
           context,
           imageList[index],
+          false,
           index: index,
         );
       }),
@@ -93,7 +101,7 @@ class ImageWidget extends StatelessWidget {
   /// 图片渐变
   /// index 当前图片如果是多图的话 就是被那个图片的index 如果是单图 就是0
   ///
-  _kazeFadeImage(BuildContext context, String netSrc, {index = 0}) {
+  _kazeFadeImage(BuildContext context, String netSrc, isSingle, {index = 0}) {
     var _cumulativeBytesLoaded = 0;
     var _expectedTotalBytes = 0;
     return ExtendedImage.network(
@@ -109,12 +117,17 @@ class ImageWidget extends StatelessWidget {
           final loadingProgress = state.loadingProgress;
           _cumulativeBytesLoaded = loadingProgress?.cumulativeBytesLoaded ?? 0;
           _expectedTotalBytes = loadingProgress?.expectedTotalBytes ?? 0;
-          final progress =
-              _expectedTotalBytes != 0 ? _cumulativeBytesLoaded / _expectedTotalBytes : null;
+          final progress = _expectedTotalBytes != 0
+              ? _cumulativeBytesLoaded / _expectedTotalBytes
+              : null;
           return Stack(
             alignment: Alignment.center,
             children: [
-              const Image(image: AssetImage("assets/image/load/loading.gif")),
+              Padding(
+                padding: EdgeInsets.all(isSingle ? 60 : 10),
+                child: const Image(
+                    image: AssetImage("assets/image/load/loading.gif")),
+              ),
               Positioned(
                 right: 0,
                 bottom: 0,
@@ -143,9 +156,7 @@ class ImageWidget extends StatelessWidget {
                     return FadeTransition(
                       opacity: anim1,
                       child: ViewImageExtendedImage(
-                          text: "",
-                          imageList: imgList,
-                          currentIndex: index),
+                          text: "", imageList: imgList, currentIndex: index),
                     );
                   },
                 ),
@@ -154,19 +165,17 @@ class ImageWidget extends StatelessWidget {
             child: Hero(
               tag: data![index].originUrl!,
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(4),
-                child: Container(
-                  constraints: const BoxConstraints(maxHeight: 400),
-                  child: ExtendedRawImage(
-                    // height: 300,
-                    width: double.infinity,
-                    alignment: Alignment.topCenter,
-                    fit: BoxFit.cover,
-                    image: state.extendedImageInfo?.image,
-                  ),
-                )
-
-              ),
+                  borderRadius: BorderRadius.circular(4),
+                  child: Container(
+                    constraints: const BoxConstraints(maxHeight: 400),
+                    child: ExtendedRawImage(
+                      // height: 300,
+                      width: double.infinity,
+                      alignment: Alignment.topCenter,
+                      fit: BoxFit.cover,
+                      image: state.extendedImageInfo?.image,
+                    ),
+                  )),
             ),
           );
         }

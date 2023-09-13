@@ -202,6 +202,7 @@ class _MainListWidgetState extends State<MainListWidget> {
           _buildTitleBar(),
           Expanded(
             child: RefreshIndicator(
+              color: DunColors.DunColor,
               onRefresh: _onRefresh,
               child: data != null ? ListView.builder(
                 controller: _scrollController,
@@ -232,7 +233,7 @@ class _MainListWidgetState extends State<MainListWidget> {
                 itemCount: data!.length + 1,
 
               ): Center(
-                child: Image.asset("assets/image/load/loading.gif"),
+                child: Image.asset("assets/image/load/loading.gif", height: 150),
               ),
             )
           ),

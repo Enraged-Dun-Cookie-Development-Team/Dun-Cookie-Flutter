@@ -131,7 +131,7 @@ class _BottomNaacBarState extends State<BottomNavBar> {
     DunApp newApp = await InfoRequest.getAppVersionInfo();
     SharedPreferences sp = await SharedPreferences.getInstance();
     String? lastShowedVersion = sp.getString("update_dialog_showed_version");
-    if (nowVersion != lastShowedVersion) {
+    if (lastShowedVersion != null && nowVersion != lastShowedVersion) {
       DunApp nowApp = await InfoRequest.getAppVersionInfo(version: nowVersion);
       showDialog(
           context: context,
@@ -261,7 +261,7 @@ class _BottomNaacBarState extends State<BottomNavBar> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(50),
               border: Border.all(
-                color: yellow,
+                color: _currentController == 1 ? yellow : gray_2,
                 width: 2,
               ),
               color: _currentController == 1 ? yellow : white,
@@ -271,7 +271,7 @@ class _BottomNaacBarState extends State<BottomNavBar> {
                 'assets/icon/main_list_icon.png',
                 width: 57,
                 height: 48,
-                color: _currentController == 1 ? white : yellow,
+                color: _currentController == 1 ? white : gray_2,
               ),
             ),
           ),

@@ -81,7 +81,8 @@ class _SetUpDatasourceState extends State<SetUpDatasource> {
           titleTextStyle:
               const TextStyle(color: DunColors.DunColor, fontSize: 20),
           titleSpacing: 0,
-          elevation: 0,
+          // 为啥别人都没去就你去了 要去一起去
+          // elevation: 0,
           title: const Text("饼来源"),
         ),
         body: Column(
@@ -151,9 +152,9 @@ class _SetUpDatasourceState extends State<SetUpDatasource> {
               decoration: const BoxDecoration(
                 boxShadow: [
                   BoxShadow(
-                    color: DunColors.DunColor,
+                    color: Color(0x29000000),
                     offset: Offset(0, 3),
-                    blurRadius: 3,
+                    blurRadius: 5,
                   ),
                 ],
                 color: white,
