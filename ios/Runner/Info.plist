@@ -32,6 +32,7 @@
 		<string>http</string>
 		<string>bilibili</string>
 		<string>sinaweibo</string>
+		<string>mqqopensdkapi</string>
 		<string>orpheus</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
