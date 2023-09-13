@@ -368,6 +368,8 @@ class QuickJumpList {
         "assets/link/dps.ico"));
     _quickJump.add(QuickJump("https://arknightscommunity.drblack-system.com/",
         "泰拉通讯枢纽", "assets/link/tltxsn.png"));
+    _quickJump.add(QuickJump("https://ass.m-j.bond/",
+        "明日方舟剧情站", "assets/link/ass.png"));
     return _quickJump;
   }
 }
