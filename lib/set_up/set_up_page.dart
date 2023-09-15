@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/open_app_or_browser.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
@@ -347,9 +349,16 @@ class _SetUpPageState extends State<SetUpPage> {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () async {
-        String nowVersion = await PackageInfoPlus.getVersion();
         //网页跳转
-        OpenAppOrBrowser.openUrl("https://www.ceobecanteen.top/?version=$nowVersion&position=mo-sponsor",context);
+        if (Platform.isIOS) {
+          String nowVersion = await PackageInfoPlus.getVersion();
+          OpenAppOrBrowser.openUrl(
+              "https://www.ceobecanteen.top/?version=$nowVersion&position=mo-sponsor",
+              context);
+        } else {
+          OpenAppOrBrowser.openUrl(
+              "https://www.ceobecanteen.top/?&position=mo-sponsor", context);
+        }
       },
       child: const SizedBox(
         width: double.infinity,
