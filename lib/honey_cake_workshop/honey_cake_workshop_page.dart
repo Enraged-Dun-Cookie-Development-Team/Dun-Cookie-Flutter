@@ -125,7 +125,8 @@ class _HoneyCakeWorkshopPageState extends State<HoneyCakeWorkshopPage> {
           ),
         ],
       ),
-      body: Column(
+      body: SafeArea(
+          child: Column(
         children: [
           Expanded(
             child: Selector<CommonProvider, BakeryData>(
@@ -158,7 +159,7 @@ class _HoneyCakeWorkshopPageState extends State<HoneyCakeWorkshopPage> {
           ),
           _buildBottomButton(),
         ],
-      ),
+      )),
     );
   }
 

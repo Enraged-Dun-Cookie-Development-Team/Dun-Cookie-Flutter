@@ -317,6 +317,7 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> {
           const SizedBox(width: 6),
           Expanded(
             child: Container(
+              height: 97,
               color: white,
               child: TodayResource(resourceInfo?.resources),
             ),
@@ -370,6 +371,7 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> {
           Expanded(
             child: Container(
               color: white,
+              padding: const EdgeInsets.all(6),
               child: Center(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
