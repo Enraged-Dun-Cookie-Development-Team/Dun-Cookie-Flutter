@@ -3,16 +3,12 @@ import 'dart:io';
 
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/package_info.dart';
-import 'package:dun_cookie_flutter/component/group_num_button.dart';
-import 'package:dun_cookie_flutter/dialog/ToSettingDialog.dart';
 import 'package:dun_cookie_flutter/main_page/main_list/main_list_widget.dart';
 import 'package:dun_cookie_flutter/main_page/more_list/more_list_widget.dart';
 import 'package:dun_cookie_flutter/main_page/terminal_page/terminal_page_widget.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
-import 'package:dun_cookie_flutter/model/user_settings.dart';
 import 'package:dun_cookie_flutter/page/error/main.dart';
 import 'package:dun_cookie_flutter/page/info/open_screen_info.dart';
-import 'package:dun_cookie_flutter/page/update/main.dart';
 import 'package:dun_cookie_flutter/provider/setting_provider.dart';
 import 'package:dun_cookie_flutter/request/info_request.dart';
 import 'package:dun_cookie_flutter/router/router.dart';
@@ -25,6 +21,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Dialog/UpdataDialog.dart';
 import 'common/constant/main.dart';
+import 'dialog/TapStarDialog.dart';
 import 'dialog/UpdataInfoDialog.dart';
 import 'provider/common_provider.dart';
 
@@ -131,6 +128,22 @@ class _BottomNaacBarState extends State<BottomNavBar> {
     DunApp newApp = await InfoRequest.getAppVersionInfo();
     SharedPreferences sp = await SharedPreferences.getInstance();
     String? lastShowedVersion = sp.getString("update_dialog_showed_version");
+    if (Platform.isAndroid) {
+      int? openNumber = sp.getInt("number_of_openings");
+      if(openNumber!=null) {
+        if(openNumber>0){
+          sp.setInt("number_of_openings",openNumber+1);
+        }
+        if(openNumber==10){
+          showDialog(
+              context: context,
+              builder: (_) => TapStartDialog());
+          sp.setInt("number_of_openings",-1);
+        }
+      }else{
+        sp.setInt("number_of_openings",1);
+      }
+    }
     if (lastShowedVersion != null && nowVersion != lastShowedVersion) {
       DunApp nowApp = await InfoRequest.getAppVersionInfo(version: nowVersion);
       showDialog(

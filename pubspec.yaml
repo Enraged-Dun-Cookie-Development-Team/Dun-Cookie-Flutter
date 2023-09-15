@@ -63,6 +63,7 @@ dependencies:
   mobpush_plugin: ^1.2.1
   date_format: ^2.0.7
   permission_handler: ^10.4.3
+  in_app_review: ^2.0.6
 
 dev_dependencies:
   flutter_test:
