@@ -128,7 +128,7 @@ class _BottomNaacBarState extends State<BottomNavBar> {
     DunApp newApp = await InfoRequest.getAppVersionInfo();
     SharedPreferences sp = await SharedPreferences.getInstance();
     String? lastShowedVersion = sp.getString("update_dialog_showed_version");
-    if (Platform.isAndroid) {
+    if (Platform.isIOS) {
       int? openNumber = sp.getInt("number_of_openings");
       if(openNumber!=null) {
         if(openNumber>0){
@@ -138,7 +138,8 @@ class _BottomNaacBarState extends State<BottomNavBar> {
           showDialog(
               context: context,
               builder: (_) => TapStartDialog());
-          sp.setInt("number_of_openings",-1);
+          // 先不用重置 统计一下吧
+          // sp.setInt("number_of_openings",-1);
         }
       }else{
         sp.setInt("number_of_openings",1);

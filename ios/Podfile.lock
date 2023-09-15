@@ -11,6 +11,8 @@ PODS:
     - Flutter
   - image_picker_ios (0.0.1):
     - Flutter
+  - in_app_review (0.2.0):
+    - Flutter
   - mob_pushsdk (3.0.3):
     - mob_pushsdk/MobPush (= 3.0.3)
     - MOBFoundation
@@ -47,6 +49,7 @@ DEPENDENCIES:
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
   - image_gallery_saver (from `.symlinks/plugins/image_gallery_saver/ios`)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
+  - in_app_review (from `.symlinks/plugins/in_app_review/ios`)
   - mobpush_plugin (from `.symlinks/plugins/mobpush_plugin/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
@@ -76,6 +79,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/image_gallery_saver/ios"
   image_picker_ios:
     :path: ".symlinks/plugins/image_picker_ios/ios"
+  in_app_review:
+    :path: ".symlinks/plugins/in_app_review/ios"
   mobpush_plugin:
     :path: ".symlinks/plugins/mobpush_plugin/ios"
   package_info_plus:
@@ -102,6 +107,7 @@ SPEC CHECKSUMS:
   fluttertoast: fafc4fa4d01a6a9e4f772ecd190ffa525e9e2d9c
   image_gallery_saver: 259eab68fb271cfd57d599904f7acdc7832e7ef2
   image_picker_ios: 4a8aadfbb6dc30ad5141a2ce3832af9214a705b5
+  in_app_review: 318597b3a06c22bb46dc454d56828c85f444f99d
   mob_pushsdk: da91cf00e2bc3ac01b5cbd58a204e0a0d1b4c145
   MOBFoundation: 778c8aa4760cece62b8b7725c88ca280b4004801
   mobpush_plugin: c7924c87d18b622e0bda192bb841fb3e1a13326a
