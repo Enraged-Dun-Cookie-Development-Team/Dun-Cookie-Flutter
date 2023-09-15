@@ -347,8 +347,9 @@ class _SetUpPageState extends State<SetUpPage> {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () async {
+        String nowVersion = await PackageInfoPlus.getVersion();
         //网页跳转
-        OpenAppOrBrowser.openUrl("https://www.ceobecanteen.top/#/#mo-sponsor",context);
+        OpenAppOrBrowser.openUrl("https://www.ceobecanteen.top/?version=$nowVersion&position=mo-sponsor",context);
       },
       child: const SizedBox(
         width: double.infinity,
