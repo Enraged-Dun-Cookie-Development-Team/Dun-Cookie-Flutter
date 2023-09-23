@@ -8,6 +8,7 @@ import '../model/ceobecanteen_data.dart';
 import '../page/update/main.dart';
 
 class TapStartDialog extends Dialog {
+  const TapStartDialog({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +56,7 @@ class TapStartDialog extends Dialog {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Text(
-                        "你对小刻食堂还满意吗？给个好评吧！",
+                        "对小刻食堂还满意吗？给个好评吧！\n我从08年就开始等好评了！",
                         style: TextStyle(
                           fontSize: 14,
                           color: Colors.black,
@@ -104,7 +105,9 @@ class TapStartDialog extends Dialog {
                                 _confirmCallBack(context);
                               },
                               child: const Text("给个好评",
-                                  style: TextStyle(fontSize: 17,color: DunColors.DunColor))),
+                                  style: TextStyle(
+                                      fontSize: 17,
+                                      color: DunColors.DunColor))),
                         ],
                       ),
                     )
@@ -117,11 +120,11 @@ class TapStartDialog extends Dialog {
   }
 
   Future<void> _confirmCallBack(BuildContext context) async {
+    Navigator.of(context).pop();
     final InAppReview inAppReview = InAppReview.instance;
     if (await inAppReview.isAvailable()) {
       inAppReview.requestReview();
     }
-    Navigator.of(context).pop();
   }
 
   void _cancelCallBack(BuildContext context) {

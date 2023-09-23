@@ -128,20 +128,19 @@ class _BottomNaacBarState extends State<BottomNavBar> {
     DunApp newApp = await InfoRequest.getAppVersionInfo();
     SharedPreferences sp = await SharedPreferences.getInstance();
     String? lastShowedVersion = sp.getString("update_dialog_showed_version");
-    if (Platform.isAndroid) {
+    if (Platform.isIOS) {
       int? openNumber = sp.getInt("number_of_openings");
-      if(openNumber!=null) {
-        if(openNumber>0){
-          sp.setInt("number_of_openings",openNumber+1);
+      if (openNumber != null) {
+        if (openNumber > 0) {
+          sp.setInt("number_of_openings", openNumber + 1);
         }
-        if(openNumber==10){
-          showDialog(
-              context: context,
-              builder: (_) => TapStartDialog());
-          sp.setInt("number_of_openings",-1);
+        if (openNumber == 10) {
+          showDialog(context: context, builder: (_) => TapStartDialog());
+          // 先不用重置 统计一下吧
+          // sp.setInt("number_of_openings",-1);
         }
-      }else{
-        sp.setInt("number_of_openings",1);
+      } else {
+        sp.setInt("number_of_openings", 1);
       }
     }
     if (lastShowedVersion != null && nowVersion != lastShowedVersion) {
@@ -163,17 +162,15 @@ class _BottomNaacBarState extends State<BottomNavBar> {
                 newApp: newApp,
                 isFocus: true,
               ));
-
     } else if (PackageInfoPlus.isVersionHigher(newApp.version, nowVersion)) {
-       showDialog(
+      showDialog(
           context: context,
           barrierDismissible: false,
           builder: (_) => UpdataDialog(
                 oldVersion: nowVersion,
                 newApp: newApp,
                 isFocus: false,
-              )
-      );
+              ));
     }
   }
 
@@ -221,11 +218,14 @@ class _BottomNaacBarState extends State<BottomNavBar> {
   }
 
   List<Widget> _buildBottomBar() {
+    double paddingBottom = MediaQuery.of(context).padding.bottom;
+
     return [
       Align(
         alignment: Alignment.bottomCenter,
         child: Container(
-          height: 60,
+          padding: EdgeInsets.only(bottom: paddingBottom),
+          height: 60 + paddingBottom,
           decoration: const BoxDecoration(color: white, boxShadow: [
             BoxShadow(
               color: Colors.black38,
@@ -234,7 +234,8 @@ class _BottomNaacBarState extends State<BottomNavBar> {
               spreadRadius: 1.0,
             )
           ]),
-          child: Row(
+          child: Container(
+              child: Row(
             children: [
               Expanded(
                 child: GestureDetector(
@@ -260,36 +261,38 @@ class _BottomNaacBarState extends State<BottomNavBar> {
                 ),
               ),
             ],
-          ),
+          )),
         ),
       ),
-      Align(
-        alignment: Alignment.bottomCenter,
-        child: GestureDetector(
-          onTap: () => setState(() => _currentController = 1),
-          child: Container(
-            width: 83,
-            height: 83,
-            margin: const EdgeInsets.only(bottom: 5),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(50),
-              border: Border.all(
-                color: _currentController == 1 ? yellow : gray_2,
-                width: 2,
+      Container(
+          padding: EdgeInsets.only(bottom: paddingBottom),
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: GestureDetector(
+              onTap: () => setState(() => _currentController = 1),
+              child: Container(
+                width: 83,
+                height: 83,
+                margin: const EdgeInsets.only(bottom: 5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50),
+                  border: Border.all(
+                    color: _currentController == 1 ? yellow : gray_2,
+                    width: 2,
+                  ),
+                  color: _currentController == 1 ? yellow : white,
+                ),
+                child: Center(
+                  child: Image.asset(
+                    'assets/icon/main_list_icon.png',
+                    width: 57,
+                    height: 48,
+                    color: _currentController == 1 ? white : gray_2,
+                  ),
+                ),
               ),
-              color: _currentController == 1 ? yellow : white,
             ),
-            child: Center(
-              child: Image.asset(
-                'assets/icon/main_list_icon.png',
-                width: 57,
-                height: 48,
-                color: _currentController == 1 ? white : gray_2,
-              ),
-            ),
-          ),
-        ),
-      )
+          ))
     ];
   }
 }
