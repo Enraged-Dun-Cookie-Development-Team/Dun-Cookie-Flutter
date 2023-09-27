@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
+import 'package:dun_cookie_flutter/dialog/InfoDialog.dart';
 import 'package:dun_cookie_flutter/provider/common_event_bus.dart';
 import 'package:dun_cookie_flutter/provider/setting_provider.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,6 +24,8 @@ class OpenScreenInfo extends StatefulWidget {
 }
 
 class _OpenScreenInfoState extends State<OpenScreenInfo> {
+  int argee = 0;
+
   @override
   void initState() {
     _initMobPush();
@@ -111,46 +114,136 @@ class _OpenScreenInfoState extends State<OpenScreenInfo> {
                   const SizedBox(
                     height: 10,
                   ),
-                  const Text("以下是免责声明"),
+                  const Text("请仔细阅读产品声明和用户守则"),
                   const SizedBox(
                     height: 6,
                   ),
-                  const Text(
-                      "1、一切移动客户端用户在下载并浏览小刻食堂软件时均被视为已经仔细阅读本条款并完全同意。凡以任何方式使用本APP，或直接、间接使用本APP资料者，均被视为自愿接受本网站相关声明和用户服务协议的约束。\n2、小刻食堂转载的内容并不代表小刻食堂之意见及观点，也不意味着赞同其观点或证实其内容的真实性。\n3、小刻食堂转载的文字、图片、音视频等资料均由鹰角网络与部分信息发布者提供，其真实性、准确性和合法性由信息发布人负责。小刻食堂不提供任何保证，并不承担任何法律责任。\n4、小刻食堂所转载的文字、图片、音视频等资料，如果侵犯了第三方的知识产权或其他权利，未保证数据不被篡改，本APP不会进行任何处理，请联系发布源进行修改。\n5、小刻食堂不保证为向用户提供便利而设置的外部链接的准确性和完整性，同时，对于该外部链接指向的不由小刻食堂实际控制的任何网页上的内容，小刻食堂不承担任何责任。\n6、用户明确并同意其使用小刻食堂网络服务所存在的风险将完全由其本人承担;因其使用小刻食堂网络服务而产生的一切后果也由其本人承担，小刻食堂对此不承担任何责任。\n7、除小刻食堂注明之服务条款外，其它因不当使用本APP而导致的任何意外、疏忽、合约毁坏、诽谤、版权或其他知识产权侵犯及其所造成的任何损失，小刻食堂概不负责，亦不承担任何法律责任。\n8、对于因不可抗力或因黑客攻击、通讯线路中断等小刻食堂不能控制的原因造成的网络服务中断或其他缺陷，导致用户不能正常使用小刻食堂，小刻食堂不承担任何责任，但将尽力减少因此给用户造成的损失或影响。\n9、本声明未涉及的问题请参见国家有关法律法规，当本声明与国家有关法律法规冲突时，以国家法律法规为准。\n10、本网站相关声明版权及其修改权、更新权和最终解释权均属小刻食堂所有。"),
-                  const Text("此项目引用了MobSdk"),
-                  ElevatedButton(
-                      style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(DunColors.DunColor)),
-                      onPressed: () async {
-                        if (Platform.isAndroid){
-                          await showDialog(
-                              context: this.context,
-                              barrierDismissible: false,
-                              builder: (_) => ToSettingDialog());
-                        }
-                        var settingData = Provider.of<SettingProvider>(context,
-                            listen: false);
-                        DunToast.showInfo("与土豆服务器连接中……");
-                        await _registerMobPush(settingData);
-                        settingData.appSetting.notOnce = false;
-                        settingData.saveAppSetting();
-                        Navigator.of(context).pop(true);
-                      },
-                      child: const Text("我看完并同意免责声明的内容")),
+                  Container(
+                      decoration: const BoxDecoration(
+                        color: gray_4,
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
+                      child: Column(children: [
+                        const Text(
+                          "《产品声明》",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w700),
+                        ),
+                        Container(
+                          constraints: BoxConstraints(
+                              maxHeight:
+                                  MediaQuery.of(context).size.width * 0.45),
+                          padding:
+                              const EdgeInsets.only(top: 8, left: 5, right: 5),
+                          child: const Scrollbar(
+                            thumbVisibility: true,
+                            child: SingleChildScrollView(
+                                child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                    "本产品为非商业化产品，除捐助用于服务器运行资金外无任何收益。\n\n本产品仅供学习交流使用。\n\n本产品相关内容（文字、图片、音视频等）均来源于/转自第三方，平台转载相关内容不视为对于相关内容、观点的认可，亦不视为对于相关内容的真实性、准确性、完整性、合法性做出任何承诺。相关内容的真实合法性由内容发布者自行承担，本平台不承担相关法律责任。本平台已明确提示内容来源，如相关内容侵犯了您的合法权益，您亦需联系发布源进行处理。\n\n如若侵犯第三方权益，请您及时与我们联系，我们将立刻整改。"),
+                              ],
+                            )),
+                          ),
+                        ),
+                      ])),
                   const SizedBox(
-                    height: 6,
+                    height: 20,
                   ),
-                  ElevatedButton(
-                      style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(gray_3)),
-                      onPressed: () {
-                        exit(0);
-                      },
-                      child: const Text(
-                        "我不同意",
-                        style: TextStyle(color: Colors.black45),
-                      ))
+                  Container(
+                    decoration: const BoxDecoration(
+                        color: gray_4,
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    child: Column(
+                      children: [
+                        const Text(
+                          "《用户守则》",
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w700),
+                        ),
+                        Container(
+                          constraints: BoxConstraints(
+                              maxHeight:
+                                  MediaQuery.of(context).size.width * 0.45),
+                          padding:
+                              const EdgeInsets.only(top: 8, left: 5, right: 5),
+                          child: const Scrollbar(
+                            thumbVisibility: true,
+                            child: SingleChildScrollView(
+                                child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                    "欢迎使用由小刻食堂开发团队（以下简称「开发组」）开发的「小刻食堂」系列。在您使用本框架之前，请仔细阅读并完全理解本声明。一旦您开始使用小刻食堂，即表示您同意遵守本声明中的所有条款和条件。\n\n1. 使用目的： 小刻食堂是一个免费开源的软件项目，旨在为用户提供抓取B站、微博、明日方舟通讯组等API数据的功能，并提供多种实用功能，如实时饼消息通知、快速跳转链接、饼内容分享、详细内容查看、饼内容图片生成、理智回复时间计算等。\n\n2. 合法合理使用： 您承诺以合法、合理的方式使用小刻食堂，不得将其用于任何违法、侵权或其他恶意行为，也不得将其应用于违反当地法律法规的Web平台。\n\n3. 免责声明： 开发组对于因使用小刻食堂而引起的任何意外、疏忽、合同损害、诽谤、版权或知识产权侵权以及由此产生的损失（包括但不限于直接、间接、附带或衍生的损失等）不承担任何法律责任。\n\n4. 风险承担： 用户明确同意，使用小刻食堂所存在的风险和后果将完全由用户自行承担，开发组不承担任何法律责任。\n\n5. 合法发布和使用： 用户在遵守本声明的前提下，可在《MIT开源许可证》所允许的范围内合法地发布、传播和使用小刻食堂。对于因违反本声明或法律法规造成的法律责任（包括但不限于民事赔偿和刑事责任），将由违约者自行承担。\n\n6. 知识产权： 小刻食堂及其相关产品享有开发组的知识产权保护，包括但不限于商标权、专利权、著作权、商业秘密等，受相关法律法规保护。\n\n7. 条款变更： 开发组有权随时单方面修改本声明条款及附件内容，并通过消息推送、网页公告等方式进行公布。变更后的条款在公布后立即生效，用户继续使用即表示您已充分阅读、理解并接受修改后的声明内容。\n\n8. 隐私政策：此项目引用了MobSDK进行推送\n\n请在使用小刻食堂之前仔细阅读并理解本声明。如果您有任何疑问，请咨询相关法律专业人士。感谢您的合作与支持！"),
+                              ],
+                            )),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text("同意《产品声明》与《用户守则》"),
+                      Radio(
+                          value: 1,
+                          groupValue: argee,
+                          onChanged: (v) {
+                            setState(() {
+                              argee = 1;
+                            });
+                          }),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(DunColors.DunColor),
+                            minimumSize:
+                                MaterialStateProperty.all(const Size(120, 40)),
+                          ),
+                          onPressed: () async {
+                            if (Platform.isAndroid) {
+                              await showDialog(
+                                  context: this.context,
+                                  barrierDismissible: false,
+                                  builder: (_) => ToSettingDialog());
+                            }
+                            var settingData = Provider.of<SettingProvider>(
+                                context,
+                                listen: false);
+                            DunToast.showInfo("与土豆服务器连接中……");
+                            await _registerMobPush(settingData);
+                            settingData.appSetting.notOnce = false;
+                            settingData.saveAppSetting();
+                            Navigator.of(context).pop(true);
+                          },
+                          child: const Text("进入小刻食堂")),
+                      const SizedBox(
+                        height: 6,
+                      ),
+                      ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(gray_3),
+                            minimumSize:
+                                MaterialStateProperty.all(const Size(120, 40)),
+                          ),
+                          onPressed: () {
+                            exit(0);
+                          },
+                          child: const Text(
+                            "退出",
+                            style: TextStyle(color: Colors.black45),
+                          ))
+                    ],
+                  ),
                 ],
               ),
             ),
