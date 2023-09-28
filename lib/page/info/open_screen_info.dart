@@ -25,8 +25,6 @@ class OpenScreenInfo extends StatefulWidget {
 }
 
 class _OpenScreenInfoState extends State<OpenScreenInfo> {
-  bool agree = false;
-
   @override
   void initState() {
     _initMobPush();
@@ -88,7 +86,7 @@ class _OpenScreenInfoState extends State<OpenScreenInfo> {
           ),
           body: SingleChildScrollView(
             child: Container(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.only(top: 150, left: 50, right: 50),
               width: double.infinity,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -117,7 +115,10 @@ class _OpenScreenInfoState extends State<OpenScreenInfo> {
                   ),
                   RichText(
                     text: TextSpan(
-                        style: TextStyle(fontSize: 18, color: Colors.black),
+                        style: TextStyle(
+                            fontSize: 17,
+                            fontWeight: FontWeight.w200,
+                            color: Colors.black),
                         children: [
                           TextSpan(
                               text:
@@ -157,72 +158,49 @@ class _OpenScreenInfoState extends State<OpenScreenInfo> {
                         ]),
                     textDirection: TextDirection.ltr,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Checkbox(
-                          value: agree,
-                          activeColor: DunColors.DunColor,
-                          shape: const CircleBorder(),
-                          onChanged: (v) {
-                            setState(() {
-                              agree = !agree;
-                            });
-                          }),
-                      const Text("同意《产品声明》与《用户守则》"),
-                    ],
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      text: "不同意",
+                      style: TextStyle(color: gray_1),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          exit(0);
+                        },
+                    ),
                   ),
                   const SizedBox(
-                    height: 30,
+                    height: 8,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      ElevatedButton(
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(gray_3),
-                            minimumSize:
-                                MaterialStateProperty.all(const Size(120, 40)),
-                          ),
-                          onPressed: () {
-                            exit(0);
-                          },
-                          child: const Text(
-                            "退出",
-                            style: TextStyle(color: Colors.black45),
-                          )),
-                      const SizedBox(
-                        height: 6,
+                  ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(DunColors.DunColor),
+                        minimumSize:
+                            MaterialStateProperty.all(const Size(300, 40)),
                       ),
-                      ElevatedButton(
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(
-                                agree ? DunColors.DunColor : gray_3),
-                            minimumSize:
-                                MaterialStateProperty.all(const Size(120, 40)),
-                          ),
-                          onPressed: () async {
-                            if (!agree) {
-                              return;
-                            }
-                            if (Platform.isAndroid) {
-                              await showDialog(
-                                  context: this.context,
-                                  barrierDismissible: false,
-                                  builder: (_) => ToSettingDialog());
-                            }
-                            var settingData = Provider.of<SettingProvider>(
-                                context,
-                                listen: false);
-                            DunToast.showInfo("与土豆服务器连接中……");
-                            await _registerMobPush(settingData);
-                            settingData.appSetting.notOnce = false;
-                            settingData.saveAppSetting();
-                            Navigator.of(context).pop(true);
-                          },
-                          child: const Text("进入小刻食堂")),
-                    ],
-                  ),
+                      onPressed: () async {
+                        if (Platform.isAndroid) {
+                          await showDialog(
+                              context: this.context,
+                              barrierDismissible: false,
+                              builder: (_) => ToSettingDialog());
+                        }
+                        var settingData = Provider.of<SettingProvider>(context,
+                            listen: false);
+                        DunToast.showInfo("与土豆服务器连接中……");
+                        await _registerMobPush(settingData);
+                        settingData.appSetting.notOnce = false;
+                        settingData.saveAppSetting();
+                        Navigator.of(context).pop(true);
+                      },
+                      child: const Text(
+                        "同意并继续",
+                        style: TextStyle(
+                            fontSize: 17, fontWeight: FontWeight.w500),
+                      )),
                 ],
               ),
             ),
