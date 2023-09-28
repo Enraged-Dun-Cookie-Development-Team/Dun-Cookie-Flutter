@@ -81,13 +81,13 @@ class _OpenScreenInfoState extends State<OpenScreenInfo> {
         title: "小刻食堂",
         home: Scaffold(
           appBar: AppBar(
-            title: const Text("这是一则很重要的说明！"),
+            title: const Text("产品声明与用户协议提示"),
             systemOverlayStyle: SystemUiOverlayStyle.light,
           ),
-          body: SingleChildScrollView(
-            child: Container(
-              padding: const EdgeInsets.only(top: 150, left: 50, right: 50),
-              width: double.infinity,
+          body:
+            Container(
+              padding: const EdgeInsets.only(left: 50, right: 50),
+              // width: double.infinity,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -97,35 +97,31 @@ class _OpenScreenInfoState extends State<OpenScreenInfo> {
                     width: 100,
                   ),
                   const SizedBox(
-                    height: 8,
+                    height: 16,
                   ),
                   const Text(
-                    "首先欢迎你使用小刻食堂移动端",
+                    "欢迎您使用小刻食堂移动端",
                     style: DunStyles.text20C,
                   ),
                   Text(
-                    "权限方面请允许我们推送和连接网络",
+                    "请允许推送与连接网络权限",
                     style: DunStyles.text14C.copyWith(color: Colors.red),
                   ),
                   const SizedBox(
-                    height: 6,
-                  ),
-                  const SizedBox(
-                    height: 10,
+                    height: 16,
                   ),
                   RichText(
                     text: TextSpan(
-                        style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.w200,
-                            color: Colors.black),
+                        style: const TextStyle(
+                            fontSize: 14,
+                            // fontWeight: FontWeight.w200,
+                            color: DunColors.DunColorGrey),
                         children: [
-                          TextSpan(
-                              text:
-                                  "  为了您的体验，请您务必审慎阅读，充分理解“产品声明”和“用户守则”。您可以阅读"),
+                          const TextSpan(
+                              text: "为了您的体验，请您务必审慎阅读、充分理解我们的“产品声明”与“用户守则”条款。您可阅读"),
                           TextSpan(
                             text: "《产品声明》",
-                            style: TextStyle(color: DunColors.DunColor),
+                            style: const TextStyle(color: DunColors.DunColor),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
                                 showDialog(
@@ -133,11 +129,11 @@ class _OpenScreenInfoState extends State<OpenScreenInfo> {
                                     builder: (_) => InfoDialog(
                                           title: "《产品声明》",
                                           content:
-                                              "本产品为非商业化产品，除捐助用于服务器运行资金外无任何收益。\n\n本产品仅供学习交流使用。\n\n本产品相关内容（文字、图片、音视频等）均来源于/转自第三方，平台转载相关内容不视为对于相关内容、观点的认可，亦不视为对于相关内容的真实性、准确性、完整性、合法性做出任何承诺。相关内容的真实合法性由内容发布者自行承担，本平台不承担相关法律责任。本平台已明确提示内容来源，如相关内容侵犯了您的合法权益，您亦需联系发布源进行处理。\n\n如若侵犯第三方权益，请您及时与我们联系，我们将立刻整改。",
+                                              "本产品为非商业化产品，除捐助用于服务器运行资金外无任何收益。\n\n本产品仅供学习交流使用。\n\n本产品相关内容（文字、图片、音视频等）均来源于/转自第三方，平台转载相关内容不视为对于相关内容、观点的认可，亦不视为对于相关内容的真实性、准确性、完整性、合法性做出任何承诺。相关内容的真实合法性由内容发布者自行承担，本平台不承担相关法律责任。\n\n本平台已明确提示内容来源，如相关内容侵犯了您的合法权益，您亦需联系发布源进行处理。\n\n如若侵犯第三方权益，请您及时与我们联系，我们将立刻整改。",
                                         ));
                               },
                           ),
-                          TextSpan(text: "和"),
+                          const TextSpan(text: "和"),
                           TextSpan(
                             text: "《用户守则》",
                             style: TextStyle(color: DunColors.DunColor),
@@ -152,9 +148,8 @@ class _OpenScreenInfoState extends State<OpenScreenInfo> {
                                         ));
                               },
                           ),
-                          TextSpan(
-                              text:
-                                  "了解详细信息。如您同意，请点击“同意《产品声明》与《用户守则》”开始接受我们的服务。")
+                          const TextSpan(
+                              text: "了解详细信息。如您同意，请点击“同意并继续”开始接受我们的服务。")
                         ]),
                     textDirection: TextDirection.ltr,
                   ),
@@ -203,7 +198,6 @@ class _OpenScreenInfoState extends State<OpenScreenInfo> {
                       )),
                 ],
               ),
-            ),
           ),
         ),
       ),
