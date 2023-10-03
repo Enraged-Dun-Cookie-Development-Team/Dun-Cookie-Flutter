@@ -144,6 +144,7 @@ class UpdataDialog extends Dialog {
   }
 
   Future<void> _confirmCallBack(BuildContext context) async {
+    Navigator.of(context).pop();
     Navigator.pushNamed(context, DunUpdate.routerName, arguments: newApp);
     DunToast.showSuccess("正在跳转到更新页面");
   }
