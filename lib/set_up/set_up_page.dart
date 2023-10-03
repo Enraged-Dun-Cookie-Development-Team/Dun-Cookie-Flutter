@@ -352,6 +352,7 @@ class _SetUpPageState extends State<SetUpPage> {
         //网页跳转
         if (Platform.isIOS) {
           String nowVersion = await PackageInfoPlus.getVersion();
+          print("https://www.ceobecanteen.top/?version=$nowVersion&position=mo-sponsor");
           OpenAppOrBrowser.openUrl(
               "https://www.ceobecanteen.top/?version=$nowVersion&position=mo-sponsor",
               context);
