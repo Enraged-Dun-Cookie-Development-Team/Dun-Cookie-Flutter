@@ -133,6 +133,7 @@ class _DunSettingState extends State<DunSetting> {
           onTap: () async {
             DunApp? app = await InfoRequest.getAppVersionInfo();
             if (app.version != null && await PackageInfoPlus.isVersionHigherThenNow(app.version)) {
+              DunToast.showSuccess("正在跳转到更新页面");
               Navigator.pushNamed(context, DunUpdate.routerName, arguments: app);
             } else {
               DunToast.showSuccess("当前版本是最新版本");

@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:flutter/material.dart';
 
+import '../common/tool/dun_toast.dart';
 import '../model/ceobecanteen_data.dart';
 import '../page/update/main.dart';
-import '../request/info_request.dart';
 
 class UpdataDialog extends Dialog {
   final String? oldVersion; //旧版本
@@ -145,7 +145,7 @@ class UpdataDialog extends Dialog {
 
   Future<void> _confirmCallBack(BuildContext context) async {
     Navigator.pushNamed(context, DunUpdate.routerName, arguments: newApp);
-    Navigator.of(context).pop();
+    DunToast.showSuccess("正在跳转到更新页面");
   }
 
   void _cancelCallBack(BuildContext context) {
