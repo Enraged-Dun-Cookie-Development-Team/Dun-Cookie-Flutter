@@ -56,7 +56,7 @@ class ToSettingDialog extends Dialog {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "为了能稳定及时的推送新饼，需要：\n\n1. 锁定应用后台，不被系统杀死\n2. 若有省电策略，设置为无限制\n3. 检查通知权限有无打开\n4. 完成上述设置后，重新启动小刻食堂",
+                  "为了能稳定及时的推送新饼，需要：\n\n1. 锁定应用后台或运行应用自启动\n2. 若有省电策略，设置为无限制\n3. 检查通知权限有无打开\n4. 完成上述设置后，重新启动小刻食堂",
                   style: TextStyle(
                     fontSize: 16,
                   ),
