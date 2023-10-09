@@ -41,6 +41,12 @@ Future<void> earlyInit() async {
     SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
   }
 
+  if (Platform.isIOS) {
+    MobpushPlugin.setCustomNotification();
+    // 开发环境 false, 线上环境 true
+    MobpushPlugin.setAPNsForProduction(true);
+  }
+
   await SettingProvider.getInstance().readAppSetting();
 }
 
