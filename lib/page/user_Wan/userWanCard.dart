@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:dun_cookie_flutter/common/tool/open_app_or_browser.dart';
 import 'package:dun_cookie_flutter/model/bilibili_favorites_data.dart';
 import 'package:dun_cookie_flutter/model/bilibili_user_favlist_data.dart';
-import 'package:dun_cookie_flutter/page/error/main.dart';
+
+import '../../page/error/main.dart';
+
 
 class UserWanCard extends StatefulWidget {
   const UserWanCard(this.favData, {Key? key}) : super(key: key);

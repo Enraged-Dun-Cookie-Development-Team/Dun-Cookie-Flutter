@@ -1,11 +1,12 @@
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/model/bilibili_user_favlist_data.dart';
-import 'package:dun_cookie_flutter/page/error/main.dart';
+
 import 'package:dun_cookie_flutter/page/user_Wan/userWanCard.dart';
 import 'package:dun_cookie_flutter/request/user_request.dart';
 import 'package:flutter/material.dart';
 
 import '../../common/tool/open_app_or_browser.dart';
+import '../../page/error/main.dart';
 
 class UserWan extends StatefulWidget {
   const UserWan({Key? key}) : super(key: key);

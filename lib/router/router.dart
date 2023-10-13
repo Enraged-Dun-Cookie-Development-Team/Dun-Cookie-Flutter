@@ -1,48 +1,28 @@
-import 'package:dun_cookie_flutter/common/browser/main.dart';
+
+import 'package:dun_cookie_flutter/page/manga/manga_list.dart';
+import 'package:dun_cookie_flutter/page/webview/main.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/main.dart';
-import 'package:dun_cookie_flutter/page/error/main.dart';
-import 'package:dun_cookie_flutter/page/bakery/main.dart';
-import 'package:dun_cookie_flutter/page/comics/main.dart';
-import 'package:dun_cookie_flutter/page/main/dun_list.dart';
-import 'package:dun_cookie_flutter/page/main/dun_share.dart';
-import 'package:dun_cookie_flutter/page/setting/main.dart';
-import 'package:dun_cookie_flutter/page/setting/setting_info.dart';
-import 'package:dun_cookie_flutter/page/setting/setting_source_filter.dart';
-import 'package:dun_cookie_flutter/page/tool/main.dart';
+
+import 'package:dun_cookie_flutter/page/widgetToImage/dun_share.dart';
+
 import 'package:dun_cookie_flutter/page/update/main.dart';
-import 'package:dun_cookie_flutter/page/user_Wan/main.dart';
 import 'package:flutter/material.dart';
 
-import '../main_page/main_list/ui/cookie_share.dart';
+import '../page/error/main.dart';
+import '../page/main/ui/home/cookie_share.dart';
 
 class DunRouter {
   static final Map<String, WidgetBuilder> routes = {
-    "/": (context) => const BottomNavBar(),
-    Bakery.routeName: (context) => const Bakery(),
-    DunList.routeName: (context) => const DunList(),
-    DunWidgetToImage.routeName: (context) => const DunWidgetToImage(),
-    DunWebView.routeName: (context) => DunWebView(),
-    DunTool.routeName: (context) => const DunTool(),
-    DunSetting.routerName: (context) => const DunSetting(),
-    SettingSourceFilter.routerName: (context) => const SettingSourceFilter(),
-    DunInfo.routerName: (context) => const DunInfo(),
+    "/": (context) => const BottomNavBar(), //主页|预加载
+    DunWebView.routeName: (context) => const DunWebView(),
     DunUpdate.routerName: (context) => const DunUpdate(),
-    Comics.routerName: (context) => const Comics(),
-    UserWan.routerName: (context) => const UserWan(),
+    DunWidgetToImage.routeName: (context) => const DunWidgetToImage(),
     CookieWidgetToImage.routeName: (context) => const CookieWidgetToImage(),
   };
 
   /// 侧边菜单固定项目
   static const pageTitles = ["小刻食堂", "蜜饼工坊", "官方漫画", "泰拉每周速递", "常用工具", "设置与其他"];
-  static var pages = [
-    const DunList(),
-    const Bakery(),
-    const Comics(),
-    const UserWan(),
-    const DunTool(),
-    const DunSetting()
-  ];
   static const pagesIcon = [
     Image(
       image: AssetImage("assets/logo/logo_item.png"),

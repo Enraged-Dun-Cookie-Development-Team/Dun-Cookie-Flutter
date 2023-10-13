@@ -3,12 +3,12 @@ import 'dart:io';
 
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/package_info.dart';
-import 'package:dun_cookie_flutter/main_page/main_list/main_list_widget.dart';
-import 'package:dun_cookie_flutter/main_page/more_list/more_list_widget.dart';
-import 'package:dun_cookie_flutter/main_page/terminal_page/terminal_page_widget.dart';
-import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
 import 'package:dun_cookie_flutter/page/error/main.dart';
-import 'package:dun_cookie_flutter/page/info/open_screen_info.dart';
+import 'package:dun_cookie_flutter/page/main/home/main_list_widget.dart';
+import 'package:dun_cookie_flutter/page/main/more/more_list_widget.dart';
+import 'package:dun_cookie_flutter/page/main/terminal/terminal_page_widget.dart';
+import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
+import 'package:dun_cookie_flutter/page/screeninfo/open_screen_info.dart';
 import 'package:dun_cookie_flutter/provider/setting_provider.dart';
 import 'package:dun_cookie_flutter/request/info_request.dart';
 import 'package:dun_cookie_flutter/router/router.dart';
