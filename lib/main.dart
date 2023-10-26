@@ -12,6 +12,7 @@ import 'package:dun_cookie_flutter/page/screeninfo/open_screen_info.dart';
 import 'package:dun_cookie_flutter/provider/setting_provider.dart';
 import 'package:dun_cookie_flutter/request/info_request.dart';
 import 'package:dun_cookie_flutter/router/router.dart';
+import 'package:fk_user_agent/fk_user_agent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mobpush_plugin/mobpush_plugin.dart';
@@ -41,13 +42,9 @@ Future<void> earlyInit() async {
     SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
   }
 
-  if (Platform.isIOS) {
-    MobpushPlugin.setCustomNotification();
-    // 开发环境 false, 线上环境 true
-    MobpushPlugin.setAPNsForProduction(true);
-  }
-
   await SettingProvider.getInstance().readAppSetting();
+
+  await FkUserAgent.init();
 }
 
 class CeobeCanteenApp extends StatefulWidget {
@@ -117,6 +114,12 @@ class _BottomNaacBarState extends State<BottomNavBar> {
       if (!result) return;
       //申请权限
       Permission.notification.request();
+    }else{
+      if (Platform.isIOS) {
+        MobpushPlugin.setCustomNotification();
+        // 开发环境 false, 线上环境 true
+        MobpushPlugin.setAPNsForProduction(true);
+      }
     }
     _checkVersion();
   }

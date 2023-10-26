@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/view_image_main.dart';
+import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
 import 'package:dun_cookie_flutter/model/cookie_main_list_model.dart';
 import 'package:dun_cookie_flutter/model/setting_data.dart';
 import 'package:dun_cookie_flutter/model/source_data.dart';
 import 'package:extended_image/extended_image.dart';
+import 'package:fk_user_agent/fk_user_agent.dart';
 import 'package:flutter/material.dart';
 
 class ImageWidget extends StatelessWidget {
@@ -100,6 +104,7 @@ class ImageWidget extends StatelessWidget {
   ///
   /// 图片渐变
   /// index 当前图片如果是多图的话 就是被那个图片的index 如果是单图 就是0
+  /// 注意在network_image_io文件下的Future<HttpClientResponse> _getResponse(Uri resolved)函数开头添加 httpClient.userAgent = null;
   ///
   _kazeFadeImage(BuildContext context, String netSrc, isSingle, {index = 0}) {
     var _cumulativeBytesLoaded = 0;
@@ -112,6 +117,9 @@ class ImageWidget extends StatelessWidget {
       clearMemoryCacheWhenDispose: false,
       mode: ExtendedImageMode.gesture,
       cache: true,
+      headers: {
+        HttpHeaders.userAgentHeader:FkUserAgent.userAgent!,
+      },
       loadStateChanged: (ExtendedImageState state) {
         if (state.extendedImageLoadState == LoadState.loading) {
           final loadingProgress = state.loadingProgress;
