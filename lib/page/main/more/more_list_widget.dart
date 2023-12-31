@@ -31,6 +31,7 @@ class MoreListWidget extends StatefulWidget {
 class _MoreListWidgetState extends State<MoreListWidget> {
   CeobecanteenData? ceobecanteenData;
   List<VideoModel> videoList = [];
+  List<QuickJump> quickJumpList =[];
   TerraRecentEpisodeModel? terraRecentEpisode;
   BakeryRecentPredictModel? bakeryRecentPredict;
 
@@ -38,6 +39,7 @@ class _MoreListWidgetState extends State<MoreListWidget> {
   void initState() {
     super.initState();
     ToolsApi.getVideoList().then((value) => setState(() => videoList = value));
+    ToolsApi.getToolLinkInfoUrl().then((value) => setState(() => quickJumpList = value));
     CookiesApi.getTerraNewestEpisode()
         .then((value) => setState(() => terraRecentEpisode = value));
     BakeryRequest.getBakeryRecentPredict()
@@ -406,14 +408,14 @@ class _MoreListWidgetState extends State<MoreListWidget> {
   }
 
   Widget _buildToolLinks() {
-    List<QuickJump>? dataList = ceobecanteenData?.quickJump;
-    if (dataList == null || dataList.isEmpty) return const SizedBox();
+    if (quickJumpList.isEmpty) return const SizedBox();
+
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
       child: GridView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: dataList.length,
+        itemCount: quickJumpList.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           mainAxisSpacing: 2,
@@ -421,7 +423,7 @@ class _MoreListWidgetState extends State<MoreListWidget> {
           childAspectRatio: 3,
         ),
         itemBuilder: (ctx, index) {
-          return Card(child: ToolLink(dataList[index]));
+          return Card(child: ToolLink(quickJumpList[index]));
         },
         padding: EdgeInsets.zero,
       ),

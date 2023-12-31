@@ -1,6 +1,7 @@
 import 'package:dun_cookie_flutter/model/resource_info.dart';
 import 'package:dun_cookie_flutter/model/video_model.dart';
 
+import '../model/ceobecanteen_data.dart';
 import 'main.dart';
 
 /// 常用工具
@@ -42,4 +43,26 @@ class ToolsApi {
       return ResourceInfo.fromJson(response.data["data"]);
     }
   }
+
+  ///友站链接
+  static String toolLinkInfoUrl = "/canteen/operate/toolLink/list";
+  static Future<List<QuickJump>> getToolLinkInfoUrl() async {
+    ResponseData response = await HttpClass.get(toolLinkInfoUrl, type: 1);
+    if (response.error) {
+      return [];
+    } else {
+      List<QuickJump> resultAll = [];
+      if (response.data is Map) {
+        Map map = response.data;
+        var data = map["data"];
+        if (data is List) {
+          for (var model in data) {
+            resultAll.add(QuickJump.fromJson(model));
+          }
+        }
+      }
+      return resultAll;
+    }
+  }
+
 }
