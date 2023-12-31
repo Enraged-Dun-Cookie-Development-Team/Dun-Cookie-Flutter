@@ -1,10 +1,10 @@
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/model/cookie_main_list_model.dart';
-import 'package:dun_cookie_flutter/page/widgetToImage/dun_share.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../common/tool/time_unit.dart';
+import 'cookie_share.dart';
 
 class CookieHead extends StatelessWidget {
   CookieHead(this.info, {Key? key, this.isShowQR = false})
@@ -76,7 +76,7 @@ class CookieHead extends StatelessWidget {
                       iconSize: 18,
                       icon: const Icon(Icons.share),
                       onPressed: () {
-                        Navigator.pushNamed(context, DunWidgetToImage.routeName,
+                        Navigator.pushNamed(context, CookieWidgetToImage.routeName,
                             arguments: info);
                       },
                     ),

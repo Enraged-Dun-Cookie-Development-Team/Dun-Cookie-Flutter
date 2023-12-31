@@ -83,10 +83,9 @@ class _CookieWidgetToImageState extends State<CookieWidgetToImage> {
                             width: size.width,
                             child: _stackHear(sourceData),
                           ),
-                          _buildContent(
-                              context, sourceData.defaultCookie?.text ?? ""),
+                          _buildContent(context, sourceData),
                           // 卡片图片
-                          CookieShareImage(data: sourceData),
+                          CookieShareImage(data: sourceData, type: 1),
                         ],
                       ),
                     ),
@@ -163,15 +162,45 @@ class _CookieWidgetToImageState extends State<CookieWidgetToImage> {
     );
   }
 
-  Widget _buildContent(BuildContext context, String cookieText) {
+  Widget _buildContent(BuildContext context, Cookies sourceData) {
     final size = MediaQuery.of(context).size;
     return Container(
       width: size.width,
-      child: ExpandableText(
-        cookieText,
-        noExpandButton: true,
-        expandLimit: 36,
-        overflow: TextOverflow.ellipsis,
+      child: Column(
+        children: [
+          ExpandableText(
+            sourceData.defaultCookie?.text ?? "",
+            noExpandButton: true,
+            expandLimit: 36,
+            overflow: TextOverflow.ellipsis,
+          ),
+          sourceData.item?.retweeted != null
+              ? Container(
+                  decoration: const BoxDecoration(
+                      color: gray_4,
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                  padding: const EdgeInsets.all(8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ExpandableText(
+                        "转发自：" +
+                            (sourceData.item?.retweeted?.authorName ?? "") +
+                            "\n" +
+                            (sourceData.item?.retweeted?.text ?? ''),
+                        noExpandButton: true,
+                        expandLimit: 36,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          color: gray_2,
+                          fontSize: 12,
+                        ),
+                      ),
+                      CookieShareImage(data: sourceData, type: 2),
+                    ],
+                  ))
+              : Container(),
+        ],
       ),
       padding: const EdgeInsets.all(10),
     );
@@ -208,6 +237,8 @@ class _CookieWidgetToImageState extends State<CookieWidgetToImage> {
     if (result["isSuccess"]) {
       DunToast.showSuccess("图片已保存");
     }
+    Future.delayed(const Duration(seconds: 1))
+        .then((value) => Navigator.of(context).pop());
   }
 
 //  图片分享
@@ -223,5 +254,7 @@ class _CookieWidgetToImageState extends State<CookieWidgetToImage> {
     final imageFile = File(dir.path);
     await imageFile.writeAsBytes(pngBytes);
     Share.shareFiles([imageFile.path]);
+    Future.delayed(const Duration(seconds: 1))
+        .then((value) => Navigator.of(context).pop());
   }
 }

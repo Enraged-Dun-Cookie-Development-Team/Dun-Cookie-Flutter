@@ -5,13 +5,24 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
 class CookieShareImage extends StatefulWidget {
-  CookieShareImage({Key? key, required this.data}) : super(key: key) {
-    _hasImage = (data.defaultCookie?.images != null &&
-        data.defaultCookie!.images!.isNotEmpty);
+  CookieShareImage({Key? key, required this.data, int? type})
+      : super(key: key) {
+    _hasImage = (type == 1 &&
+            data.defaultCookie?.images != null &&
+            data.defaultCookie!.images!.isNotEmpty) ||
+        (type == 2 &&
+            data.item?.retweeted?.images!= null &&
+            data.item!.retweeted!.images!.isNotEmpty);
     _imageList = [];
     if (_hasImage) {
-      for (var image in data.defaultCookie!.images!) {
-        _imageList.add(image.originUrl!);
+      if(type == 1){
+        for (var image in data.defaultCookie!.images!) {
+          _imageList.add(image.originUrl!);
+        }
+      }else if(type ==2){
+        for (var image in data.item!.retweeted!.images!) {
+          _imageList.add(image.originUrl!);
+        }
       }
     }
   }
@@ -40,8 +51,6 @@ class _CookieShareImageState extends State<CookieShareImage> {
           _showChecked = !event.dunShareImageIsShare;
           widget._imageList = _handleImageList();
         });
-        Future.delayed(const Duration(seconds: 1))
-            .then((value) => Navigator.of(context).pop());
       }
     });
     super.initState();

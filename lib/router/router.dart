@@ -4,8 +4,6 @@ import 'package:dun_cookie_flutter/page/webview/main.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/main.dart';
 
-import 'package:dun_cookie_flutter/page/widgetToImage/dun_share.dart';
-
 import 'package:dun_cookie_flutter/page/update/main.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +15,6 @@ class DunRouter {
     "/": (context) => const BottomNavBar(), //主页|预加载
     DunWebView.routeName: (context) => const DunWebView(),
     DunUpdate.routerName: (context) => const DunUpdate(),
-    DunWidgetToImage.routeName: (context) => const DunWidgetToImage(),
     CookieWidgetToImage.routeName: (context) => const CookieWidgetToImage(),
   };
 
