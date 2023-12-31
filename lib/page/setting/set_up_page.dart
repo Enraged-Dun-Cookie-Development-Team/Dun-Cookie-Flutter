@@ -114,6 +114,24 @@ class _SetUpPageState extends State<SetUpPage> {
                 ],
               ),
             ),
+            const Spacer(),
+            const Text(
+              "Copyright: Ceobe Canteen",
+              style: TextStyle(
+                color: Colors.grey,
+                fontSize: 12,
+              ),
+            ),
+            InkWell(
+                child: const Text(
+                  "闽ICP备2021013932号-2A",
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 12,
+                  ),
+                ),
+                onTap: () => OpenAppOrBrowser.openUrl(
+                    'https://beian.miit.gov.cn/', context))
           ],
         ),
       ),
@@ -352,7 +370,8 @@ class _SetUpPageState extends State<SetUpPage> {
         //网页跳转
         if (Platform.isIOS) {
           String nowVersion = await PackageInfoPlus.getVersion();
-          print("https://www.ceobecanteen.top/?version=$nowVersion&position=mo-sponsor");
+          print(
+              "https://www.ceobecanteen.top/?version=$nowVersion&position=mo-sponsor");
           OpenAppOrBrowser.openUrl(
               "https://www.ceobecanteen.top/?version=$nowVersion&position=mo-sponsor",
               context);
