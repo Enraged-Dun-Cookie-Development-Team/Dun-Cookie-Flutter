@@ -1,11 +1,13 @@
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
 import 'package:dun_cookie_flutter/model/config_datasource_model.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
 class SetUpItem extends StatefulWidget {
   final List<String> userSelectedList;
   final ConfigDatasourceModel data;
+
   const SetUpItem(
       {required this.userSelectedList, required this.data, Key? key})
       : super(key: key);
@@ -26,12 +28,12 @@ class _SetUpItemState extends State<SetUpItem> {
       child: Row(
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(4),
-            child: Image.network(
-              widget.data.avatar!,
-              width: 30,
-            ),
-          ),
+              borderRadius: BorderRadius.circular(4),
+              child: ExtendedImage.network(
+                widget.data.avatar!,
+                width: 30,
+                cache: true,
+              )),
           const SizedBox(width: 8),
           Text(widget.data.nickname ?? ""),
           const Expanded(child: SizedBox()),
