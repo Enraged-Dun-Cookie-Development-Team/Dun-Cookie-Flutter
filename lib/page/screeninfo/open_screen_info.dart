@@ -25,11 +25,6 @@ class OpenScreenInfo extends StatefulWidget {
 }
 
 class _OpenScreenInfoState extends State<OpenScreenInfo> {
-  @override
-  void initState() {
-    _initMobPush();
-  }
-
   /// 注册mobid，并且与后端注册
   _initMobPush() async {
     await MobpushPlugin.updatePrivacyPermissionStatus(true);
@@ -63,7 +58,7 @@ class _OpenScreenInfoState extends State<OpenScreenInfo> {
         break;
       }
       retry += 1;
-      if (retry > 5) {
+      if (retry > 10) {
         break;
       }
       var duration = const Duration(seconds: 1);
@@ -181,6 +176,7 @@ class _OpenScreenInfoState extends State<OpenScreenInfo> {
                           MaterialStateProperty.all(const Size(300, 40)),
                     ),
                     onPressed: () async {
+                      await _initMobPush();
                       if (Platform.isAndroid) {
                         await showDialog(
                             context: this.context,
@@ -190,7 +186,7 @@ class _OpenScreenInfoState extends State<OpenScreenInfo> {
                       Navigator.of(context).pop(true);
                       DunToast.showInfo("与土豆服务器连接中……");
                       var settingData =
-                      Provider.of<SettingProvider>(context, listen: false);
+                          Provider.of<SettingProvider>(context, listen: false);
                       await _registerMobPush(settingData);
                       settingData.appSetting.notOnce = false;
                       settingData.saveAppSetting();

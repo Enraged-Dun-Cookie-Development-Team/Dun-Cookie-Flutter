@@ -52,8 +52,8 @@ class HttpClass {
         options: options,
       );
       return ResponseData(false, response.data, "");
-    } catch (e) {
-      return ResponseData(true, null, e.toString());
+    } on DioError catch (e) {
+      return ResponseData(true, e.response, e.message);
     }
   }
 
