@@ -55,10 +55,14 @@ class _OpenScreenInfoState extends State<OpenScreenInfo> {
     while (true) {
       success = await InfoRequest.createUser(regId);
       if (success) {
+        settingData.appSetting.notOnce = false;
+        DunToast.showSuccess("连接成功，正在跳转到主界面。");
         break;
       }
       retry += 1;
       if (retry > 10) {
+        DunToast.showError("连接超时，请稍后再试。");
+        settingData.appSetting.notOnce = true;
         break;
       }
       var duration = const Duration(seconds: 1);
@@ -188,7 +192,7 @@ class _OpenScreenInfoState extends State<OpenScreenInfo> {
                       var settingData =
                           Provider.of<SettingProvider>(context, listen: false);
                       await _registerMobPush(settingData);
-                      settingData.appSetting.notOnce = false;
+
                       settingData.saveAppSetting();
                     },
                     child: const Text(
