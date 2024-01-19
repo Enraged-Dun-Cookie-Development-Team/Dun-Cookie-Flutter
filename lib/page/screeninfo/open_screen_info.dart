@@ -63,7 +63,9 @@ class _OpenScreenInfoState extends State<OpenScreenInfo> {
       if (retry > 10) {
         DunToast.showError("连接超时，请稍后再试。");
         settingData.appSetting.notOnce = true;
-        break;
+        var duration = const Duration(seconds: 5);
+        await Future.delayed(duration);
+        exit(0);
       }
       var duration = const Duration(seconds: 1);
       await Future.delayed(duration);
