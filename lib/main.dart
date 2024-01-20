@@ -205,7 +205,9 @@ class _BottomNaacBarState extends State<BottomNavBar> {
             // TODO: 也可以传递 loading 布尔参数给子控件，让子控件自己显示进度条
             // 相应的，子控件的载入过程应该推迟到 didUpdateWidget() 时
             if (!isDatasourceAvailable) {
-              return const Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator(
+                color: DunColors.DunColor,
+              ));
             }
             return Stack(
               children: [
