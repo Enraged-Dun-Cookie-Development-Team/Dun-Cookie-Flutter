@@ -22,24 +22,27 @@ import '../../honey_cake_workshop/honey_cake_workshop_page.dart';
 import '../ui/common/dashed_line_widget.dart';
 
 class MoreListWidget extends StatefulWidget {
-  const MoreListWidget({Key? key}) : super(key: key);
-
   @override
   State<MoreListWidget> createState() => _MoreListWidgetState();
 }
 
-class _MoreListWidgetState extends State<MoreListWidget> {
+class _MoreListWidgetState extends State<MoreListWidget>
+    with AutomaticKeepAliveClientMixin {
   CeobecanteenData? ceobecanteenData;
   List<VideoModel> videoList = [];
-  List<QuickJump> quickJumpList =[];
+  List<QuickJump> quickJumpList = [];
   TerraRecentEpisodeModel? terraRecentEpisode;
   BakeryRecentPredictModel? bakeryRecentPredict;
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
     super.initState();
     ToolsApi.getVideoList().then((value) => setState(() => videoList = value));
-    ToolsApi.getToolLinkInfoUrl().then((value) => setState(() => quickJumpList = value));
+    ToolsApi.getToolLinkInfoUrl()
+        .then((value) => setState(() => quickJumpList = value));
     CookiesApi.getTerraNewestEpisode()
         .then((value) => setState(() => terraRecentEpisode = value));
     BakeryRequest.getBakeryRecentPredict()
@@ -48,6 +51,7 @@ class _MoreListWidgetState extends State<MoreListWidget> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     ceobecanteenData = Provider.of<CeobecanteenData>(context);
     return ListView(
       padding: const EdgeInsets.fromLTRB(0, 14, 0, 150),

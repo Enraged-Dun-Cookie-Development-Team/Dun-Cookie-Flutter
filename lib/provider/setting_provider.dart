@@ -45,34 +45,42 @@ class SettingProvider with ChangeNotifier {
   set appSetting(SettingData settingData) {
     _settingData = settingData;
     saveAppSetting();
+    print("设置appSetting");
   }
 
   saveRid(rid) {
     _settingData.rid = rid;
-    saveAppSetting();
+    print("保存rid");
   }
 
   saveIsPreview(isPreview) {
     _settingData.isPreview = isPreview;
-    saveAppSetting();
+    print("保存isPreview");
   }
 
   saveDatasourceSetting(UserDatasourceSettings datasourceSetting) {
     _settingData.datasourceSetting = datasourceSetting;
-    saveAppSetting();
+    print("保存datasourceSetting");
   }
 
   saveAppSetting() {
     DunPreferences()
         .saveString(key: "settingData", value: settingDataToJson(_settingData));
     notifyListeners();
+    print("保存设置");
   }
 
   readAppSetting() async {
     String data = await DunPreferences().getString(key: "settingData");
     if (data != "") {
       _settingData = settingDataFromJson(data);
-      notifyListeners();
     }
+    notifyListeners();
+    print("读取设置");
+  }
+
+  flash(){
+    notifyListeners();
+    print("刷新设置");
   }
 }

@@ -73,6 +73,7 @@ class _OpenScreenInfoState extends State<OpenScreenInfo> {
     UserDatasourceSettings userSettings =
         await InfoRequest.getUserDatasourceSettings();
     settingData.saveDatasourceSetting(userSettings);
+    settingData.saveAppSetting();
   }
 
   @override
@@ -194,8 +195,6 @@ class _OpenScreenInfoState extends State<OpenScreenInfo> {
                       var settingData =
                           Provider.of<SettingProvider>(context, listen: false);
                       await _registerMobPush(settingData);
-
-                      settingData.saveAppSetting();
                     },
                     child: const Text(
                       "同意并继续",

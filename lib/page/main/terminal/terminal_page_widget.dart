@@ -17,15 +17,16 @@ import '../ui/terminal/prts_title_widget.dart';
 
 
 class TerminalPageWidget extends StatefulWidget {
-  const TerminalPageWidget({Key? key}) : super(key: key);
-
   @override
   State<StatefulWidget> createState() => _TerminalPageWidgetState();
 }
 
-class _TerminalPageWidgetState extends State<TerminalPageWidget> {
+class _TerminalPageWidgetState extends State<TerminalPageWidget> with AutomaticKeepAliveClientMixin{
   ResourceInfo? resourceInfo;
   CookieInfoCountModel? cookieInfoCount;
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -38,6 +39,7 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     List<Widget> listWidget = [
       _buildCakeWarehouse(cookieInfoCount),
       const SizedBox(height: 15),

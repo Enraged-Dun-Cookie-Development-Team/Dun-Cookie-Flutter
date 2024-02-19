@@ -248,7 +248,7 @@ class _SetUpPageState extends State<SetUpPage> {
         Switch(
           value: settingData.appSetting.isPreview!,
           onChanged: (isPreview) {
-            settingData.appSetting.isPreview = isPreview;
+            settingData.saveIsPreview(isPreview);
             settingData.saveAppSetting();
             setState(() {});
           },

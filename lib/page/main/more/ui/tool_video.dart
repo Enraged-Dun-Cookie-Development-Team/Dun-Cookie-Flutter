@@ -11,14 +11,13 @@ class ToolVideo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       child: Column(
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(4),
             child: ExtendedImage.network(
               videoInfo.coverImg!,
-              height: 100,
               fit: BoxFit.cover,
             ),
           ),
@@ -31,16 +30,14 @@ class ToolVideo extends StatelessWidget {
               style: DunStyles.text12,
             ),
           ),
-          Expanded(
-              child: Container(
-                alignment: Alignment.bottomRight,
-                padding: const EdgeInsets.only(right: 10.0, bottom: 5.0),
-                child: Text(
-                  videoInfo.author!,
-                  maxLines: 1,
-                  style: DunStyles.text12,
-                ),
-              )
+          Container(
+            alignment: Alignment.bottomRight,
+            padding: const EdgeInsets.only(right: 3),
+            child: Text(
+              videoInfo.author!,
+              maxLines: 1,
+              style: DunStyles.text12,
+            ),
           )
         ],
       ),

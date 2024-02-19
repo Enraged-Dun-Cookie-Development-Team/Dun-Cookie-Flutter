@@ -19,13 +19,12 @@ import '../../../provider/setting_provider.dart';
 import '../ui/home/main_list_item_card.dart';
 
 class MainListWidget extends StatefulWidget {
-  const MainListWidget({Key? key}) : super(key: key);
-
   @override
   State<StatefulWidget> createState() => _MainListWidgetState();
 }
 
-class _MainListWidgetState extends State<MainListWidget> {
+class _MainListWidgetState extends State<MainListWidget>
+    with AutomaticKeepAliveClientMixin {
   SettingData? settingData;
   List<Cookies>? data;
   String? nextPageId;
@@ -37,43 +36,53 @@ class _MainListWidgetState extends State<MainListWidget> {
   bool isAllowRefresh = true; // 运行刷新
   /// 滚动控制器
   ScrollController _scrollController = ScrollController();
+
   ///监听TextField内容变化
   final TextEditingController _searchController = TextEditingController();
 
   @override
-  void initState() {
-    settingData = Provider.of<SettingProvider>(context, listen: false).appSetting;
-    fetchData();
-    /// 为滚动控制器添加监听
+  bool get wantKeepAlive => true;
 
+  @override
+  void initState() {
+    /// 为settingData添加监听
+    Provider.of<SettingProvider>(context, listen: false).addListener(() {
+      settingData =
+          Provider.of<SettingProvider>(context, listen: false).appSetting;
+      fetchData();
+      print("重加载数据");
+    });
+
+    /// 为滚动控制器添加监听
     _scrollController.addListener(() {
       /// _scrollController.position.pixels 是当前像素点位置
       /// _scrollController.position.maxScrollExtent 当前列表最大可滚动位置
       /// 如果二者相等 , 那么就触发上拉加载更多机制
-      var debounce = EventFilter.debounce("main_list_page", (){
-        if (nextPageId != null && _scrollController.position.maxScrollExtent - _scrollController.position.pixels < 40
-            ) {
+      var debounce = EventFilter.debounce("main_list_page", () {
+        if (nextPageId != null &&
+            _scrollController.position.maxScrollExtent -
+                    _scrollController.position.pixels <
+                40) {
           /// 触发上拉加载更多机制
           _loadMore();
         }
-      },
-      duration: const Duration(milliseconds: 200));
+      }, duration: const Duration(milliseconds: 200));
       debounce();
     });
     _searchController.addListener(() {
-      var debounce = EventFilter.debounce("list_search_word", (){
+      var debounce = EventFilter.debounce("list_search_word", () {
         bool isNotEmpty = _searchController.text.isNotEmpty;
-        if(offstage == isNotEmpty) {
+        if (offstage == isNotEmpty) {
           offstage = !isNotEmpty;
           setState(() {});
         }
         if (!isNotEmpty && searchStatue) {
           _cancelSearch();
         }
-      },
-      duration: const Duration(milliseconds: 100));
+      }, duration: const Duration(milliseconds: 100));
       debounce();
     });
+
     super.initState();
   }
 
@@ -81,32 +90,43 @@ class _MainListWidgetState extends State<MainListWidget> {
   _loadMore() async {
     if (searchStatue) {
       var searchText = _searchController.text;
-      var cookiesResp = await CookiesApi.getCookieSearchList(settingData!.datasourceSetting!.datasourceCombId!, searchText, nextPageId!);
+      var cookiesResp = await CookiesApi.getCookieSearchList(
+          settingData!.datasourceSetting!.datasourceCombId!,
+          searchText,
+          nextPageId!);
       data!.addAll(cookiesResp.cookies!);
       nextPageId = cookiesResp.nextPageId;
     } else {
-      var cookiesResp = await ServeCdnCookieApi.getCdnCookieMainList(settingData!.datasourceSetting!.datasourceCombId!, nextPageId!, newestCookieId!.updateCookieId);
+      var cookiesResp = await ServeCdnCookieApi.getCdnCookieMainList(
+          settingData!.datasourceSetting!.datasourceCombId!,
+          nextPageId!,
+          newestCookieId!.updateCookieId);
       data!.addAll(cookiesResp.cookies!);
       nextPageId = cookiesResp.nextPageId;
     }
 
-
-    setState(() {
-    });
+    setState(() {});
   }
 
-  void fetchData() async {
-    var newestIdResp = await CdnCookieApi.getCdnNewestCookieId(settingData!.datasourceSetting!.datasourceCombId!);
+  fetchData() async {
+    var newestIdResp = await CdnCookieApi.getCdnNewestCookieId(
+        settingData!.datasourceSetting!.datasourceCombId!);
     newestCookieId = newestIdResp;
-    var cookiesResp = await ServeCdnCookieApi.getCdnCookieMainList(settingData!.datasourceSetting!.datasourceCombId!, newestCookieId!.cookieId!, newestCookieId!.updateCookieId);
+    var cookiesResp = await ServeCdnCookieApi.getCdnCookieMainList(
+        settingData!.datasourceSetting!.datasourceCombId!,
+        newestCookieId!.cookieId!,
+        newestCookieId!.updateCookieId);
     // 如果请求失败，updateId让它为空再请求一次
     if (cookiesResp.cookies == null) {
-      cookiesResp = await ServeCdnCookieApi.getCdnCookieMainList(settingData!.datasourceSetting!.datasourceCombId!, newestCookieId!.cookieId!, null);
+      cookiesResp = await ServeCdnCookieApi.getCdnCookieMainList(
+          settingData!.datasourceSetting!.datasourceCombId!,
+          newestCookieId!.cookieId!,
+          null);
       newestCookieId?.updateCookieId = null;
     }
     data = cookiesResp.cookies;
     nextPageId = cookiesResp.nextPageId;
-    // FIXME: 不要在这里调用 setState()，因为本函数可能在 build() 开始之前调用，导致异常
+
     setState(() {});
   }
 
@@ -121,39 +141,48 @@ class _MainListWidgetState extends State<MainListWidget> {
     } else {
       DunToast.showError("小刻别急！！！");
     }
-
   }
 
   /// 下拉刷新获取数据
   Future<void> _getRefreshData() async {
-    var newestIdResp = await CdnCookieApi.getCdnNewestCookieId(settingData!.datasourceSetting!.datasourceCombId!);
-    if (newestIdResp.updateCookieId == newestCookieId?.updateCookieId && newestIdResp.cookieId == newestCookieId?.cookieId) {
+    var newestIdResp = await CdnCookieApi.getCdnNewestCookieId(
+        settingData!.datasourceSetting!.datasourceCombId!);
+    if (newestIdResp.updateCookieId == newestCookieId?.updateCookieId &&
+        newestIdResp.cookieId == newestCookieId?.cookieId) {
       return;
     }
     newestCookieId = newestIdResp;
     if (searchStatue) {
       var searchText = _searchController.text;
-      var cookiesResp = await CookiesApi.getCookieSearchList(settingData!.datasourceSetting!.datasourceCombId!, searchText, null);
+      var cookiesResp = await CookiesApi.getCookieSearchList(
+          settingData!.datasourceSetting!.datasourceCombId!, searchText, null);
       data = cookiesResp.cookies;
       nextPageId = cookiesResp.nextPageId;
-      var cookiesMainResp = await ServeCdnCookieApi.getCdnCookieMainList(settingData!.datasourceSetting!.datasourceCombId!, newestCookieId!.cookieId!, newestCookieId!.updateCookieId);
+      var cookiesMainResp = await ServeCdnCookieApi.getCdnCookieMainList(
+          settingData!.datasourceSetting!.datasourceCombId!,
+          newestCookieId!.cookieId!,
+          newestCookieId!.updateCookieId);
       tempData = cookiesMainResp.cookies;
       tempNextPageId = cookiesMainResp.nextPageId;
     } else {
-      var cookiesResp = await ServeCdnCookieApi.getCdnCookieMainList(settingData!.datasourceSetting!.datasourceCombId!, newestCookieId!.cookieId!, newestCookieId!.updateCookieId);
+      var cookiesResp = await ServeCdnCookieApi.getCdnCookieMainList(
+          settingData!.datasourceSetting!.datasourceCombId!,
+          newestCookieId!.cookieId!,
+          newestCookieId!.updateCookieId);
       // 如果请求失败，updateId让它为空再请求一次
       if (cookiesResp.cookies == null) {
-        cookiesResp = await ServeCdnCookieApi.getCdnCookieMainList(settingData!.datasourceSetting!.datasourceCombId!, newestCookieId!.cookieId!, null);
+        cookiesResp = await ServeCdnCookieApi.getCdnCookieMainList(
+            settingData!.datasourceSetting!.datasourceCombId!,
+            newestCookieId!.cookieId!,
+            null);
         newestCookieId?.updateCookieId = null;
       }
       data = cookiesResp.cookies;
       nextPageId = cookiesResp.nextPageId;
     }
 
-
     /// 更新状态
-    setState(() {
-    });
+    setState(() {});
     return;
   }
 
@@ -163,7 +192,9 @@ class _MainListWidgetState extends State<MainListWidget> {
     if (searchText == "") {
       return;
     }
-    var cookiesResp = await CookiesApi.getCookieSearchList(settingData!.datasourceSetting!.datasourceCombId!, searchText, null);
+    var cookiesResp = await CookiesApi.getCookieSearchList(
+        settingData!.datasourceSetting!.datasourceCombId!, searchText, null);
+
     /// 当前不在搜索状态，将主列表值放入临时
     if (!searchStatue) {
       tempData = data;
@@ -173,10 +204,11 @@ class _MainListWidgetState extends State<MainListWidget> {
     nextPageId = cookiesResp.nextPageId;
     searchStatue = true;
 
-    _scrollController.animateTo(0, duration: const Duration(milliseconds: 1), curve: Curves.linear);
+    _scrollController.animateTo(0,
+        duration: const Duration(milliseconds: 1), curve: Curves.linear);
+
     /// 更新状态
-    setState(() {
-    });
+    setState(() {});
   }
 
   void _cancelSearch() {
@@ -186,57 +218,65 @@ class _MainListWidgetState extends State<MainListWidget> {
     tempData = [];
     tempNextPageId = null;
 
-    _scrollController.animateTo(0, duration: const Duration(milliseconds: 1), curve: Curves.linear);
+    _scrollController.animateTo(0,
+        duration: const Duration(milliseconds: 1), curve: Curves.linear);
 
     /// 更新状态
-    setState(() {
-    });
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Padding(
       padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
       child: Column(
         children: [
           _buildTitleBar(),
           Expanded(
-            child: RefreshIndicator(
-              color: DunColors.DunColor,
-              onRefresh: _onRefresh,
-              child: data != null ? ListView.builder(
-                controller: _scrollController,
-                padding: EdgeInsets.zero,
-                shrinkWrap: true,
-                itemBuilder: (BuildContext context, int index) {
-                  return index == data!.length? (nextPageId == null ? const Center(
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 10, bottom: 30),
-                      child: Text(
-                        "已经没有饼了，小刻很满足！！！",
-                        style: TextStyle(color: gray_1),
-                      ),
-                    ),
-                  ) : const Center(
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 10, bottom: 30),
-                      child: Text(
-                        "精美的加载动画",
-                        style: TextStyle(color: gray_1),
-                      ),
-                    ),
-                  )) : MainListItemCard(
-                    data: data![index],
-                    settingData: settingData,
-                  );
-                },
-                itemCount: data!.length + 1,
-
-              ): Center(
-                child: Image.asset("assets/image/load/loading.gif", height: 150),
-              ),
-            )
-          ),
+              child: RefreshIndicator(
+            color: DunColors.DunColor,
+            onRefresh: _onRefresh,
+            child: data != null
+                ? ListView.builder(
+                    controller: _scrollController,
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    itemBuilder: (BuildContext context, int index) {
+                      return index == data!.length
+                          ? (nextPageId == null
+                              ? const Center(
+                                  child: Padding(
+                                    padding:
+                                        EdgeInsets.only(top: 10, bottom: 30),
+                                    child: Text(
+                                      "已经没有饼了，小刻很满足！！！",
+                                      style: TextStyle(color: gray_1),
+                                    ),
+                                  ),
+                                )
+                              : const Center(
+                                  child: Padding(
+                                    padding:
+                                        EdgeInsets.only(top: 10, bottom: 30),
+                                    child: Text(
+                                      "精美的加载动画",
+                                      style: TextStyle(color: gray_1),
+                                    ),
+                                  ),
+                                ))
+                          : MainListItemCard(
+                              data: data![index],
+                              settingData: settingData,
+                            );
+                    },
+                    itemCount: data!.length + 1,
+                  )
+                : Center(
+                    child: Image.asset("assets/image/load/loading.gif",
+                        height: 150),
+                  ),
+          )),
           Container(
             height: 50,
           )
@@ -244,11 +284,12 @@ class _MainListWidgetState extends State<MainListWidget> {
       ),
     );
   }
+
   Widget buildSliverList([int count = 5]) {
     return SliverFixedExtentList(
       itemExtent: 50,
       delegate: SliverChildBuilderDelegate(
-            (context, index) {
+        (context, index) {
           return ListTile(title: Text('$index'));
         },
         childCount: count,
@@ -282,32 +323,30 @@ class _MainListWidgetState extends State<MainListWidget> {
                       controller: _searchController,
                       cursorColor: DunColors.DunColor,
                       decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          hintText: '搜索：皮肤',
-                         ),
+                        border: InputBorder.none,
+                        hintText: '搜索：皮肤',
+                      ),
                       maxLines: 1,
                       textInputAction: TextInputAction.search,
                       onSubmitted: (_) {
                         _handleSearch();
                       },
                     ),
-
                   ),
                 ),
                 Offstage(
                   offstage: offstage,
                   child: GestureDetector(
-                    onTap: () => {_searchController.clear()},
-                    child: Container(
-                      color: white,
-                      height: 42,
-                      child: Image.asset(
-                        "assets/icon/close.png",
-                        width: 16,
-                        height: 16,
-                      ),
-                    )
-                  ),
+                      onTap: () => {_searchController.clear()},
+                      child: Container(
+                        color: white,
+                        height: 42,
+                        child: Image.asset(
+                          "assets/icon/close.png",
+                          width: 16,
+                          height: 16,
+                        ),
+                      )),
                 ),
                 Container(
                   width: 5,
@@ -318,9 +357,7 @@ class _MainListWidgetState extends State<MainListWidget> {
                   height: 42,
                   color: gray_1,
                   child: GestureDetector(
-                    onTap: () => {
-                      _handleSearch()
-                    },
+                    onTap: () => {_handleSearch()},
                     child: Container(
                       padding: const EdgeInsets.all(10),
                       child: Image.asset(

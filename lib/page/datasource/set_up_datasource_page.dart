@@ -43,6 +43,7 @@ class _SetUpDatasourceState extends State<SetUpDatasource> {
     UserDatasourceSettings userSettings =
         await InfoRequest.getUserDatasourceSettings();
     settingData.saveDatasourceSetting(userSettings);
+    settingData.saveAppSetting();
     setState(() {
       userDatasourceUuids =
           settingData.appSetting.datasourceSetting!.datasourceConfig!;
