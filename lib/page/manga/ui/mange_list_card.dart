@@ -8,6 +8,7 @@ import 'package:dun_cookie_flutter/model/terra_comic_model.dart';
 import 'package:dun_cookie_flutter/request/cookie_request.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MangaListCard extends StatefulWidget {
   const MangaListCard(this.comicModel, {Key? key}) : super(key: key);
@@ -30,7 +31,7 @@ class _MangaListCardState extends State<MangaListCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.all(10),
+      margin: REdgeInsets.all(10),
       child: GestureDetector(
         onTap: () async {
           if(!_isExpanded && episodes.isEmpty) {
@@ -52,9 +53,9 @@ class _MangaListCardState extends State<MangaListCard> {
               cache: true,
               loadStateChanged: (ExtendedImageState state) {
                 if (state.extendedImageLoadState == LoadState.loading) {
-                  return const Center(
+                  return Center(
                       child:
-                          Image(height: 220, image: AssetImage("assets/image/load/loading.gif")));
+                          Image(height: 220.h, image: const AssetImage("assets/image/load/loading.gif")));
                 }
                 return null;
               },
@@ -74,12 +75,12 @@ class _MangaListCardState extends State<MangaListCard> {
                   headerBuilder: (context, isExpanded) {
                     return Container(
                       alignment: Alignment.centerLeft,
-                      margin: const EdgeInsets.only(left: 10),
+                      margin: REdgeInsets.only(left: 10),
                       child: Text("共${widget.comicModel.count}章，最新于${TimeUnit.timestampFormatYMD(widget.comicModel.updateTime!)}更新"),
                     );
                   },
                   body: Padding(
-                    padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),
+                    padding: REdgeInsets.fromLTRB(15, 0, 15, 15),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -87,7 +88,7 @@ class _MangaListCardState extends State<MangaListCard> {
                           children: List.generate(
                               widget.comicModel.keywords?.length ?? 0, (index) {
                             return Container(
-                              margin: const EdgeInsets.only(right: 5),
+                              margin: REdgeInsets.only(right: 5),
                               child: DunTag(widget.comicModel.keywords![index]),
                             );
                           }),

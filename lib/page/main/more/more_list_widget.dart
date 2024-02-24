@@ -13,6 +13,7 @@ import 'package:dun_cookie_flutter/request/cookie_request.dart';
 import 'package:dun_cookie_flutter/request/tools_api.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import '../../../model/bakery_data.dart';
@@ -54,17 +55,17 @@ class _MoreListWidgetState extends State<MoreListWidget>
     super.build(context);
     ceobecanteenData = Provider.of<CeobecanteenData>(context);
     return ListView(
-      padding: const EdgeInsets.fromLTRB(0, 14, 0, 150),
+      padding: REdgeInsets.fromLTRB(0, 14, 0, 150),
       children: [
         _buildTitle(),
         _buildOfficialManga(),
         _buildHoneyCakeWorkshop(),
         _buildToolLinks(),
         _buildVideoRecommend(),
-        const Center(
+        Center(
           child: Padding(
-            padding: EdgeInsets.only(top: 20),
-            child: Text(
+            padding: const EdgeInsets.only(top: 20).w,
+            child: const Text(
               "没有更多了",
               style: TextStyle(color: gray_1),
             ),
@@ -76,15 +77,15 @@ class _MoreListWidgetState extends State<MoreListWidget>
 
   Widget _buildTitle() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(14, 0, 14 - 7, 0),
+      padding: REdgeInsets.fromLTRB(14, 0, 14 - 7, 0),
       child: SizedBox(
-        height: 42,
+        height: 42.h,
         child: Stack(
           children: [
             Container(
-              width: double.infinity,
-              margin: const EdgeInsets.only(right: 7),
-              padding: const EdgeInsets.fromLTRB(12, 11, 0, 11),
+              width: double.infinity.w,
+              margin: REdgeInsets.only(right: 7),
+              padding: REdgeInsets.fromLTRB(12, 11, 0, 11),
               color: gray_1,
               child: const Text(
                 "常用工具&推荐",
@@ -98,9 +99,9 @@ class _MoreListWidgetState extends State<MoreListWidget>
             Align(
               alignment: Alignment.bottomRight,
               child: Container(
-                margin: const EdgeInsets.only(bottom: 6),
-                width: 17,
-                height: 10,
+                margin: EdgeInsets.only(bottom: 6.r),
+                width: 17.w,
+                height: 10.h,
                 color: yellow,
               ),
             ),
@@ -126,11 +127,11 @@ class _MoreListWidgetState extends State<MoreListWidget>
               )
           : () => {},
       child: Container(
-        margin: const EdgeInsets.fromLTRB(14, 14, 14, 0),
-        height: 140,
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.only(
-              topRight: Radius.circular(5), bottomRight: Radius.circular(5)),
+        margin: const EdgeInsets.fromLTRB(14, 14, 14, 0).w,
+        height: 140.h,
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.only(
+              topRight: Radius.circular(5), bottomRight: Radius.circular(5)).w,
           color: white,
         ),
         child: Stack(
@@ -138,7 +139,7 @@ class _MoreListWidgetState extends State<MoreListWidget>
             Row(
               children: [
                 Container(
-                  width: 20,
+                  width: 20.w,
                   color: gray_1,
                   child: Center(
                       child: Column(
@@ -151,7 +152,7 @@ class _MoreListWidgetState extends State<MoreListWidget>
                         ? Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              const SizedBox(width: 13),
+                              SizedBox(width: 13.w),
                               // TODO: 这边一些参数意思不是很懂，要怎么搞
                               ExtendedImage.network(
                                 terraRecentEpisode!.coverUrl!,
@@ -161,36 +162,36 @@ class _MoreListWidgetState extends State<MoreListWidget>
                                 clearMemoryCacheWhenDispose: false,
                                 mode: ExtendedImageMode.gesture,
                                 cache: true,
-                                height: 100,
-                                width: 180,
+                                height: 100.h,
+                                width: 180.w,
                                 loadStateChanged: (ExtendedImageState state) {
                                   if (state.extendedImageLoadState ==
                                       LoadState.loading) {
-                                    return const Center(
+                                    return Center(
                                         child: Image(
-                                            height: 220,
-                                            image: AssetImage(
+                                            height: 220.h,
+                                            image: const AssetImage(
                                                 "assets/image/load/loading.gif")));
                                   }
                                   return null;
                                 },
                               ),
-                              const SizedBox(width: 13),
-                              const DashedLineVerticalWidget(height: 100),
-                              const SizedBox(width: 13),
+                              SizedBox(width: 13.w),
+                              DashedLineVerticalWidget(height: 100.h),
+                              SizedBox(width: 13.w),
                               Expanded(
                                 child: Column(
                                   children: [
-                                    const SizedBox(height: 26),
+                                    SizedBox(height: 26.h),
                                     Row(children: [
                                       _buildBlueSquare(),
                                       const Text("最近更新",
                                           style: TextStyle(fontSize: 12)),
                                     ]),
-                                    const SizedBox(height: 8),
+                                    SizedBox(height: 8.h),
                                     Container(
                                       margin: const EdgeInsets.fromLTRB(
-                                          11, 0, 0, 0),
+                                          11, 0, 0, 0).w,
                                       alignment: Alignment.centerLeft,
                                       child: Text(
                                         terraRecentEpisode!.title! +
@@ -202,16 +203,16 @@ class _MoreListWidgetState extends State<MoreListWidget>
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                     ),
-                                    const SizedBox(height: 8),
+                                    SizedBox(height: 8.h),
                                     Row(children: [
                                       _buildBlueSquare(),
                                       const Text("更新日期",
                                           style: TextStyle(fontSize: 12)),
                                     ]),
-                                    const SizedBox(height: 8),
+                                    SizedBox(height: 8.h),
                                     Container(
                                       margin: const EdgeInsets.fromLTRB(
-                                          11, 0, 0, 0),
+                                          11, 0, 0, 0).w,
                                       alignment: Alignment.centerLeft,
                                       child: Text(
                                           TimeUnit.timestampFormatYMD(
@@ -224,10 +225,10 @@ class _MoreListWidgetState extends State<MoreListWidget>
                             ],
                           )
                         : const Center(child: Text("暂时还没有漫画更新")),
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.only(
                           topRight: Radius.circular(5),
-                          bottomRight: Radius.circular(5)),
+                          bottomRight: Radius.circular(5)).w,
                       color: white,
                     ),
                   ),
@@ -235,25 +236,25 @@ class _MoreListWidgetState extends State<MoreListWidget>
               ],
             ),
             Container(
-              margin: const EdgeInsets.fromLTRB(15, 6, 0, 0),
-              width: 13,
-              height: 8,
+              margin: REdgeInsets.fromLTRB(15, 6, 0, 0),
+              width: 13.w,
+              height: 8.h,
               color: blue,
             ),
             terraRecentEpisode != null
                 ? Container(
                     alignment: Alignment.bottomRight,
-                    padding: const EdgeInsets.fromLTRB(0, 0, 12, 10),
+                    padding: REdgeInsets.fromLTRB(0, 0, 12, 10),
                     child: SizedBox(
-                        width: 16,
-                        height: 16,
+                        width: 16.w,
+                        height: 16.h,
                         child: Transform.rotate(
                           angle: math.pi / 4,
                           child: Container(
-                            decoration: const BoxDecoration(
+                            decoration: BoxDecoration(
                               border: Border(
-                                  top: BorderSide(width: 5, color: gray_1),
-                                  right: BorderSide(width: 5, color: gray_1)),
+                                  top: BorderSide(width: 5.w, color: gray_1),
+                                  right: BorderSide(width: 5.w, color: gray_1)),
                             ),
                           ),
                         )),
@@ -267,9 +268,9 @@ class _MoreListWidgetState extends State<MoreListWidget>
 
   Widget _buildBlueSquare() {
     return Container(
-      margin: const EdgeInsets.fromLTRB(0, 0, 3, 0),
-      width: 9,
-      height: 9,
+      margin: REdgeInsets.fromLTRB(0, 0, 3, 0),
+      width: 9.w,
+      height: 9.h,
       color: blue,
     );
   }
@@ -281,18 +282,18 @@ class _MoreListWidgetState extends State<MoreListWidget>
         MaterialPageRoute(builder: (context) => const HoneyCakeWorkshopPage()),
       ),
       child: Container(
-        margin: const EdgeInsets.fromLTRB(14, 14, 14, 0),
-        height: 90,
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(9), bottomRight: Radius.circular(9)),
+        margin: REdgeInsets.fromLTRB(14, 14, 14, 0),
+        height: 90.h,
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.only(
+              bottomLeft: Radius.circular(9), bottomRight: Radius.circular(9)).w,
           color: white,
         ),
         child: Column(
           children: [
             Container(
-              height: 21,
-              padding: const EdgeInsets.fromLTRB(10, 2, 8, 2),
+              height: 21.h,
+              padding: REdgeInsets.fromLTRB(10, 2, 8, 2),
               color: gray_1,
               child: Row(
                 children: [
@@ -305,8 +306,8 @@ class _MoreListWidgetState extends State<MoreListWidget>
                   ),
                   const Expanded(child: SizedBox()),
                   Container(
-                    width: 10,
-                    height: 10,
+                    width: 10.w,
+                    height: 10.w,
                     color: yellow,
                   ),
                 ],
@@ -317,45 +318,45 @@ class _MoreListWidgetState extends State<MoreListWidget>
                 child: bakeryRecentPredict != null
                     ? Row(
                         children: [
-                          const SizedBox(
-                            width: 13,
+                          SizedBox(
+                            width: 13.w,
                           ),
                           ClipOval(
                               child: Image.asset(
                             "assets/image/bilibili_up_mbgf.webp",
-                            width: 40,
+                            width: 40.w,
                           )),
-                          const SizedBox(
-                            width: 18,
+                          SizedBox(
+                            width: 18.w,
                           ),
                           Text(bakeryRecentPredict!.daily!.datetime!,
                               style:
                                   const TextStyle(color: gray_2, fontSize: 18)),
-                          const SizedBox(
-                            width: 11,
+                          SizedBox(
+                            width: 11.w,
                           ),
                           Expanded(
                               child: Column(
                             children: [
-                              const SizedBox(
-                                height: 8,
+                              SizedBox(
+                                height: 8.h,
                               ),
                               Text(
                                 "饼学大厦：${bakeryRecentPredict!.id!}",
                                 style: const TextStyle(
                                     color: gray_2, fontSize: 14),
                               ),
-                              const SizedBox(
-                                height: 5,
+                              SizedBox(
+                                height: 5.h,
                               ),
                               Container(
-                                padding: const EdgeInsets.fromLTRB(0, 0, 17, 0),
-                                child: const DashedLineHorizontalWidget(
-                                  width: 10000,
+                                padding: REdgeInsets.fromLTRB(0, 0, 17, 0),
+                                child: DashedLineHorizontalWidget(
+                                  width: 10000.w,
                                 ),
                               ),
-                              const SizedBox(
-                                height: 5,
+                              SizedBox(
+                                height: 5.h,
                               ),
                               Text(
                                 bakeryRecentPredict?.daily?.info != null &&
@@ -397,10 +398,10 @@ class _MoreListWidgetState extends State<MoreListWidget>
                         ],
                       )
                     : const Center(child: Text("饼学大厦还未有预测")),
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.only(
                       bottomLeft: Radius.circular(9),
-                      bottomRight: Radius.circular(9)),
+                      bottomRight: Radius.circular(9)).w,
                   color: white,
                 ),
               ),
@@ -415,7 +416,7 @@ class _MoreListWidgetState extends State<MoreListWidget>
     if (quickJumpList.isEmpty) return const SizedBox();
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+      padding: REdgeInsets.fromLTRB(10, 10, 10, 0),
       child: GridView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
@@ -429,7 +430,7 @@ class _MoreListWidgetState extends State<MoreListWidget>
         itemBuilder: (ctx, index) {
           return Card(child: ToolLink(quickJumpList[index]));
         },
-        padding: EdgeInsets.zero,
+        padding: EdgeInsets.zero.w,
       ),
     );
   }
@@ -438,12 +439,12 @@ class _MoreListWidgetState extends State<MoreListWidget>
     if (videoList.isEmpty) return const SizedBox();
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(14, 14, 14, 0),
+      padding: REdgeInsets.fromLTRB(14, 14, 14, 0),
       child: Column(
         children: [
           Container(
-            height: 21,
-            padding: const EdgeInsets.fromLTRB(10, 2, 8, 2),
+            height: 21.h,
+            padding: REdgeInsets.fromLTRB(10, 2, 8, 2),
             color: gray_1,
             child: Row(
               children: [
@@ -456,27 +457,29 @@ class _MoreListWidgetState extends State<MoreListWidget>
                 ),
                 const Expanded(child: SizedBox()),
                 Container(
-                  width: 10,
-                  height: 10,
+                  width: 10.w,
+                  height: 10.h,
                   color: yellow,
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 14),
+          SizedBox(height: 14.h),
+
           GridView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemCount: videoList.length,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              mainAxisSpacing: 2,
-              crossAxisSpacing: 2,
+              mainAxisSpacing: 2.h,
+              crossAxisSpacing: 2.w,
+              childAspectRatio: 0.99.r,
             ),
             itemBuilder: (ctx, index) {
               return Card(child: ToolVideo(videoList[index]));
             },
-            padding: EdgeInsets.zero,
+            padding: EdgeInsets.zero.w,
           ),
         ],
       ),

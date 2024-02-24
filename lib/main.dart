@@ -26,6 +26,8 @@ import 'dialog/TapStarDialog.dart';
 import 'dialog/UpdataInfoDialog.dart';
 import 'provider/common_provider.dart';
 
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -58,22 +60,26 @@ class _CeobeCanteenAppState extends State<CeobeCanteenApp> {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<CommonProvider>(create: (_) => CommonProvider()),
-        ChangeNotifierProvider.value(value: SettingProvider.getInstance()),
-        ChangeNotifierProvider<CeobecanteenData>(
-            create: (_) => CeobecanteenData()),
-      ],
-      child: MaterialApp(
-        title: '小刻食堂',
-        routes: DunRouter.routes,
-        initialRoute: "/",
-        onUnknownRoute: (settings) => MaterialPageRoute(
-          builder: (context) => DunError(error: "404"),
-        ),
-      ),
-    );
+        providers: [
+          ChangeNotifierProvider<CommonProvider>(
+              create: (_) => CommonProvider()),
+          ChangeNotifierProvider.value(value: SettingProvider.getInstance()),
+          ChangeNotifierProvider<CeobecanteenData>(
+              create: (_) => CeobecanteenData()),
+        ],
+        child: ScreenUtilInit(
+            designSize: const Size(360, 690),
+            minTextAdapt: true,
+            splitScreenMode: true,
+            builder: (context, child) {
+              return MaterialApp(
+                title: '小刻食堂',
+                routes: DunRouter.routes,
+                initialRoute: "/",
+                onUnknownRoute: (settings) => MaterialPageRoute(
+                  builder: (context) => DunError(error: "404"),
+                ),
+              );
+            }));
   }
 }
-
-

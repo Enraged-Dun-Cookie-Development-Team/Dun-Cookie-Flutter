@@ -1,5 +1,6 @@
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PrtsTitleWidget extends StatelessWidget {
   const PrtsTitleWidget({Key? key}) : super(key: key);
@@ -7,13 +8,13 @@ class PrtsTitleWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 42,
+      height: 42.h,
       child: Stack(children: [
         Container(
-          margin: const EdgeInsets.only(right: 7),
-          padding: const EdgeInsets.fromLTRB(16, 0, 24, 0),
+          margin: REdgeInsets.only(right: 7),
+          padding: REdgeInsets.fromLTRB(16, 0, 24, 0),
           color: gray_1,
-          height: double.infinity,
+          height: double.infinity.h,
           child: Row(
             children: const [
               Text(
@@ -31,9 +32,9 @@ class PrtsTitleWidget extends StatelessWidget {
         Align(
           alignment: Alignment.bottomRight,
           child: Container(
-            margin: const EdgeInsets.only(bottom: 6),
-            width: 17,
-            height: 10,
+            margin: REdgeInsets.only(bottom: 6),
+            width: 17.w,
+            height: 10.h,
             color: yellow,
           ),
         ),

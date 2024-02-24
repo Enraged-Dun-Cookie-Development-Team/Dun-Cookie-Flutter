@@ -6,6 +6,7 @@ import 'package:dun_cookie_flutter/provider/common_event_bus.dart';
 import 'package:dun_cookie_flutter/provider/setting_provider.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:vibration/vibration.dart';
 
@@ -51,10 +52,10 @@ class _ToolLinkState extends State<ToolLink> {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.only(left: 10),
+        width: double.infinity.w,
+        padding: REdgeInsets.only(left: 10),
         child: Stack(
-          alignment:Alignment.centerLeft,
+          alignment: Alignment.centerLeft,
           children: [
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -62,13 +63,18 @@ class _ToolLinkState extends State<ToolLink> {
                 ClipRRect(
                     child: ExtendedImage.network(
                       image,
-                      width: 30,
+                      width: 30.w,
                     ),
-                    borderRadius: BorderRadius.circular(4)),
-                const SizedBox(
-                  width: 5,
+                    borderRadius: BorderRadius.circular(4).w),
+                SizedBox(
+                  width: 5.w,
                 ),
-                Text(title)
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 12,
+                  ),
+                )
               ],
             ),
             Positioned(
@@ -79,8 +85,8 @@ class _ToolLinkState extends State<ToolLink> {
                       color: DunColors.DunColor,
                     )
                   : Container(),
-              top: 3,
-              right: 3,
+              top: 3.w,
+              right: 3.r,
             )
           ],
         ),
@@ -114,7 +120,7 @@ class _ToolLinkState extends State<ToolLink> {
     settingData.saveAppSetting();
     var hasAmplitude = await Vibration.hasAmplitudeControl();
     if (hasAmplitude != null && hasAmplitude) {
-      Vibration.vibrate(duration: 100,amplitude: 100);
+      Vibration.vibrate(duration: 100, amplitude: 100);
     }
   }
 }

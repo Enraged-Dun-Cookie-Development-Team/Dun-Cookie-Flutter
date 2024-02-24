@@ -8,6 +8,7 @@ import 'package:dun_cookie_flutter/request/list_request.dart';
 import 'package:dun_cookie_flutter/request/serve_cdn_cookie_request.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import '../../../common/tool/debounce_throttle.dart';
@@ -229,7 +230,7 @@ class _MainListWidgetState extends State<MainListWidget>
   Widget build(BuildContext context) {
     super.build(context);
     return Padding(
-      padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
+      padding: REdgeInsets.fromLTRB(12, 12, 12, 12),
       child: Column(
         children: [
           _buildTitleBar(),
@@ -245,21 +246,21 @@ class _MainListWidgetState extends State<MainListWidget>
                     itemBuilder: (BuildContext context, int index) {
                       return index == data!.length
                           ? (nextPageId == null
-                              ? const Center(
+                              ? Center(
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(top: 10, bottom: 30),
-                                    child: Text(
+                                        REdgeInsets.only(top: 10, bottom: 30),
+                                    child: const Text(
                                       "已经没有饼了，小刻很满足！！！",
                                       style: TextStyle(color: gray_1),
                                     ),
                                   ),
                                 )
-                              : const Center(
+                              : Center(
                                   child: Padding(
                                     padding:
-                                        EdgeInsets.only(top: 10, bottom: 30),
-                                    child: Text(
+                                        REdgeInsets.only(top: 10, bottom: 30),
+                                    child: const Text(
                                       "精美的加载动画",
                                       style: TextStyle(color: gray_1),
                                     ),
@@ -274,51 +275,39 @@ class _MainListWidgetState extends State<MainListWidget>
                   )
                 : Center(
                     child: Image.asset("assets/image/load/loading.gif",
-                        height: 150),
+                        height: 150.h),
                   ),
           )),
           Container(
-            height: 50,
+            height: 50.h,
           )
         ],
       ),
     );
   }
 
-  Widget buildSliverList([int count = 5]) {
-    return SliverFixedExtentList(
-      itemExtent: 50,
-      delegate: SliverChildBuilderDelegate(
-        (context, index) {
-          return ListTile(title: Text('$index'));
-        },
-        childCount: count,
-      ),
-    );
-  }
-
   Widget _buildTitleBar() {
     return SizedBox(
-      height: 42,
+      height: 42.h,
       child: Row(
         children: [
-          const ContainerWithLabel(
+          ContainerWithLabel(
             text: "小刻食堂",
-            containerWidth: 90,
+            containerWidth: 90.r,
             labelColor: yellow,
           ),
-          const SizedBox(width: 9),
+          SizedBox(width: 9.w),
           Expanded(
             child: Row(
               children: [
                 Container(
-                  width: 14,
+                  width: 14.w,
                   color: gray_1,
                 ),
                 Expanded(
                   child: Container(
                     color: white,
-                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    padding: REdgeInsets.fromLTRB(10, 0, 10, 0),
                     child: TextField(
                       controller: _searchController,
                       cursorColor: DunColors.DunColor,
@@ -340,26 +329,26 @@ class _MainListWidgetState extends State<MainListWidget>
                       onTap: () => {_searchController.clear()},
                       child: Container(
                         color: white,
-                        height: 42,
+                        height: 42.h,
                         child: Image.asset(
                           "assets/icon/close.png",
-                          width: 16,
-                          height: 16,
+                          width: 16.w,
+                          height: 16.h,
                         ),
                       )),
                 ),
                 Container(
-                  width: 5,
+                  width: 5.w,
                   color: white,
                 ),
                 Container(
-                  width: 44,
-                  height: 42,
+                  width: 44.w,
+                  height: 42.h,
                   color: gray_1,
                   child: GestureDetector(
                     onTap: () => {_handleSearch()},
                     child: Container(
-                      padding: const EdgeInsets.all(10),
+                      padding: REdgeInsets.all(10),
                       child: Image.asset(
                         "assets/icon/search.png",
                         color: yellow,

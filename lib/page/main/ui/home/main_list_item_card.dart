@@ -6,6 +6,7 @@ import 'package:dun_cookie_flutter/model/cookie_main_list_model.dart';
 import 'package:dun_cookie_flutter/model/setting_data.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../common/tool/open_app_or_browser.dart';
 import 'cookie_share.dart';
@@ -26,7 +27,7 @@ class MainListItemCard extends StatelessWidget {
         onTap: () => _goSource(
             context, data!.source!.type!, data!.item!.id!, data!.item!.url!),
         child: Container(
-          margin: const EdgeInsets.only(top: 12),
+          margin: REdgeInsets.only(top: 12),
           color: white,
           child: Stack(
             children: [
@@ -45,27 +46,27 @@ class MainListItemCard extends StatelessWidget {
     return [
       /// 左上灰色label
       Container(
-        width: 14,
-        height: 60,
+        width: 14.w,
+        height: 60.h,
         color: gray_1,
       ),
 
       /// 右上黄色label
       Positioned(
-        top: 51,
-        right: 18,
+        top: 51.h,
+        right: 18.w,
         child: Container(
-          width: 13,
-          height: 19,
+          width: 13.w,
+          height: 19.h,
           color: yellow,
         ),
       ),
 
       /// 虚线
-      const Positioned(
-        left: 26,
-        top: 60,
-        right: 40,
+      Positioned(
+        left: 26.w,
+        top: 60.h,
+        right: 40.w,
         child: DashedLineHorizontalWidget(),
       )
     ];
@@ -73,8 +74,8 @@ class MainListItemCard extends StatelessWidget {
 
   Widget _buildIcon() {
     return Positioned(
-      left: 26,
-      top: 11,
+      left: 26.w,
+      top: 11.h,
       child: data?.icon != null
           ? ExtendedImage.network(
               data!.icon!,
@@ -83,15 +84,15 @@ class MainListItemCard extends StatelessWidget {
               clearMemoryCacheWhenDispose: false,
               mode: ExtendedImageMode.gesture,
               cache: true,
-              width: 38,
-              height: 38,
+              width: 38.w,
+              height: 38.h,
               fit: BoxFit.cover,
               alignment: Alignment.topLeft,
             )
           : Image.asset(
               "assets/image/load/loading.gif",
-              width: 38,
-              height: 38,
+              width: 38.w,
+              height: 38.h,
               fit: BoxFit.cover,
               alignment: Alignment.topLeft,
             ),
@@ -100,8 +101,8 @@ class MainListItemCard extends StatelessWidget {
 
   Widget _buildTitle() {
     return Positioned(
-      left: 70,
-      top: 11,
+      left: 70.w,
+      top: 11.h,
       child: Text(
         data?.datasource ?? '',
         style: const TextStyle(
@@ -116,7 +117,7 @@ class MainListItemCard extends StatelessWidget {
     String timestamp = "";
     if (data?.timestamp?.platformPrecision == null ||
         data!.timestamp!.platformPrecision! == "none") {
-      timestamp = "";
+      timestamp = TimeUnit.timestampFormatYMDHNS(data!.timestamp!.fetcher!);
     } else if (data!.timestamp!.platformPrecision! == "second" ||
         data!.timestamp!.platformPrecision! == "ms") {
       timestamp = TimeUnit.timestampFormatYMDHNS(data!.timestamp!.platform!);
@@ -124,8 +125,8 @@ class MainListItemCard extends StatelessWidget {
       timestamp = TimeUnit.timestampFormatYMD(data!.timestamp!.platform!);
     }
     return Positioned(
-      left: 70,
-      top: 32,
+      left: 70.w,
+      top: 32.h,
       child: Text(
         timestamp,
         style: const TextStyle(
@@ -138,10 +139,10 @@ class MainListItemCard extends StatelessWidget {
 
   Widget _buildShareIcon(BuildContext context) {
     return Positioned(
-      right: 10,
-      top: 6,
+      right: 10.w,
+      top: 6.h,
       child: IconButton(
-        iconSize: 18,
+        iconSize: 18.r,
         icon: const Icon(Icons.share),
         onPressed: () {
           Navigator.pushNamed(context, CookieWidgetToImage.routeName,
@@ -153,7 +154,7 @@ class MainListItemCard extends StatelessWidget {
 
   Widget _buildContent(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(26, 73, 26, 0),
+      padding: REdgeInsets.fromLTRB(26, 73, 26, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -166,7 +167,7 @@ class MainListItemCard extends StatelessWidget {
           ),
           data?.item?.retweeted != null
               ? Container(
-                  padding: const EdgeInsets.all(5),
+                  padding: REdgeInsets.all(5),
                   color: gray_4,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -195,7 +196,7 @@ class MainListItemCard extends StatelessWidget {
             settingData: settingData,
           ),
           SizedBox(
-            height: 10,
+            height: 10.h,
           )
         ],
       ),

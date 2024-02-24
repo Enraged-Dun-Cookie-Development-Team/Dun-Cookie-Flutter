@@ -4,6 +4,7 @@ import 'package:dun_cookie_flutter/common/tool/dun_toast.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../common/tool/color_theme.dart';
 import '../../common/tool/open_app_or_browser.dart';
@@ -41,87 +42,90 @@ class _DunUpdateState extends State<DunUpdate> {
   @override
   Widget build(BuildContext context) {
     dunApp = ModalRoute.of(context)!.settings.arguments as DunApp;
-    return WillPopScope(
-      onWillPop: () async {
-        if (isFocus) {
-          DunToast.showInfo("这波啊，是强制更新");
-          return false;
-        }
-        return true;
-      },
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          leading: IconButton(
-              icon: const Icon(Icons.arrow_back_ios),
-              onPressed: () {
-                if (isFocus) {
-                  DunToast.showInfo("这波啊，是强制更新");
-                } else {
-                  Navigator.of(context).pop('刷新');
-                }
-              }),
-          iconTheme: const IconThemeData(
-            color: DunColors.DunColor,
-          ),
-          centerTitle: true,
-          titleTextStyle:
-              const TextStyle(color: DunColors.DunColor, fontSize: 20),
-          title: const Text("检查更新"),
-          elevation: 0,
-        ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 15, right: 15),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
+    return MediaQuery(
+        data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+        child: WillPopScope(
+          onWillPop: () async {
+            if (isFocus) {
+              DunToast.showInfo("这波啊，是强制更新");
+              return false;
+            }
+            return true;
+          },
+          child: Scaffold(
+            backgroundColor: Colors.white,
+            appBar: AppBar(
+              backgroundColor: Colors.white,
+              leading: IconButton(
+                  icon: const Icon(Icons.arrow_back_ios),
+                  onPressed: () {
+                    if (isFocus) {
+                      DunToast.showInfo("这波啊，是强制更新");
+                    } else {
+                      Navigator.of(context).pop('刷新');
+                    }
+                  }),
+              iconTheme: const IconThemeData(
+                color: DunColors.DunColor,
+              ),
+              centerTitle: true,
+              titleTextStyle:
+                  const TextStyle(color: DunColors.DunColor, fontSize: 20),
+              title: const Text("检查更新"),
+              elevation: 0,
+            ),
+            body: SingleChildScrollView(
+              child: Padding(
+                padding: REdgeInsets.only(left: 15, right: 15),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Image(
-                      image: AssetImage("assets/logo/logo_no_line.png"),
-                      width: 50,
-                    ),
-                    const SizedBox(width: 13),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    Row(
                       children: [
-                        const Text(
-                          "当前版本",
-                          style: TextStyle(
-                            fontSize: 15,
-                          ),
+                        Image(
+                          image:
+                              const AssetImage("assets/logo/logo_no_line.png"),
+                          width: 50.w,
                         ),
-                        Text(
-                          version.toString(),
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                        SizedBox(width: 13.w),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "当前版本",
+                              style: TextStyle(
+                                fontSize: 15,
+                              ),
+                            ),
+                            Text(
+                              version.toString(),
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ],
                         ),
                       ],
                     ),
+                    _content("新版本", "${dunApp.version.toString()}"),
+                    _content("更新模式", isFocus ? "强制" : "非强制",
+                        color: isFocus ? Colors.red : Colors.black),
+                    _content("更新内容", dunApp.description),
+                    SizedBox(
+                      height: 30.h,
+                    ),
+                    const Text(
+                      "更新地址",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    _DownloadRes(),
                   ],
                 ),
-                _content("新版本", "${dunApp.version.toString()}"),
-                _content("更新模式", isFocus ? "强制" : "非强制",
-                    color: isFocus ? Colors.red : Colors.black),
-                _content("更新内容", dunApp.description),
-                const SizedBox(
-                  height: 30,
-                ),
-                const Text(
-                  "更新地址",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                _DownloadRes(),
-              ],
+              ),
             ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 
   _content(title, content, {Color? color}) {
@@ -129,8 +133,8 @@ class _DunUpdateState extends State<DunUpdate> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(
-          height: 25,
+        SizedBox(
+          height: 25.h,
         ),
         Text(
           title,
@@ -147,7 +151,7 @@ class _DunUpdateState extends State<DunUpdate> {
   _DownloadRes() {
     if (Platform.isAndroid) {
       return Container(
-        padding: const EdgeInsets.only(left: 20, right: 20),
+        padding: REdgeInsets.only(left: 20, right: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -160,7 +164,7 @@ class _DunUpdateState extends State<DunUpdate> {
       );
     } else if (Platform.isIOS) {
       return Container(
-        padding: const EdgeInsets.only(left: 20, right: 20),
+        padding: REdgeInsets.only(left: 20, right: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -171,7 +175,8 @@ class _DunUpdateState extends State<DunUpdate> {
               ),
               onPressed: () async {
                 //跳转到更新网页
-                OpenAppOrBrowser.openAppUrlScheme("https://apps.apple.com/cn/app/id1629917304", context);
+                OpenAppOrBrowser.openAppUrlScheme(
+                    "https://apps.apple.com/cn/app/id1629917304", context);
               },
               child: const Text(
                 "应用商店",
