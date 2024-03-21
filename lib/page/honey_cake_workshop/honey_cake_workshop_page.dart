@@ -78,89 +78,92 @@ class _HoneyCakeWorkshopPageState extends State<HoneyCakeWorkshopPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: gray_3,
-      appBar: AppBar(
-        //蜜饼工坊页面
-        backgroundColor: Colors.white,
-        leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios),
-            onPressed: () => {Navigator.of(context).pop('刷新')}),
-        leadingWidth: 50,
-        iconTheme: const IconThemeData(
-          color: DunColors.DunColor,
-        ),
-        titleTextStyle:
-            const TextStyle(color: DunColors.DunColor, fontSize: 20),
-        titleSpacing: 0,
-        title: const Text("罗德岛蜜饼工坊"),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 8),
-            child: bakeryMansionIdList.isNotEmpty
-                ? SizedBox(
-                    width: 80,
-                    // 下拉列表框选版本
-                    child: DropdownButtonFormField<String>(
-                      isExpanded: true,
-                      decoration: const InputDecoration(
-                        enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: DunColors.DunColor, width: 1.5)),
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: DunColors.DunColor, width: 1.5)),
-                      ),
-                      value: bakeryMansionIdList.last,
-                      // 选择回调
-                      onChanged: (String? value) => _getBakeryInfo(value),
-                      // 传入可选的数组
-                      items: bakeryMansionIdList
-                          .map(
-                              (e) => DropdownMenuItem(value: e, child: Text(e)))
-                          .toList(),
-                    ),
-                  )
-                : const SizedBox(),
+    return MediaQuery(
+        data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+        child: Scaffold(
+          backgroundColor: gray_3,
+          appBar: AppBar(
+            //蜜饼工坊页面
+            backgroundColor: Colors.white,
+            leading: IconButton(
+                icon: const Icon(Icons.arrow_back_ios),
+                onPressed: () => {Navigator.of(context).pop('刷新')}),
+            leadingWidth: 50,
+            iconTheme: const IconThemeData(
+              color: DunColors.DunColor,
+            ),
+            titleTextStyle:
+                const TextStyle(color: DunColors.DunColor, fontSize: 20),
+            titleSpacing: 0,
+            title: const Text("罗德岛蜜饼工坊"),
+            actions: [
+              Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: bakeryMansionIdList.isNotEmpty
+                    ? SizedBox(
+                        width: 80,
+                        // 下拉列表框选版本
+                        child: DropdownButtonFormField<String>(
+                          isExpanded: true,
+                          decoration: const InputDecoration(
+                            enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: DunColors.DunColor, width: 1.5)),
+                            focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: DunColors.DunColor, width: 1.5)),
+                          ),
+                          value: bakeryMansionIdList.last,
+                          // 选择回调
+                          onChanged: (String? value) => _getBakeryInfo(value),
+                          // 传入可选的数组
+                          items: bakeryMansionIdList
+                              .map((e) =>
+                                  DropdownMenuItem(value: e, child: Text(e)))
+                              .toList(),
+                        ),
+                      )
+                    : const SizedBox(),
+              ),
+            ],
           ),
-        ],
-      ),
-      body: SafeArea(
-          child: Column(
-        children: [
-          Expanded(
-            child: Selector<CommonProvider, BakeryData>(
-                builder: (ctx, data, child) {
-              if (loadDataType == 2) {
-                return GestureDetector(
-                  onTap: () => _getBakeryMansionIdList(),
-                  child: const Center(
-                    child: Image(
-                      image: AssetImage("assets/image/load/bakery_error.png"),
-                      width: 200,
-                    ),
-                  ),
-                );
-              }
-              return loadDataType == 1
-                  ? const Center(
-                      child: Image(
-                        image:
-                            AssetImage("assets/image/load/bakery_loading.gif"),
-                        width: 200,
+          body: SafeArea(
+              child: Column(
+            children: [
+              Expanded(
+                child: Selector<CommonProvider, BakeryData>(
+                    builder: (ctx, data, child) {
+                  if (loadDataType == 2) {
+                    return GestureDetector(
+                      onTap: () => _getBakeryMansionIdList(),
+                      child: const Center(
+                        child: Image(
+                          image:
+                              AssetImage("assets/image/load/bakery_error.png"),
+                          width: 200,
+                        ),
                       ),
-                    )
-                  : FadeIn(
-                      duration: const Duration(milliseconds: 1000),
-                      child: HoneyCakeWorkshopCard(data));
-            }, selector: (ctx, commonProvider) {
-              return commonProvider.bakeryData;
-            }),
-          ),
-          _buildBottomButton(),
-        ],
-      )),
-    );
+                    );
+                  }
+                  return loadDataType == 1
+                      ? const Center(
+                          child: Image(
+                            image: AssetImage(
+                                "assets/image/load/bakery_loading.gif"),
+                            width: 200,
+                          ),
+                        )
+                      : FadeIn(
+                          duration: const Duration(milliseconds: 1000),
+                          child: HoneyCakeWorkshopCard(data));
+                }, selector: (ctx, commonProvider) {
+                  return commonProvider.bakeryData;
+                }),
+              ),
+              _buildBottomButton(),
+            ],
+          )),
+        ));
   }
 
   Widget _buildBottomButton() {

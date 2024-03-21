@@ -56,8 +56,7 @@ class DunTheme {
       ),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
-          primary: Colors.white,
-          backgroundColor: primaryColor,
+          foregroundColor: Colors.white, backgroundColor: primaryColor,
         ),
       ),
     );

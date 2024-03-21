@@ -116,7 +116,7 @@ class MainListItemCard extends StatelessWidget {
     String timestamp = "";
     if (data?.timestamp?.platformPrecision == null ||
         data!.timestamp!.platformPrecision! == "none") {
-      timestamp = "";
+      timestamp = TimeUnit.timestampFormatYMDHNS(data!.timestamp!.fetcher!);
     } else if (data!.timestamp!.platformPrecision! == "second" ||
         data!.timestamp!.platformPrecision! == "ms") {
       timestamp = TimeUnit.timestampFormatYMDHNS(data!.timestamp!.platform!);

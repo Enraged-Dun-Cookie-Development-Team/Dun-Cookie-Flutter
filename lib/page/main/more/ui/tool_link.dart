@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 import 'package:vibration/vibration.dart';
 
 class ToolLink extends StatefulWidget {
-  ToolLink(this.linkInfo, {Key? key});
+  ToolLink(this.linkInfo);
 
   dynamic linkInfo;
 

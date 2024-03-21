@@ -43,6 +43,7 @@ class _SetUpDatasourceState extends State<SetUpDatasource> {
     UserDatasourceSettings userSettings =
         await InfoRequest.getUserDatasourceSettings();
     settingData.saveDatasourceSetting(userSettings);
+    settingData.saveAppSetting();
     setState(() {
       userDatasourceUuids =
           settingData.appSetting.datasourceSetting!.datasourceConfig!;
@@ -64,43 +65,45 @@ class _SetUpDatasourceState extends State<SetUpDatasource> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        eventBus.fire(ChangeSourceBus());
-        return true;
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          leading: IconButton(
-              icon: const Icon(Icons.arrow_back_ios),
-              onPressed: () => {Navigator.of(context).pop('刷新')}),
-          leadingWidth: 50,
-          iconTheme: const IconThemeData(
-            color: DunColors.DunColor,
-          ),
-          titleTextStyle:
-              const TextStyle(color: DunColors.DunColor, fontSize: 20),
-          titleSpacing: 0,
-          // 为啥别人都没去就你去了 要去一起去
-          // elevation: 0,
-          title: const Text("饼来源"),
-        ),
-        body: Column(
-          children: [
-            Expanded(
-              child: Container(
-                color: gray_3,
-                child: SingleChildScrollView(
-                  child: _buildBody(),
-                ),
+    return MediaQuery(
+        data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+        child: WillPopScope(
+          onWillPop: () async {
+            eventBus.fire(ChangeSourceBus());
+            return true;
+          },
+          child: Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.white,
+              leading: IconButton(
+                  icon: const Icon(Icons.arrow_back_ios),
+                  onPressed: () => {Navigator.of(context).pop('刷新')}),
+              leadingWidth: 50,
+              iconTheme: const IconThemeData(
+                color: DunColors.DunColor,
               ),
+              titleTextStyle:
+                  const TextStyle(color: DunColors.DunColor, fontSize: 20),
+              titleSpacing: 0,
+              // 为啥别人都没去就你去了 要去一起去
+              // elevation: 0,
+              title: const Text("饼来源"),
             ),
-            _buildSaveButton(),
-          ],
-        ),
-      ),
-    );
+            body: Column(
+              children: [
+                Expanded(
+                  child: Container(
+                    color: gray_3,
+                    child: SingleChildScrollView(
+                      child: _buildBody(),
+                    ),
+                  ),
+                ),
+                _buildSaveButton(),
+              ],
+            ),
+          ),
+        ));
   }
 
   static List<Platform> platformList = [
