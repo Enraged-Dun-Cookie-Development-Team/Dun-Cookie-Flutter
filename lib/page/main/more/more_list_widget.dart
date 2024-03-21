@@ -13,6 +13,7 @@ import 'package:dun_cookie_flutter/request/cookie_request.dart';
 import 'package:dun_cookie_flutter/request/tools_api.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import '../../../model/bakery_data.dart';
@@ -138,7 +139,7 @@ class _MoreListWidgetState extends State<MoreListWidget>
             Row(
               children: [
                 Container(
-                  width: 20,
+                  width: 20.w,
                   color: gray_1,
                   child: Center(
                       child: Column(
@@ -151,7 +152,7 @@ class _MoreListWidgetState extends State<MoreListWidget>
                         ? Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              const SizedBox(width: 13),
+                              SizedBox(width: 13.w),
                               // TODO: 这边一些参数意思不是很懂，要怎么搞
                               ExtendedImage.network(
                                 terraRecentEpisode!.coverUrl!,
@@ -162,7 +163,7 @@ class _MoreListWidgetState extends State<MoreListWidget>
                                 mode: ExtendedImageMode.gesture,
                                 cache: true,
                                 height: 100,
-                                width: 180,
+                                width: 180.w,
                                 loadStateChanged: (ExtendedImageState state) {
                                   if (state.extendedImageLoadState ==
                                       LoadState.loading) {
@@ -175,9 +176,9 @@ class _MoreListWidgetState extends State<MoreListWidget>
                                   return null;
                                 },
                               ),
-                              const SizedBox(width: 13),
+                              SizedBox(width: 13.w),
                               const DashedLineVerticalWidget(height: 100),
-                              const SizedBox(width: 13),
+                              SizedBox(width: 13.w),
                               Expanded(
                                 child: Column(
                                   children: [

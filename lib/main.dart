@@ -15,6 +15,7 @@ import 'package:dun_cookie_flutter/router/router.dart';
 import 'package:fk_user_agent/fk_user_agent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobpush_plugin/mobpush_plugin.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
@@ -58,22 +59,26 @@ class _CeobeCanteenAppState extends State<CeobeCanteenApp> {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<CommonProvider>(create: (_) => CommonProvider()),
-        ChangeNotifierProvider.value(value: SettingProvider.getInstance()),
-        ChangeNotifierProvider<CeobecanteenData>(
-            create: (_) => CeobecanteenData()),
-      ],
-      child: MaterialApp(
-        title: '小刻食堂',
-        routes: DunRouter.routes,
-        initialRoute: "/",
-        onUnknownRoute: (settings) => MaterialPageRoute(
-          builder: (context) => DunError(error: "404"),
-        ),
-      ),
-    );
+        providers: [
+          ChangeNotifierProvider<CommonProvider>(
+              create: (_) => CommonProvider()),
+          ChangeNotifierProvider.value(value: SettingProvider.getInstance()),
+          ChangeNotifierProvider<CeobecanteenData>(
+              create: (_) => CeobecanteenData()),
+        ],
+        child: ScreenUtilInit(
+            designSize: const Size(360, 690),
+            minTextAdapt: true,
+            splitScreenMode: true,
+            builder: (context, child) {
+              return MaterialApp(
+                title: '小刻食堂',
+                routes: DunRouter.routes,
+                initialRoute: "/",
+                onUnknownRoute: (settings) => MaterialPageRoute(
+                  builder: (context) => DunError(error: "404"),
+                ),
+              );
+            }));
   }
 }
-
-

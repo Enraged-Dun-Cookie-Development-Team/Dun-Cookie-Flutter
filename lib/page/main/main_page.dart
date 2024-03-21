@@ -131,26 +131,29 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     double paddingTop = MediaQuery.of(context).padding.top;
-    return Scaffold(
-        body: Container(
-            color: gray_3,
-            padding: EdgeInsets.only(top: paddingTop),
-            child: Stack(
-              children: [
-                PageView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  // 设置控制器
-                  controller: _controller,
-                  // 设置子项集
-                  children: [
-                    MainListWidget(),
-                    MoreListWidget(),
-                    TerminalPageWidget()
-                  ],
-                ),
-                ..._buildBottomBar(),
-              ],
-            )));
+    return MediaQuery(
+      data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+      child: Scaffold(
+          body: Container(
+              color: gray_3,
+              padding: EdgeInsets.only(top: paddingTop),
+              child: Stack(
+                children: [
+                  PageView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    // 设置控制器
+                    controller: _controller,
+                    // 设置子项集
+                    children: [
+                      MainListWidget(),
+                      MoreListWidget(),
+                      TerminalPageWidget()
+                    ],
+                  ),
+                  ..._buildBottomBar(),
+                ],
+              ))),
+    );
   }
 
   List<Widget> _buildBottomBar() {

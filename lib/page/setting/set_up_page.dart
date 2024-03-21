@@ -43,99 +43,111 @@ class _SetUpPageState extends State<SetUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: gray_3,
-      appBar: AppBar(
-          //设置&其他页面
-          // elevation: 0,
-          backgroundColor: Colors.white,
-          leading: IconButton(
-              icon: const Icon(Icons.arrow_back_ios),
-              onPressed: () => {Navigator.of(context).pop('刷新')}),
-          leadingWidth: 50,
-          iconTheme: const IconThemeData(
-            color: DunColors.DunColor,
-          ),
-          titleTextStyle:
-              const TextStyle(color: DunColors.DunColor, fontSize: 20),
-          titleSpacing: 0,
-          title: const Text("设置&其他")),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-        child: Column(
-          children: [
-            Container(
-              decoration: const BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: Color(0x29000000),
-                    offset: Offset(0, 3),
-                    blurRadius: 5,
+    return MediaQuery(
+        data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+        child: Scaffold(
+          backgroundColor: gray_3,
+          appBar: AppBar(
+              //设置&其他页面
+              // elevation: 0,
+              backgroundColor: Colors.white,
+              leading: IconButton(
+                  icon: const Icon(Icons.arrow_back_ios),
+                  onPressed: () => {Navigator.of(context).pop('刷新')}),
+              leadingWidth: 50,
+              iconTheme: const IconThemeData(
+                color: DunColors.DunColor,
+              ),
+              titleTextStyle:
+                  const TextStyle(color: DunColors.DunColor, fontSize: 20),
+              titleSpacing: 0,
+              title: const Text("设置&其他")),
+          body: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 5),
+            child: Column(
+              children: [
+                Expanded(
+                    child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Container(
+                        decoration: const BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Color(0x29000000),
+                              offset: Offset(0, 3),
+                              blurRadius: 5,
+                            ),
+                          ],
+                          color: white,
+                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        child: Column(
+                          children: [
+                            _buildCakeSource(context),
+                            _buildLine(),
+                            // _buildThemeColorSwitch(),
+                            // _buildLine(),
+                            _buildSaveFlow(),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 15),
+                      Container(
+                        decoration: const BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              color: Color(0x29000000),
+                              offset: Offset(0, 3),
+                              blurRadius: 5,
+                            ),
+                          ],
+                          color: white,
+                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _buildAboutUs(context),
+                            _buildLine(),
+                            _buildFollowOnBilibili(context),
+                            _buildLine(),
+                            _buildCheckUpgrade(),
+                            _buildLine(),
+                            _buildDonation(),
+                            _buildLine(),
+                            _buildMobId(),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-                color: white,
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Column(
-                children: [
-                  _buildCakeSource(context),
-                  _buildLine(),
-                  // _buildThemeColorSwitch(),
-                  // _buildLine(),
-                  _buildSaveFlow(),
-                ],
-              ),
-            ),
-            const SizedBox(height: 15),
-            Container(
-              decoration: const BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: Color(0x29000000),
-                    offset: Offset(0, 3),
-                    blurRadius: 5,
-                  ),
-                ],
-                color: white,
-              ),
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildAboutUs(context),
-                  _buildLine(),
-                  _buildFollowOnBilibili(context),
-                  _buildLine(),
-                  _buildCheckUpgrade(),
-                  _buildLine(),
-                  _buildDonation(),
-                  _buildLine(),
-                  _buildMobId(),
-                ],
-              ),
-            ),
-            const Spacer(),
-            const Text(
-              "Copyright: Ceobe Canteen",
-              style: TextStyle(
-                color: Colors.grey,
-                fontSize: 12,
-              ),
-            ),
-            InkWell(
-                child: const Text(
-                  "闽ICP备2021013932号-2A",
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 12,
-                  ),
+                )),
+                Column(
+                  children: [
+                    const Text(
+                      "Copyright: Ceobe Canteen",
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 12,
+                      ),
+                    ),
+                    InkWell(
+                        child: const Text(
+                          "闽ICP备2021013932号-2A",
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 12,
+                          ),
+                        ),
+                        onTap: () => OpenAppOrBrowser.openUrl(
+                            'https://beian.miit.gov.cn/', context))
+                  ],
                 ),
-                onTap: () => OpenAppOrBrowser.openUrl(
-                    'https://beian.miit.gov.cn/', context))
-          ],
-        ),
-      ),
-    );
+              ],
+            ),
+          ),
+        ));
   }
 
   Widget _buildLine() {
