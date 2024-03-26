@@ -52,36 +52,24 @@ class _ToolLinkState extends State<ToolLink> {
       behavior: HitTestBehavior.opaque,
       child: Container(
         width: double.infinity,
-        padding: const EdgeInsets.only(left: 10),
+        padding: const EdgeInsets.only(left: 10,),
         child: Stack(
-          alignment:Alignment.centerLeft,
+          alignment: Alignment.centerLeft,
           children: [
             Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ClipRRect(
                     child: ExtendedImage.network(
                       image,
                       width: 30,
+                      height: 30,
                     ),
                     borderRadius: BorderRadius.circular(4)),
-                const SizedBox(
-                  width: 5,
-                ),
-                Text(title)
+                const SizedBox(width: 10,),
+                Expanded(child: Text(title,maxLines: 1,))
               ],
             ),
-            Positioned(
-              child: hasShortcut
-                  ? const Icon(
-                      Icons.menu_open,
-                      size: 16,
-                      color: DunColors.DunColor,
-                    )
-                  : Container(),
-              top: 3,
-              right: 3,
-            )
           ],
         ),
       ),
@@ -114,7 +102,7 @@ class _ToolLinkState extends State<ToolLink> {
     settingData.saveAppSetting();
     var hasAmplitude = await Vibration.hasAmplitudeControl();
     if (hasAmplitude != null && hasAmplitude) {
-      Vibration.vibrate(duration: 100,amplitude: 100);
+      Vibration.vibrate(duration: 100, amplitude: 100);
     }
   }
 }

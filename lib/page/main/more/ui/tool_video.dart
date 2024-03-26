@@ -14,11 +14,15 @@ class ToolVideo extends StatelessWidget {
     return InkWell(
       child: Column(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(4),
-            child: ExtendedImage.network(
-              videoInfo.coverImg!,
-              fit: BoxFit.cover,
+          Expanded(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(4),
+              child: ExtendedImage.network(
+                videoInfo.coverImg!,
+                fit: BoxFit.fill,
+                width: 300,
+                height: 300,
+              ),
             ),
           ),
           Padding(

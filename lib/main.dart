@@ -1,36 +1,30 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
-import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
-import 'package:dun_cookie_flutter/common/tool/package_info.dart';
 import 'package:dun_cookie_flutter/page/error/main.dart';
-import 'package:dun_cookie_flutter/page/main/home/main_list_widget.dart';
-import 'package:dun_cookie_flutter/page/main/more/more_list_widget.dart';
-import 'package:dun_cookie_flutter/page/main/terminal/terminal_page_widget.dart';
+
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
-import 'package:dun_cookie_flutter/page/screeninfo/open_screen_info.dart';
+
 import 'package:dun_cookie_flutter/provider/setting_provider.dart';
-import 'package:dun_cookie_flutter/request/info_request.dart';
+
 import 'package:dun_cookie_flutter/router/router.dart';
 import 'package:fk_user_agent/fk_user_agent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mobpush_plugin/mobpush_custom_message.dart';
+import 'package:mobpush_plugin/mobpush_notify_message.dart';
 import 'package:mobpush_plugin/mobpush_plugin.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import 'Dialog/UpdataDialog.dart';
-import 'common/constant/main.dart';
-import 'dialog/TapStarDialog.dart';
-import 'dialog/UpdataInfoDialog.dart';
+import 'package:provider/provider.dart';
+
 import 'provider/common_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  earlyInit().then((_) => runApp(const CeobeCanteenApp()));
+  earlyInit().then((_) => runApp(const MaterialApp(home: CeobeCanteenApp(),)));
 }
 
 Future<void> earlyInit() async {
@@ -56,6 +50,53 @@ class CeobeCanteenApp extends StatefulWidget {
 }
 
 class _CeobeCanteenAppState extends State<CeobeCanteenApp> {
+  @override
+  void initState() {
+    super.initState();
+    //MobpushPlugin.addPushReceiver(_onEvent, _onError);
+  }
+
+  // void _onEvent(dynamic event) {
+  //   print('>>>>>>>>>>>>>>>>>>>>>>>>>>>onEvent:' + event.toString());
+  //   setState(() {
+  //     Map<String, dynamic> eventMap = json.decode(event as String);
+  //     Map<String, dynamic> result = eventMap['result'];
+  //     int action = eventMap['action'];
+  //     switch (action) {
+  //       case 0://未知
+  //         MobPushNotifyMessage message = MobPushNotifyMessage.fromJson(result);
+  //         break;
+  //       case 1://通知推送
+  //         MobPushCustomMessage message = MobPushCustomMessage.fromJson(result);
+  //
+  //         break;
+  //       case 2://点击推送
+  //         MobPushNotifyMessage message = MobPushNotifyMessage.fromJson(result);
+  //         showDialog(
+  //             context: context,
+  //             builder: (context) {
+  //               return AlertDialog(
+  //                 content: Text(message.content),
+  //                 actions: <Widget>[
+  //                   TextButton(
+  //                       onPressed: () {
+  //                         Navigator.pop(context);
+  //                       },
+  //                       child: const Text("确定"))
+  //                 ],
+  //               );
+  //             });
+  //         break;
+  //     }
+  //   });
+  // }
+  //
+  // void _onError(dynamic event) {
+  //   setState(() {
+  //     print('>>>>>>>>>>>>>>>>>>>>>>>>>>>onError:' + event.toString());
+  //   });
+  // }
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
