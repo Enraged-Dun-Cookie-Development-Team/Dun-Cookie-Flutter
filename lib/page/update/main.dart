@@ -170,11 +170,13 @@ class _DunUpdateState extends State<DunUpdate> {
           children: [
             ElevatedButton(
               style: ButtonStyle(
+                shape: MaterialStateProperty.all(const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(4)))),
                 backgroundColor: MaterialStateProperty.all(DunColors.DunColor),
               ),
               onPressed: () async {
                 //跳转到更新网页
-                OpenAppOrBrowser.openAppUrlScheme("https://apps.apple.com/cn/app/id1629917304", context);
+                OpenAppOrBrowser.openAppUrlScheme(
+                    "https://apps.apple.com/cn/app/id1629917304", context);
               },
               child: const Text(
                 "应用商店",
@@ -189,6 +191,7 @@ class _DunUpdateState extends State<DunUpdate> {
   _DownloadButton(address, url) {
     return ElevatedButton(
       style: ButtonStyle(
+        shape: MaterialStateProperty.all(const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(4)))),
         backgroundColor: MaterialStateProperty.all(DunColors.DunColor),
       ),
       onPressed: () async {
@@ -196,7 +199,7 @@ class _DunUpdateState extends State<DunUpdate> {
         OpenAppOrBrowser.openUrl(url, context);
       },
       child: Text(
-        address,
+        address,style: const TextStyle(color: Colors.white),
       ),
     );
   }

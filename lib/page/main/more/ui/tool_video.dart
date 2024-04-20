@@ -36,7 +36,7 @@ class ToolVideo extends StatelessWidget {
           ),
           Container(
             alignment: Alignment.bottomRight,
-            padding: const EdgeInsets.only(right: 3),
+            padding: const EdgeInsets.only(right: 8,bottom: 3),
             child: Text(
               videoInfo.author!,
               maxLines: 1,

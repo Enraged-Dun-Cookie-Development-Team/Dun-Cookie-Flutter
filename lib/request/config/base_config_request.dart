@@ -1,18 +1,17 @@
-import '../model/config_datasource_model.dart';
-import 'main.dart';
+import '../../model/config_datasource_model.dart';
+import '../request.dart';
+import '../respond.dart';
 
 class BaseConfigRequest {
   /// 全部数据源列表
-  static const String configDatasourceUrl = "/canteen/config/datasource/list";
   static Future<List<ConfigDatasourceModel>> getConfigDatasource() async {
-    ResponseData response = await HttpClass.get(configDatasourceUrl, type: 1);
+    ResponseData response = await HttpClass.get(UrlString.configDatasourceUrl, type: RequestType.server);
     if (response.error) {
       return [];
     } else {
       return _responseDataToConfigDatasourceListData(response);
     }
   }
-
   static List<ConfigDatasourceModel> _responseDataToConfigDatasourceListData(
       ResponseData request) {
     List<ConfigDatasourceModel> resultAll = [];
@@ -28,14 +27,14 @@ class BaseConfigRequest {
     return resultAll;
   }
 
-  static const String updateDataSourceUrl =
-      "/canteen/user/updateDatasourceConfig";
+  ///更新数据源
   static Future<bool> updateDataSource(List<String> list) async {
-    ResponseData response = await HttpClass.post(updateDataSourceUrl,
+    ResponseData response = await HttpClass.post(UrlString.updateDataSourceUrl,
         data: {
           "datasource_push": list,
         },
-        type: 1);
-    return response.isSuccess();
+        type: RequestType.server);
+    return response.isSuccess;
   }
+
 }

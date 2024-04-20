@@ -3,9 +3,9 @@ import 'package:dun_cookie_flutter/common/tool/dun_tag.dart';
 import 'package:dun_cookie_flutter/common/tool/open_app_or_browser.dart';
 import 'package:dun_cookie_flutter/common/tool/time_unit.dart';
 import 'package:dun_cookie_flutter/model/terra_comic_episode_model.dart';
-import 'package:dun_cookie_flutter/model/source_data.dart';
 import 'package:dun_cookie_flutter/model/terra_comic_model.dart';
-import 'package:dun_cookie_flutter/request/cookie_request.dart';
+import 'package:dun_cookie_flutter/request/cookie/cookie_request.dart';
+import 'package:dun_cookie_flutter/request/manga/manga_request.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
@@ -34,7 +34,7 @@ class _MangaListCardState extends State<MangaListCard> {
       child: GestureDetector(
         onTap: () async {
           if(!_isExpanded && episodes.isEmpty) {
-            episodes = await CookiesApi.getTerraComicEpisodeList(widget.comicModel.comic!);
+            episodes = await MangaApi.getTerraComicEpisodeList(widget.comicModel.comic!);
           }
           setState(() {
             _isExpanded = !_isExpanded;
@@ -63,7 +63,7 @@ class _MangaListCardState extends State<MangaListCard> {
               elevation: 0,
               expansionCallback: (panelIndex, isExpanded) async {
                 if(!isExpanded && episodes.isEmpty) {
-                  episodes = await CookiesApi.getTerraComicEpisodeList(widget.comicModel.comic!);
+                  episodes = await MangaApi.getTerraComicEpisodeList(widget.comicModel.comic!);
                 }
                 setState(() {
                   _isExpanded = !isExpanded;

@@ -18,7 +18,7 @@ import '../../model/ceobecanteen_data.dart';
 import '../../model/setting_data.dart';
 import '../../provider/setting_provider.dart';
 
-import '../../request/info_request.dart';
+import '../../request/info/info_request.dart';
 import '../screeninfo/open_screen_info.dart';
 import 'home/main_list_widget.dart';
 import 'more/more_list_widget.dart';

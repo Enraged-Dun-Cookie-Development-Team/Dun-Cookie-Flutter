@@ -41,7 +41,10 @@ class _CookieWidgetToImageState extends State<CookieWidgetToImage> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: const Text("小刻分享"),
+        iconTheme: const IconThemeData(
+          color: gray_3
+        ),
+        title: const Text("小刻分享",style: TextStyle(color: gray_3),),
         actions: [
           _button(_widgetToImageSave, Icons.save_alt),
           _button(_widgetToImageShare, Icons.share)

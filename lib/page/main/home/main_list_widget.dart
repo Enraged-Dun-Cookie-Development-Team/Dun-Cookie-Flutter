@@ -1,11 +1,8 @@
-import 'package:dun_cookie_flutter/common/constant/main.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/page/main/ui/common/container_with_label.dart';
-import 'package:dun_cookie_flutter/model/source_data.dart';
-import 'package:dun_cookie_flutter/request/cdn_datasource_request.dart';
-import 'package:dun_cookie_flutter/request/cookie_request.dart';
-import 'package:dun_cookie_flutter/request/list_request.dart';
-import 'package:dun_cookie_flutter/request/serve_cdn_cookie_request.dart';
+
+import 'package:dun_cookie_flutter/request/cookie/cookie_request.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -97,7 +94,7 @@ class _MainListWidgetState extends State<MainListWidget>
       data!.addAll(cookiesResp.cookies!);
       nextPageId = cookiesResp.nextPageId;
     } else {
-      var cookiesResp = await ServeCdnCookieApi.getCdnCookieMainList(
+      var cookiesResp = await CookiesApi.getCdnCookieMainList(
           settingData!.datasourceSetting!.datasourceCombId!,
           nextPageId!,
           newestCookieId!.updateCookieId);
@@ -109,16 +106,16 @@ class _MainListWidgetState extends State<MainListWidget>
   }
 
   fetchData() async {
-    var newestIdResp = await CdnCookieApi.getCdnNewestCookieId(
+    var newestIdResp = await CookiesApi.getCdnNewestCookieId(
         settingData!.datasourceSetting!.datasourceCombId!);
     newestCookieId = newestIdResp;
-    var cookiesResp = await ServeCdnCookieApi.getCdnCookieMainList(
+    var cookiesResp = await CookiesApi.getCdnCookieMainList(
         settingData!.datasourceSetting!.datasourceCombId!,
         newestCookieId!.cookieId!,
         newestCookieId!.updateCookieId);
     // 如果请求失败，updateId让它为空再请求一次
     if (cookiesResp.cookies == null) {
-      cookiesResp = await ServeCdnCookieApi.getCdnCookieMainList(
+      cookiesResp = await CookiesApi.getCdnCookieMainList(
           settingData!.datasourceSetting!.datasourceCombId!,
           newestCookieId!.cookieId!,
           null);
@@ -145,7 +142,7 @@ class _MainListWidgetState extends State<MainListWidget>
 
   /// 下拉刷新获取数据
   Future<void> _getRefreshData() async {
-    var newestIdResp = await CdnCookieApi.getCdnNewestCookieId(
+    var newestIdResp = await CookiesApi.getCdnNewestCookieId(
         settingData!.datasourceSetting!.datasourceCombId!);
     if (newestIdResp.updateCookieId == newestCookieId?.updateCookieId &&
         newestIdResp.cookieId == newestCookieId?.cookieId) {
@@ -158,20 +155,20 @@ class _MainListWidgetState extends State<MainListWidget>
           settingData!.datasourceSetting!.datasourceCombId!, searchText, null);
       data = cookiesResp.cookies;
       nextPageId = cookiesResp.nextPageId;
-      var cookiesMainResp = await ServeCdnCookieApi.getCdnCookieMainList(
+      var cookiesMainResp = await CookiesApi.getCdnCookieMainList(
           settingData!.datasourceSetting!.datasourceCombId!,
           newestCookieId!.cookieId!,
           newestCookieId!.updateCookieId);
       tempData = cookiesMainResp.cookies;
       tempNextPageId = cookiesMainResp.nextPageId;
     } else {
-      var cookiesResp = await ServeCdnCookieApi.getCdnCookieMainList(
+      var cookiesResp = await CookiesApi.getCdnCookieMainList(
           settingData!.datasourceSetting!.datasourceCombId!,
           newestCookieId!.cookieId!,
           newestCookieId!.updateCookieId);
       // 如果请求失败，updateId让它为空再请求一次
       if (cookiesResp.cookies == null) {
-        cookiesResp = await ServeCdnCookieApi.getCdnCookieMainList(
+        cookiesResp = await CookiesApi.getCdnCookieMainList(
             settingData!.datasourceSetting!.datasourceCombId!,
             newestCookieId!.cookieId!,
             null);

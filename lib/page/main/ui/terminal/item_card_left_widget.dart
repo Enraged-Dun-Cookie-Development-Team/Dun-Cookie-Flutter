@@ -21,7 +21,8 @@ class ItemCardLeftWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> titleTextList = [];
     for (int i = 0; i < columnText.length; i++) {
-      titleTextList.add(Text(columnText[i], style: const TextStyle(color: white, fontSize: 8)));
+      titleTextList.add(Text(columnText[i],
+          style: const TextStyle(color: white, fontSize: 8)));
     }
 
     return Container(
@@ -55,9 +56,9 @@ class ItemCardLeftWidget extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
-            left: 60,
-            top: 29,
+          Center(
+              child: Padding(
+            padding: EdgeInsets.only(top: 10),
             child: Text(
               centerText,
               style: const TextStyle(
@@ -65,20 +66,20 @@ class ItemCardLeftWidget extends StatelessWidget {
                 fontSize: 36,
               ),
             ),
-          ),
-          bottomText != null ?
-              Container(
-                alignment: Alignment.bottomRight,
-                padding: const EdgeInsets.fromLTRB(0, 0, 10, 8),
-                child: Text(
-                  bottomText!,
-                  style: const TextStyle(
-                    color: gray_1,
-                    fontSize: 16,
+          )),
+          bottomText != null
+              ? Container(
+                  alignment: Alignment.bottomRight,
+                  padding: const EdgeInsets.fromLTRB(0, 0, 10, 8),
+                  child: Text(
+                    bottomText!,
+                    style: const TextStyle(
+                      color: gray_1,
+                      fontSize: 16,
+                    ),
                   ),
-                ),
-              )
-           : Container(),
+                )
+              : Container(),
         ],
       ),
     );

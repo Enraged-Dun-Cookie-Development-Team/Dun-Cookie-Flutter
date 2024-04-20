@@ -7,21 +7,21 @@ import 'bilibili_favorites_data.dart';
 /// ttl : 1
 /// data : {"count":2,"list":[{"id":1596945616,"fid":15969456,"mid":1579053316,"attr":22,"title":"泰拉每周速递 第一期","fav_state":0,"media_count":9},{"id":1596945916,"fid":15969459,"mid":1579053316,"attr":22,"title":"泰拉每周速递 第二期","fav_state":0,"media_count":11}],"season":null}
 
-BilibiliUserFavlistData userWanFavlistFromJson(String str) =>
-    BilibiliUserFavlistData.fromJson(json.decode(str));
+BilibiliUserFavoriteListData userWanFavlistFromJson(String str) =>
+    BilibiliUserFavoriteListData.fromJson(json.decode(str));
 
-String userWanFavlistToJson(BilibiliUserFavlistData data) =>
+String userWanFavlistToJson(BilibiliUserFavoriteListData data) =>
     json.encode(data.toJson());
 
-class BilibiliUserFavlistData {
-  BilibiliUserFavlistData({
+class BilibiliUserFavoriteListData {
+  BilibiliUserFavoriteListData({
     this.code,
     this.message,
     this.ttl,
     this.data,
   });
 
-  BilibiliUserFavlistData.fromJson(dynamic json) {
+  BilibiliUserFavoriteListData.fromJson(dynamic json) {
     code = json['code'];
     message = json['message'];
     ttl = json['ttl'];

@@ -6,7 +6,7 @@ import 'package:dun_cookie_flutter/model/bakery_data.dart';
 import 'package:dun_cookie_flutter/page/honey_cake_workshop/ui/honey_cake_workshop_card.dart';
 import 'package:dun_cookie_flutter/provider/common_event_bus.dart';
 import 'package:dun_cookie_flutter/provider/common_provider.dart';
-import 'package:dun_cookie_flutter/request/bakery_request.dart';
+import 'package:dun_cookie_flutter/request/bakery/bakery_request.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

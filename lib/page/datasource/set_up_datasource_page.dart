@@ -9,8 +9,8 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/user_settings.dart';
-import '../../request/base_config_request.dart';
-import '../../request/info_request.dart';
+import '../../request/config/base_config_request.dart';
+import '../../request/info/info_request.dart';
 import 'data/platform.dart';
 import 'ui/set_up_item.dart';
 

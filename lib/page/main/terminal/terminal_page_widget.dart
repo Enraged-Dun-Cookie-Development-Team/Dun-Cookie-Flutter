@@ -7,8 +7,8 @@ import 'package:dun_cookie_flutter/page/main/ui/terminal/set_up_button_widget.da
 import 'package:dun_cookie_flutter/page/main/ui/terminal/today_rotation.dart';
 import 'package:dun_cookie_flutter/model/cookie_count_model.dart';
 import 'package:dun_cookie_flutter/model/resource_info.dart';
-import 'package:dun_cookie_flutter/request/cookie_request.dart';
-import 'package:dun_cookie_flutter/request/tools_api.dart';
+import 'package:dun_cookie_flutter/request/cookie/cookie_request.dart';
+import 'package:dun_cookie_flutter/request/tool/tools_request.dart';
 import 'package:dun_cookie_flutter/page/setting/set_up_page.dart';
 import 'package:flutter/material.dart';
 
@@ -33,7 +33,7 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> with AutomaticK
     super.initState();
     ToolsApi.getResourceInfo()
         .then((value) => setState(() => resourceInfo = value));
-    CookiesApi.getCookieCountList()
+    CookiesApi.getCookieInfoCount()
         .then((value) => setState(() => cookieInfoCount = value));
   }
 
@@ -335,7 +335,7 @@ class _TerminalPageWidgetState extends State<TerminalPageWidget> with AutomaticK
   Widget _buildActivityWidget(Countdown countdown, int index) {
     var timeDiff = TimeUnit.timeDiffUnit(countdown.time!);
     return SizedBox(
-      height: 97,
+      height: countdown.countdownType == "activity"?120:97,
       child: Row(
         children: [
           ItemCardLeftWidget(

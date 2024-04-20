@@ -1,7 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/model/terra_comic_model.dart';
-import 'package:dun_cookie_flutter/request/cookie_request.dart';
+import 'package:dun_cookie_flutter/request/manga/manga_request.dart';
 import 'package:flutter/material.dart';
 
 import '../error/main.dart';
@@ -43,11 +43,9 @@ class _MangaListPageState extends State<MangaListPage> {
             iconTheme: const IconThemeData(
               color: DunColors.DunColor,
             ),
-
             titleTextStyle:
                 const TextStyle(color: DunColors.DunColor, fontSize: 20),
             titleSpacing: 0,
-
             title: const Text("官方漫画"),
           ),
           body: Container(
@@ -81,7 +79,7 @@ class _MangaListPageState extends State<MangaListPage> {
     setState(() {
       loadDataType = 1;
     });
-    var data = await CookiesApi.getTerraComicList();
+    var data = await MangaApi.getTerraComicList();
     if (data.isNotEmpty) {
       setState(() {
         comicsList = data;

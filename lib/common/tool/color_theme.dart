@@ -45,20 +45,21 @@ class DunStyles {
 class DunTheme {
   static ThemeData getThemeData(Color color, Brightness brightness) {
     ThemeData td = ThemeData(colorSchemeSeed: color, brightness: brightness);
-    ThemeData tdlight =
-        ThemeData(colorSchemeSeed: color, brightness: Brightness.light);
+    ThemeData tdlight = ThemeData(colorSchemeSeed: color, brightness: Brightness.light);
     Color primaryThemeColor = tdlight.primaryColor;
     Color primaryColor = color;
     ThemeData rst = td.copyWith(
-      appBarTheme: AppBarTheme(
-        color:
-            brightness == Brightness.light ? primaryColor : primaryThemeColor,
-      ),
-      textButtonTheme: TextButtonThemeData(
-        style: TextButton.styleFrom(
-          foregroundColor: Colors.white, backgroundColor: primaryColor,
+        appBarTheme: AppBarTheme(
+          color:
+              brightness == Brightness.light ? primaryColor : primaryThemeColor,
         ),
-      ),
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+            foregroundColor: Colors.white,
+            backgroundColor: primaryColor,
+          ),
+        ),
+
     );
     return rst;
   }

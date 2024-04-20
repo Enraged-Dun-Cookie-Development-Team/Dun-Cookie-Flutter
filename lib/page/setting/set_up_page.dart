@@ -13,7 +13,7 @@ import '../../common/tool/package_info.dart';
 import '../datasource/set_up_datasource_page.dart';
 import '../update/main.dart';
 import '../../provider/setting_provider.dart';
-import '../../request/info_request.dart';
+import '../../request/info/info_request.dart';
 
 class SetUpPage extends StatefulWidget {
   const SetUpPage({Key? key}) : super(key: key);
@@ -258,6 +258,9 @@ class _SetUpPageState extends State<SetUpPage> {
         ),
         const Expanded(child: SizedBox()),
         Switch(
+          activeColor: DunColors.DunColor,
+          inactiveThumbColor: Colors.grey,
+          inactiveTrackColor: Colors.white,
           value: settingData.appSetting.isPreview!,
           onChanged: (isPreview) {
             settingData.saveIsPreview(isPreview);

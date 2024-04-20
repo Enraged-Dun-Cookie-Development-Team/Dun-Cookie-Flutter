@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:dun_cookie_flutter/page/error/main.dart';
@@ -13,9 +12,6 @@ import 'package:fk_user_agent/fk_user_agent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mobpush_plugin/mobpush_custom_message.dart';
-import 'package:mobpush_plugin/mobpush_notify_message.dart';
-import 'package:mobpush_plugin/mobpush_plugin.dart';
 
 import 'package:provider/provider.dart';
 
@@ -23,8 +19,7 @@ import 'provider/common_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  earlyInit().then((_) => runApp(const MaterialApp(home: CeobeCanteenApp(),)));
+  earlyInit().then((_) => runApp(const MaterialApp(home: CeobeCanteenApp())));
 }
 
 Future<void> earlyInit() async {
@@ -116,6 +111,14 @@ class _CeobeCanteenAppState extends State<CeobeCanteenApp> {
                 title: '小刻食堂',
                 routes: DunRouter.routes,
                 initialRoute: "/",
+                theme: ThemeData(
+                  primarySwatch: Colors.blue,
+                  colorScheme: ColorScheme.fromSeed(
+                    seedColor: Colors.white,
+                    surfaceTint: Colors.transparent,
+                  ),
+                  useMaterial3: true,
+                ),
                 onUnknownRoute: (settings) => MaterialPageRoute(
                   builder: (context) => DunError(error: "404"),
                 ),

@@ -3,14 +3,12 @@ import 'dart:math' as math;
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/time_unit.dart';
 
-// import 'package:dun_cookie_flutter/honey_cake_workshop/honey_cake_workshop_page.dart';
 import 'package:dun_cookie_flutter/page/manga/manga_list.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
 import 'package:dun_cookie_flutter/model/video_model.dart';
 import 'package:dun_cookie_flutter/page/main/more/ui/tool_link.dart';
 import 'package:dun_cookie_flutter/page/main/more/ui/tool_video.dart';
-import 'package:dun_cookie_flutter/request/cookie_request.dart';
-import 'package:dun_cookie_flutter/request/tools_api.dart';
+import 'package:dun_cookie_flutter/request/manga/manga_request.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,7 +16,8 @@ import 'package:provider/provider.dart';
 
 import '../../../model/bakery_data.dart';
 import '../../../model/terra_recent_episode_model.dart';
-import '../../../request/bakery_request.dart';
+import '../../../request/bakery/bakery_request.dart';
+import '../../../request/tool/tools_request.dart';
 import '../../honey_cake_workshop/honey_cake_workshop_page.dart';
 import '../ui/common/dashed_line_widget.dart';
 
@@ -42,9 +41,9 @@ class _MoreListWidgetState extends State<MoreListWidget>
   void initState() {
     super.initState();
     ToolsApi.getVideoList().then((value) => setState(() => videoList = value));
-    ToolsApi.getToolLinkInfoUrl()
+    ToolsApi.getToolLinkInfo()
         .then((value) => setState(() => quickJumpList = value));
-    CookiesApi.getTerraNewestEpisode()
+    MangaApi.getTerraNewestEpisode()
         .then((value) => setState(() => terraRecentEpisode = value));
     BakeryRequest.getBakeryRecentPredict()
         .then((value) => setState(() => bakeryRecentPredict = value));

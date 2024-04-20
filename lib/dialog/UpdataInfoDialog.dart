@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../model/ceobecanteen_data.dart';
 import '../page/update/main.dart';
-import '../request/info_request.dart';
+import '../request/info/info_request.dart';
 
 class UpdataInfoDialog extends Dialog {
   final String? version; //新版本
