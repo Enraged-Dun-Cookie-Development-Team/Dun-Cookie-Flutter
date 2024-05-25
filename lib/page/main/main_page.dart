@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:dun_cookie_flutter/page/main/terminal/terminal_page_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobpush_plugin/mobpush_plugin.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
@@ -159,8 +160,8 @@ class _MainPageState extends State<MainPage> {
       Align(
         alignment: Alignment.bottomCenter,
         child: Container(
-          padding: EdgeInsets.only(bottom: paddingBottom),
-          height: 60 + paddingBottom,
+          padding: REdgeInsets.only(bottom: paddingBottom),
+          height: 60.h + paddingBottom,
           decoration: const BoxDecoration(color: white, boxShadow: [
             BoxShadow(
               color: Colors.black38,
@@ -179,8 +180,8 @@ class _MainPageState extends State<MainPage> {
                   }),
                   child: Image.asset(
                     'assets/icon/more_list_icon.png',
-                    width: 30,
-                    height: 30,
+                    width: 30.r,
+                    height: 30.r,
                     color: currentIndex == 1 ? yellow : gray_2,
                   ),
                 ),
@@ -194,8 +195,8 @@ class _MainPageState extends State<MainPage> {
                   }),
                   child: Image.asset(
                     'assets/icon/terminal_page_icon.png',
-                    width: 30,
-                    height: 30,
+                    width: 30.r,
+                    height: 30.r,
                     color: currentIndex == 2 ? yellow : gray_2,
                   ),
                 ),
@@ -214,22 +215,22 @@ class _MainPageState extends State<MainPage> {
                 _controller.jumpToPage(currentIndex);
               }),
               child: Container(
-                width: 83,
-                height: 83,
-                margin: const EdgeInsets.only(bottom: 5),
+                width: 83.r,
+                height: 83.r,
+                margin: REdgeInsets.only(bottom: 5),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50),
+                  borderRadius: BorderRadius.circular(50).r,
                   border: Border.all(
                     color: currentIndex == 0 ? yellow : gray_2,
-                    width: 2,
+                    width: 2.r,
                   ),
                   color: currentIndex == 0 ? yellow : white,
                 ),
                 child: Center(
                   child: Image.asset(
                     'assets/icon/main_list_icon.png',
-                    width: 57,
-                    height: 48,
+                    width: 57.r,
+                    height: 48.r,
                     color: currentIndex == 0 ? white : gray_2,
                   ),
                 ),
