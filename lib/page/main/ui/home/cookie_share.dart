@@ -41,10 +41,11 @@ class _CookieWidgetToImageState extends State<CookieWidgetToImage> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const IconThemeData(
-          color: gray_3
+        iconTheme: const IconThemeData(color: gray_3),
+        title: const Text(
+          "小刻分享",
+          style: TextStyle(color: gray_3),
         ),
-        title: const Text("小刻分享",style: TextStyle(color: gray_3),),
         actions: [
           _button(_widgetToImageSave, Icons.save_alt),
           _button(_widgetToImageShare, Icons.share)
@@ -209,12 +210,12 @@ class _CookieWidgetToImageState extends State<CookieWidgetToImage> {
     );
   }
 
-//  顶部按钮
+  //  顶部按钮
   _button(event, icon) {
     return IconButton(onPressed: () => event(), icon: Icon(icon));
   }
 
-//  图片转流
+  //  图片转流
   Future<Uint8List> _widgetToUint8List() async {
     await Future.delayed(
         const Duration(milliseconds: 100)); // 让后续的代码异步执行，因为要先等UI变完再生成图片
@@ -229,7 +230,7 @@ class _CookieWidgetToImageState extends State<CookieWidgetToImage> {
     return completer.future;
   }
 
-//图片保存
+  //图片保存
   void _widgetToImageSave() async {
     DunShareImageIsShare event = DunShareImageIsShare(true);
     eventBus.fire(event);
@@ -244,7 +245,7 @@ class _CookieWidgetToImageState extends State<CookieWidgetToImage> {
         .then((value) => Navigator.of(context).pop());
   }
 
-//  图片分享
+  //  图片分享
   void _widgetToImageShare() async {
     DunShareImageIsShare event = DunShareImageIsShare(true);
     eventBus.fire(event);

@@ -1,20 +1,18 @@
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/time_unit.dart';
-import 'package:dun_cookie_flutter/page/main/ui/common/dashed_circle_widget.dart';
-
+import 'package:dun_cookie_flutter/model/cookie_count_model.dart';
+import 'package:dun_cookie_flutter/model/resource_info.dart';
 import 'package:dun_cookie_flutter/page/main/ui/terminal/item_card_left_widget.dart';
 import 'package:dun_cookie_flutter/page/main/ui/terminal/set_up_button_widget.dart';
 import 'package:dun_cookie_flutter/page/main/ui/terminal/today_rotation.dart';
-import 'package:dun_cookie_flutter/model/cookie_count_model.dart';
-import 'package:dun_cookie_flutter/model/resource_info.dart';
+import 'package:dun_cookie_flutter/page/setting/set_up_page.dart';
 import 'package:dun_cookie_flutter/request/cookie/cookie_request.dart';
 import 'package:dun_cookie_flutter/request/tool/tools_request.dart';
-import 'package:dun_cookie_flutter/page/setting/set_up_page.dart';
+import 'package:dun_cookie_flutter/widget/dashed_circle_widget.dart';
 import 'package:flutter/material.dart';
 
-import '../ui/common/dashed_line_widget.dart';
+import '../../../widget/dashed_line_widget.dart';
 import '../ui/terminal/prts_title_widget.dart';
-
 
 class TerminalPageWidget extends StatefulWidget {
   @override

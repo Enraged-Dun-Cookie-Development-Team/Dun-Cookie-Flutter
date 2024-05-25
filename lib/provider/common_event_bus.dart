@@ -1,7 +1,6 @@
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:event_bus/event_bus.dart';
 
-class CommonEventBus {}
 
 EventBus eventBus = EventBus();
 

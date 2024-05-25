@@ -2,12 +2,11 @@ import 'dart:math' as math;
 
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/time_unit.dart';
-
-import 'package:dun_cookie_flutter/page/manga/manga_list.dart';
 import 'package:dun_cookie_flutter/model/ceobecanteen_data.dart';
 import 'package:dun_cookie_flutter/model/video_model.dart';
 import 'package:dun_cookie_flutter/page/main/more/ui/tool_link.dart';
 import 'package:dun_cookie_flutter/page/main/more/ui/tool_video.dart';
+import 'package:dun_cookie_flutter/page/manga/manga_list.dart';
 import 'package:dun_cookie_flutter/request/manga/manga_request.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
@@ -18,8 +17,8 @@ import '../../../model/bakery_data.dart';
 import '../../../model/terra_recent_episode_model.dart';
 import '../../../request/bakery/bakery_request.dart';
 import '../../../request/tool/tools_request.dart';
+import '../../../widget/dashed_line_widget.dart';
 import '../../honey_cake_workshop/honey_cake_workshop_page.dart';
-import '../ui/common/dashed_line_widget.dart';
 
 class MoreListWidget extends StatefulWidget {
   @override

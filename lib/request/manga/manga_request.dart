@@ -31,7 +31,9 @@ class MangaApi{
 
   /// 泰拉记事社漫画小节列表
   static Future<List<TerraComicEpisodeModel>> getTerraComicEpisodeList(String comicId) async {
-    ResponseData response = await HttpClass.get(UrlString.getTerraComicEpisodeUrl(comicId), type: RequestType.server);
+    ResponseData response = await HttpClass.get(
+        UrlString.terraComicEpisodeUrl(comicId),
+        type: RequestType.server);
     if (response.error) {
       return [];
     } else {

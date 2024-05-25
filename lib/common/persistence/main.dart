@@ -32,7 +32,7 @@ class DunPreferences {
     return await _prefs.then((_) => _.setStringList(key, value));
   }
 
-  getBool({key}) async {
+  Future<bool?> getBool({key}) async {
     return await _prefs.then((_) => _.getBool(key) ?? false);
   }
 

@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 /// "total_count": 78,
 /// "skin_count": 2,
 /// "operator_count": 0,

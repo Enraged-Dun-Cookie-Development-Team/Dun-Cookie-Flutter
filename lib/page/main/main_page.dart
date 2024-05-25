@@ -15,9 +15,7 @@ import '../../common/tool/package_info.dart';
 import '../../dialog/TapStarDialog.dart';
 import '../../dialog/UpdataInfoDialog.dart';
 import '../../model/ceobecanteen_data.dart';
-import '../../model/setting_data.dart';
 import '../../provider/setting_provider.dart';
-
 import '../../request/info/info_request.dart';
 import '../screeninfo/open_screen_info.dart';
 import 'home/main_list_widget.dart';
@@ -57,7 +55,6 @@ class _MainPageState extends State<MainPage> {
         Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const OpenScreenInfo()))
             .then((value) => completer.complete(value));
-
       });
       result = await completer.future;
       if (!result) return null;
@@ -172,8 +169,7 @@ class _MainPageState extends State<MainPage> {
               spreadRadius: 1.0,
             )
           ]),
-          child: Container(
-              child: Row(
+          child: Row(
             children: [
               Expanded(
                 child: GestureDetector(
@@ -205,7 +201,7 @@ class _MainPageState extends State<MainPage> {
                 ),
               ),
             ],
-          )),
+          ),
         ),
       ),
       Container(

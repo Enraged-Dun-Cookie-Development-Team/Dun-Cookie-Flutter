@@ -1,9 +1,6 @@
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
-import 'package:dun_cookie_flutter/page/main/ui/common/container_with_label.dart';
-
 import 'package:dun_cookie_flutter/request/cookie/cookie_request.dart';
-
-import 'package:flutter/cupertino.dart';
+import 'package:dun_cookie_flutter/widget/container_with_label.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -32,7 +29,7 @@ class _MainListWidgetState extends State<MainListWidget>
   bool offstage = true; // 隐藏搜索清空
   bool isAllowRefresh = true; // 运行刷新
   /// 滚动控制器
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
 
   ///监听TextField内容变化
   final TextEditingController _searchController = TextEditingController();
@@ -278,18 +275,6 @@ class _MainListWidgetState extends State<MainListWidget>
             height: 50,
           )
         ],
-      ),
-    );
-  }
-
-  Widget buildSliverList([int count = 5]) {
-    return SliverFixedExtentList(
-      itemExtent: 50,
-      delegate: SliverChildBuilderDelegate(
-        (context, index) {
-          return ListTile(title: Text('$index'));
-        },
-        childCount: count,
       ),
     );
   }

@@ -1,10 +1,9 @@
+import 'dart:math';
+
 import 'package:dio/dio.dart';
 import 'package:dun_cookie_flutter/common/constant/main.dart';
 
 import 'config.dart';
-
-import 'dart:math';
-
 import 'respond.dart';
 
 enum RequestType {
@@ -35,7 +34,7 @@ class UrlString {
   // 漫画相关
   static String get terraComicListUrl => "/canteen/cookie/terraComic/list";
 
-  static String getTerraComicEpisodeUrl(String comicId) =>
+  static String terraComicEpisodeUrl(String comicId) =>
       "/canteen/cookie/terraComic/episodeList?comic=$comicId";
 
   static String get terraNewestEpisodeUrl => "/canteen/cookie/terraComic/newestEpisode";
@@ -77,8 +76,7 @@ class HttpClass {
 
   static final Dio dio = Dio(_baseOptions);
 
-  static Future _request(
-    String url, {
+  static Future _request(String url, {
     String method = "get",
     Map<String, dynamic>? params,
     data,
@@ -143,8 +141,8 @@ class HttpClass {
 
   static Future post(String url,
       {Map<String, dynamic>? params,
-      data,
-      RequestType type = RequestType.temp}) {
+        data,
+        RequestType type = RequestType.temp}) {
     return _request(url,
         method: "post", params: params, data: data, type: type);
   }

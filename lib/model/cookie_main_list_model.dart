@@ -1,5 +1,3 @@
-
-
 /// "cookies": [
 ///   {
 ///     "datasource": "明日方舟-B站",
@@ -35,8 +33,8 @@
 /// "next_page_id": "644a96ce34422f48cd20bdef"
 class CookieMainListModel {
   CookieMainListModel({
-      this.cookies, 
-      this.nextPageId,});
+    this.cookies,
+    this.nextPageId,});
 
   CookieMainListModel.fromJson(dynamic json) {
     if (json['cookies'] != null) {
@@ -47,6 +45,7 @@ class CookieMainListModel {
     }
     nextPageId = json['next_page_id'];
   }
+
   List<Cookies>? cookies;
   String? nextPageId;
 
@@ -83,6 +82,7 @@ class DefaultCookie {
       });
     }
   }
+
   String? text;
   List<CookieImage>? images;
 
@@ -140,6 +140,7 @@ class Cookies {
     item = json['item'] != null ? Item.fromJson(json['item']) : null;
     source = json['source'] != null ? Source.fromJson(json['source']) : null;
   }
+
   String? datasource;
   String? icon;
   String? jumpUrl;
@@ -176,6 +177,7 @@ class Timestamp {
     platformPrecision = json['platform_precision'];
     fetcher = json['fetcher'];
   }
+
   int? platform;
   String? platformPrecision;
   int? fetcher;
@@ -199,6 +201,7 @@ class CookieImage {
     originUrl = json['origin_url'];
     compressUrl = json['compress_url'];
   }
+
   String? originUrl;
   String? compressUrl;
 
@@ -226,6 +229,7 @@ class Item {
     url = json['url'];
     retweeted = json['retweeted'] != null ? Retweeted.fromJson(json['retweeted']) : null;
   }
+
   String? id;
   String? url;
   Retweeted? retweeted;
@@ -250,6 +254,7 @@ class Source {
     type = json['type'];
     data = json['data'];
   }
+
   String? type;
   String? data;
 
@@ -291,6 +296,7 @@ class Retweeted {
       });
     }
   }
+
   String? authorName;
   String? authorAvatar;
   String? text;

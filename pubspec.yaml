@@ -66,6 +66,9 @@ dependencies:
   in_app_review: ^2.0.6
   fk_user_agent: ^2.1.0
   flutter_screenutil: ^5.0.0+2
+  json_serializable:
+  json_annotation: ^4.8.1
+  build_runner: ^2.4.9
   get: ^4.6.6
 dev_dependencies:
   flutter_test:

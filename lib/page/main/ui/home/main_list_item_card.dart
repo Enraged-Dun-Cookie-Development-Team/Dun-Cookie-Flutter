@@ -1,21 +1,20 @@
 import 'package:dun_cookie_flutter/common/tool/color_theme.dart';
 import 'package:dun_cookie_flutter/common/tool/time_unit.dart';
-import 'package:dun_cookie_flutter/page/main/ui/common/dashed_line_widget.dart';
-
 import 'package:dun_cookie_flutter/model/cookie_main_list_model.dart';
 import 'package:dun_cookie_flutter/model/setting_data.dart';
-import 'package:extended_image/extended_image.dart';
+import 'package:dun_cookie_flutter/widget/dashed_line_widget.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../common/tool/open_app_or_browser.dart';
+import '../../../../version_2.0/widget/cookie/cookie_title.dart';
 import 'cookie_share.dart';
 import 'expandable_text.dart';
 import 'images_widget.dart';
 
-
 class MainListItemCard extends StatelessWidget {
-  final Cookies? data;
+  final Cookies data;
   final SettingData? settingData;
+
   const MainListItemCard(
       {required this.data, required this.settingData, Key? key})
       : super(key: key);
@@ -23,148 +22,124 @@ class MainListItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: () => _goSource(
-            context, data!.source!.type!, data!.item!.id!, data!.item!.url!),
-        child: Container(
-          margin: const EdgeInsets.only(top: 12),
-          color: white,
-          child: Stack(
-            children: [
-              ..._buildBg(),
-              _buildIcon(),
-              _buildTitle(),
-              _buildTime(),
-              _buildShareIcon(context),
-              _buildContent(context),
-            ],
-          ),
-        ));
-  }
-
-  List<Widget> _buildBg() {
-    return [
-      /// 左上灰色label
-      Container(
-        width: 14,
-        height: 60,
-        color: gray_1,
-      ),
-
-      /// 右上黄色label
-      Positioned(
-        top: 51,
-        right: 18,
-        child: Container(
-          width: 13,
-          height: 19,
-          color: yellow,
+      onTap: () => _goSource(
+          context, data.source!.type!, data.item!.id!, data.item!.url!),
+      child: Container(
+        margin: const EdgeInsets.only(top: 10),
+        color: Colors.white,
+        child: Column(
+          children: [_buildTop(context), _buildContent(context)],
         ),
       ),
-
-      /// 虚线
-      const Positioned(
-        left: 26,
-        top: 60,
-        right: 40,
-        child: DashedLineHorizontalWidget(),
-      )
-    ];
+    );
   }
 
-  Widget _buildIcon() {
-    return Positioned(
-      left: 26,
-      top: 11,
-      child: data?.icon != null
-          ? ExtendedImage.network(
-              data!.icon!,
-              handleLoadingProgress: true,
-              clearMemoryCacheIfFailed: true,
-              clearMemoryCacheWhenDispose: false,
-              mode: ExtendedImageMode.gesture,
-              cache: true,
-              width: 38,
-              height: 38,
-              fit: BoxFit.cover,
-              alignment: Alignment.topLeft,
-            )
-          : Image.asset(
-              "assets/image/load/loading.gif",
-              width: 38,
-              height: 38,
-              fit: BoxFit.cover,
-              alignment: Alignment.topLeft,
-            ),
+  Widget _buildTop(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        /// 左上灰色label
+        Container(
+          margin: const EdgeInsets.only(bottom: 1, right: 10),
+          width: 15,
+          height: 60,
+          color: gray_1,
+        ),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _buildTitle(),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 5),
+                    child: _buildShareIcon(context),
+                  )
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(right: 10),
+                      child: DashedLine(
+                        axis: Axis.horizontal,
+                        count: 100,
+                        dashedColor: gray_1,
+                      ),
+                    ),
+                  ),
+
+                  /// 右上黄色label
+                  Padding(
+                    padding: const EdgeInsets.only(right: 15),
+                    child: Container(
+                      width: 13,
+                      height: 19,
+                      color: yellow,
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        )
+      ],
     );
   }
 
   Widget _buildTitle() {
-    return Positioned(
-      left: 70,
-      top: 11,
-      child: Text(
-        data?.datasource ?? '',
-        style: const TextStyle(
-          fontSize: 15,
-          color: yellow,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildTime() {
     String timestamp = "";
-    if (data?.timestamp?.platformPrecision == null ||
-        data!.timestamp!.platformPrecision! == "none") {
-      timestamp = TimeUnit.timestampFormatYMDHNS(data!.timestamp!.fetcher!);
-    } else if (data!.timestamp!.platformPrecision! == "second" ||
-        data!.timestamp!.platformPrecision! == "ms") {
-      timestamp = TimeUnit.timestampFormatYMDHNS(data!.timestamp!.platform!);
+    if (data.timestamp?.platformPrecision == null ||
+        data.timestamp!.platformPrecision! == "none") {
+      timestamp = TimeUnit.timestampFormatYMDHNS(data.timestamp!.fetcher!);
+    } else if (data.timestamp!.platformPrecision! == "second" ||
+        data.timestamp!.platformPrecision! == "ms") {
+      timestamp = TimeUnit.timestampFormatYMDHNS(data.timestamp!.platform!);
     } else {
-      timestamp = TimeUnit.timestampFormatYMD(data!.timestamp!.platform!);
+      timestamp = TimeUnit.timestampFormatYMD(data.timestamp!.platform!);
     }
-    return Positioned(
-      left: 70,
-      top: 32,
-      child: Text(
-        timestamp,
-        style: const TextStyle(
-          fontSize: 13,
-          color: gray_2,
-        ),
+    return Padding(
+      padding: const EdgeInsets.only(top: 5),
+      child: CookieTitle(
+        cookieTitle: data.datasource ?? '',
+        titleColor: yellow,
+        time: timestamp,
+        timeColor: gray_2,
+        icon: data.icon,
       ),
     );
   }
 
   Widget _buildShareIcon(BuildContext context) {
-    return Positioned(
-      right: 10,
-      top: 6,
-      child: IconButton(
-        iconSize: 18,
-        icon: const Icon(Icons.share),
-        onPressed: () {
-          Navigator.pushNamed(context, CookieWidgetToImage.routeName,
-              arguments: data);
-        },
-      ),
+    return IconButton(
+      iconSize: 18,
+      icon: const Icon(Icons.share),
+      color: Colors.black,
+      onPressed: () {
+        Navigator.pushNamed(context, CookieWidgetToImage.routeName,
+            arguments: data);
+      },
     );
   }
 
   Widget _buildContent(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(26, 73, 26, 0),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ExpandableText(
-            data?.defaultCookie?.text ?? '',
+            data.defaultCookie?.text ?? '',
             style: const TextStyle(
               color: gray_2,
               fontSize: 12,
             ),
           ),
-          data?.item?.retweeted != null
+          data.item?.retweeted != null
               ? Container(
                   padding: const EdgeInsets.all(5),
                   color: gray_4,
@@ -173,28 +148,28 @@ class MainListItemCard extends StatelessWidget {
                     children: [
                       ExpandableText(
                         "转发自：" +
-                            (data?.item?.retweeted?.authorName ?? "") +
+                            (data.item?.retweeted?.authorName ?? "") +
                             "\n" +
-                            (data?.item?.retweeted?.text ?? ''),
+                            (data.item?.retweeted?.text ?? ''),
                         style: const TextStyle(
                           color: gray_2,
                           fontSize: 12,
                         ),
                       ),
                       ImageWidget(
-                        data: data?.item?.retweeted?.images,
-                        sourceType: data?.source?.type,
+                        data: data.item?.retweeted?.images,
+                        sourceType: data.source?.type,
                         settingData: settingData,
                       )
                     ],
                   ))
               : Container(),
           ImageWidget(
-            data: data?.defaultCookie?.images,
-            sourceType: data?.source?.type,
+            data: data.defaultCookie?.images,
+            sourceType: data.source?.type,
             settingData: settingData,
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           )
         ],
