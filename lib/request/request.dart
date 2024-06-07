@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:dio/dio.dart';
-import 'package:dun_cookie_flutter/common/constant/main.dart';
 
+import '../manager/settingManager.dart';
 import 'config.dart';
 import 'respond.dart';
 
@@ -37,7 +37,8 @@ class UrlString {
   static String terraComicEpisodeUrl(String comicId) =>
       "/canteen/cookie/terraComic/episodeList?comic=$comicId";
 
-  static String get terraNewestEpisodeUrl => "/canteen/cookie/terraComic/newestEpisode";
+  static String get terraNewestEpisodeUrl =>
+      "/canteen/cookie/terraComic/newestEpisode";
 
   // 蜜饼工坊
   static String get testBakeryInfoUrl =>
@@ -76,7 +77,8 @@ class HttpClass {
 
   static final Dio dio = Dio(_baseOptions);
 
-  static Future _request(String url, {
+  static Future _request(
+    String url, {
     String method = "get",
     Map<String, dynamic>? params,
     data,
@@ -105,7 +107,7 @@ class HttpClass {
     }
     try {
       dio.options.headers.addAll({
-        "mob-id": Constant.mobRId,
+        "mob-id": SettingManager.getInstance().rid,
       });
       print("请求 ${dio.options.baseUrl}$url");
       Response response = await dio.request(
@@ -120,31 +122,15 @@ class HttpClass {
     }
   }
 
-  static InterceptorsWrapper _dInter() {
-    return InterceptorsWrapper(
-      onRequest: (options, handler) {
-        options.headers.addAll({"MobRId": Constant.mobRId});
-        return handler.next(options);
-      },
-      onResponse: (response, handler) {
-        return handler.next(response);
-      },
-      onError: (DioError err, handler) async {
-        return handler.next(err);
-      },
-    );
-  }
-
   static Future get(String url, {params, RequestType type = RequestType.temp}) {
     return _request(url, params: params, type: type);
   }
 
   static Future post(String url,
       {Map<String, dynamic>? params,
-        data,
-        RequestType type = RequestType.temp}) {
+      data,
+      RequestType type = RequestType.temp}) {
     return _request(url,
         method: "post", params: params, data: data, type: type);
   }
 }
-

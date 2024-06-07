@@ -25,6 +25,7 @@ class DashedCircleBorder extends StatelessWidget {
 
 class DashedCirclePainter extends CustomPainter {
   final Color borderColor;
+
   DashedCirclePainter({
     required this.borderColor,
   });
@@ -45,7 +46,10 @@ class DashedCirclePainter extends CustomPainter {
     for (double i = 0; i < 360; i += dashWidth + dashSpace) {
       double from = radians(i);
       dashPath.arcTo(
-          Rect.fromCircle(center: size.center(Offset.zero), radius: radius), from, step, true);
+          Rect.fromCircle(center: size.center(Offset.zero), radius: radius),
+          from,
+          step,
+          true);
     }
 
     canvas.drawPath(dashPath, borderPaint);

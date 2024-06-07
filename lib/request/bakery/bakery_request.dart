@@ -1,20 +1,24 @@
 import 'dart:convert';
-import 'package:dun_cookie_flutter/model/bakery_data.dart';
-import 'package:dun_cookie_flutter/request/request.dart';
 
+import '../../model/bakery/bakery_data.dart';
+import '../request.dart';
 import '../respond.dart';
 
-class BakeryRequest {
-
+class BakeryApi {
   /// 请求测试饼组数据
-  static Future<BakeryData> getTestBakeryInfo() async {
+  static Future<BakeryDataModel?> getTestBakeryInfo() async {
     //print("请求测试饼组数据");
     ResponseData response = await HttpClass.get(UrlString.testBakeryInfoUrl,
         type: RequestType.server);
     if (response.error) {
-      return BakeryData();
+      return null;
     } else {
-      return BakeryData.fromJson(response.data);
+      try {
+        return BakeryDataModel.fromJson(response.data);
+      } catch (e) {
+        print(e);
+        return null;
+      }
     }
   }
 
@@ -37,31 +41,41 @@ class BakeryRequest {
   }
 
   /// 根据ID请求饼组数据
-  static Future<BakeryData> getBakeryInfo(id) async {
+  static Future<BakeryDataModel?> getBakeryInfo(id) async {
     //print("根据ID请求饼组数据");
     ResponseData response = await HttpClass.get(
         UrlString.bakeryMansionInfoUrl(id),
         type: RequestType.server);
     if (response.error) {
-      return BakeryData();
+      return null;
     } else {
-      return BakeryData.fromJson(response.data['data']);
+      try {
+        return BakeryDataModel.fromJson(response.data);
+      } catch (e) {
+        print(e);
+        return null;
+      }
     }
   }
 
   /// 获取蜜饼工坊最近一次预测信息
-  static Future<BakeryRecentPredictModel?> getBakeryRecentPredict() async {
+  static Future<BakeryRecentPredictModel> getBakeryRecentPredict() async {
     //print("获取蜜饼工坊最近一次预测信息");
     ResponseData response = await HttpClass.get(
         UrlString.bakeryRecentPredictUrl,
         type: RequestType.server);
     if (response.error) {
-      return BakeryRecentPredictModel();
+      return BakeryRecentPredictModel.fromJson({});
     } else {
       if (response.data['data'] != null) {
-        return BakeryRecentPredictModel.fromJson(response.data['data']);
+        try {
+          return BakeryRecentPredictModel.fromJson(response.data['data']);
+        } catch (e) {
+          print(e);
+          return BakeryRecentPredictModel.fromJson({});
+        }
       } else {
-        return null;
+        return BakeryRecentPredictModel.fromJson({});
       }
     }
   }

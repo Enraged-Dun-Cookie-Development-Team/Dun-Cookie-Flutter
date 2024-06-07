@@ -7,5 +7,3 @@ class ResponseData {
 
   bool get isSuccess => msg == "";
 }
-
-
