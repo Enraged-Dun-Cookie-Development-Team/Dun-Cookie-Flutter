@@ -18,7 +18,7 @@ class RegisterLogic extends GetxController {
   onAgree() async {
     String rid = await _initMobPush();
     if (Platform.isAndroid) {
-      //await Get.dialog(ToSettingDialog(), barrierDismissible: false);
+      await Get.dialog(ToSettingDialog(), barrierDismissible: false);
     }
     DunToast.showInfo("与土豆服务器连接中……");
     bool result = await _registerMobPush(rid);

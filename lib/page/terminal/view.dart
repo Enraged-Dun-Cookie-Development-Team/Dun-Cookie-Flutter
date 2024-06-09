@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-
 import '../../common/dun_color.dart';
 import '../../common/time_unit.dart';
 import '../../model/ceobe/resource/resource_info.dart';
@@ -23,24 +22,22 @@ class TerminalPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
-      child: GetBuilder<TerminalLogic>(
-        id: state.rootGID,
-        builder: (logic) {
-          return ListView(
-            children: [
-              _buildTitleBar(),
-              _buildCakeWarehouse(state.cookieInfoCount),
-              _buildResourceWidget(state.resourceInfo.resources),
-              _buildActivityWidget(state.resourceInfo.countdown),
-              const SizedBox(
-                height: 60,
-              )
-            ],
-          );
-        },
-      ),
+    return GetBuilder<TerminalLogic>(
+      id: state.rootGID,
+      builder: (logic) {
+        return ListView(
+          padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+          children: [
+            _buildTitleBar(),
+            _buildCakeWarehouse(state.cookieInfoCount),
+            _buildResourceWidget(state.resourceInfo.resources),
+            _buildActivityWidget(state.resourceInfo.countdown),
+            const SizedBox(
+              height: 60,
+            )
+          ],
+        );
+      },
     );
   }
 

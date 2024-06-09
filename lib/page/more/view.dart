@@ -1,10 +1,8 @@
 import 'dart:math' as math;
 
-
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 
 import '../../common/dun_color.dart';
 import '../../common/time_unit.dart';
@@ -24,7 +22,7 @@ class MorePage extends StatelessWidget {
     return GetBuilder<MoreLogic>(
       builder: (logic) {
         return ListView(
-          padding: const EdgeInsets.fromLTRB(0, 14, 0, 150),
+          padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
           children: [
             _buildTitle(),
             _buildOfficialManga(),
@@ -47,37 +45,34 @@ class MorePage extends StatelessWidget {
   }
 
   Widget _buildTitle() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(14, 0, 14 - 7, 0),
-      child: SizedBox(
-        height: 42,
-        child: Stack(
-          children: [
-            Container(
-              width: double.infinity,
-              margin: const EdgeInsets.only(right: 7),
-              padding: const EdgeInsets.fromLTRB(12, 11, 0, 11),
-              color: DunColors.gray_1,
-              child: const Text(
-                "常用工具&推荐",
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  fontSize: 16,
-                  color: DunColors.white,
-                ),
+    return SizedBox(
+      height: 42,
+      child: Stack(
+        children: [
+          Container(
+            width: double.infinity,
+            margin: const EdgeInsets.only(right: 7),
+            padding: const EdgeInsets.fromLTRB(12, 11, 0, 11),
+            color: DunColors.gray_1,
+            child: const Text(
+              "常用工具&推荐",
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontSize: 16,
+                color: DunColors.white,
               ),
             ),
-            Align(
-              alignment: Alignment.bottomRight,
-              child: Container(
-                margin: const EdgeInsets.only(bottom: 6),
-                width: 17,
-                height: 10,
-                color: DunColors.yellow,
-              ),
+          ),
+          Align(
+            alignment: Alignment.bottomRight,
+            child: Container(
+              margin: const EdgeInsets.only(bottom: 6),
+              width: 17,
+              height: 10,
+              color: DunColors.yellow,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -93,7 +88,7 @@ class MorePage extends StatelessWidget {
       // 处理没有漫画的情况，不能跳转
       onTap: logic.onTapManga,
       child: Container(
-        margin: const EdgeInsets.fromLTRB(14, 14, 14, 0),
+        margin: const EdgeInsets.only(top: 14),
         height: 140,
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
@@ -225,8 +220,10 @@ class MorePage extends StatelessWidget {
                           child: Container(
                             decoration: const BoxDecoration(
                               border: Border(
-                                  top: BorderSide(width: 5, color: DunColors.gray_1),
-                                  right: BorderSide(width: 5, color: DunColors.gray_1)),
+                                  top: BorderSide(
+                                      width: 5, color: DunColors.gray_1),
+                                  right: BorderSide(
+                                      width: 5, color: DunColors.gray_1)),
                             ),
                           ),
                         )),
@@ -251,7 +248,7 @@ class MorePage extends StatelessWidget {
     return GestureDetector(
       onTap: logic.onTapHoneyCakeWorkshop,
       child: Container(
-        margin: const EdgeInsets.fromLTRB(14, 14, 14, 0),
+        margin: const EdgeInsets.only(top: 14),
         height: 90,
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
@@ -299,8 +296,8 @@ class MorePage extends StatelessWidget {
                             width: 18,
                           ),
                           Text(state.bakeryRecentPredict.daily.datetime,
-                              style:
-                                  const TextStyle(color: DunColors.gray_2, fontSize: 18)),
+                              style: const TextStyle(
+                                  color: DunColors.gray_2, fontSize: 18)),
                           const SizedBox(
                             width: 11,
                           ),
@@ -378,7 +375,7 @@ class MorePage extends StatelessWidget {
   Widget _buildToolLinks() {
     if (state.quickJumpList.isEmpty) return const SizedBox();
     return Padding(
-      padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+      padding: const EdgeInsets.only(top: 14),
       child: GridView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
@@ -404,7 +401,7 @@ class MorePage extends StatelessWidget {
   Widget _buildVideoRecommend() {
     if (state.videoList.isEmpty) return const SizedBox();
     return Padding(
-      padding: const EdgeInsets.fromLTRB(14, 14, 14, 0),
+      padding: const EdgeInsets.only(top: 14),
       child: Column(
         children: [
           Container(
@@ -436,15 +433,14 @@ class MorePage extends StatelessWidget {
             itemCount: state.videoList.length,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
-              mainAxisSpacing: 2,
-              crossAxisSpacing: 2,
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10,
             ),
             itemBuilder: (ctx, index) {
-              return Card(
-                  child: VideoLinkCard(
+              return VideoLinkCard(
                 state.videoList[index],
                 onTap: logic.onTapVideoLink,
-              ));
+              );
             },
             padding: EdgeInsets.zero,
           ),

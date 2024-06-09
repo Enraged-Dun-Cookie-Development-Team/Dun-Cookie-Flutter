@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../common/dun_color.dart';
-
 import '../../widget/cookie/container_with_label.dart';
 import '../../widget/cookie/cookie_card.dart';
 import 'logic.dart';
@@ -18,7 +17,7 @@ class CookiesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
+      padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
       child: Column(
         children: [
           _buildTitleBar(),

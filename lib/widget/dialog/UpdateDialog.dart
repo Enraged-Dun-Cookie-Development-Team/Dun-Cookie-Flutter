@@ -123,7 +123,8 @@ class UpdateDialog extends Dialog {
                             },
                             child: const Text(
                               '前往更新',
-                              style: TextStyle(fontSize: 17),
+                              style: TextStyle(
+                                  fontSize: 17, color: DunColors.DunColor),
                             ),
                           ),
                           const VerticalDivider(
@@ -136,7 +137,8 @@ class UpdateDialog extends Dialog {
                                 _cancelCallBack(context);
                               },
                               child: Text(isFocus ? "退出" : "暂不更新",
-                                  style: const TextStyle(fontSize: 17))),
+                                  style: const TextStyle(
+                                      fontSize: 17, color: DunColors.gray_1))),
                         ],
                       ),
                     )

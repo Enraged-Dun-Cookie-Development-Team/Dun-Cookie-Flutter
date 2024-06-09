@@ -6,7 +6,7 @@ class InfoDialog extends Dialog {
   final String? title;
   final String? content;
 
-  InfoDialog({this.title, this.content});
+  const InfoDialog({super.key, this.title, this.content});
 
   @override
   Widget build(BuildContext context) {
