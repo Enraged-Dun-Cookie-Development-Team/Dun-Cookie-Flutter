@@ -1,39 +1,34 @@
 buildscript {
-    ext.kotlin_version = "1.9.24"
+    ext.kotlin_version = "1.8.0"
     repositories {
-//        google()
-//        jcenter()
-        maven { allowInsecureProtocol = true
-            url 'https://maven.aliyun.com/repository/google' }
-        maven { allowInsecureProtocol = true
-            url 'https://maven.aliyun.com/repository/jcenter' }
-        maven { allowInsecureProtocol = true
-            url 'http://maven.aliyun.com/nexus/content/groups/public' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
         maven { url "https://mvn.mob.com/android" }
+//        google()
+//        mavenCentral()
     }
-
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.2.2'
+        classpath 'com.android.tools.build:gradle:7.4.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        // 集成MobPush
         classpath "com.mob.sdk:MobSDK2:+"
     }
 }
 
 allprojects {
     repositories {
-//        google()
-//        jcenter()
-        maven { allowInsecureProtocol = true
-            url 'https://maven.aliyun.com/repository/google' }
-        maven { allowInsecureProtocol = true
-            url 'https://maven.aliyun.com/repository/jcenter' }
-        maven { allowInsecureProtocol = true
-            url 'http://maven.aliyun.com/nexus/content/groups/public' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
         maven { url "https://mvn.mob.com/android" }
     }
 }
 
 rootProject.buildDir = '../build'
+
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }

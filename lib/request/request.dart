@@ -118,7 +118,7 @@ class HttpClass {
       );
       return ResponseData(error: false, data: response.data, msg: "");
     } on DioError catch (e) {
-      return ResponseData(error: true, data: e.response, msg: e.message);
+      return ResponseData(error: true, data: e.response, msg: e.message ?? '');
     }
   }
 

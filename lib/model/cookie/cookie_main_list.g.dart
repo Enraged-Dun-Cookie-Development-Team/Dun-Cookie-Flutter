@@ -45,8 +45,8 @@ CookieImage _$CookieImageFromJson(Map<String, dynamic> json) => CookieImage(
     );
 
 Item _$ItemFromJson(Map<String, dynamic> json) => Item(
-      id: json['id'] as String? ?? "",
-      url: json['url'] as String? ?? "",
+      id: json['id'] as String? ?? '',
+      url: json['url'] as String? ?? '',
       retweeted: fromJsonToRetweeted(json['retweeted']),
     );
 

@@ -2,7 +2,6 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 import '../../common/dun_color.dart';
 import '../../manager/settingManager.dart';
 import '../../model/config/config_datasource.dart';
@@ -14,13 +13,14 @@ class DatasourceItem extends StatelessWidget {
       onTapDatasource;
 
   DatasourceItem(
-      {super.key, required this.datasourceModel, required this.onTapDatasource})
+      {Key? key, required this.datasourceModel, required this.onTapDatasource})
       : isSelected = SettingManager.getInstance()
             .datasourceSetting
             .value
             .datasourceList
             .contains(datasourceModel.uniqueId)
-            .obs;
+            .obs,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {

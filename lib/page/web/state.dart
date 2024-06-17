@@ -4,7 +4,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 class WebState {
   String url = "";
   RxString title = "".obs;
-  WebViewController? webController;
+  WebViewController webController = WebViewController();
   bool finish = false;
 
   WebState() {

@@ -31,9 +31,9 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-
+    namespace "com.ceobecanteen.duncookie"
+    ndkVersion flutter.ndkVersion
     compileSdkVersion flutter.compileSdkVersion
-    buildToolsVersion '30.0.0'
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -44,10 +44,14 @@ android {
         jvmTarget = '1.8'
     }
 
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
     defaultConfig {
         applicationId "com.ceobecanteen.duncookie"
         minSdkVersion 21
-        targetSdkVersion 33
+        targetSdkVersion 34
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         multiDexEnabled true
@@ -64,9 +68,10 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.release
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'// 混淆文件
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+// 混淆文件
             ndk {
-                abiFilters "armeabi",  "arm64-v8a", "armeabi-v7a"
+                abiFilters "armeabi", "arm64-v8a", "armeabi-v7a"
             }
         }
         debug {
@@ -75,11 +80,10 @@ android {
             shrinkResources true //删除无用资源
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             ndk { //这里要加上，否则debug包会出问题,后面三个为可选，x86建议加上不然部分模拟器回报错
-                abiFilters "armeabi",  "armeabi-v7a" , "arm64-v8a" , "x86", "x86_64"
+                abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
             }
         }
     }
-    ndkVersion '22.1.7171670'
 }
 
 flutter {
@@ -89,7 +93,7 @@ flutter {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
 }
 
 apply plugin: 'com.mob.sdk'

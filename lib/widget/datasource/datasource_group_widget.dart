@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 import '../../common/dun_color.dart';
 import '../../model/config/config_datasource.dart';
 import 'datasource_item.dart';
@@ -12,10 +11,11 @@ class DataSourceGroupWidget extends StatelessWidget {
       onTapDatasource;
 
   const DataSourceGroupWidget(
-      {super.key,
+      {Key? key,
       required this.platform,
       required this.datasourceList,
-      required this.onTapDatasource});
+      required this.onTapDatasource})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

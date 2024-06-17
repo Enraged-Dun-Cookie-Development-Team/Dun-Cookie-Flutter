@@ -24,9 +24,9 @@ Resources fromJsonToResources(var json) {
 
 @JsonSerializable(createToJson: false)
 class Resources {
-  @JsonKey(name: 'start_time', defaultValue: '')
+  @JsonKey(name: 'start_time', defaultValue: '1970-01-01')
   final String startTime;
-  @JsonKey(name: 'over_time', defaultValue: '')
+  @JsonKey(name: 'over_time', defaultValue: '1970-01-01')
   final String overTime;
 
   Resources({required this.startTime, required this.overTime});

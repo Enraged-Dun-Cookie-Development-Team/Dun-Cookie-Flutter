@@ -3,16 +3,12 @@ import 'dart:io';
 import 'package:dun_cookie_flutter/common/dun_dialog.dart';
 import 'package:dun_cookie_flutter/manager/settingManager.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import '../common/dun_color.dart';
 import '../common/package_info.dart';
 import '../manager/dunPreference.dart';
 import '../model/ceobe/version/dun_app.dart';
 import '../request/ceobe/ceobe_request.dart';
-import '../widget/dialog/TapStarDialog.dart';
-import '../widget/dialog/UpdateDialog.dart';
-import '../widget/dialog/UpdateInfoDialog.dart';
 import 'cookies/view.dart';
 import 'more/view.dart';
 import 'terminal/view.dart';
@@ -34,9 +30,6 @@ class _RootPageState extends State<RootPage> {
     MorePage(),
     TerminalPage(),
   ];
-
-  // 控制器
-  final PageController _controller = PageController(initialPage: 0);
 
   @override
   void initState() {
@@ -87,10 +80,8 @@ class _RootPageState extends State<RootPage> {
               padding: EdgeInsets.only(top: paddingTop),
               child: Stack(
                 children: [
-                  PageView(
-                    physics: const NeverScrollableScrollPhysics(),
-                    // 设置控制器
-                    controller: _controller,
+                  IndexedStack(
+                    index: currentIndex,
                     // 设置子项集
                     children: pageList,
                   ),
@@ -122,7 +113,6 @@ class _RootPageState extends State<RootPage> {
                 child: GestureDetector(
                   onTap: () => setState(() {
                     currentIndex = 1;
-                    _controller.jumpToPage(currentIndex);
                   }),
                   child: Image.asset(
                     'assets/icon/more_list_icon.png',
@@ -138,7 +128,6 @@ class _RootPageState extends State<RootPage> {
                 child: GestureDetector(
                   onTap: () => setState(() {
                     currentIndex = 2;
-                    _controller.jumpToPage(currentIndex);
                   }),
                   child: Image.asset(
                     'assets/icon/terminal_page_icon.png',
@@ -160,7 +149,6 @@ class _RootPageState extends State<RootPage> {
             child: GestureDetector(
               onTap: () => setState(() {
                 currentIndex = 0;
-                _controller.jumpToPage(currentIndex);
               }),
               child: Container(
                 width: 83,

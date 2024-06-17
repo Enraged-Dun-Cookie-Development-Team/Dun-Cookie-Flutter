@@ -17,13 +17,13 @@ class ImageWidget extends StatelessWidget {
   final Function(CookieImage cookieImage, bool value)? onSelect;
 
   const ImageWidget({
-    super.key,
+    Key? key,
     required this.cookieImageList,
     required this.sourceType,
     this.onTap,
     this.onSelect,
     this.showCheck = false,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

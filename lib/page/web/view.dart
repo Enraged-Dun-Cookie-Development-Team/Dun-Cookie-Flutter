@@ -37,12 +37,8 @@ class WebPage extends StatelessWidget {
         title: Obx(() => Text(state.title.value)),
         systemOverlayStyle: SystemUiOverlayStyle.light,
       ),
-      body: WebView(
-        initialUrl: state.url,
-        navigationDelegate: logic.navigationDelegate,
-        javascriptMode: JavascriptMode.unrestricted,
-        onProgress: logic.onProgress,
-        onWebViewCreated: logic.onWebViewCreated,
+      body: WebViewWidget(
+        controller: state.webController,
       ),
     );
   }

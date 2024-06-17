@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
@@ -37,32 +36,41 @@ class CookieShareLogic extends GetxController {
   Future<void> onTapSave() async {
     state.type.value = CookieContentType.image;
     await Future.delayed(const Duration(milliseconds: 500));
-    Uint8List? pngBytes = await _generateImageData();
-    if (pngBytes != null) {
-      final result = await ImageGallerySaver.saveImage(pngBytes,
-          name: "ceobecanteen_" +
-              DateTime.now().millisecondsSinceEpoch.toString());
-      if (result["isSuccess"]) {
-        DunToast.showSuccess("图片已保存");
+    try {
+      Uint8List? pngBytes = await _generateImageData();
+      if (pngBytes != null) {
+        final result = await ImageGallerySaver.saveImage(pngBytes,
+            name: "ceobecanteen_${DateTime.now().millisecondsSinceEpoch}");
+        if (result["isSuccess"]) {
+          DunToast.showSuccess("图片已保存");
+        }
+        Future.delayed(const Duration(seconds: 1)).then((value) => Get.back());
+      } else {
+        DunToast.showError('图片生成失败');
       }
-      Future.delayed(const Duration(seconds: 1)).then((value) => Get.back());
+    } catch (e) {
+      DunToast.showError('图片保存失败');
     }
   }
 
   Future<void> onTapShare() async {
     state.type.value = CookieContentType.image;
     await Future.delayed(const Duration(milliseconds: 500));
-    Uint8List? pngBytes = await _generateImageData();
-    if (pngBytes != null) {
-      final document = await getApplicationDocumentsDirectory();
-      final dir = Directory(document.path +
-          "/ceobecanteen_" +
-          DateTime.now().millisecondsSinceEpoch.toString() +
-          '.png');
-      final imageFile = File(dir.path);
-      await imageFile.writeAsBytes(pngBytes);
-      Share.shareFiles([imageFile.path]);
-      Future.delayed(const Duration(seconds: 1)).then((value) => Get.back());
+    try {
+      Uint8List? pngBytes = await _generateImageData();
+      if (pngBytes != null) {
+        final document = await getApplicationDocumentsDirectory();
+        final dir = Directory(
+            "${document.path}/ceobecanteen_${DateTime.now().millisecondsSinceEpoch.toString()}.png");
+        final imageFile = File(dir.path);
+        await imageFile.writeAsBytes(pngBytes);
+        Share.shareFiles([imageFile.path]);
+        Future.delayed(const Duration(seconds: 1)).then((value) => Get.back());
+      } else {
+        DunToast.showError('图片生成失败');
+      }
+    } catch (e) {
+      DunToast.showError('图片分享失败');
     }
   }
 
@@ -84,6 +92,7 @@ class CookieShareLogic extends GetxController {
         return imageData;
       }
     }
+    DunToast.showError('图片生成失败');
     return null;
   }
 

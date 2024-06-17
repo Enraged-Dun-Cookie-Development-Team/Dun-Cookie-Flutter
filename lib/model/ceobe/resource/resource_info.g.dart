@@ -16,8 +16,8 @@ ResourceInfoModel _$ResourceInfoModelFromJson(Map<String, dynamic> json) =>
     );
 
 Resources _$ResourcesFromJson(Map<String, dynamic> json) => Resources(
-      startTime: json['start_time'] as String? ?? '',
-      overTime: json['over_time'] as String? ?? '',
+      startTime: json['start_time'] as String? ?? '1970-01-01',
+      overTime: json['over_time'] as String? ?? '1970-01-01',
     );
 
 Countdown _$CountdownFromJson(Map<String, dynamic> json) => Countdown(

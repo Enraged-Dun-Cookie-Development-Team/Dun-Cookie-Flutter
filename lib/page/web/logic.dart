@@ -14,6 +14,13 @@ class WebLogic extends GetxController {
   void onInit() {
     super.onInit();
     state.url = Get.arguments;
+    state.webController = WebViewController()
+      ..loadRequest(Uri.parse(state.url))
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setNavigationDelegate(NavigationDelegate(
+        onNavigationRequest: navigationDelegate,
+        onProgress: onProgress,
+      ));
   }
 
   FutureOr<NavigationDecision> navigationDelegate(NavigationRequest request) {
@@ -29,14 +36,10 @@ class WebLogic extends GetxController {
     return NavigationDecision.navigate;
   }
 
-  void onWebViewCreated(WebViewController controller) {
-    state.webController = controller;
-  }
-
   Future<void> onProgress(int progress) async {
     if (progress == 100) {
       await Future.delayed(const Duration(milliseconds: 500));
-      state.title.value = await state.webController?.getTitle() ?? '';
+      state.title.value = await state.webController.getTitle() ?? '';
     } else {
       state.title.value = "小刻努力奔跑中……${progress.toString()}%";
     }

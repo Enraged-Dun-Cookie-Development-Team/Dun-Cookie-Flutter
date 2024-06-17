@@ -101,18 +101,14 @@ class CookiesLogic extends GetxController {
 
   void cancelSearch() {
     state.searchStatue = false;
-    state.scrollController
-        .animateTo(0,
-            duration: const Duration(milliseconds: 1), curve: Curves.linear)
-        .then(
-          (value) => loadData(refresh: true).then(
-            (value) {
-              state.searchCookieList.clear();
-              state.searchNextPageId = null;
-              state.lastSearchContent = '';
-            },
-          ),
-        );
+    if (state.searchCookieList.isNotEmpty) {
+      state.scrollController.jumpTo(0);
+    }
+    loadData(refresh: true).then((value) {
+      state.searchCookieList.clear();
+      state.searchNextPageId = null;
+      state.lastSearchContent = '';
+    });
   }
 
   void handleSearch() {
@@ -131,7 +127,7 @@ class CookiesLogic extends GetxController {
 
   onTapShare(Cookie cookie) {
     //todo 分享页跳转
-    Get.toNamed(DunRouter.share,arguments: cookie);
+    Get.toNamed(DunRouter.share, arguments: cookie);
   }
 
   onTapCard(Cookie cookie) {
