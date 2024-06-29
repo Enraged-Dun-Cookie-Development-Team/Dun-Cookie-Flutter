@@ -8,9 +8,14 @@ import 'logic.dart';
 
 
 
-class CookiesPage extends StatelessWidget {
-  CookiesPage({Key? key}) : super(key: key);
+class CookiesPage extends StatefulWidget {
+  const CookiesPage({super.key});
 
+  @override
+  State<CookiesPage> createState() => _CookiesPageState();
+}
+
+class _CookiesPageState extends State<CookiesPage> {
   final logic = Get.put(CookiesLogic());
   final state = Get.find<CookiesLogic>().state;
 

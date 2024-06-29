@@ -14,9 +14,14 @@ import '../../widget/terminal/item_leading_widget.dart';
 import '../../widget/terminal/today_rotation.dart';
 import 'logic.dart';
 
-class TerminalPage extends StatelessWidget {
-  TerminalPage({Key? key}) : super(key: key);
+class TerminalPage extends StatefulWidget {
+  const TerminalPage({super.key});
 
+  @override
+  State<TerminalPage> createState() => _TerminalPageState();
+}
+
+class _TerminalPageState extends State<TerminalPage> {
   final logic = Get.put(TerminalLogic());
   final state = Get.find<TerminalLogic>().state;
 

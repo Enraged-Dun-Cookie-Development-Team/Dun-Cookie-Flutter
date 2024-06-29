@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dun_cookie_flutter/common/dun_dialog.dart';
 import 'package:dun_cookie_flutter/manager/settingManager.dart';
+import 'package:dun_cookie_flutter/widget/lazy_indexed_stack.dart';
 import 'package:flutter/material.dart';
 
 import '../common/dun_color.dart';
@@ -14,7 +15,7 @@ import 'more/view.dart';
 import 'terminal/view.dart';
 
 class RootPage extends StatefulWidget {
-  const RootPage({Key? key}) : super(key: key);
+  const RootPage({super.key});
 
   @override
   State<StatefulWidget> createState() => _RootPageState();
@@ -26,9 +27,9 @@ class _RootPageState extends State<RootPage> {
 
   //主页
   List<Widget> pageList = [
-    CookiesPage(),
-    MorePage(),
-    TerminalPage(),
+    const CookiesPage(),
+    const MorePage(),
+    const TerminalPage(),
   ];
 
   @override
@@ -80,7 +81,7 @@ class _RootPageState extends State<RootPage> {
               padding: EdgeInsets.only(top: paddingTop),
               child: Stack(
                 children: [
-                  IndexedStack(
+                  LazyIndexedStack(
                     index: currentIndex,
                     // 设置子项集
                     children: pageList,

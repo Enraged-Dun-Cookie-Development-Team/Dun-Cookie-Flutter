@@ -11,9 +11,14 @@ import '../../widget/more/tool_link.dart';
 import '../../widget/more/video_link.dart';
 import 'logic.dart';
 
-class MorePage extends StatelessWidget {
-  MorePage({Key? key}) : super(key: key);
+class MorePage extends StatefulWidget {
+  const MorePage({super.key});
 
+  @override
+  State<MorePage> createState() => _MorePageState();
+}
+
+class _MorePageState extends State<MorePage> {
   final logic = Get.put(MoreLogic());
   final state = Get.find<MoreLogic>().state;
 
