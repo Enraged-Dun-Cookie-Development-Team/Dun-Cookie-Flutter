@@ -5,23 +5,31 @@ pluginManagement {
         def flutterSdkPath = properties.getProperty("flutter.sdk")
         assert flutterSdkPath != null, "flutter.sdk not set in local.properties"
         return flutterSdkPath
-    }()
+    }
+    settings.ext.flutterSdkPath = flutterSdkPath()
 
-    includeBuild("$flutterSdkPath/packages/flutter_tools/gradle")
+    includeBuild("${settings.ext.flutterSdkPath}/packages/flutter_tools/gradle")
 
     repositories {
-        maven{
-            url 'https://maven.aliyun.com/repository/gradle-plugin'
+        maven {
+            allowInsecureProtocol = true
+            url 'https://maven.aliyun.com/repository/google'
         }
-        google()
-        mavenCentral()
-        gradlePluginPortal()
+        maven {
+            allowInsecureProtocol = true
+            url 'https://maven.aliyun.com/repository/jcenter'
+        }
+        maven {
+            allowInsecureProtocol = true
+            url 'http://maven.aliyun.com/nexus/content/groups/public'
+        }
+        maven { url "https://mvn.mob.com/android" }
     }
 }
 
 plugins {
     id "dev.flutter.flutter-plugin-loader" version "1.0.0"
-    id "com.android.application" version "7.3.0" apply false
+    id "com.android.application" version '7.4.2' apply false
     id "org.jetbrains.kotlin.android" version "1.7.10" apply false
 }
 
