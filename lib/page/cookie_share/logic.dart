@@ -49,7 +49,7 @@ class CookieShareLogic extends GetxController {
         DunToast.showError('图片生成失败');
       }
     } catch (e) {
-      DunToast.showError('图片保存失败');
+      DunToast.showError('图片保存失败,${e.toString()}');
     }
   }
 
@@ -70,7 +70,7 @@ class CookieShareLogic extends GetxController {
         DunToast.showError('图片生成失败');
       }
     } catch (e) {
-      DunToast.showError('图片分享失败');
+      DunToast.showError('图片分享失败,${e.toString()}');
     }
   }
 
@@ -78,12 +78,6 @@ class CookieShareLogic extends GetxController {
     //根据Globalkey获取RenderObject对象
     final boundary = state.boundaryKey.currentContext?.findRenderObject();
     if (boundary != null && boundary is RenderRepaintBoundary) {
-      if (boundary.debugNeedsPaint) {
-        // 延时一定时间后，boundary.debugNeedsPaint 会变为 false，然后可以正常执行截图的功能
-        await Future.delayed(const Duration(milliseconds: 20));
-        // 重新调用方法
-        return _generateImageData();
-      }
       double dpr = window.devicePixelRatio;
       final image = await boundary.toImage(pixelRatio: dpr);
       ByteData? byteData = await image.toByteData(format: ImageByteFormat.png);
