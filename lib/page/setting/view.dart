@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
 
 import '../../common/dun_color.dart';
 import 'logic.dart';
@@ -34,7 +34,7 @@ class SettingPage extends StatelessWidget {
               titleSpacing: 0,
               title: const Text("设置&其他")),
           body: Padding(
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 5),
+            padding: REdgeInsets.fromLTRB(16, 16, 16, 5),
             child: Column(
               children: [
                 Expanded(
@@ -52,7 +52,7 @@ class SettingPage extends StatelessWidget {
                           ],
                           color: DunColors.white,
                         ),
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        padding: REdgeInsets.symmetric(horizontal: 12),
                         child: Column(
                           children: [
                             _buildCakeSource(),
@@ -73,7 +73,7 @@ class SettingPage extends StatelessWidget {
                           ],
                           color: DunColors.white,
                         ),
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
+                        padding: REdgeInsets.symmetric(horizontal: 12),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [

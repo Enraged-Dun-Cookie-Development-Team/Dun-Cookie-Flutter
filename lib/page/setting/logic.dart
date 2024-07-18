@@ -70,12 +70,12 @@ class SettingLogic extends GetxController {
   }
 
   void onTapMobId() {
-    Clipboard.setData(ClipboardData(text: state.mobRId.value ?? '--'));
+    Clipboard.setData(ClipboardData(text: state.mobRId.value));
     DunToast.showSuccess("已复制");
   }
 
   void onTapRecord() {
-    Clipboard.setData(ClipboardData(text: state.record ?? '--'));
+    Clipboard.setData(ClipboardData(text: state.record));
     DunJump.openWebPage('https://beian.miit.gov.cn/');
   }
 }

@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 
@@ -82,6 +83,7 @@ class _ViewImageExtendedImageState extends State<ViewImageExtendedImage>
             }
           },
           child: Container(
+            padding: REdgeInsets.all(5.0),
             child: ExtendedImage.network(
               item,
               fit: BoxFit.contain,
@@ -116,7 +118,6 @@ class _ViewImageExtendedImageState extends State<ViewImageExtendedImage>
                 }
               },
             ),
-            padding: const EdgeInsets.all(5.0),
           ),
         );
       },
@@ -134,7 +135,7 @@ class _ViewImageExtendedImageState extends State<ViewImageExtendedImage>
       right: 0,
       child: Container(
         color: Colors.black26,
-        padding: const EdgeInsets.only(left: 10, right: 10),
+        padding: REdgeInsets.only(left: 10, right: 10),
         height: 20,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

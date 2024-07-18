@@ -4,6 +4,7 @@ import 'package:dun_cookie_flutter/common/dun_dialog.dart';
 import 'package:dun_cookie_flutter/manager/settingManager.dart';
 import 'package:dun_cookie_flutter/widget/lazy_indexed_stack.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../common/dun_color.dart';
 import '../common/package_info.dart';
@@ -154,7 +155,7 @@ class _RootPageState extends State<RootPage> {
               child: Container(
                 width: 83,
                 height: 83,
-                margin: const EdgeInsets.only(bottom: 5),
+                margin: REdgeInsets.only(bottom: 5),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(50),
                   border: Border.all(

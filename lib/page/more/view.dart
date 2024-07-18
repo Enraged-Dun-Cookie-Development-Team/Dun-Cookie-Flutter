@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../common/dun_color.dart';
@@ -27,7 +28,7 @@ class _MorePageState extends State<MorePage> {
     return GetBuilder<MoreLogic>(
       builder: (logic) {
         return ListView(
-          padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+          padding: REdgeInsets.fromLTRB(12, 0, 12, 12),
           children: [
             _buildTitle(),
             _buildOfficialManga(),
@@ -36,7 +37,7 @@ class _MorePageState extends State<MorePage> {
             _buildVideoRecommend(),
             const Center(
               child: Padding(
-                padding: EdgeInsets.only(top: 20),
+                padding: EdgeInsets.only(top: 10, bottom: 80),
                 child: Text(
                   "没有更多了",
                   style: TextStyle(color: DunColors.gray_1),
@@ -56,8 +57,8 @@ class _MorePageState extends State<MorePage> {
         children: [
           Container(
             width: double.infinity,
-            margin: const EdgeInsets.only(right: 7),
-            padding: const EdgeInsets.fromLTRB(12, 11, 0, 11),
+            margin: REdgeInsets.only(right: 7),
+            padding: REdgeInsets.fromLTRB(12, 11, 0, 11),
             color: DunColors.gray_1,
             child: const Text(
               "常用工具&推荐",
@@ -71,7 +72,7 @@ class _MorePageState extends State<MorePage> {
           Align(
             alignment: Alignment.bottomRight,
             child: Container(
-              margin: const EdgeInsets.only(bottom: 6),
+              margin: REdgeInsets.only(bottom: 6),
               width: 17,
               height: 10,
               color: DunColors.yellow,
@@ -93,7 +94,7 @@ class _MorePageState extends State<MorePage> {
       // 处理没有漫画的情况，不能跳转
       onTap: logic.onTapManga,
       child: Container(
-        margin: const EdgeInsets.only(top: 14),
+        margin: REdgeInsets.only(top: 14),
         height: 140,
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
@@ -114,6 +115,12 @@ class _MorePageState extends State<MorePage> {
                 ),
                 Expanded(
                   child: Container(
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(5),
+                          bottomRight: Radius.circular(5)),
+                      color: DunColors.white,
+                    ),
                     child: state.terraRecentEpisode.updatedTime != 0
                         ? Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -148,9 +155,9 @@ class _MorePageState extends State<MorePage> {
                                       height: 220,
                                       image: AssetImage(
                                           "assets/image/load/loading.gif")),
-                              SizedBox(width: 13),
+                              const SizedBox(width: 13),
                               const DashedLineVerticalWidget(height: 100),
-                              SizedBox(width: 13),
+                              const SizedBox(width: 13),
                               Expanded(
                                 child: Column(
                                   children: [
@@ -162,14 +169,10 @@ class _MorePageState extends State<MorePage> {
                                     ]),
                                     const SizedBox(height: 8),
                                     Container(
-                                      margin: const EdgeInsets.fromLTRB(
-                                          11, 0, 0, 0),
+                                      margin: REdgeInsets.fromLTRB(11, 0, 0, 0),
                                       alignment: Alignment.centerLeft,
                                       child: Text(
-                                        state.terraRecentEpisode.title +
-                                            ":" +
-                                            state.terraRecentEpisode
-                                                .episodeShortTitle,
+                                        "${state.terraRecentEpisode.title}:${state.terraRecentEpisode.episodeShortTitle}",
                                         style: const TextStyle(fontSize: 12),
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
@@ -183,8 +186,7 @@ class _MorePageState extends State<MorePage> {
                                     ]),
                                     const SizedBox(height: 8),
                                     Container(
-                                      margin: const EdgeInsets.fromLTRB(
-                                          11, 0, 0, 0),
+                                      margin: REdgeInsets.fromLTRB(11, 0, 0, 0),
                                       alignment: Alignment.centerLeft,
                                       child: Text(
                                           TimeUnit.timestampFormatYMD(state
@@ -197,18 +199,12 @@ class _MorePageState extends State<MorePage> {
                             ],
                           )
                         : const Center(child: Text("暂时还没有漫画更新")),
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(5),
-                          bottomRight: Radius.circular(5)),
-                      color: DunColors.white,
-                    ),
                   ),
                 ),
               ],
             ),
             Container(
-              margin: const EdgeInsets.fromLTRB(15, 6, 0, 0),
+              margin: REdgeInsets.fromLTRB(15, 6, 0, 0),
               width: 13,
               height: 8,
               color: DunColors.blue,
@@ -216,7 +212,7 @@ class _MorePageState extends State<MorePage> {
             state.terraRecentEpisode.updatedTime != 0
                 ? Container(
                     alignment: Alignment.bottomRight,
-                    padding: const EdgeInsets.fromLTRB(0, 0, 12, 10),
+                    padding: REdgeInsets.fromLTRB(0, 0, 12, 10),
                     child: SizedBox(
                         width: 16,
                         height: 16,
@@ -242,7 +238,7 @@ class _MorePageState extends State<MorePage> {
 
   Widget _buildBlueSquare() {
     return Container(
-      margin: const EdgeInsets.fromLTRB(0, 0, 3, 0),
+      margin: REdgeInsets.fromLTRB(0, 0, 3, 0),
       width: 9,
       height: 9,
       color: DunColors.blue,
@@ -253,7 +249,7 @@ class _MorePageState extends State<MorePage> {
     return GestureDetector(
       onTap: logic.onTapHoneyCakeWorkshop,
       child: Container(
-        margin: const EdgeInsets.only(top: 14),
+        margin: REdgeInsets.only(top: 14),
         height: 90,
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
@@ -264,7 +260,7 @@ class _MorePageState extends State<MorePage> {
           children: [
             Container(
               height: 21,
-              padding: const EdgeInsets.fromLTRB(10, 2, 8, 2),
+              padding: REdgeInsets.fromLTRB(10, 2, 8, 2),
               color: DunColors.gray_1,
               child: Row(
                 children: [
@@ -286,6 +282,12 @@ class _MorePageState extends State<MorePage> {
             ),
             Expanded(
               child: Container(
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(9),
+                      bottomRight: Radius.circular(9)),
+                  color: DunColors.white,
+                ),
                 child: state.bakeryRecentPredict.id != ''
                     ? Row(
                         children: [
@@ -308,6 +310,7 @@ class _MorePageState extends State<MorePage> {
                           ),
                           Expanded(
                               child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const SizedBox(
                                 height: 8,
@@ -321,7 +324,7 @@ class _MorePageState extends State<MorePage> {
                                 height: 5,
                               ),
                               Container(
-                                padding: const EdgeInsets.fromLTRB(0, 0, 17, 0),
+                                padding: REdgeInsets.fromLTRB(0, 0, 17, 0),
                                 child: const DashedLineHorizontalWidget(
                                   width: 10000,
                                 ),
@@ -358,17 +361,10 @@ class _MorePageState extends State<MorePage> {
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ],
-                            crossAxisAlignment: CrossAxisAlignment.start,
                           ))
                         ],
                       )
                     : const Center(child: Text("饼学大厦还未有预测")),
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(9),
-                      bottomRight: Radius.circular(9)),
-                  color: DunColors.white,
-                ),
               ),
             ),
           ],
@@ -380,7 +376,7 @@ class _MorePageState extends State<MorePage> {
   Widget _buildToolLinks() {
     if (state.quickJumpList.isEmpty) return const SizedBox();
     return Padding(
-      padding: const EdgeInsets.only(top: 14),
+      padding: REdgeInsets.only(top: 14),
       child: GridView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
@@ -406,12 +402,12 @@ class _MorePageState extends State<MorePage> {
   Widget _buildVideoRecommend() {
     if (state.videoList.isEmpty) return const SizedBox();
     return Padding(
-      padding: const EdgeInsets.only(top: 14),
+      padding: REdgeInsets.only(top: 14),
       child: Column(
         children: [
           Container(
             height: 21,
-            padding: const EdgeInsets.fromLTRB(10, 2, 8, 2),
+            padding: REdgeInsets.fromLTRB(10, 2, 8, 2),
             color: DunColors.gray_1,
             child: Row(
               children: [

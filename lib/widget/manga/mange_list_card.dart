@@ -2,13 +2,12 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-
 import '../../common/dun_color.dart';
-import '../dun_tag.dart';
 import '../../common/time_unit.dart';
 import '../../model/manga/terra_comic.dart';
 import '../../model/manga/terra_comic_episode.dart';
 import '../../request/manga/manga_request.dart';
+import '../dun_tag.dart';
 
 class MangaListCard extends StatefulWidget {
   const MangaListCard({
@@ -137,10 +136,10 @@ class _MangaListCardState extends State<MangaListCard> {
                                 widget.onTapCard(episodes[index]);
                               },
                               child: Container(
-                                  padding: const EdgeInsets.symmetric(
+                                  padding: REdgeInsets.symmetric(
                                       vertical: 2, horizontal: 8),
-                                  margin: const EdgeInsets.only(
-                                      bottom: 10, right: 10),
+                                  margin:
+                                      REdgeInsets.only(bottom: 10, right: 10),
                                   decoration: BoxDecoration(
                                       border:
                                           Border.all(color: DunColors.DunColor),

@@ -1,5 +1,6 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../common/dun_color.dart';
@@ -25,7 +26,7 @@ class DatasourceItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(16, 8, 8, 8),
+      padding: REdgeInsets.fromLTRB(16, 8, 8, 8),
       color: DunColors.white,
       child: Row(
         children: [

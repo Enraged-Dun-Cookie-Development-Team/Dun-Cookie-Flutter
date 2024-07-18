@@ -31,7 +31,7 @@ class _TerminalPageState extends State<TerminalPage> {
       id: state.rootGID,
       builder: (logic) {
         return ListView(
-          padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+          padding: REdgeInsets.fromLTRB(12, 0, 12, 12),
           children: [
             _buildTitleBar(),
             _buildCakeWarehouse(state.cookieInfoCount),
@@ -59,7 +59,7 @@ class _TerminalPageState extends State<TerminalPage> {
                 children: [
                   Container(
                     height: double.infinity,
-                    padding: const EdgeInsets.only(
+                    padding: REdgeInsets.only(
                         top: 10, bottom: 10, left: 15, right: 25),
                     color: DunColors.gray_1,
                     child: const Row(
@@ -118,14 +118,14 @@ class _TerminalPageState extends State<TerminalPage> {
 
   _buildCakeWarehouse(CookieInfoCountModel cookieInfoCount) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 15),
+      padding: REdgeInsets.symmetric(vertical: 15),
       child: SizedBox(
         height: 240,
         child: Column(
           children: [
             Container(
               height: 23,
-              padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+              padding: REdgeInsets.symmetric(vertical: 4, horizontal: 8),
               color: DunColors.gray_1,
               child: Row(
                 children: [
@@ -200,7 +200,7 @@ class _TerminalPageState extends State<TerminalPage> {
                               const DashedLineHorizontalWidget(width: 50),
                               const SizedBox(width: 6),
                               Text(
-                                cookieInfoCount.skinCount.toString() ?? "0",
+                                cookieInfoCount.skinCount.toString(),
                                 style: const TextStyle(
                                   fontSize: 12,
                                   color: DunColors.gray_1,
@@ -343,7 +343,7 @@ class _TerminalPageState extends State<TerminalPage> {
     DateTime dt = TimeUnit.utcChinaNow();
     int weekDay = dt.weekday;
     return Padding(
-      padding: const EdgeInsets.only(bottom: 15),
+      padding: REdgeInsets.only(bottom: 15),
       child: ItemCard(
           leading: ItemLeadingWidget(
             columnText: "WEEK",
@@ -364,7 +364,7 @@ class _TerminalPageState extends State<TerminalPage> {
           TimeUnit.utcChinaNow(), countdown.startTime, countdown.overTime))) {
         activityWidgetList.add(
           Padding(
-            padding: const EdgeInsets.only(bottom: 15),
+            padding: REdgeInsets.only(bottom: 15),
             child: ItemCard(
               height: countdown.countdownType == "activity" ? 120 : 97,
               leading: ItemLeadingWidget(
@@ -402,7 +402,7 @@ class _TerminalPageState extends State<TerminalPage> {
               ),
               content: Container(
                 color: DunColors.white,
-                padding: const EdgeInsets.all(6),
+                padding: REdgeInsets.all(6),
                 child: Center(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,

@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/widgets.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../common/dun_color.dart';
 
@@ -31,7 +32,7 @@ class ContainerWithLabel extends StatelessWidget {
           child: Stack(
             children: [
               Container(
-                margin: const EdgeInsets.only(right: 7),
+                margin: REdgeInsets.only(right: 7),
                 width: containerWidth,
                 color: containerBgColor,
                 child: Center(
@@ -47,7 +48,7 @@ class ContainerWithLabel extends StatelessWidget {
               Align(
                 alignment: Alignment.bottomRight,
                 child: Container(
-                  margin: const EdgeInsets.only(bottom: 6),
+                  margin: REdgeInsets.only(bottom: 6),
                   width: 17,
                   height: 10,
                   color: labelColor,

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:extended_image/extended_image.dart';
 import 'package:fk_user_agent/fk_user_agent.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../common/dun_color.dart';
 import '../../manager/settingManager.dart';
@@ -35,7 +36,7 @@ class ImageWidget extends StatelessWidget {
       child: cookieImageList.length > 1
           ? _multiImage(context)
           : _oneImage(context),
-      padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+      padding: REdgeInsets.fromLTRB(0, 10, 0, 0),
     );
   }
 
@@ -170,7 +171,7 @@ class ImageWidget extends StatelessWidget {
                       right: 0,
                       bottom: 0,
                       child: Container(
-                        padding: const EdgeInsets.all(4),
+                        padding: REdgeInsets.all(4),
                         color: Colors.white,
                         child: Text(
                           "${((progress) * 100).toInt()}%",

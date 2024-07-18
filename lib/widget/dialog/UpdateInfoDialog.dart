@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../common/dun_color.dart';
 
@@ -24,7 +25,7 @@ class UpdateInfoDialog extends Dialog {
   Widget _buildVersionUpdateDialog(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.85,
-      padding: const EdgeInsets.only(top: 8, bottom: 15),
+      padding: REdgeInsets.only(top: 8, bottom: 15),
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -48,7 +49,7 @@ class UpdateInfoDialog extends Dialog {
               width: MediaQuery.of(context).size.width * 0.85,
               constraints: BoxConstraints(
                   maxHeight: MediaQuery.of(context).size.width * 0.5),
-              padding: const EdgeInsets.only(top: 8, left: 15, right: 5),
+              padding: REdgeInsets.only(top: 8, left: 15, right: 5),
               child: Scrollbar(
                 thumbVisibility: false,
                 child: SingleChildScrollView(

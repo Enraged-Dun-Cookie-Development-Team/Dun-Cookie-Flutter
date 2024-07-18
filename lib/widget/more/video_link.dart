@@ -1,5 +1,6 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../common/dun_color.dart';
 import '../../model/ceobe/video/video.dart';
@@ -8,7 +9,7 @@ class VideoLinkCard extends StatelessWidget {
   VideoModel linkInfo;
   void Function(VideoModel videoModel)? onTap;
 
-  VideoLinkCard(this.linkInfo, {Key? key, this.onTap}) : super(key: key);
+  VideoLinkCard(this.linkInfo, {super.key, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,7 @@ class VideoLinkCard extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: REdgeInsets.all(8.0),
               child: Text(
                 linkInfo.title,
                 overflow: TextOverflow.ellipsis,
@@ -39,7 +40,7 @@ class VideoLinkCard extends StatelessWidget {
             ),
             Container(
               alignment: Alignment.bottomRight,
-              padding: const EdgeInsets.only(right: 8, bottom: 3),
+              padding: REdgeInsets.only(right: 8, bottom: 3),
               child: Text(
                 linkInfo.author,
                 maxLines: 1,

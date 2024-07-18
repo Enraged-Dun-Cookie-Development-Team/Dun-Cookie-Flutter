@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
 
 import '../../common/dun_color.dart';
 import '../../widget/datasource/datasource_group_widget.dart';
@@ -78,7 +78,7 @@ class DatasourcePage extends StatelessWidget {
       onTap: logic.onTapSave,
       child: Container(
         color: DunColors.white,
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+        padding: REdgeInsets.symmetric(vertical: 8, horizontal: 12),
         child: Container(
           height: 40,
           decoration: BoxDecoration(

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../common/dun_color.dart';
-import '../../common/time_unit.dart';
 import '../../model/cookie/cookie_main_list.dart';
+import '../dashed_line_widget.dart';
 import 'cookie_content.dart';
 import 'cookie_title.dart';
-import '../dashed_line_widget.dart';
 
 class CookieCard extends StatelessWidget {
   final Cookie data;
@@ -28,7 +28,7 @@ class CookieCard extends StatelessWidget {
       },
       //onTapCard(context, data.source!.type, data.item!.id, data.item!.url),
       child: Container(
-        margin: const EdgeInsets.only(top: 10),
+        margin: REdgeInsets.only(top: 10),
         color: Colors.white,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,7 +44,7 @@ class CookieCard extends StatelessWidget {
       children: [
         /// 左上灰色label
         Container(
-          margin: const EdgeInsets.only(bottom: 1, right: 10),
+          margin: REdgeInsets.only(bottom: 1, right: 10),
           width: 15,
           height: 60,
           color: DunColors.gray_1,
@@ -58,7 +58,7 @@ class CookieCard extends StatelessWidget {
                 children: [
                   _buildTitle(),
                   Padding(
-                    padding: const EdgeInsets.only(right: 5),
+                    padding: REdgeInsets.only(right: 5),
                     child: _buildShareIcon(context),
                   )
                 ],
@@ -75,7 +75,7 @@ class CookieCard extends StatelessWidget {
 
                   /// 右上黄色label
                   Padding(
-                    padding: const EdgeInsets.only(right: 15),
+                    padding: REdgeInsets.only(right: 15),
                     child: Container(
                       width: 13,
                       height: 19,
@@ -93,7 +93,7 @@ class CookieCard extends StatelessWidget {
 
   Widget _buildTitle() {
     return Padding(
-      padding: const EdgeInsets.only(top: 6),
+      padding: REdgeInsets.only(top: 6),
       child: CookieTitle(
         cookie: data,
         titleStyle: const TextStyle(
@@ -122,7 +122,7 @@ class CookieCard extends StatelessWidget {
 
   Widget _buildContent(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: REdgeInsets.symmetric(horizontal: 20),
       child: CookieContent(
         cookie: data,
         onTapImage: onTapImage,

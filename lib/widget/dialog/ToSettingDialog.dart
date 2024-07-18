@@ -1,7 +1,7 @@
 import 'dart:async';
 
-
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../common/dun_color.dart';
@@ -14,8 +14,7 @@ class ToSettingDialog extends Dialog {
 
   StateSetter? aState;
 
-  @override
-  Widget build(BuildContext context) {
+  ToSettingDialog({super.key}) {
     _timer = Timer.periodic(const Duration(milliseconds: 1000), (timer) {
       curentTimer--;
       content = "我知道了($curentTimer)";
@@ -26,6 +25,10 @@ class ToSettingDialog extends Dialog {
       }
       aState!(() {});
     });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Material(
       type: MaterialType.transparency,
       child: Center(
@@ -37,7 +40,7 @@ class ToSettingDialog extends Dialog {
   _buildToSettingDialog(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.8,
-      padding: const EdgeInsets.only(top: 20),
+      padding: REdgeInsets.only(top: 20),
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -53,7 +56,7 @@ class ToSettingDialog extends Dialog {
             ),
           ),
           Container(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+            padding: REdgeInsets.symmetric(vertical: 20, horizontal: 10),
             child: const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -68,7 +71,7 @@ class ToSettingDialog extends Dialog {
           ),
           SizedBox(
             child: Container(
-                padding: const EdgeInsets.only(top: 15),
+                padding: REdgeInsets.only(top: 15),
                 child: Column(
                   children: [
                     const Divider(

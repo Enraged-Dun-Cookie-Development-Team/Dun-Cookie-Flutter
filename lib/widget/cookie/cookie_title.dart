@@ -1,5 +1,6 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../common/time_unit.dart';
 import '../../model/cookie/cookie_main_list.dart';
@@ -33,7 +34,7 @@ class CookieTitle extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(top: 4, right: 8),
+          padding: EdgeInsets.only(top: 2, right: 8.w),
           child: _buildIcon(cookie.icon, const Size(40, 40)),
         ),
         Column(

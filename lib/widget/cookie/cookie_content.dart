@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../common/dun_color.dart';
 import '../../model/cookie/cookie_main_list.dart';
@@ -52,7 +53,7 @@ class CookieContent extends StatelessWidget {
   _buildRetweeted(Retweeted? retweeted) {
     return retweeted != null
         ? Container(
-            padding: const EdgeInsets.all(5),
+        padding: REdgeInsets.all(5),
             decoration: BoxDecoration(
                 color: DunColors.gray_4,
                 borderRadius: BorderRadius.circular(avatarBorderRadius)),

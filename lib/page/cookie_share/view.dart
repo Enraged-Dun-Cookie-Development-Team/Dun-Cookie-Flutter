@@ -1,5 +1,6 @@
 import 'package:dun_cookie_flutter/widget/cookie/cookie_content.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -53,10 +54,10 @@ class CookieSharePage extends StatelessWidget {
     return Column(
       children: [
         const SizedBox(
-          height: 15,
+          height: 10,
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 180),
+          padding: REdgeInsets.symmetric(horizontal: 150),
           child: Image.asset(
             "assets/logo/logo_no_line_share.png",
             fit: BoxFit.fill,
@@ -70,7 +71,7 @@ class CookieSharePage extends StatelessWidget {
 
   Widget _buildCard(Cookie cookie) {
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 15),
+      margin: REdgeInsets.symmetric(horizontal: 15),
       child: Column(
         children: [
           _buildTitle(cookie),
@@ -82,7 +83,7 @@ class CookieSharePage extends StatelessWidget {
 
   Widget _buildTitle(Cookie cookie) {
     return Padding(
-      padding: const EdgeInsets.only(right: 3),
+      padding: REdgeInsets.only(right: 3),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -92,7 +93,7 @@ class CookieSharePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(8),
+                  padding: REdgeInsets.all(8),
                   child: RichText(
                     text: const TextSpan(
                         text: "小刻食堂",
@@ -114,7 +115,7 @@ class CookieSharePage extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                    padding: const EdgeInsets.all(8),
+                    padding: REdgeInsets.all(8),
                     child: CookieTitle(
                       cookie: cookie,
                       titleStyle: DunStyles.text16,
@@ -147,10 +148,12 @@ class CookieSharePage extends StatelessWidget {
 
   Widget _buildContent(Cookie cookie) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
+      padding: REdgeInsets.symmetric(horizontal: 8),
       child: Obx(() => CookieContent(
             cookie: state.type.value == CookieContentType.image
-                ? cookie.copyWithImageList(images: state.selectedImage,retweetedImages: state.selectedRetweetedImage)
+                ? cookie.copyWithImageList(
+                    images: state.selectedImage,
+                    retweetedImages: state.selectedRetweetedImage)
                 : cookie,
             type: state.type.value,
             onSelectImage: logic.onSelectImage,
@@ -160,7 +163,7 @@ class CookieSharePage extends StatelessWidget {
 
   Widget _buildBottom() {
     return Padding(
-      padding: const EdgeInsets.only(top: 5, bottom: 30),
+      padding: REdgeInsets.only(top: 5, bottom: 30),
       child: Center(
         child: Text(
           "-- 搜索小刻食堂下载软件 --",

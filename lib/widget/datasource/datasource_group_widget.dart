@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../common/dun_color.dart';
 import '../../model/config/config_datasource.dart';
@@ -23,7 +24,7 @@ class DataSourceGroupWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(13, 10, 0, 10),
+          padding: REdgeInsets.fromLTRB(13, 10, 0, 10),
           child: Text(
             platform.name,
             style: const TextStyle(
@@ -33,7 +34,7 @@ class DataSourceGroupWidget extends StatelessWidget {
           ),
         ),
         Container(
-          margin: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+          margin: REdgeInsets.fromLTRB(10, 0, 10, 0),
           decoration: const BoxDecoration(
             boxShadow: [
               BoxShadow(

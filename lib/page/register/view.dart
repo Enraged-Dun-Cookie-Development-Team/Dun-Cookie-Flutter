@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../common/dun_color.dart';
@@ -34,7 +35,7 @@ class RegisterPage extends StatelessWidget {
             systemOverlayStyle: SystemUiOverlayStyle.light,
           ),
           body: Container(
-            padding: const EdgeInsets.only(left: 50, right: 50),
+            padding: REdgeInsets.only(left: 50, right: 50),
             // width: double.infinity,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../common/dun_color.dart';
@@ -22,7 +23,7 @@ class _CookiesPageState extends State<CookiesPage> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
+      padding: REdgeInsets.fromLTRB(12, 0, 12, 12),
       child: Column(
         children: [
           _buildTitleBar(),
@@ -55,13 +56,15 @@ class _CookiesPageState extends State<CookiesPage> {
                 ),
                 Expanded(
                   child: Container(
+                    height: 42,
                     color: DunColors.white,
-                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                    padding: REdgeInsets.fromLTRB(10, 0, 10, 0),
                     child: TextField(
                       controller: state.searchController,
                       focusNode: state.searchFocusNode,
                       cursorColor: DunColors.DunColor,
                       decoration: const InputDecoration(
+                        isDense: true,
                         border: InputBorder.none,
                         hintText: '搜索：皮肤',
                       ),
@@ -103,7 +106,7 @@ class _CookiesPageState extends State<CookiesPage> {
                   child: GestureDetector(
                     onTap: () => {logic.handleSearch()},
                     child: Container(
-                      padding: const EdgeInsets.all(10),
+                      padding: REdgeInsets.all(10),
                       child: Image.asset(
                         "assets/icon/search.png",
                         color: DunColors.yellow,

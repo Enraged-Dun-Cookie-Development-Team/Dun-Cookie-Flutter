@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../common/dun_color.dart';
@@ -40,7 +41,7 @@ class UpdatePage extends StatelessWidget {
                 ),
                 body: SingleChildScrollView(
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 15, right: 15),
+                    padding: REdgeInsets.only(left: 15, right: 15),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -117,7 +118,7 @@ class UpdatePage extends StatelessWidget {
   _downloadRes() {
     if (Platform.isAndroid) {
       return Container(
-        padding: const EdgeInsets.only(left: 20, right: 20),
+        padding: REdgeInsets.only(left: 20, right: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -130,7 +131,7 @@ class UpdatePage extends StatelessWidget {
       );
     } else if (Platform.isIOS) {
       return Container(
-        padding: const EdgeInsets.only(left: 20, right: 20),
+        padding: REdgeInsets.only(left: 20, right: 20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,

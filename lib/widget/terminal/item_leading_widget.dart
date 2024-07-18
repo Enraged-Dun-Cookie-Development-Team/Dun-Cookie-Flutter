@@ -1,5 +1,6 @@
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../common/dun_color.dart';
 
@@ -11,13 +12,12 @@ class ItemLeadingWidget extends StatelessWidget {
   final Color labelColor;
 
   const ItemLeadingWidget(
-      {Key? key,
+      {super.key,
       required this.columnText,
       required this.titleText,
       required this.centerText,
       this.bottomText,
-      this.labelColor = DunColors.blue})
-      : super(key: key);
+      this.labelColor = DunColors.blue});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class ItemLeadingWidget extends StatelessWidget {
               flex: 2,
               child: Container(
                 color: DunColors.gray_1,
-                padding: const EdgeInsets.only(top: 22),
+                padding: REdgeInsets.only(top: 22),
                 child: Column(
                   children: titleTextList,
                 ),
@@ -51,7 +51,7 @@ class ItemLeadingWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(left: 14, top: 4),
+                      padding: REdgeInsets.only(left: 14, top: 4),
                       child: Text(
                         titleText,
                         style: const TextStyle(
@@ -81,7 +81,7 @@ class ItemLeadingWidget extends StatelessWidget {
         Align(
           alignment: Alignment.bottomRight,
           child: Padding(
-            padding: EdgeInsets.only(right: 10,bottom: 8),
+            padding: REdgeInsets.only(right: 10, bottom: 8),
             child: Text(
               bottomText ?? '',
               style: const TextStyle(

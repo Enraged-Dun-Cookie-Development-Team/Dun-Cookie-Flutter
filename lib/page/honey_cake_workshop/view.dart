@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
 
 import '../../common/dun_color.dart';
 import 'logic.dart';
@@ -34,29 +34,30 @@ class HoneyCakeWorkshopPage extends StatelessWidget {
             title: const Text("罗德岛蜜饼工坊"),
             actions: [
               Padding(
-                padding: const EdgeInsets.only(right: 8),
+                padding: REdgeInsets.only(right: 8),
                 child: state.bakeryMansionIdList.isNotEmpty
                     ? SizedBox(
-                  width: 80,
-                  // 下拉列表框选版本
-                  child: DropdownButtonFormField<String>(
-                    isExpanded: true,
-                    decoration: const InputDecoration(
-                      enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                              color: DunColors.DunColor, width: 1.5)),
-                      focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                              color: DunColors.DunColor, width: 1.5)),
-                    ),
-                    value: state.bakeryMansionIdList.last,
-                    // 选择回调
-                    onChanged: (String? value) => logic.getBakeryInfo(value),
-                    // 传入可选的数组
-                    items: state.bakeryMansionIdList
-                        .map((e) =>
-                        DropdownMenuItem(value: e, child: Text(e)))
-                        .toList(),
+                        width: 80,
+                        // 下拉列表框选版本
+                        child: DropdownButtonFormField<String>(
+                          isExpanded: true,
+                          decoration: const InputDecoration(
+                            enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: DunColors.DunColor, width: 1.5)),
+                            focusedBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: DunColors.DunColor, width: 1.5)),
+                          ),
+                          value: state.bakeryMansionIdList.last,
+                          // 选择回调
+                          onChanged: (String? value) =>
+                              logic.getBakeryInfo(value),
+                          // 传入可选的数组
+                          items: state.bakeryMansionIdList
+                              .map((e) =>
+                                  DropdownMenuItem(value: e, child: Text(e)))
+                              .toList(),
                   ),
                 )
                     : const SizedBox(),
@@ -78,7 +79,7 @@ class HoneyCakeWorkshopPage extends StatelessWidget {
       onTap: logic.onTapBottomButton,
       child: Container(
         height: 40,
-        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+        margin: REdgeInsets.symmetric(vertical: 8, horizontal: 16),
         decoration: BoxDecoration(
           color: DunColors.DunColor,
           borderRadius: BorderRadius.circular(4),
