@@ -85,7 +85,7 @@ class _MangaListCardState extends State<MangaListCard> {
                       alignment: Alignment.centerLeft,
                       margin: REdgeInsets.only(left: 10),
                       child: Text(
-                          "共${widget.comicModel.count}章，最新于${TimeUnit.timestampFormatYMD(widget.comicModel.updateTime!)}更新"),
+                          "共${widget.comicModel.count}章，最新于${TimeUnit.timestampFormatYMD(widget.comicModel.updateTime)}更新"),
                     );
                   },
                   body: Padding(
@@ -106,7 +106,7 @@ class _MangaListCardState extends State<MangaListCard> {
                           height: 6,
                         ),
                         Text(
-                          widget.comicModel.title ?? "",
+                          widget.comicModel.title,
                           style: DunStyles.text16,
                         ),
                         const SizedBox(
@@ -115,7 +115,7 @@ class _MangaListCardState extends State<MangaListCard> {
                         widget.comicModel.subtitle == ""
                             ? Container()
                             : Text(
-                                widget.comicModel.subtitle ?? "",
+                          widget.comicModel.subtitle,
                                 style: DunStyles.text16B45,
                               ),
                         widget.comicModel.subtitle == ""
@@ -123,7 +123,7 @@ class _MangaListCardState extends State<MangaListCard> {
                             : const SizedBox(
                                 height: 6,
                               ),
-                        Text(widget.comicModel.introduction ?? "",
+                        Text(widget.comicModel.introduction,
                             style: DunStyles.text14B45),
                         const SizedBox(
                           height: 6,
@@ -145,7 +145,7 @@ class _MangaListCardState extends State<MangaListCard> {
                                           Border.all(color: DunColors.DunColor),
                                       borderRadius: BorderRadius.circular(5)),
                                   child: Text(
-                                    episodes[index].shortTitle ?? "",
+                                    episodes[index].shortTitle,
                                   )),
                             );
                           }),

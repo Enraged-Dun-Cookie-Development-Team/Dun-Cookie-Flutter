@@ -4,8 +4,6 @@ import 'package:get/get.dart';
 
 import '../../common/dun_jump.dart';
 import '../../common/dun_toast.dart';
-import '../../common/package_info.dart';
-import '../../request/ceobe/ceobe_request.dart';
 import 'state.dart';
 
 class UpdateLogic extends GetxController {

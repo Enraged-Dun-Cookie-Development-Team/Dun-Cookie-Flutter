@@ -91,7 +91,7 @@ class UpdateDialog extends Dialog {
                       ),
                       const SizedBox(height: 3),
                       Text(
-                        newApp.description ?? "",
+                        newApp.description,
                         style: const TextStyle(
                           fontSize: 13,
                           color: DunColors.gray_1,

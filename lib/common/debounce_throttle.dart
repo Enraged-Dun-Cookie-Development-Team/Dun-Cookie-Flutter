@@ -12,7 +12,7 @@ enum FilterType {
 
 typedef VoidFunction = void Function();
 class EventFilter {
-  static Map<String, Timer> _wrappers = {};
+  static final Map<String, Timer> _wrappers = {};
 
   ///防抖
   static VoidFunction debounce(String sign, function,
@@ -22,7 +22,6 @@ class EventFilter {
           duration: duration, filterType: FilterType.debounce);
     };
   }
-
 
   ///节流
   static VoidFunction throttle(String sign, function,
@@ -90,11 +89,11 @@ extension EventFilterExtension on State {
   stateFilter(String sign, Function function,
       {Duration duration = _defaultDuration,
         FilterType filterType = FilterType.debounce}) {
-    EventFilter.execute("${this.hashCode.toString()}$sign", function,
+    EventFilter.execute("${hashCode.toString()}$sign", function,
         duration: duration, filterType: filterType);
   }
 
   clearStateFilter() {
-    EventFilter.removeState(this.hashCode.toString());
+    EventFilter.removeState(hashCode.toString());
   }
 }

@@ -32,7 +32,7 @@ class DunJump {
     if (appUrlScheme != "") {
       if (await canLaunchUrlString(appUrlScheme)) {
         DunToast.showSuccess("正在唤起APP");
-        await launch(appUrlScheme);
+        await launchUrl(Uri.dataFromString(appUrlScheme));
       } else {
         DunToast.showError("没有检测到APP，正在打开网页");
         // Navigator.pushNamed(ctx, DunWebView.routeName, arguments: url);
