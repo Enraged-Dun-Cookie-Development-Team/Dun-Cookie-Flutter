@@ -17,6 +17,12 @@ class TerminalLogic extends GetxController {
     loadData();
   }
 
+  @override
+  void onClose() {
+    super.onClose();
+    state.pageScrollController.dispose();
+  }
+
   Future<void> loadData() async {
     state.resourceInfo = await CeobeApi.getResourceInfo();
     state.cookieInfoCount = await CookiesApi.getCookieInfoCount();

@@ -23,6 +23,12 @@ class MoreLogic extends GetxController {
     });
   }
 
+  @override
+  void onClose() {
+    super.onClose();
+    state.pageScrollController.dispose();
+  }
+
   Future<void> loadData() async {
     state.terraRecentEpisode = await MangaApi.getTerraNewestEpisode();
     state.videoList = await CeobeApi.getVideoInfo();
