@@ -7,6 +7,7 @@ import '../model/info/user_settings.dart';
 String _$NotOnce = 'notOnce';
 String _$Rid = 'rid';
 String _$IsPreview = 'isPreview';
+String _$IsHideBottomOnScroll = 'isHideBottomOnScroll';
 String _$DatasourceSetting = "datasourceSetting";
 String _$LastShowVersion = 'lastShowVersion';
 String _$LaunchCount = 'launchCount';
@@ -66,10 +67,11 @@ class DunPreferences {
 }
 
 Future<bool> saveLastShowVersion(String value) async {
-  return await DunPreferences.getInstance().saveString(_$LastShowVersion, value);
+  return await DunPreferences.getInstance()
+      .saveString(_$LastShowVersion, value);
 }
 
-String? getLastShowVersion(){
+String? getLastShowVersion() {
   return DunPreferences.getInstance().getString(_$LastShowVersion);
 }
 
@@ -77,7 +79,7 @@ Future<bool> saveLaunchCount(int value) async {
   return await DunPreferences.getInstance().saveInt(_$LaunchCount, value);
 }
 
-int? getLaunchCount(){
+int? getLaunchCount() {
   return DunPreferences.getInstance().getInt(_$LaunchCount);
 }
 
@@ -103,6 +105,14 @@ Future<bool> saveIsPreview(bool value) async {
 
 bool? getIsPreview() {
   return DunPreferences.getInstance().getBool(_$IsPreview);
+}
+
+Future<bool> saveIsHideBottomOnScroll(bool value) async {
+  return await DunPreferences.getInstance().saveBool(_$IsHideBottomOnScroll, value);
+}
+
+bool? getIsHideBottomOnScroll() {
+  return DunPreferences.getInstance().getBool(_$IsHideBottomOnScroll);
 }
 
 Future<bool> saveDatasourceSetting(String value) async {

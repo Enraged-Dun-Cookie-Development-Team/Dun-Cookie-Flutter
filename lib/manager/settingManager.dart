@@ -17,6 +17,7 @@ class SettingManager {
   bool _notOnce = true;
   String _rid = "--";
   bool _isPreview = false;
+  bool _isHideBottomOnScroll = false;
   Rx<UserDatasourceModel> datasourceSetting =
       UserDatasourceModel(datasourceList: {}, datasourceCombId: "").obs;
 
@@ -25,6 +26,7 @@ class SettingManager {
     await _readNotOnce();
     await _readRid();
     await _readIsPreview();
+    await _readIsHideBottomOnScroll();
     await _readDatasourceSetting();
   }
 
@@ -71,6 +73,21 @@ class SettingManager {
 
   _readIsPreview() {
     _isPreview = getIsPreview() ?? false;
+  }
+
+  bool get isHideBottomOnScroll => _isHideBottomOnScroll;
+
+  set isHideBottomOnScroll(bool value) {
+    _isHideBottomOnScroll = value;
+    _saveIsHideBottomOnScroll();
+  }
+
+  _saveIsHideBottomOnScroll() {
+    saveIsHideBottomOnScroll(_isHideBottomOnScroll);
+  }
+
+  _readIsHideBottomOnScroll() {
+    _isHideBottomOnScroll = getIsHideBottomOnScroll() ?? true;
   }
 
   updateDataSource(UserDatasourceModel datasource) {

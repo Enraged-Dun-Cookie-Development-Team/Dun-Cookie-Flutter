@@ -1,4 +1,5 @@
 import 'package:dun_cookie_flutter/common/dun_color.dart';
+import 'package:dun_cookie_flutter/manager/settingManager.dart';
 import 'package:dun_cookie_flutter/page/root/logic.dart';
 import 'package:dun_cookie_flutter/widget/scroll_hide.dart';
 import 'package:dun_cookie_flutter/widget/lazy_indexed_stack.dart';
@@ -41,7 +42,10 @@ class RootPage extends StatelessWidget {
             controller: state.scrollHideController,
             child: _buildBottomBar(context),
             builder: (context, child, isHidden) => AnimatedPositioned(
-              bottom: isHidden ? -100 : 0,
+              bottom:
+                  SettingManager.getInstance().isHideBottomOnScroll && isHidden
+                      ? -100
+                      : 0,
               duration: const Duration(milliseconds: 200),
               child: child,
             ),

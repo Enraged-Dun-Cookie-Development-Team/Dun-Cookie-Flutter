@@ -6,7 +6,7 @@ import '../../common/dun_color.dart';
 import 'logic.dart';
 
 class SettingPage extends StatelessWidget {
-  SettingPage({Key? key}) : super(key: key);
+  SettingPage({super.key});
 
   final logic = Get.put(SettingLogic());
   final state = Get.find<SettingLogic>().state;
@@ -58,6 +58,8 @@ class SettingPage extends StatelessWidget {
                             _buildCakeSource(),
                             _buildLine(),
                             _buildSaveFlow(),
+                            _buildLine(),
+                            _buildHideBottomOnScrollSwitch(),
                           ],
                         ),
                       ),
@@ -144,38 +146,65 @@ class SettingPage extends StatelessWidget {
   }
 
   Widget _buildSaveFlow() {
+    return _buildItem(
+      title: '省流模式',
+      subtitle: '列表使用缩略图',
+      trailing: Obx(() => Switch(
+            activeColor: DunColors.DunColor,
+            inactiveThumbColor: Colors.grey,
+            inactiveTrackColor: Colors.white,
+            value: state.isPreview.value,
+            onChanged: logic.onTapPreviewSwitch,
+          )),
+    );
+  }
+
+  Widget _buildHideBottomOnScrollSwitch() {
+    return _buildItem(
+      title: '向下滚动时隐藏底栏',
+      subtitle: '向上滚动显示',
+      trailing: Obx(() => Switch(
+            activeColor: DunColors.DunColor,
+            inactiveThumbColor: Colors.grey,
+            inactiveTrackColor: Colors.white,
+            value: state.isHideBottomOnScroll.value,
+            onChanged: logic.onTapHideBottomOnScrollSwitch,
+          )),
+    );
+  }
+
+  Widget _buildItem({
+    required String title,
+    String? subtitle,
+    Widget? trailing,
+  }) {
     return Row(
       children: [
-        const Column(
+        Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 7),
+            const SizedBox(height: 7),
             Text(
-              "省流模式",
-              style: TextStyle(
+              title,
+              style: const TextStyle(
                 color: DunColors.gray_1,
                 fontSize: 16,
               ),
             ),
-            SizedBox(height: 2),
-            Text(
-              "列表使用缩略图",
-              style: TextStyle(
-                color: DunColors.gray_subtitle,
-                fontSize: 11,
+            const SizedBox(height: 2),
+            if (subtitle?.isNotEmpty == true)
+              Text(
+                subtitle ?? '',
+                style: const TextStyle(
+                  color: DunColors.gray_subtitle,
+                  fontSize: 11,
+                ),
               ),
-            ),
-            SizedBox(height: 7),
+            const SizedBox(height: 7),
           ],
         ),
         const Expanded(child: SizedBox()),
-        Obx(() => Switch(
-              activeColor: DunColors.DunColor,
-              inactiveThumbColor: Colors.grey,
-              inactiveTrackColor: Colors.white,
-              value: state.isPreview.value,
-              onChanged: logic.onTapSwitch,
-            )),
+        if (trailing != null) trailing,
       ],
     );
   }
@@ -351,14 +380,14 @@ class SettingPage extends StatelessWidget {
           ),
         ),
         InkWell(
+            onTap: logic.onTapRecord,
             child: Text(
               state.record,
               style: const TextStyle(
                 color: Colors.grey,
                 fontSize: 12,
               ),
-            ),
-            onTap: logic.onTapRecord)
+            ))
       ],
     );
   }
