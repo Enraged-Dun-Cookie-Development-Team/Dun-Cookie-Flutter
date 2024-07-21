@@ -1,4 +1,4 @@
-
+import 'package:dun_cookie_flutter/page/root/logic.dart';
 import 'package:get/get.dart';
 
 import '../../common/dun_jump.dart';
@@ -16,6 +16,8 @@ class MoreLogic extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    RootLogic.to.state.scrollHideController
+        .addScrollController(state.pageScrollController);
     loadData().then((value) {
       update();
     });

@@ -1,3 +1,4 @@
+import 'package:dun_cookie_flutter/page/root/logic.dart';
 import 'package:dun_cookie_flutter/route.dart';
 import 'package:flutter/animation.dart';
 import 'package:get/get.dart';
@@ -26,6 +27,8 @@ class CookiesLogic extends GetxController {
         loadData(more: true);
       }
     });
+    RootLogic.to.state.scrollHideController
+        .addScrollController(state.scrollController);
     state.searchController.addListener(() {
       var debounce = EventFilter.debounce("list_search_word", () {
         bool isNotEmpty = state.searchController.text.isNotEmpty;

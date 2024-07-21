@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import '../../model/bakery/bakery_data.dart';
 import '../../model/ceobe/tool/tool.dart';
 import '../../model/ceobe/video/video.dart';
@@ -10,6 +12,7 @@ class MoreState {
       TerraRecentEpisodeModel.fromJson({});
   BakeryRecentPredictModel bakeryRecentPredict =
       BakeryRecentPredictModel.fromJson({});
+  final pageScrollController = ScrollController();
 
   MoreState() {
     ///Initialize variables

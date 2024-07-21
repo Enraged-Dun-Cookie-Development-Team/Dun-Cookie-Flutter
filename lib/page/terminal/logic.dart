@@ -1,5 +1,4 @@
-
-
+import 'package:dun_cookie_flutter/page/root/logic.dart';
 import 'package:get/get.dart';
 
 import '../../request/ceobe/ceobe_request.dart';
@@ -13,6 +12,8 @@ class TerminalLogic extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    RootLogic.to.state.scrollHideController
+        .addScrollController(state.pageScrollController);
     loadData();
   }
 

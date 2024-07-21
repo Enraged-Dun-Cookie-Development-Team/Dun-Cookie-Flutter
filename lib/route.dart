@@ -6,7 +6,7 @@ import 'page/datasource/view.dart';
 import 'page/honey_cake_workshop/view.dart';
 import 'page/manga/view.dart';
 import 'page/register/view.dart';
-import '../page/rootPage.dart';
+import 'page/root/view.dart';
 import 'page/setting/view.dart';
 import 'page/update/view.dart';
 import 'page/web/view.dart';
@@ -40,7 +40,7 @@ class DunRouter {
 
   /// 别名映射页面
   static final List<GetPage> getPages = [
-    GetPage(name: root, page: () => const RootPage()),
+    GetPage(name: root, page: () => RootPage()),
     GetPage(name: register, page: () => RegisterPage()),
     GetPage(name: manga, page: () => MangaPage()),
     GetPage(name: honeyCake, page: () => HoneyCakeWorkshopPage()),

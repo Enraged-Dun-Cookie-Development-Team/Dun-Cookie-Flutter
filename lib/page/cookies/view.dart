@@ -22,15 +22,12 @@ class _CookiesPageState extends State<CookiesPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: REdgeInsets.fromLTRB(12, 0, 12, 12),
+    return Container(
+      padding: REdgeInsets.fromLTRB(12, 0, 12, 0),
       child: Column(
         children: [
           _buildTitleBar(),
           _buildList(),
-          Container(
-            height: 50,
-          )
         ],
       ),
     );
@@ -144,7 +141,7 @@ class _CookiesPageState extends State<CookiesPage> {
       return ListView.builder(
         key: const PageStorageKey<String>("cookieList"),
         controller: state.scrollController,
-        padding: EdgeInsets.zero,
+        padding: REdgeInsets.only(bottom: 20.r),
         shrinkWrap: true,
         itemBuilder: (BuildContext context, int index) {
           return index == cookies.length

@@ -28,6 +28,7 @@ class _MorePageState extends State<MorePage> {
     return GetBuilder<MoreLogic>(
       builder: (logic) {
         return ListView(
+          controller: state.pageScrollController,
           padding: REdgeInsets.fromLTRB(12, 0, 12, 12),
           children: [
             _buildTitle(),
@@ -37,7 +38,7 @@ class _MorePageState extends State<MorePage> {
             _buildVideoRecommend(),
             const Center(
               child: Padding(
-                padding: EdgeInsets.only(top: 10, bottom: 80),
+                padding: EdgeInsets.only(top: 30, bottom: 80),
                 child: Text(
                   "没有更多了",
                   style: TextStyle(color: DunColors.gray_1),

@@ -31,6 +31,7 @@ class _TerminalPageState extends State<TerminalPage> {
       id: state.rootGID,
       builder: (logic) {
         return ListView(
+          controller: state.pageScrollController,
           padding: REdgeInsets.fromLTRB(12, 0, 12, 12),
           children: [
             _buildTitleBar(),
