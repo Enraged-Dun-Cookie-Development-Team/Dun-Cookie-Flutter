@@ -16,7 +16,7 @@ class MoreLogic extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    RootLogic.to.state.scrollHideController
+    RootLogic.to?.state.scrollHideController
         .addScrollController(state.pageScrollController);
     loadData().then((value) {
       update();
