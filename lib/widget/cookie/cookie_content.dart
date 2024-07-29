@@ -25,6 +25,8 @@ class CookieContent extends StatelessWidget {
   bool get showCheck =>
       type == CookieContentType.shared && onSelectImage != null;
 
+  bool get imageFill => type == CookieContentType.image;
+
   double get avatarBorderRadius => type == CookieContentType.normal ? 0 : 8;
 
   const CookieContent({
@@ -92,6 +94,7 @@ class CookieContent extends StatelessWidget {
         }
       },
       showCheck: showCheck,
+      imageFill: imageFill,
     );
   }
 }

@@ -14,17 +14,19 @@ class ImageWidget extends StatelessWidget {
   final List<CookieImage> cookieImageList;
   final String sourceType;
   final bool showCheck;
+  final bool imageFill;
   final Function(List<String> imageURLList, int currentIndex)? onTap;
   final Function(CookieImage cookieImage, bool value)? onSelect;
 
   const ImageWidget({
-    Key? key,
+    super.key,
     required this.cookieImageList,
     required this.sourceType,
     this.onTap,
     this.onSelect,
     this.showCheck = false,
-  }) : super(key: key);
+    required this.imageFill,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -61,12 +63,12 @@ class ImageWidget extends StatelessWidget {
         previewList.add(img.compressUrl!);
       } else if (sourceType == "bilibili:dynamic-by-uid") {
         if (data.length == 1) {
-          previewList.add(img.originUrl + "@573w_358h_1e_1c_!web-dynamic.webp");
+          previewList.add("${img.originUrl}@573w_358h_1e_1c_!web-dynamic.webp");
         } else {
-          previewList.add(img.originUrl + "@416w_416h_1e_1c_!web-dynamic.webp");
+          previewList.add("${img.originUrl}@416w_416h_1e_1c_!web-dynamic.webp");
         }
       } else if (sourceType == "netease-cloud-music:albums-by-artist") {
-        previewList.add(img.originUrl + "?param=416x416");
+        previewList.add("${img.originUrl}?param=416x416");
       } else {
         previewList.add(img.originUrl);
       }
@@ -187,9 +189,9 @@ class ImageWidget extends StatelessWidget {
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(4),
                       child: Container(
-                        constraints: const BoxConstraints(maxHeight: 400),
+                        constraints: BoxConstraints(
+                            maxHeight: imageFill ? double.infinity : 400),
                         child: ExtendedRawImage(
-                          // height: 300,
                           width: double.infinity,
                           alignment: Alignment.topCenter,
                           fit: BoxFit.cover,
