@@ -25,7 +25,7 @@ class ImageWidget extends StatelessWidget {
     this.onTap,
     this.onSelect,
     this.showCheck = false,
-    required this.imageFill,
+    this.imageFill = false,
   });
 
   @override
@@ -141,7 +141,6 @@ class ImageWidget extends StatelessWidget {
       children: [
         ExtendedImage.network(
           url,
-          fit: BoxFit.cover,
           handleLoadingProgress: true,
           clearMemoryCacheIfFailed: true,
           clearMemoryCacheWhenDispose: false,
@@ -184,21 +183,43 @@ class ImageWidget extends StatelessWidget {
                   ],
                 );
               case LoadState.completed:
-                return GestureDetector(
-                  onTap: onTap,
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.circular(4),
-                      child: Container(
-                        constraints: BoxConstraints(
-                            maxHeight: imageFill ? double.infinity : 400),
-                        child: ExtendedRawImage(
-                          width: double.infinity,
-                          alignment: Alignment.topCenter,
-                          fit: BoxFit.cover,
-                          image: state.extendedImageInfo?.image,
-                        ),
-                      )),
-                );
+                if (isSingle) {
+                  return GestureDetector(
+                    onTap: onTap,
+                    child: Container(
+                      clipBehavior: Clip.hardEdge,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      constraints: BoxConstraints(
+                        maxHeight: imageFill ? double.infinity : 400,
+                      ),
+                      child: ExtendedRawImage(
+                        width: double.infinity,
+                        alignment: Alignment.topCenter,
+                        fit: BoxFit.cover,
+                        image: state.extendedImageInfo?.image,
+                      ),
+                    ),
+                  );
+                } else {
+                  return GestureDetector(
+                    onTap: onTap,
+                    child: Container(
+                      clipBehavior: Clip.hardEdge,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: ExtendedRawImage(
+                        width: double.infinity,
+                        height: double.infinity,
+                        alignment: Alignment.topCenter,
+                        fit: BoxFit.cover,
+                        image: state.extendedImageInfo?.image,
+                      ),
+                    ),
+                  );
+                }
               case LoadState.failed:
                 print('图片加载失败:$url');
                 return const Image(
