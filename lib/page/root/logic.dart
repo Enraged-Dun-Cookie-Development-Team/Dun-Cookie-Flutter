@@ -10,7 +10,8 @@ import 'package:dun_cookie_flutter/request/ceobe/ceobe_request.dart';
 import 'package:get/get.dart';
 
 class RootLogic extends GetxController {
-  static RootLogic get to => Get.find<RootLogic>();
+  static RootLogic? get to =>
+      Get.isRegistered<RootLogic>() ? Get.find<RootLogic>() : null;
 
   final state = RootState();
 

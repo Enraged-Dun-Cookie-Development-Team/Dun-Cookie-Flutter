@@ -27,7 +27,7 @@ class CookiesLogic extends GetxController {
         loadData(more: true);
       }
     });
-    RootLogic.to.state.scrollHideController
+    RootLogic.to?.state.scrollHideController
         .addScrollController(state.scrollController);
     state.searchController.addListener(() {
       var debounce = EventFilter.debounce("list_search_word", () {
