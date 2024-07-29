@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../route.dart';
@@ -32,7 +31,7 @@ class DunJump {
     if (appUrlScheme != "") {
       if (await canLaunchUrlString(appUrlScheme)) {
         DunToast.showSuccess("正在唤起APP");
-        await launchUrl(Uri.dataFromString(appUrlScheme));
+        await launchUrlString(appUrlScheme);
       } else {
         DunToast.showError("没有检测到APP，正在打开网页");
         // Navigator.pushNamed(ctx, DunWebView.routeName, arguments: url);
@@ -48,7 +47,7 @@ class DunJump {
   static openAppUrlScheme(String appUrlScheme) async {
     if (await canLaunchUrlString(appUrlScheme)) {
       DunToast.showSuccess("正在唤起APP");
-      await canLaunchUrlString(appUrlScheme);
+      await launchUrlString(appUrlScheme);
     } else {
       DunToast.showError("没有检测到对应app");
     }

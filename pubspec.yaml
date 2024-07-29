@@ -51,7 +51,7 @@ dependencies:
   package_info_plus:
   build_runner:
   path_provider:
-  url_launcher:
+  url_launcher: ^6.3.0
 
 dev_dependencies:
   flutter_test:
