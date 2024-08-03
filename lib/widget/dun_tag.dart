@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../common/dun_color.dart';
 
 class DunTag extends StatelessWidget {
-  const DunTag(this.text, {Key? key}) : super(key: key);
+  const DunTag(this.text, {super.key});
 
   final String text;
 

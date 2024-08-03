@@ -10,8 +10,7 @@ class DashedLineHorizontalWidget extends StatelessWidget {
   final double itemPadding;
 
   const DashedLineHorizontalWidget(
-      {Key? key, this.width, this.itemLength = 1.5, this.itemPadding = 1.5})
-      : super(key: key);
+      {super.key, this.width, this.itemLength = 1.5, this.itemPadding = 1.5});
 
   @override
   Widget build(BuildContext context) => LayoutBuilder(

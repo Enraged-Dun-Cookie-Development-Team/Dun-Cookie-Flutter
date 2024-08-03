@@ -11,20 +11,41 @@ import 'page/setting/view.dart';
 import 'page/update/view.dart';
 import 'page/web/view.dart';
 
-RouteObserver<PageRoute> routeObserver = DunObserver();
+DunObserver routeObserver = DunObserver();
 
 class DunObserver extends RouteObserver<PageRoute> {
+  static Route? loadingDialogRoute;
+
   @override
   void didPop(Route route, Route? previousRoute) {
+    if (route.settings.name == DunDialogRoute.loading.name) {
+      loadingDialogRoute = null;
+    }
     super.didPop(route, previousRoute);
     print('page:${route.settings.name} is pop');
   }
 
   @override
   void didPush(Route route, Route? previousRoute) {
+    if (route.settings.name == DunDialogRoute.loading.name) {
+      loadingDialogRoute = route;
+    }
     super.didPush(route, previousRoute);
     print('page:${route.settings.name} is push');
   }
+
+  @override
+  void didRemove(Route route, Route? previousRoute) {
+    if (route.settings.name == DunDialogRoute.loading.name) {
+      loadingDialogRoute = null;
+    }
+    super.didRemove(route, previousRoute);
+    print('page:${route.settings.name} is remove');
+  }
+}
+
+enum DunDialogRoute {
+  loading;
 }
 
 class DunRouter {

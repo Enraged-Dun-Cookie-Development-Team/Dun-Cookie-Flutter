@@ -10,10 +10,10 @@ import '../common/dun_toast.dart';
 
 class ViewImageExtendedImage extends StatefulWidget {
   const ViewImageExtendedImage({
-    Key? key,
+    super.key,
     required this.imageList,
     this.initialIndex = 0,
-  }) : super(key: key);
+  });
 
   //图片地址数组
   final List<String> imageList;
@@ -22,7 +22,7 @@ class ViewImageExtendedImage extends StatefulWidget {
   final int initialIndex;
 
   @override
-  _ViewImageExtendedImageState createState() => _ViewImageExtendedImageState();
+  State<ViewImageExtendedImage> createState() => _ViewImageExtendedImageState();
 }
 
 class _ViewImageExtendedImageState extends State<ViewImageExtendedImage>
@@ -51,18 +51,15 @@ class _ViewImageExtendedImageState extends State<ViewImageExtendedImage>
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "小刻食堂",
-      home: Scaffold(
-        backgroundColor: Colors.black,
-        body: SafeArea(
-          child: GestureDetector(
-            onTap: () {
-              Get.back();
-            },
-            child: Stack(
-              children: [_buildImageView(), _buildImageInfo()],
-            ),
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: SafeArea(
+        child: GestureDetector(
+          onTap: () {
+            Get.back();
+          },
+          child: Stack(
+            children: [_buildImageView(), _buildImageInfo()],
           ),
         ),
       ),
