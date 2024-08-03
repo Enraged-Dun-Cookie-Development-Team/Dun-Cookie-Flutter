@@ -7,7 +7,8 @@ class InfoRequest {
   static Future<bool> createUser(String? mobId) async {
     ResponseData response = await HttpClass.post(UrlString.createUserUrl,
         data: {"mob_id": mobId}, type: RequestType.server);
-    String code = response.data.data["code"];
+
+    String code = response.data["code"];
     return response.isSuccess || code == "C0018";
   }
 
