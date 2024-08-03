@@ -1,6 +1,6 @@
 
+import 'package:dun_cookie_flutter/common/dun_dialog.dart';
 import 'package:get/get.dart';
-
 
 import '../../common/dun_toast.dart';
 import '../../manager/settingManager.dart';
@@ -42,8 +42,10 @@ class DatasourceLogic extends GetxController {
   }
 
   Future<void> onTapSave() async {
+    showLoadingDialog();
     bool saveSucceed =
         await InfoRequest.updateDataSource(state.userDatasourceList);
+    clearLoadingDialog();
     if (saveSucceed) {
       DunToast.showInfo("保存成功");
       UserDatasourceModel userDatasourceModel =

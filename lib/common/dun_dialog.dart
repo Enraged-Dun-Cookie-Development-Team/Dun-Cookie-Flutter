@@ -47,7 +47,7 @@ showLoadingDialog() {
   if (DunObserver.loadingDialogRoute == null) {
     Get.dialog(const LoadingDialog(),
         useSafeArea: false,
-        barrierDismissible: true,
+        barrierDismissible: false,
         name: DunDialogRoute.loading.name);
   }
 }

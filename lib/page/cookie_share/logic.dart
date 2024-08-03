@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
 
+import 'package:dun_cookie_flutter/common/dun_dialog.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
@@ -35,26 +36,31 @@ class CookieShareLogic extends GetxController {
 
   Future<void> onTapSave() async {
     state.type.value = CookieContentType.image;
+    showLoadingDialog();
     await Future.delayed(const Duration(milliseconds: 500));
     try {
       Uint8List? pngBytes = await _generateImageData();
       if (pngBytes != null) {
         final result = await ImageGallerySaver.saveImage(pngBytes,
             name: "ceobecanteen_${DateTime.now().millisecondsSinceEpoch}");
+        clearLoadingDialog();
         if (result["isSuccess"]) {
           DunToast.showSuccess("图片已保存");
         }
         Future.delayed(const Duration(seconds: 1)).then((value) => Get.back());
       } else {
+        clearLoadingDialog();
         DunToast.showError('图片生成失败');
       }
     } catch (e) {
+      clearLoadingDialog();
       DunToast.showError('图片保存失败,${e.toString()}');
     }
   }
 
   Future<void> onTapShare() async {
     state.type.value = CookieContentType.image;
+    showLoadingDialog();
     await Future.delayed(const Duration(milliseconds: 500));
     try {
       Uint8List? pngBytes = await _generateImageData();
@@ -64,12 +70,15 @@ class CookieShareLogic extends GetxController {
             "${document.path}/ceobecanteen_${DateTime.now().millisecondsSinceEpoch.toString()}.png");
         final imageFile = File(dir.path);
         await imageFile.writeAsBytes(pngBytes);
+        clearLoadingDialog();
         Share.shareFiles([imageFile.path]);
         Future.delayed(const Duration(seconds: 1)).then((value) => Get.back());
       } else {
+        clearLoadingDialog();
         DunToast.showError('图片生成失败');
       }
     } catch (e) {
+      clearLoadingDialog();
       DunToast.showError('图片分享失败,${e.toString()}');
     }
   }

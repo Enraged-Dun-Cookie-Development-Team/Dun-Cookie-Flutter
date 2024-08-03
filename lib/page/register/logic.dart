@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dun_cookie_flutter/common/dun_dialog.dart';
 import 'package:get/get.dart';
 import 'package:mobpush_plugin/mobpush_plugin.dart';
 
@@ -16,6 +17,7 @@ class RegisterLogic extends GetxController {
   final RegisterState state = RegisterState();
 
   onAgree() async {
+    showLoadingDialog();
     String rid = await _initMobPush();
     if (Platform.isAndroid) {
       await Get.dialog(ToSettingDialog(), barrierDismissible: false);
@@ -24,6 +26,7 @@ class RegisterLogic extends GetxController {
     bool result = await _registerMobPush(rid);
     if (result) {
       //跳转到主页
+      clearLoadingDialog();
       Get.offAndToNamed(DunRouter.root);
     }
   }

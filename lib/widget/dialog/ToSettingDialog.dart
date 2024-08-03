@@ -2,12 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../common/dun_color.dart';
 
 class ToSettingDialog extends Dialog {
-  int curentTimer = 5;
+  int currentTimer = 5;
   String content = "我知道了(5)";
   bool disable = true;
   late Timer _timer;
@@ -16,9 +17,9 @@ class ToSettingDialog extends Dialog {
 
   ToSettingDialog({super.key}) {
     _timer = Timer.periodic(const Duration(milliseconds: 1000), (timer) {
-      curentTimer--;
-      content = "我知道了($curentTimer)";
-      if (curentTimer == 0) {
+      currentTimer--;
+      content = "我知道了($currentTimer)";
+      if (currentTimer == 0) {
         content = "我知道了";
         _timer.cancel();
         disable = false;
@@ -88,7 +89,7 @@ class ToSettingDialog extends Dialog {
                               child: TextButton(
                             onPressed: () {
                               openAppSettings();
-                              Navigator.of(context).pop();
+                              Get.back();
                             },
                             child: const Text(
                               '前往设置',
@@ -109,7 +110,7 @@ class ToSettingDialog extends Dialog {
                                   onPressed: disable
                                       ? null
                                       : () {
-                                          Navigator.of(context).pop();
+                                    Get.back();
                                         },
                                   child: Text(content,
                                       style: TextStyle(
