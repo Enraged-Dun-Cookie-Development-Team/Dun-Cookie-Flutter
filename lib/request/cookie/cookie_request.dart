@@ -10,16 +10,15 @@ class CookiesApi {
   static Future<CookieInfoCountModel> getCookieInfoCount() async {
     ResponseData response = await HttpClass.get(UrlString.cookieInfoCountUrl,
         type: RequestType.server);
-    if (response.error) {
-      return CookieInfoCountModel(
+    return response.toModel(
+      transform: (json) => CookieInfoCountModel.fromJson(json),
+      onError: () => CookieInfoCountModel(
           totalCount: 0,
           skinCount: 0,
           operatorCount: 0,
           activityCount: 0,
-          epCount: 0);
-    } else {
-      return CookieInfoCountModel.fromJson(response.data['data']);
-    }
+          epCount: 0),
+    );
   }
 
   /// 饼主列表
@@ -34,11 +33,10 @@ class CookiesApi {
     }
     ResponseData response = await HttpClass.get(UrlString.cdnCookieMainList,
         params: map, type: RequestType.serveCdn);
-    if (response.error) {
-      return CookieMainListModel(cookies: []);
-    } else {
-      return CookieMainListModel.fromJson(response.data['data']);
-    }
+    return response.toModel(
+      transform: (json) => CookieMainListModel.fromJson(json),
+      onError: () => CookieMainListModel(cookies: []),
+    );
   }
 
   /// 饼搜索列表
@@ -53,11 +51,10 @@ class CookiesApi {
     }
     ResponseData response = await HttpClass.get(UrlString.cookieSearchList,
         params: map, type: RequestType.server);
-    if (response.error) {
-      return CookieMainListModel(cookies: []);
-    } else {
-      return CookieMainListModel.fromJson(response.data['data']);
-    }
+    return response.toModel(
+      transform: (json) => CookieMainListModel.fromJson(json),
+      onError: () => CookieMainListModel(cookies: []),
+    );
   }
 
   /// 最新饼id
@@ -65,10 +62,9 @@ class CookiesApi {
     ResponseData response = await HttpClass.get(
         UrlString.cdnNewestCookieIdUrl(combId),
         type: RequestType.cdn);
-    if (response.error) {
-      return NewestCookieIdModel.fromJson({});
-    } else {
-      return NewestCookieIdModel.fromJson(response.data);
-    }
+    return response.toModel(
+      transform: (json) => NewestCookieIdModel.fromJson(json),
+      onError: () => NewestCookieIdModel.fromJson({}),
+    );
   }
 }

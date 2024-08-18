@@ -9,26 +9,10 @@ class MangaApi {
   static Future<List<TerraComicModel>> getTerraComicList() async {
     ResponseData response = await HttpClass.get(UrlString.terraComicListUrl,
         type: RequestType.server);
-    if (response.error) {
-      return [];
-    } else {
-      return _responseDataToTerraComicListData(response);
-    }
-  }
-
-  static List<TerraComicModel> _responseDataToTerraComicListData(
-      ResponseData request) {
-    List<TerraComicModel> resultAll = [];
-    if (request.data is Map) {
-      Map map = request.data;
-      var data = map["data"];
-      if (data is List) {
-        for (var model in data) {
-          resultAll.add(TerraComicModel.fromJson(model));
-        }
-      }
-    }
-    return resultAll;
+    return response.toModelList(
+      transform: (json) => TerraComicModel.fromJson(json),
+      onError: () => [],
+    );
   }
 
   /// 泰拉记事社漫画小节列表
@@ -37,40 +21,19 @@ class MangaApi {
     ResponseData response = await HttpClass.get(
         UrlString.terraComicEpisodeUrl(comicId),
         type: RequestType.server);
-    if (response.error) {
-      return [];
-    } else {
-      return _responseDataToTerraComicEpisodeListData(response);
-    }
-  }
-
-  static List<TerraComicEpisodeModel> _responseDataToTerraComicEpisodeListData(
-      ResponseData request) {
-    List<TerraComicEpisodeModel> resultAll = [];
-    if (request.data is Map) {
-      Map map = request.data;
-      var data = map["data"];
-      if (data is List) {
-        for (var model in data) {
-          resultAll.add(TerraComicEpisodeModel.fromJson(model));
-        }
-      }
-    }
-    return resultAll;
+    return response.toModelList(
+      transform: (json) => TerraComicEpisodeModel.fromJson(json),
+      onError: () => [],
+    );
   }
 
   /// 泰拉记事社最近漫画章节
   static Future<TerraRecentEpisodeModel> getTerraNewestEpisode() async {
     ResponseData response = await HttpClass.get(UrlString.terraNewestEpisodeUrl,
         type: RequestType.server);
-    if (response.error) {
-      return TerraRecentEpisodeModel.fromJson({});
-    } else {
-      if (response.data['data'] != null) {
-        return TerraRecentEpisodeModel.fromJson(response.data['data']);
-      } else {
-        return TerraRecentEpisodeModel.fromJson({});
-      }
-    }
+    return response.toModel(
+      transform: (json) => TerraRecentEpisodeModel.fromJson(json),
+      onError: () => TerraRecentEpisodeModel.fromJson({}),
+    );
   }
 }

@@ -17,10 +17,10 @@ class InfoRequest {
     ResponseData response = await HttpClass.get(
         UrlString.userDatasourceSettingsUrl,
         type: RequestType.server);
-    if (response.data != null) {
-      return UserDatasourceModel.fromJson(response.data?["data"]);
-    }
-    return UserDatasourceModel.fromJson({});
+    return response.toModel(
+      transform: (json) => UserDatasourceModel.fromJson(json),
+      onError: () => UserDatasourceModel.fromJson({}),
+    );
   }
 
   ///更新数据源
