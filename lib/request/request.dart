@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:dio/dio.dart';
+import 'package:dun_cookie_flutter/common/logger.dart';
+import 'package:dun_cookie_flutter/request/interceptor/dio_log_interceptor.dart';
 
 import '../manager/settingManager.dart';
 import 'config.dart';
@@ -75,7 +77,8 @@ class HttpClass {
     responseType: ResponseType.json,
   );
 
-  static final Dio dio = Dio(_baseOptions);
+  static final Dio dio = Dio(_baseOptions)
+    ..interceptors.add(DioLogInterceptor(logger));
 
   static Future _request(
     String url, {
@@ -109,7 +112,6 @@ class HttpClass {
       dio.options.headers.addAll({
         "mob-id": SettingManager.getInstance().rid,
       });
-      print("请求 ${dio.options.baseUrl}$url");
       Response response = await dio.request(
         url,
         queryParameters: params,

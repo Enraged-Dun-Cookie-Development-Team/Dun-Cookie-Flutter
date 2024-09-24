@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dun_cookie_flutter/common/dun_dialog.dart';
+import 'package:dun_cookie_flutter/common/logger.dart';
 import 'package:get/get.dart';
 import 'package:mobpush_plugin/mobpush_plugin.dart';
 
@@ -42,7 +43,7 @@ class RegisterLogic extends GetxController {
     //获取注册的设备id， 这个可以不初始化
     Map<String, dynamic> ridMap = await MobpushPlugin.getRegistrationId();
     String regId = ridMap['res'].toString();
-    print('RID: ' + regId);
+    logger.info('RID: $regId');
     return regId;
   }
 
@@ -50,7 +51,7 @@ class RegisterLogic extends GetxController {
     if (SettingManager.getInstance().rid != regId) {
       SettingManager.getInstance().rid = regId;
     }
-    print('MobID: ' + regId);
+    logger.info('MobID: $regId');
     var result = false;
     var retry = 0;
     while (true) {

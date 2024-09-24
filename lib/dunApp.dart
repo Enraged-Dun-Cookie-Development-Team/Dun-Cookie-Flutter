@@ -1,4 +1,6 @@
+import 'package:dun_cookie_flutter/common/logger.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_logkit/logkit.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -29,6 +31,7 @@ class DunApp extends StatelessWidget {
         getPages: DunRouter.getPages,
         navigatorObservers: [
           routeObserver,
+          RouterLogObserver(logger),
         ],
       ),
     );

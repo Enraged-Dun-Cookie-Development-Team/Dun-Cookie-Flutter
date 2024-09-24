@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dun_cookie_flutter/common/logger.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:fk_user_agent/fk_user_agent.dart';
 import 'package:flutter/material.dart';
@@ -221,7 +222,7 @@ class ImageWidget extends StatelessWidget {
                   );
                 }
               case LoadState.failed:
-                print('图片加载失败:$url');
+                logger.error('图片加载失败: $url');
                 return const Image(
                     image: AssetImage("assets/image/load/error.png"));
             }

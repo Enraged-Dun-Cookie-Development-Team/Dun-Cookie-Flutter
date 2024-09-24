@@ -1,5 +1,7 @@
+import 'package:dun_cookie_flutter/common/logger.dart';
 import 'package:dun_cookie_flutter/page/cookie_share/view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_logkit/logkit.dart';
 import 'package:get/get.dart';
 
 import 'page/datasource/view.dart';
@@ -22,7 +24,6 @@ class DunObserver extends RouteObserver<PageRoute> {
       loadingDialogRoute = null;
     }
     super.didPop(route, previousRoute);
-    print('page:${route.settings.name} is pop');
   }
 
   @override
@@ -31,7 +32,6 @@ class DunObserver extends RouteObserver<PageRoute> {
       loadingDialogRoute = route;
     }
     super.didPush(route, previousRoute);
-    print('page:${route.settings.name} is push');
   }
 
   @override
@@ -40,7 +40,6 @@ class DunObserver extends RouteObserver<PageRoute> {
       loadingDialogRoute = null;
     }
     super.didRemove(route, previousRoute);
-    print('page:${route.settings.name} is remove');
   }
 }
 
@@ -61,8 +60,14 @@ class DunRouter {
 
   /// 别名映射页面
   static final List<GetPage> getPages = [
-    GetPage(name: root, page: () => RootPage()),
-    GetPage(name: register, page: () => RegisterPage()),
+    GetPage(
+      name: root,
+      page: () => LogkitOverlayAttacher(logger: logger, child: RootPage()),
+    ),
+    GetPage(
+      name: register,
+      page: () => LogkitOverlayAttacher(logger: logger, child: RegisterPage()),
+    ),
     GetPage(name: manga, page: () => MangaPage()),
     GetPage(name: honeyCake, page: () => HoneyCakeWorkshopPage()),
     GetPage(name: setting, page: () => SettingPage()),

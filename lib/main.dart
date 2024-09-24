@@ -1,19 +1,20 @@
 import 'dart:io';
 
-
+import 'package:dun_cookie_flutter/common/logger.dart';
 import 'package:fk_user_agent/fk_user_agent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_logkit/logkit.dart';
 
 import 'dunApp.dart';
 import 'manager/dunPreference.dart';
 import 'manager/settingManager.dart';
 
-
-
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  earlyInit().then((_) => runApp(const DunApp()));
+  runLogkitZonedGuarded(logger, () {
+    WidgetsFlutterBinding.ensureInitialized();
+    earlyInit().then((_) => runApp(const DunApp()));
+  });
 }
 
 Future<void> earlyInit() async {

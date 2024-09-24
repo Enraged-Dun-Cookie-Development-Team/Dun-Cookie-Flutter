@@ -52,6 +52,10 @@ dependencies:
   build_runner:
   path_provider:
   url_launcher: ^6.3.0
+  flutter_logkit:
+    git:
+      url: https://github.com/linyi102/flutter_logkit.git
+      ref: v0.0.1
 
 dev_dependencies:
   flutter_test:
