@@ -1,4 +1,5 @@
 
+import 'package:dun_cookie_flutter/common/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -89,8 +90,7 @@ class HoneyCakeWorkshopPage extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(20),
-              child: const Image(
-                image: AssetImage("assets/image/bilibili_up_mbgf.webp"),
+              child: Assets.image.bilibiliUpMbgf.image(
                 height: 24,
               ),
             ),

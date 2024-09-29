@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dun_cookie_flutter/common/assets.gen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -41,8 +42,7 @@ class RegisterPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image.asset(
-                  "assets/logo/logo.png",
+                Assets.logo.logo.image(
                   width: 100,
                 ),
                 const SizedBox(

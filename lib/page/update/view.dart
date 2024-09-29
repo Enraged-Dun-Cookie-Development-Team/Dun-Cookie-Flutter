@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dun_cookie_flutter/common/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -47,8 +48,7 @@ class UpdatePage extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            const Image(
-                              image: AssetImage("assets/logo/logo_no_line.png"),
+                            Assets.logo.logoNoLine.image(
                               width: 50,
                             ),
                             const SizedBox(width: 13),

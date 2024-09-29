@@ -1,4 +1,5 @@
 
+import 'package:dun_cookie_flutter/common/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -103,9 +104,7 @@ class _TerminalPageState extends State<TerminalPage> {
                 color: Colors.white,
                 child: Container(
                   padding: REdgeInsets.all(5),
-                  child: Image.asset(
-                    "assets/icon/settings.png",
-                  ),
+                  child: Assets.icon.settings.image(),
                 )),
           ),
           Container(

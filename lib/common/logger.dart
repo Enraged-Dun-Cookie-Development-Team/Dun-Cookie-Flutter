@@ -1,3 +1,4 @@
+import 'package:dun_cookie_flutter/common/assets.gen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_logkit/logkit.dart';
@@ -39,11 +40,7 @@ class _LogEntryIcon extends StatelessWidget {
         ],
       ),
       padding: const EdgeInsets.all(8),
-      child: Image.asset(
-        height: 36,
-        width: 36,
-        'assets/image/logo_rhine.png',
-      ),
+      child: Assets.image.logoRhine.image(height: 36, width: 36),
     );
   }
 }
