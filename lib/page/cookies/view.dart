@@ -1,3 +1,4 @@
+import 'package:dun_cookie_flutter/common/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -84,8 +85,7 @@ class _CookiesPageState extends State<CookiesPage> {
                         child: Container(
                           color: DunColors.white,
                           height: 42,
-                          child: Image.asset(
-                            "assets/icon/close.png",
+                          child: Assets.icon.close.image(
                             width: 16,
                             height: 16,
                           ),
@@ -104,8 +104,7 @@ class _CookiesPageState extends State<CookiesPage> {
                     onTap: () => {logic.handleSearch()},
                     child: Container(
                       padding: REdgeInsets.all(10),
-                      child: Image.asset(
-                        "assets/icon/search.png",
+                      child: Assets.icon.search.image(
                         color: DunColors.yellow,
                       ),
                     ),
@@ -175,7 +174,7 @@ class _CookiesPageState extends State<CookiesPage> {
       );
     } else {
       return Center(
-        child: Image.asset("assets/image/load/loading.gif", height: 150),
+        child: Assets.image.load.loading.image(height: 150),
       );
     }
   }

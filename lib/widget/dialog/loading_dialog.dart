@@ -1,3 +1,4 @@
+import 'package:dun_cookie_flutter/common/assets.gen.dart';
 import 'package:dun_cookie_flutter/common/dun_color.dart';
 import 'package:flutter/material.dart';
 
@@ -41,8 +42,7 @@ class LoadingDialog extends Dialog {
   }
 
   Image _buildImage() {
-    return Image.asset(
-      "assets/image/load/loading.gif",
+    return Assets.image.load.loading.image(
       height: imgSize,
       width: imgSize,
     );

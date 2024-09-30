@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dun_cookie_flutter/common/assets.gen.dart';
 import 'package:dun_cookie_flutter/common/logger.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:fk_user_agent/fk_user_agent.dart';
@@ -166,8 +167,7 @@ class ImageWidget extends StatelessWidget {
                   children: [
                     Padding(
                       padding: EdgeInsets.all(isSingle ? 60 : 10),
-                      child: const Image(
-                          image: AssetImage("assets/image/load/loading.gif")),
+                      child: Assets.image.load.loading.image(),
                     ),
                     Positioned(
                       right: 0,
@@ -223,8 +223,7 @@ class ImageWidget extends StatelessWidget {
                 }
               case LoadState.failed:
                 logger.error('图片加载失败: $url');
-                return const Image(
-                    image: AssetImage("assets/image/load/error.png"));
+                return Assets.image.load.error.image();
             }
           },
         ),

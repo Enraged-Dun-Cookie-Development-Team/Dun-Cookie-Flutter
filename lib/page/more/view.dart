@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import 'package:dun_cookie_flutter/common/assets.gen.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -143,19 +144,15 @@ class _MorePageState extends State<MorePage> {
                                           (ExtendedImageState state) {
                                         if (state.extendedImageLoadState ==
                                             LoadState.loading) {
-                                          return const Center(
-                                              child: Image(
-                                                  height: 220,
-                                                  image: AssetImage(
-                                                      "assets/image/load/loading.gif")));
+                                          return Center(
+                                              child: Assets.image.load.loading
+                                                  .image(height: 220));
                                         }
                                         return null;
                                       },
                                     )
-                                  : const Image(
-                                      height: 220,
-                                      image: AssetImage(
-                                          "assets/image/load/loading.gif")),
+                                  : Assets.image.load.loading
+                                      .image(height: 220),
                               const SizedBox(width: 13),
                               const DashedLineVerticalWidget(height: 100),
                               const SizedBox(width: 13),
@@ -296,8 +293,7 @@ class _MorePageState extends State<MorePage> {
                             width: 13,
                           ),
                           ClipOval(
-                              child: Image.asset(
-                            "assets/image/bilibili_up_mbgf.webp",
+                              child: Assets.image.bilibiliUpMbgf.image(
                             width: 40,
                           )),
                           const SizedBox(

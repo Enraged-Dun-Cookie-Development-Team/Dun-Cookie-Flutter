@@ -1,3 +1,4 @@
+import 'package:dun_cookie_flutter/common/assets.gen.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -59,10 +60,7 @@ class _MangaListCardState extends State<MangaListCard> {
               loadStateChanged: (ExtendedImageState state) {
                 if (state.extendedImageLoadState == LoadState.loading) {
                   return Center(
-                      child: Image(
-                          height: 220.h,
-                          image: const AssetImage(
-                              "assets/image/load/loading.gif")));
+                      child: Assets.image.load.loading.image(height: 220.h));
                 }
                 return null;
               },
@@ -115,7 +113,7 @@ class _MangaListCardState extends State<MangaListCard> {
                         widget.comicModel.subtitle == ""
                             ? Container()
                             : Text(
-                          widget.comicModel.subtitle,
+                                widget.comicModel.subtitle,
                                 style: DunStyles.text16B45,
                               ),
                         widget.comicModel.subtitle == ""

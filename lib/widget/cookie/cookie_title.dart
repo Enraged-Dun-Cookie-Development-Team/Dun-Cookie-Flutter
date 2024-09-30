@@ -1,3 +1,4 @@
+import 'package:dun_cookie_flutter/common/assets.gen.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -70,8 +71,7 @@ class CookieTitle extends StatelessWidget {
               mode: ExtendedImageMode.gesture,
               cache: true,
             )
-          : Image.asset(
-              "assets/image/load/load.png",
+          : Assets.image.load.load.image(
               width: size.width,
               height: size.height,
               fit: BoxFit.cover,

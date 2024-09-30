@@ -1,3 +1,4 @@
+import 'package:dun_cookie_flutter/common/assets.gen.dart';
 import 'package:dun_cookie_flutter/common/dun_color.dart';
 import 'package:dun_cookie_flutter/manager/settingManager.dart';
 import 'package:dun_cookie_flutter/page/root/logic.dart';
@@ -69,12 +70,12 @@ class RootPage extends StatelessWidget {
               children: [
                 _buildBottomItem(
                   index: 1,
-                  iconPath: 'assets/icon/more_list_icon.png',
+                  iconPath: Assets.icon.moreListIcon.path,
                 ),
                 const Spacer(),
                 _buildBottomItem(
                   index: 2,
-                  iconPath: 'assets/icon/terminal_page_icon.png',
+                  iconPath: Assets.icon.terminalPageIcon.path,
                 ),
               ],
             ),
@@ -140,8 +141,7 @@ class RootPage extends StatelessWidget {
           color: isSelected ? DunColors.yellow : DunColors.white,
         ),
         child: Center(
-          child: Image.asset(
-            'assets/icon/main_list_icon.png',
+          child: Assets.icon.mainListIcon.image(
             width: 57,
             height: 48,
             color: isSelected ? DunColors.white : DunColors.gray_2,
