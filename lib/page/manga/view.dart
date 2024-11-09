@@ -2,13 +2,12 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 import '../../common/dun_color.dart';
 import '../../widget/manga/mange_list_card.dart';
 import 'logic.dart';
 
 class MangaPage extends StatelessWidget {
-  MangaPage({Key? key}) : super(key: key);
+  MangaPage({super.key});
 
   final logic = Get.put(MangaLogic());
   final state = Get.find<MangaLogic>().state;
@@ -16,7 +15,7 @@ class MangaPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MediaQuery(
-        data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+        data: MediaQuery.of(context).copyWith(textScaler: TextScaler.noScaling),
         child: Scaffold(
           backgroundColor: DunColors.gray_3,
           appBar: AppBar(

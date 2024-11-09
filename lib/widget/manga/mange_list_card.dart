@@ -11,10 +11,10 @@ import '../dun_tag.dart';
 
 class MangaListCard extends StatefulWidget {
   const MangaListCard({
-    Key? key,
+    super.key,
     required this.comicModel,
     required this.onTapCard,
-  }) : super(key: key);
+  });
 
   final TerraComicModel comicModel;
   final Function(TerraComicEpisodeModel url) onTapCard;
@@ -39,8 +39,11 @@ class _MangaListCardState extends State<MangaListCard> {
       child: GestureDetector(
         onTap: () async {
           if (!_isExpanded && episodes.isEmpty) {
-            episodes = await MangaApi.getTerraComicEpisodeList(
+            var responseData = await MangaApi.getTerraComicEpisodeList(
                 widget.comicModel.comic);
+            if (!responseData.error) {
+              episodes = responseData.data ?? [];
+            }
           }
           setState(() {
             _isExpanded = !_isExpanded;
@@ -71,8 +74,11 @@ class _MangaListCardState extends State<MangaListCard> {
               elevation: 0,
               expansionCallback: (panelIndex, isExpanded) async {
                 if (!_isExpanded && episodes.isEmpty) {
-                  episodes = await MangaApi.getTerraComicEpisodeList(
+                  var responseData = await MangaApi.getTerraComicEpisodeList(
                       widget.comicModel.comic);
+                  if (!responseData.error) {
+                    episodes = responseData.data ?? [];
+                  }
                 }
                 setState(() {
                   _isExpanded = !_isExpanded;

@@ -1,3 +1,4 @@
+import 'package:dun_cookie_flutter/model/cookie/newest_cookie_id.dart';
 import 'package:dun_cookie_flutter/page/root/logic.dart';
 import 'package:dun_cookie_flutter/route.dart';
 import 'package:flutter/animation.dart';
@@ -9,7 +10,6 @@ import '../../common/dun_jump.dart';
 import '../../common/dun_toast.dart';
 import '../../manager/settingManager.dart';
 import '../../model/cookie/cookie_main_list.dart';
-import '../../model/cookie/newest_cookie_id.dart';
 import '../../model/info/user_settings.dart';
 import '../../request/cookie/cookie_request.dart';
 import 'state.dart';
@@ -17,25 +17,25 @@ import 'state.dart';
 class CookiesLogic extends GetxController {
   final CookiesState state = CookiesState();
 
+  UserDatasourceModel get datasourceSetting =>
+      SettingManager.getInstance().datasourceSetting.value;
+
   @override
   void onInit() {
     super.onInit();
-    loadData(refresh: true);
+    refreshData();
     state.scrollController.addListener(() {
       if (state.scrollController.position.pixels ==
           state.scrollController.position.maxScrollExtent) {
-        loadData(more: true);
+        loadData();
       }
     });
     RootLogic.to?.state.scrollHideController
         .addScrollController(state.scrollController);
     state.searchController.addListener(() {
       var debounce = EventFilter.debounce("list_search_word", () {
-        bool isNotEmpty = state.searchController.text.isNotEmpty;
-        if (state.offstage.value == isNotEmpty) {
-          state.offstage.value = !isNotEmpty;
-        }
-        if (!isNotEmpty && state.searchStatue) {
+        state.offstage.value = state.searchController.text.isNotEmpty;
+        if (state.searchController.text.isEmpty && state.searchStatue.value) {
           cancelSearch();
         }
       }, duration: const Duration(milliseconds: 100));
@@ -49,51 +49,113 @@ class CookiesLogic extends GetxController {
     state.scrollController.dispose();
   }
 
-  Future<void> loadData({bool refresh = false, bool more = false}) async {
-    UserDatasourceModel datasourceSetting =
-        SettingManager.getInstance().datasourceSetting.value;
-    if (state.searchStatue) {
-      CookieMainListModel cookiesResp = await CookiesApi.getCookieSearchList(
-          datasourceSetting.datasourceCombId,
-          state.lastSearchContent,
-          more ? state.searchNextPageId : null);
-      more
-          ? state.searchCookieList.addAll(cookiesResp.cookies)
-          : state.searchCookieList = cookiesResp.cookies;
-      state.searchNextPageId = cookiesResp.nextPageId;
-    } else {
-      NewestCookieIdModel newestCookieId =
-          await CookiesApi.getCdnNewestCookieId(
-              datasourceSetting.datasourceCombId);
-      if (newestCookieId == state.newestCookieId && !more) {
-        if (refresh) update([state.listGID]);
-        return;
+  Future<bool> updateNewestCookieId() async {
+    var responseData = await CookiesApi.getCdnNewestCookieId(
+        datasourceSetting.datasourceCombId);
+    if (!responseData.error) {
+      NewestCookieIdModel? data = responseData.data;
+      if (data != null) {
+        if (data.cookieId == state.newestCookieId.cookieId &&
+            data.updateCookieId == state.newestCookieId.cookieId) {
+          update([state.listGID]);
+        } else {
+          state.newestCookieId = data;
+          return true;
+        }
       }
-      state.newestCookieId = newestCookieId;
-      CookieMainListModel cookiesResp = await CookiesApi.getCdnCookieMainList(
-          datasourceSetting.datasourceCombId,
-          more ? state.nextPageId! : state.newestCookieId.cookieId,
-          state.newestCookieId.updateCookieId);
-      // 如果请求失败，updateId让它为空再请求一次
-      if (cookiesResp.cookies.isEmpty) {
-        cookiesResp = await CookiesApi.getCdnCookieMainList(
-            datasourceSetting.datasourceCombId,
-            more ? state.nextPageId! : state.newestCookieId.cookieId,
-            null);
-        state.newestCookieId.updateCookieId = '';
-      }
-      more
-          ? state.cookieList.addAll(cookiesResp.cookies)
-          : state.cookieList = cookiesResp.cookies;
-      state.nextPageId = cookiesResp.nextPageId;
     }
-    update([state.listGID]);
+    return false;
+  }
+
+  Future<void> refreshData() async {
+    if (state.searchStatue.value) {
+      var responseData = await CookiesApi.getCookieSearchList(
+        combId: datasourceSetting.datasourceCombId,
+        searchWord: state.lastSearchContent,
+      );
+      if (responseData.error) {
+        //获取搜索饼列表失败
+        DunToast.showError("请求失败");
+      }
+      CookieMainListModel? searchList = responseData.data;
+      if (searchList != null) {
+        state.searchCookieList.value = searchList.cookies;
+        state.searchNextPageId.value = searchList.nextPageId;
+      }
+    } else {
+      bool result = await updateNewestCookieId();
+      if (result) {
+        var responseData = await CookiesApi.getCdnCookieMainList(
+            combId: datasourceSetting.datasourceCombId,
+            cookieId: state.newestCookieId.cookieId,
+            updateCookieId: state.newestCookieId.updateCookieId);
+        if (responseData.error) {
+          //获取饼列表失败
+          responseData = await CookiesApi.getCdnCookieMainList(
+            combId: datasourceSetting.datasourceCombId,
+            cookieId: state.newestCookieId.cookieId,
+          );
+          if (responseData.error) {
+            //二次请求饼列表失败
+            DunToast.showError("请求失败");
+            return;
+          }
+          state.newestCookieId.cookieId = '';
+        }
+        CookieMainListModel? mainList = responseData.data;
+        if (mainList != null) {
+          state.cookieList.value = mainList.cookies;
+          state.nextPageId.value = mainList.nextPageId;
+        }
+      }
+    }
+  }
+
+  Future<void> loadData() async {
+    if (state.searchStatue.value) {
+      var responseData = await CookiesApi.getCookieSearchList(
+          combId: datasourceSetting.datasourceCombId,
+          searchWord: state.lastSearchContent,
+          cookieId: state.searchNextPageId.value);
+      if (responseData.error) {
+        //获取搜索饼列表失败
+        DunToast.showError("请求失败");
+      }
+      CookieMainListModel? searchList = responseData.data;
+      if (searchList != null) {
+        state.searchCookieList.addAll(searchList.cookies);
+        state.searchNextPageId.value = searchList.nextPageId;
+      }
+    } else {
+      var responseData = await CookiesApi.getCdnCookieMainList(
+          combId: datasourceSetting.datasourceCombId,
+          cookieId: state.nextPageId.value,
+          updateCookieId: state.newestCookieId.updateCookieId);
+      if (responseData.error) {
+        //获取饼列表失败
+        responseData = await CookiesApi.getCdnCookieMainList(
+          combId: datasourceSetting.datasourceCombId,
+          cookieId: state.newestCookieId.cookieId,
+        );
+        if (responseData.error) {
+          //二次请求饼列表失败
+          DunToast.showError("请求失败");
+          return;
+        }
+        state.newestCookieId.cookieId = '';
+      }
+      CookieMainListModel? mainList = responseData.data;
+      if (mainList != null) {
+        state.cookieList.addAll(mainList.cookies);
+        state.nextPageId.value = mainList.nextPageId;
+      }
+    }
   }
 
   Future<void> onRefresh() async {
     if (state.isAllowRefresh) {
-      await loadData(refresh: true);
       state.isAllowRefresh = false;
+      refreshData();
       Future.delayed(const Duration(seconds: 10), () {
         state.isAllowRefresh = true;
       });
@@ -103,13 +165,13 @@ class CookiesLogic extends GetxController {
   }
 
   void cancelSearch() {
-    state.searchStatue = false;
+    state.searchStatue.value = false;
     if (state.searchCookieList.isNotEmpty) {
       state.scrollController.jumpTo(0);
     }
-    loadData(refresh: true).then((value) {
+    refreshData().then((value) {
       state.searchCookieList.clear();
-      state.searchNextPageId = null;
+      state.searchNextPageId.value = '';
       state.lastSearchContent = '';
     });
   }
@@ -119,7 +181,7 @@ class CookiesLogic extends GetxController {
     if (searchText == state.lastSearchContent) {
       return;
     } else {
-      state.searchStatue = true;
+      state.searchStatue.value = true;
       state.lastSearchContent = searchText;
       state.scrollController
           .animateTo(0,
@@ -129,7 +191,6 @@ class CookiesLogic extends GetxController {
   }
 
   onTapShare(Cookie cookie) {
-    //todo 分享页跳转
     Get.toNamed(DunRouter.share, arguments: cookie);
   }
 

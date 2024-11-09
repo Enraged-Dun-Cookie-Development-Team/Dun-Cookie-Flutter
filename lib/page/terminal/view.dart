@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -35,9 +34,9 @@ class _TerminalPageState extends State<TerminalPage> {
           padding: REdgeInsets.fromLTRB(12, 0, 12, 12),
           children: [
             _buildTitleBar(),
-            _buildCakeWarehouse(state.cookieInfoCount),
-            _buildResourceWidget(state.resourceInfo.resources),
-            _buildActivityWidget(state.resourceInfo.countdown),
+            Obx(() => _buildCakeWarehouse(state.cookieInfoCount.value)),
+            Obx(() => _buildResourceWidget(state.resourceInfo.value.resources)),
+            Obx(() => _buildActivityWidget(state.resourceInfo.value.countdown)),
             const SizedBox(
               height: 60,
             )
@@ -161,7 +160,8 @@ class _TerminalPageState extends State<TerminalPage> {
                     Positioned(
                       left: 10,
                       top: 9,
-                      child: Container(width: 11, height: 22, color: DunColors.yellow),
+                      child: Container(
+                          width: 11, height: 22, color: DunColors.yellow),
                     ),
                     const Positioned(
                       left: 24,

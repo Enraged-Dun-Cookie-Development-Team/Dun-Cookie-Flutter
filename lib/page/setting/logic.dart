@@ -20,7 +20,8 @@ class SettingLogic extends GetxController {
     super.onInit();
     state.version.value = SettingManager.getInstance().version;
     state.isPreview.value = SettingManager.getInstance().isPreview;
-    state.isHideBottomOnScroll.value = SettingManager.getInstance().isHideBottomOnScroll;
+    state.isHideBottomOnScroll.value =
+        SettingManager.getInstance().isHideBottomOnScroll;
     state.mobRId.value = SettingManager.getInstance().rid;
   }
 
@@ -51,13 +52,16 @@ class SettingLogic extends GetxController {
   }
 
   Future<void> onTapCheckUpgrade() async {
-    DunAppInfoModel? app = await CeobeApi.getAppVersionInfo();
-    if (PackageInfoPlus.isVersionHigher(app?.version, state.version.value)) {
-      //跳转更新
-      DunToast.showInfo("当前版本已过时，为您跳转到更新页面");
-      Get.toNamed(DunRouter.update, arguments: app);
-    } else {
-      DunToast.showSuccess("当前版本是最新版本");
+    var responseData = await CeobeApi.getAppVersionInfo();
+    if (!responseData.error) {
+      DunAppInfoModel? app = responseData.data;
+      if (PackageInfoPlus.isVersionHigher(app?.version, state.version.value)) {
+        //跳转更新
+        DunToast.showInfo("当前版本已过时，为您跳转到更新页面");
+        Get.toNamed(DunRouter.update, arguments: app);
+      } else {
+        DunToast.showSuccess("当前版本是最新版本");
+      }
     }
   }
 

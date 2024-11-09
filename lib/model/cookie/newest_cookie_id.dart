@@ -19,13 +19,4 @@ class NewestCookieIdModel {
 
   factory NewestCookieIdModel.fromJson(Map<String, dynamic> srcJson) =>
       _$NewestCookieIdModelFromJson(srcJson);
-
-  @override
-  bool operator ==(Object other) {
-    if (other is NewestCookieIdModel) {
-      return cookieId == other.cookieId &&
-          updateCookieId == other.updateCookieId;
-    }
-    return false;
-  }
 }

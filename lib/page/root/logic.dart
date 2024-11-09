@@ -30,7 +30,8 @@ class RootLogic extends GetxController {
   // 判断版本号，强制更新&更新日志
   void _checkVersion() async {
     String nowVersion = SettingManager.getInstance().version;
-    DunAppInfoModel? newApp = await CeobeApi.getAppVersionInfo();
+    var responseData = await CeobeApi.getAppVersionInfo();
+    DunAppInfoModel? newApp = responseData.data;
     String? lastShowedVersion = getLastShowVersion();
     if (Platform.isIOS) {
       int openNumber = getLaunchCount() ?? 0;
@@ -44,9 +45,9 @@ class RootLogic extends GetxController {
       }
     }
     if (lastShowedVersion != null && nowVersion != lastShowedVersion) {
-      DunAppInfoModel? nowApp =
-          await CeobeApi.getAppVersionInfo(version: nowVersion);
-      if (nowApp != null) {
+      responseData = await CeobeApi.getAppVersionInfo(version: nowVersion);
+      DunAppInfoModel? nowApp = responseData.data;
+      if (!responseData.error && nowApp != null) {
         showUpdateInfoDialog(nowApp);
       }
     }

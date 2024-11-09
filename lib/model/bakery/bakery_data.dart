@@ -34,7 +34,6 @@ class BakeryDataModel {
     required this.daily,
   });
 
-  @override
   factory BakeryDataModel.fromJson(Map<String, dynamic> srcJson) =>
       _$BakeryDataModelFromJson(srcJson);
 }

@@ -1,4 +1,3 @@
-
 import 'package:get/get.dart';
 
 import '../../common/dun_jump.dart';
@@ -18,11 +17,14 @@ class MangaLogic extends GetxController {
   //  获取数据
   loadData() async {
     state.loadDataType.value = 1;
-    state.comicsList = await MangaApi.getTerraComicList();
-    if (state.comicsList.isNotEmpty) {
-      state.loadDataType.value = 0;
-    } else {
-      state.loadDataType.value = 2;
+    var responseData = await MangaApi.getTerraComicList();
+    if (!responseData.error) {
+      state.comicsList = responseData.data ?? [];
+      if (state.comicsList.isNotEmpty) {
+        state.loadDataType.value = 0;
+      } else {
+        state.loadDataType.value = 2;
+      }
     }
   }
 

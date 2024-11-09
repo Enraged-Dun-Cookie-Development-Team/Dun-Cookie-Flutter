@@ -7,12 +7,12 @@ part 'cookie_main_list.g.dart';
 class CookieMainListModel {
   @JsonKey(defaultValue: [])
   List<Cookie> cookies;
-  @JsonKey(name: 'next_page_id')
-  String? nextPageId;
+  @JsonKey(name: 'next_page_id', defaultValue: '')
+  String nextPageId;
 
   CookieMainListModel({
     required this.cookies,
-    this.nextPageId,
+    required this.nextPageId,
   });
 
   factory CookieMainListModel.fromJson(Map<String, dynamic> srcJson) =>

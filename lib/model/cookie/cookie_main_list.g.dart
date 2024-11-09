@@ -12,7 +12,7 @@ CookieMainListModel _$CookieMainListModelFromJson(Map<String, dynamic> json) =>
               ?.map((e) => Cookie.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
-      nextPageId: json['next_page_id'] as String?,
+      nextPageId: json['next_page_id'] as String? ?? '',
     );
 
 Cookie _$CookieFromJson(Map<String, dynamic> json) => Cookie(
