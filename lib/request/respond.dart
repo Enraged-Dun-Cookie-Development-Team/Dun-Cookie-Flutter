@@ -16,7 +16,7 @@ class ResponseData<T> {
   final bool error;
   final dynamic _data;
   final String msg;
-  final MapToModel fromJson;
+  final MapToModel<T> fromJson;
   final RequestType type;
 
   T? get data {
@@ -34,12 +34,17 @@ class ResponseData<T> {
 
 MapToModel<List<T>> getListHandle<T, E>({ValueToModel<T, E>? fromJson}) {
   return (data) {
+    List<T> result = [];
     final value = data['row'];
     if (value is List<T>) {
       return value;
-    } else if (fromJson != null && value is List<E>) {
-      return value.map((e) => fromJson(e)).toList();
+    } else if (fromJson != null && value is List) {
+      for (var element in value) {
+        if (element is E) {
+          result.add(fromJson(element));
+        }
+      }
     }
-    return [];
+    return result;
   };
 }
