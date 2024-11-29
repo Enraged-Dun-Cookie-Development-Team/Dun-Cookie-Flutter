@@ -9,6 +9,7 @@ part of 'terra_comic_episode.dart';
 TerraComicEpisodeModel _$TerraComicEpisodeModelFromJson(
         Map<String, dynamic> json) =>
     TerraComicEpisodeModel(
+      episodeId: json['episode_id'] as String? ?? '',
       comic: json['comic'] as String? ?? '',
       jumpUrl: json['jump_url'] as String? ?? '',
       shortTitle: json['short_title'] as String? ?? '',

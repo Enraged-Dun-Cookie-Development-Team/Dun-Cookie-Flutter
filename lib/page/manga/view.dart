@@ -2,7 +2,6 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
 import '../../common/dun_color.dart';
 import '../../widget/manga/mange_list_card.dart';
 import 'logic.dart';
@@ -16,7 +15,8 @@ class MangaPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MediaQuery(
-        data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+        data: MediaQuery.of(context)
+            .copyWith(textScaler: const TextScaler.linear(1.0)),
         child: Scaffold(
           backgroundColor: DunColors.gray_3,
           appBar: AppBar(
@@ -51,7 +51,7 @@ class MangaPage extends StatelessWidget {
               duration: const Duration(milliseconds: 1000),
               child: MangaListCard(
                 comicModel: state.comicsList[index],
-                onTapCard: logic.onTapManga,
+                onTapEpisode: logic.onTapManga,
               ),
             );
           },

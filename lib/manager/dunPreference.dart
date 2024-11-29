@@ -11,6 +11,7 @@ String _$IsHideBottomOnScroll = 'isHideBottomOnScroll';
 String _$DatasourceSetting = "datasourceSetting";
 String _$LastShowVersion = 'lastShowVersion';
 String _$LaunchCount = 'launchCount';
+String _$MangaHistory = "mangaHistory";
 
 class DunPreferences {
   static final _instance = DunPreferences._();
@@ -127,4 +128,16 @@ UserDatasourceModel getDatasourceSetting() {
   } else {
     return UserDatasourceModel.fromJson({});
   }
+}
+
+Future<bool> saveMangaHistory(String value) async {
+  return await DunPreferences.getInstance().saveString(_$MangaHistory, value);
+}
+
+Map<String, dynamic> getMangaHistory() {
+  String? data = DunPreferences.getInstance().getString(_$MangaHistory);
+  if (data != null) {
+    return jsonDecode(data);
+  }
+  return {};
 }

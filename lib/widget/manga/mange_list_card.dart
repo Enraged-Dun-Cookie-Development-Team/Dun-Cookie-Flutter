@@ -1,6 +1,9 @@
+import 'package:dun_cookie_flutter/manager/settingManager.dart';
+import 'package:dun_cookie_flutter/widget/manga/episode_list.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 import '../../common/dun_color.dart';
 import '../../common/time_unit.dart';
@@ -13,11 +16,11 @@ class MangaListCard extends StatefulWidget {
   const MangaListCard({
     Key? key,
     required this.comicModel,
-    required this.onTapCard,
+    required this.onTapEpisode,
   }) : super(key: key);
 
   final TerraComicModel comicModel;
-  final Function(TerraComicEpisodeModel url) onTapCard;
+  final Function(TerraComicEpisodeModel url) onTapEpisode;
 
   @override
   State<MangaListCard> createState() => _MangaListCardState();
@@ -93,7 +96,7 @@ class _MangaListCardState extends State<MangaListCard> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
+                        Wrap(
                           children: List.generate(
                               widget.comicModel.keywords.length, (index) {
                             return Container(
@@ -115,7 +118,7 @@ class _MangaListCardState extends State<MangaListCard> {
                         widget.comicModel.subtitle == ""
                             ? Container()
                             : Text(
-                          widget.comicModel.subtitle,
+                                widget.comicModel.subtitle,
                                 style: DunStyles.text16B45,
                               ),
                         widget.comicModel.subtitle == ""
@@ -128,28 +131,14 @@ class _MangaListCardState extends State<MangaListCard> {
                         const SizedBox(
                           height: 6,
                         ),
-                        Wrap(
-                          crossAxisAlignment: WrapCrossAlignment.start,
-                          children: List.generate(episodes.length, (index) {
-                            return GestureDetector(
-                              onTap: () {
-                                widget.onTapCard(episodes[index]);
-                              },
-                              child: Container(
-                                  padding: REdgeInsets.symmetric(
-                                      vertical: 2, horizontal: 8),
-                                  margin:
-                                      REdgeInsets.only(bottom: 10, right: 10),
-                                  decoration: BoxDecoration(
-                                      border:
-                                          Border.all(color: DunColors.DunColor),
-                                      borderRadius: BorderRadius.circular(5)),
-                                  child: Text(
-                                    episodes[index].shortTitle,
-                                  )),
-                            );
-                          }),
-                        )
+                        Obx(
+                          () => EpisodeList(
+                            episodes: episodes,
+                            lastView: SettingManager.getInstance()
+                                .mangaHistory[widget.comicModel.comic],
+                            onTapEpisode: widget.onTapEpisode,
+                          ),
+                        ),
                       ],
                     ),
                   ),

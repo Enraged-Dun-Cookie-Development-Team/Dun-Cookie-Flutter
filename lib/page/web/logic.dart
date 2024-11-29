@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:dun_cookie_flutter/manager/settingManager.dart';
 import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../common/dun_jump.dart';
+import '../../common/dun_tool.dart';
 import 'state.dart';
 
 class WebLogic extends GetxController {
@@ -17,10 +19,18 @@ class WebLogic extends GetxController {
     state.webController = WebViewController()
       ..loadRequest(Uri.parse(state.url))
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setNavigationDelegate(NavigationDelegate(
-        onNavigationRequest: navigationDelegate,
-        onProgress: onProgress,
-      ));
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onNavigationRequest: navigationDelegate,
+          onProgress: onProgress,
+          onPageFinished: onPageFinished,
+          onUrlChange: onUrlChange,
+        ),
+      );
+  }
+
+  void onTapBack() {
+    Get.back();
   }
 
   FutureOr<NavigationDecision> navigationDelegate(NavigationRequest request) {
@@ -37,7 +47,7 @@ class WebLogic extends GetxController {
   }
 
   Future<void> onProgress(int progress) async {
-    if (progress == 100) {
+    if (progress >= 100) {
       await Future.delayed(const Duration(milliseconds: 500));
       state.title.value = await state.webController.getTitle() ?? '';
     } else {
@@ -45,7 +55,19 @@ class WebLogic extends GetxController {
     }
   }
 
-  void onTapBack() {
-    Get.back();
+  Future<void> onPageFinished(String url) async {}
+
+  Future<void> onUrlChange(UrlChange change) async {
+    String? url = change.url;
+    if (url != null) {
+      RegExpMatch? match = MangaTool.regExp.firstMatch(url);
+      if (match != null) {
+        String? comic = match.group(1);
+        String? episode = match.group(2);
+        if (comic != null && episode != null) {
+          SettingManager.getInstance().addMangaHistory(comic, episode);
+        }
+      }
+    }
   }
 }

@@ -1,10 +1,11 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
+import 'package:get/get_rx/get_rx.dart';
 
 import '../common/package_info.dart';
-import 'dunPreference.dart';
 import '../model/info/user_settings.dart';
+import 'dunPreference.dart';
 
 class SettingManager {
   static final _instance = SettingManager._();
@@ -20,14 +21,18 @@ class SettingManager {
   bool _isHideBottomOnScroll = false;
   Rx<UserDatasourceModel> datasourceSetting =
       UserDatasourceModel(datasourceList: {}, datasourceCombId: "").obs;
+  RxMap<String, String> mangaHistory = RxMap();
 
   init() async {
     version = await PackageInfoPlus.getVersion();
-    await _readNotOnce();
-    await _readRid();
-    await _readIsPreview();
-    await _readIsHideBottomOnScroll();
-    await _readDatasourceSetting();
+    await Future.value([
+      _readNotOnce(),
+      _readRid(),
+      _readIsPreview(),
+      _readIsHideBottomOnScroll(),
+      _readDatasourceSetting(),
+      _readMangaHistory(),
+    ]);
   }
 
   bool get notOnce => _notOnce;
@@ -102,5 +107,21 @@ class SettingManager {
 
   _readDatasourceSetting() {
     datasourceSetting.value = getDatasourceSetting();
+  }
+
+  addMangaHistory(String comic, String episode) {
+    mangaHistory[comic] = episode;
+    _saveMangaHistory();
+  }
+
+  _saveMangaHistory() {
+    String data = jsonEncode(mangaHistory);
+    saveMangaHistory(data);
+  }
+
+  _readMangaHistory() {
+    var data = getMangaHistory();
+    mangaHistory.value =
+        data.map((key, value) => MapEntry(key, value.toString()));
   }
 }
