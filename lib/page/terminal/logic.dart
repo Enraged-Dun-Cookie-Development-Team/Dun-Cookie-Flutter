@@ -24,8 +24,16 @@ class TerminalLogic extends GetxController {
   }
 
   Future<void> loadData() async {
-    state.resourceInfo = await CeobeApi.getResourceInfo();
-    state.cookieInfoCount = await CookiesApi.getCookieInfoCount();
+    await CeobeApi.getResourceInfo().then((value) {
+      if (!value.error && value.data != null) {
+        state.resourceInfo.value = value.data!;
+      }
+    });
+    CookiesApi.getCookieInfoCount().then((value) {
+      if (!value.error && value.data != null) {
+        state.cookieInfoCount.value = value.data!;
+      }
+    });
     update([state.rootGID]);
   }
 

@@ -1,4 +1,3 @@
-
 import 'package:dun_cookie_flutter/common/dun_dialog.dart';
 import 'package:get/get.dart';
 
@@ -26,15 +25,21 @@ class DatasourceLogic extends GetxController {
     final values =
         List<List<ConfigDatasourceModel>>.generate(keys.length, (index) => []);
     state.datasourceGroups = Map.fromIterables(keys, values);
-    var allDatasource = await ConfigRequest.getConfigDatasource();
-    for (var element in allDatasource) {
-      if (state.datasourceGroups[element.platform] != null) {
-        state.datasourceGroups[element.platform]?.add(element);
-      } else {
-        state.datasourceGroups[Platform.other]?.add(element);
-      }
+    var responseData = await ConfigRequest.getConfigDatasource();
+    if (responseData.error) {
+      //请求配置数据源失败
     }
-    update([state.groupGID]);
+    var allDatasource = responseData.data;
+    if (allDatasource != null) {
+      for (var element in allDatasource) {
+        if (state.datasourceGroups[element.platform] != null) {
+          state.datasourceGroups[element.platform]?.add(element);
+        } else {
+          state.datasourceGroups[Platform.other]?.add(element);
+        }
+      }
+      update([state.groupGID]);
+    }
   }
 
   void onTapBack() {
@@ -44,14 +49,19 @@ class DatasourceLogic extends GetxController {
   Future<void> onTapSave() async {
     showLoadingDialog();
     bool saveSucceed =
-        await InfoRequest.updateDataSource(state.userDatasourceList);
+        (await InfoRequest.updateDataSource(state.userDatasourceList)).error;
     clearLoadingDialog();
     if (saveSucceed) {
       DunToast.showInfo("保存成功");
-      UserDatasourceModel userDatasourceModel =
-          await InfoRequest.getUserDatasourceSettings();
-      SettingManager.getInstance().updateDataSource(userDatasourceModel);
-      update([state.groupGID]);
+      var responseData = await InfoRequest.getUserDatasourceSettings();
+      if (responseData.error) {
+        return;
+      }
+      UserDatasourceModel? userDatasourceModel = responseData.data;
+      if (userDatasourceModel != null) {
+        SettingManager.getInstance().updateDataSource(userDatasourceModel);
+        update([state.groupGID]);
+      }
     } else {
       DunToast.showInfo("保存失败");
     }
@@ -62,10 +72,10 @@ class DatasourceLogic extends GetxController {
       state.userDatasourceList.add(datasource.uniqueId);
       return true;
     } else {
-      if(state.userDatasourceList.length==1){
+      if (state.userDatasourceList.length == 1) {
         DunToast.showError("至少关注一个哦");
         return true;
-      }else{
+      } else {
         state.userDatasourceList.remove(datasource.uniqueId);
         return false;
       }

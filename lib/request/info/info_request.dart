@@ -1,4 +1,5 @@
 import '../../model/info/user_settings.dart';
+import '../api.dart';
 import '../request.dart';
 import '../respond.dart';
 
@@ -6,30 +7,31 @@ class InfoRequest {
   /// 创建新用户
   static Future<bool> createUser(String? mobId) async {
     ResponseData response = await HttpClass.post(UrlString.createUserUrl,
-        data: {"mob_id": mobId}, type: RequestType.server);
-
-    String code = response.data["code"];
-    return response.isSuccess || code == "C0018";
+        data: {"mob_id": mobId},
+        type: RequestType.server,
+        fromJson: (Map<String, dynamic> data) {});
+    String code = response.code;
+    return !response.error || code == USER_HAS_CREATE;
   }
 
   /// 根据mobId获取用户数据源配置
-  static Future<UserDatasourceModel> getUserDatasourceSettings() async {
-    ResponseData response = await HttpClass.get(
+  static Future<ResponseData<UserDatasourceModel>>
+      getUserDatasourceSettings() async {
+    ResponseData<UserDatasourceModel> response = await HttpClass.get(
         UrlString.userDatasourceSettingsUrl,
-        type: RequestType.server);
-    if (response.data != null) {
-      return UserDatasourceModel.fromJson(response.data?["data"]);
-    }
-    return UserDatasourceModel.fromJson({});
+        type: RequestType.server,
+        fromJson: UserDatasourceModel.fromJson);
+    return response;
   }
 
   ///更新数据源
-  static Future<bool> updateDataSource(Set<String> list) async {
+  static Future<ResponseData> updateDataSource(Set<String> list) async {
     ResponseData response = await HttpClass.post(UrlString.updateDataSourceUrl,
         data: {
           "datasource_push": list.toList(),
         },
-        type: RequestType.server);
-    return response.isSuccess;
+        type: RequestType.server,
+        fromJson: (_) {});
+    return response;
   }
 }

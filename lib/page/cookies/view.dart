@@ -7,8 +7,6 @@ import '../../widget/cookie/container_with_label.dart';
 import '../../widget/cookie/cookie_card.dart';
 import 'logic.dart';
 
-
-
 class CookiesPage extends StatefulWidget {
   const CookiesPage({super.key});
 
@@ -135,48 +133,45 @@ class _CookiesPageState extends State<CookiesPage> {
   }
 
   Widget cookieList() {
-    var cookies =
-        state.searchStatue ? state.searchCookieList : state.cookieList;
-    if (cookies.isNotEmpty) {
-      return ListView.builder(
-        key: const PageStorageKey<String>("cookieList"),
-        controller: state.scrollController,
-        padding: REdgeInsets.only(bottom: 20.r),
-        shrinkWrap: true,
-        itemBuilder: (BuildContext context, int index) {
-          return index == cookies.length
-              ? (state.nextPageId == null
-                  ? const Center(
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 10, bottom: 30),
-                        child: Text(
-                          "已经没有饼了，小刻很满足！！！",
-                          style: TextStyle(color: DunColors.gray_1),
-                        ),
-                      ),
-                    )
-                  : const Center(
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 10, bottom: 30),
-                        child: Text(
-                          "精美的加载动画",
-                          style: TextStyle(color: DunColors.gray_1),
-                        ),
-                      ),
-                    ))
-              : CookieCard(
-                  data: cookies[index],
-                  onTapCard: logic.onTapCard,
-                  onTapShare: logic.onTapShare,
-                  onTapImage: logic.onTapImage,
-                );
-        },
-        itemCount: cookies.length + 1,
-      );
-    } else {
-      return Center(
-        child: Image.asset("assets/image/load/loading.gif", height: 150),
-      );
-    }
+    return Obx(() {
+      var cookies =
+          state.searchStatue.value ? state.searchCookieList : state.cookieList;
+      var nextPageId = state.searchStatue.value
+          ? state.searchNextPageId.value
+          : state.nextPageId.value;
+      if (cookies.isNotEmpty) {
+        return ListView.builder(
+          key: const PageStorageKey<String>("cookieList"),
+          controller: state.scrollController,
+          padding: REdgeInsets.only(bottom: 20.r),
+          shrinkWrap: true,
+          itemBuilder: (BuildContext context, int index) {
+            if (index == cookies.length) {
+              return Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10, bottom: 30),
+                  child: Text(
+                    nextPageId.isEmpty ? "已经没有饼了，小刻很满足！！！" : "精美的加载动画",
+                    style: const TextStyle(color: DunColors.gray_1),
+                  ),
+                ),
+              );
+            } else {
+              return CookieCard(
+                data: cookies[index],
+                onTapCard: logic.onTapCard,
+                onTapShare: logic.onTapShare,
+                onTapImage: logic.onTapImage,
+              );
+            }
+          },
+          itemCount: cookies.length + 1,
+        );
+      } else {
+        return Center(
+          child: Image.asset("assets/image/load/loading.gif", height: 150),
+        );
+      }
+    });
   }
 }

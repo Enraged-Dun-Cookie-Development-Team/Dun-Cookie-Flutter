@@ -30,10 +30,26 @@ class MoreLogic extends GetxController {
   }
 
   Future<void> loadData() async {
-    state.terraRecentEpisode = await MangaApi.getTerraNewestEpisode();
-    state.videoList = await CeobeApi.getVideoInfo();
-    state.quickJumpList = await CeobeApi.getQuickJumpInfo();
-    state.bakeryRecentPredict = await BakeryApi.getBakeryRecentPredict();
+    MangaApi.getTerraNewestEpisode().then((value) {
+      if (!value.error && value.data != null) {
+        state.terraRecentEpisode.value = value.data!;
+      }
+    });
+    CeobeApi.getVideoInfo().then((value) {
+      if (!value.error) {
+        state.videoList.addAll(value.data ?? []);
+      }
+    });
+    CeobeApi.getQuickJumpInfo().then((value) {
+      if (!value.error) {
+        state.quickJumpList.addAll(value.data ?? []);
+      }
+    });
+    BakeryApi.getBakeryRecentPredict().then((value) {
+      if (!value.error && value.data != null) {
+        state.bakeryRecentPredict.value = value.data!;
+      }
+    });
   }
 
   void onTapManga() {
