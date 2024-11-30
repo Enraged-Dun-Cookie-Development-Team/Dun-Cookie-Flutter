@@ -52,6 +52,8 @@ dependencies:
   build_runner:
   path_provider:
   url_launcher: ^6.3.0
+  timelines:
+  flutter_html: 3.0.0-alpha.2
 
 dev_dependencies:
   flutter_test:

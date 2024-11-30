@@ -35,6 +35,7 @@ class DunStyles {
   static const text26C = TextStyle(fontSize: 26, color: DunColors.DunColor);
   static const text30C = TextStyle(fontSize: 30, color: DunColors.DunColor);
   static const text12 = TextStyle(fontSize: 12);
+  static const text12B = TextStyle(fontSize: 12, color: Colors.black45);
   static const text14 = TextStyle(fontSize: 14);
   static const text16 = TextStyle(fontSize: 16);
   static const text18 = TextStyle(fontSize: 18);

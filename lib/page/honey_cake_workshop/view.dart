@@ -1,13 +1,14 @@
-
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../common/dun_color.dart';
+import '../../widget/honey_cake_workshop/honey_cake_card.dart';
 import 'logic.dart';
 
 class HoneyCakeWorkshopPage extends StatelessWidget {
-  HoneyCakeWorkshopPage({Key? key}) : super(key: key);
+  HoneyCakeWorkshopPage({super.key});
 
   final logic = Get.put(HoneyCakeWorkshopLogic());
   final state = Get.find<HoneyCakeWorkshopLogic>().state;
@@ -15,25 +16,26 @@ class HoneyCakeWorkshopPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MediaQuery(
-        data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-        child: Scaffold(
-          backgroundColor: DunColors.gray_3,
-          appBar: AppBar(
-            //蜜饼工坊页面
-            backgroundColor: Colors.white,
-            leading: IconButton(
-                icon: const Icon(Icons.arrow_back_ios),
-                onPressed: logic.onTapBack),
-            leadingWidth: 50,
-            iconTheme: const IconThemeData(
-              color: DunColors.DunColor,
-            ),
-            titleTextStyle:
-            const TextStyle(color: DunColors.DunColor, fontSize: 20),
-            titleSpacing: 0,
-            title: const Text("罗德岛蜜饼工坊"),
-            actions: [
-              Padding(
+      data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(1.0)),
+      child: Scaffold(
+        backgroundColor: DunColors.gray_3,
+        appBar: AppBar(
+          //蜜饼工坊页面
+          backgroundColor: Colors.white,
+          leading: IconButton(
+              icon: const Icon(Icons.arrow_back_ios),
+              onPressed: logic.onTapBack),
+          leadingWidth: 50,
+          iconTheme: const IconThemeData(
+            color: DunColors.DunColor,
+          ),
+          titleTextStyle:
+              const TextStyle(color: DunColors.DunColor, fontSize: 20),
+          titleSpacing: 0,
+          title: const Text("罗德岛蜜饼工坊"),
+          actions: [
+            Obx(
+              () => Padding(
                 padding: REdgeInsets.only(right: 8),
                 child: state.bakeryMansionIdList.isNotEmpty
                     ? SizedBox(
@@ -58,20 +60,39 @@ class HoneyCakeWorkshopPage extends StatelessWidget {
                               .map((e) =>
                                   DropdownMenuItem(value: e, child: Text(e)))
                               .toList(),
-                  ),
-                )
+                        ),
+                      )
                     : const SizedBox(),
               ),
+            ),
+          ],
+        ),
+        body: SafeArea(
+          child: Column(
+            children: [
+              Expanded(
+                child: Obx(() {
+                  if (state.bakeryData.value.id.isNotEmpty) {
+                    return FadeIn(
+                        duration: const Duration(milliseconds: 1000),
+                        child: HoneyCakeWorkshopCard((state.bakeryData.value)));
+                  } else {
+                    return const Center(
+                      child: Image(
+                        image:
+                            AssetImage("assets/image/load/bakery_loading.gif"),
+                        width: 200,
+                      ),
+                    );
+                  }
+                }),
+              ),
+              _buildBottomButton(),
             ],
           ),
-          body: SafeArea(
-              child: Column(
-                children: [
-
-                  _buildBottomButton(),
-                ],
-              )),
-        ));
+        ),
+      ),
+    );
   }
 
   Widget _buildBottomButton() {

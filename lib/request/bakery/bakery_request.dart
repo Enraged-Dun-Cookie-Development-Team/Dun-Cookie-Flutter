@@ -19,13 +19,13 @@ class BakeryApi {
     ResponseData<List<String>> response = await HttpClass.get<List<String>>(
       UrlString.bakeryMansionIdListUrl,
       type: RequestType.server,
-      fromJson: getListHandle(),
+      fromJson: getListHandle(fromJson: (jsonSrc) => jsonSrc.toString()),
     );
     return response;
   }
 
   /// 根据ID请求饼组数据
-  static Future<ResponseData<BakeryDataModel>> getBakeryInfo(id) async {
+  static Future<ResponseData<BakeryDataModel>> getBakeryInfo(String id) async {
     //print("根据ID请求饼组数据");
     ResponseData<BakeryDataModel> response =
         await HttpClass.get<BakeryDataModel>(UrlString.bakeryMansionInfoUrl(id),

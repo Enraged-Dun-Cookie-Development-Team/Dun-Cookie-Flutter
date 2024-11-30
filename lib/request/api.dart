@@ -31,7 +31,7 @@ class UrlString {
 
   static String get bakeryMansionIdListUrl => "/canteen/bakery/mansionId";
 
-  static String bakeryMansionInfoUrl(id) =>
+  static String bakeryMansionInfoUrl(String id) =>
       "/canteen/bakery/mansionInfo?mansion_id=$id";
 
   static String get bakeryRecentPredictUrl =>
