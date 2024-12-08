@@ -113,12 +113,7 @@ class UpdateLogic extends GetxController {
   void onTapDownload() async {
     state.downloadStatus = DataStatus.loading;
     update([state.downloadGID]);
-    final isSuccess = await _downloadApp();
-    if (state.appCancelToken == null) {
-      state.downloadStatus = null;
-    } else {
-      state.downloadStatus = isSuccess ? DataStatus.success : DataStatus.error;
-    }
+    state.downloadStatus = await _downloadApp();
     update([state.downloadGID]);
   }
 
@@ -129,16 +124,16 @@ class UpdateLogic extends GetxController {
     state.downloadProgressController.count = 0;
   }
 
-  Future<bool> _downloadApp() async {
+  Future<DataStatus?> _downloadApp() async {
     if (state.downloadableUrlModels.isEmpty) {
       DunToast.showInfo('未发现下载链接');
-      return false;
+      return DataStatus.error;
     }
 
     state.downloadSavePath = await _genAppSavePath(state.newVersion);
     if (state.downloadSavePath == null) {
       DunToast.showInfo('获取下载路径失败');
-      return false;
+      return DataStatus.error;
     }
     print('下载路径：${state.downloadSavePath}');
 
@@ -162,15 +157,15 @@ class UpdateLogic extends GetxController {
       );
       if (resp.rawData == true) {
         installApp();
-        return true;
+        return DataStatus.success;
       }
       if (state.appCancelToken == null) {
-        return false;
+        return null;
       }
       print('下载错误，尝试下一个');
     }
     DunToast.showInfo('下载失败，请手动下载');
-    return false;
+    return DataStatus.error;
   }
 
   /// 生成安装包本地保存路径
