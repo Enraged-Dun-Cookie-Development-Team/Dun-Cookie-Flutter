@@ -40,6 +40,16 @@
         <!--       <meta-data-->
         <!--           android:name="com.mob.mobpush.debugLevel"-->
         <!--           android:value="4" />-->
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
     <queries>

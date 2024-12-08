@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:app_installer/app_installer.dart';
 import 'package:dun_cookie_flutter/common/data_status.dart';
 import 'package:dun_cookie_flutter/common/dun_dialog.dart';
 import 'package:dun_cookie_flutter/common/package_info.dart';
@@ -113,7 +114,11 @@ class UpdateLogic extends GetxController {
     }
 
     state.downloadSavePath = await _genAppSavePath(state.newVersion);
-    print('下载保存位置：${state.downloadSavePath}');
+    if (state.downloadSavePath == null) {
+      DunToast.showInfo('获取下载路径失败');
+      return false;
+    }
+    print('下载路径：${state.downloadSavePath}');
 
     for (final urlModel in state.downloadableUrlModels) {
       print('下载 ${urlModel.url}');
@@ -142,22 +147,30 @@ class UpdateLogic extends GetxController {
   }
 
   /// 生成安装包本地保存路径
-  Future<String> _genAppSavePath(String version) async {
-    final dir = await getTemporaryDirectory();
+  Future<String?> _genAppSavePath(String version) async {
+    final dir = await getExternalStorageDirectory();
+    if (dir == null) return null;
     final savePath = p.join(dir.path, 'Ceobe-Canteen-$version.apk');
     return savePath;
   }
 
-  void installApp() {
+  Future<bool> installApp() async {
     final savePath = state.downloadSavePath;
     if (savePath == null || !File(savePath).existsSync()) {
       DunToast.showInfo('未找到安装包');
-      return;
+      return false;
+    }
+    try {
+      await AppInstaller.installApk(savePath);
+      return true;
+    } catch (e) {
+      DunToast.showInfo('安装错误');
+      return false;
     }
   }
 
-  void jumpWebPage(DownloadUrlModel urlModel) {
-    if (urlModel.manual) DunJump.openWebPage(urlModel.url);
+  void jumpWebPage(String url) {
+    DunJump.openWebPage(url);
   }
 
   void jumpAppStore() {
@@ -186,6 +199,8 @@ class UpdateLogic extends GetxController {
   /// 删除下载的当前版本的安装包
   Future<bool> _deleteLocalApkFile(String version) async {
     final path = await _genAppSavePath(version);
+    if (path == null) return true;
+
     final file = File(path);
     if (!await file.exists()) return true;
 

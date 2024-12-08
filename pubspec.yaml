@@ -55,6 +55,7 @@ dependencies:
   timelines:
   flutter_html: 3.0.0-alpha.2
   path: ^1.8.0
+  app_installer: ^1.3.1
 
 dev_dependencies:
   flutter_test:

@@ -140,7 +140,7 @@ class UpdatePage extends StatelessWidget {
                   if (text.isEmpty) text = '手动下载方式 ${index + 1}';
                   return _buildPrimaryButton(
                     text: text,
-                    onPressed: () => logic.jumpWebPage(urlModel),
+                    onPressed: () => logic.jumpWebPage(urlModel.url),
                   );
                 },
               )
