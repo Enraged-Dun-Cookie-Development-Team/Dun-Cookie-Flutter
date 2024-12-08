@@ -14,7 +14,7 @@ class RootLogic extends GetxController {
   void onInit() {
     super.onInit();
     _increaseLaunchCount();
-    UpdateLogic.to?.checkLatestVersion();
+    UpdateLogic.to?.checkLatestVersion(autoCheck: true);
   }
 
   @override

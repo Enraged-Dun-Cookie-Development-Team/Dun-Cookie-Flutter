@@ -50,7 +50,7 @@ class UpdateLogic extends GetxController {
 
     bool isNew = PackageInfoPlus.isVersionHigher(latestVersion, nowVersion);
     if (!isNew) {
-      if (autoCheck) _tryShowTapStarDialog();
+      autoCheck ? _tryShowTapStarDialog() : DunToast.showInfo("当前已是最新版本");
       return false;
     }
 
