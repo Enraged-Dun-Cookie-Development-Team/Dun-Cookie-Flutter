@@ -191,8 +191,8 @@ class UpdateLogic extends GetxController {
     }
   }
 
-  void jumpWebPage(String url) {
-    DunJump.openWebPage(url);
+  void jumpExternalWeb(String url) {
+    DunJump.openExternalWeb(url);
   }
 
   void jumpAppStore() {

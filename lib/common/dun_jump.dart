@@ -60,4 +60,13 @@ class DunJump {
       Get.toNamed(DunRouter.web, arguments: url);
     }
   }
+
+  /// 打开外部浏览器
+  static Future<bool> openExternalWeb(String url) async {
+    if (url.isEmpty) {
+      DunToast.showInfo("无法访问空链接");
+      return false;
+    }
+    return launchUrlString(url, mode: LaunchMode.externalApplication);
+  }
 }
