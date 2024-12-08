@@ -42,7 +42,7 @@ class UpdateLogic extends GetxController {
   }
 
   Future<bool> _checkLatestVersion({bool autoCheck = false}) async {
-    final resp = await CeobeApi.getAppVersionInfo(version: state.nowVersion);
+    final resp = await CeobeApi.getAppVersionInfo();
     final latestApp = resp.data;
     if (resp.error || latestApp == null) return false;
 
