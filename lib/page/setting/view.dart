@@ -1,3 +1,4 @@
+import 'package:dun_cookie_flutter/page/update/logic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -279,26 +280,47 @@ class SettingPage extends StatelessWidget {
       onTap: logic.onTapCheckUpgrade,
       child: SizedBox(
         width: double.infinity,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Row(
           children: [
-            const SizedBox(height: 7),
-            const Text(
-              "检查更新",
-              style: TextStyle(
-                color: DunColors.gray_1,
-                fontSize: 16,
-              ),
-            ),
-            const SizedBox(height: 2),
-            Obx(() => Text(
-                  state.version.value,
-                  style: const TextStyle(
-                    color: DunColors.gray_subtitle,
-                    fontSize: 11,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 7),
+                const Text(
+                  "检查更新",
+                  style: TextStyle(
+                    color: DunColors.gray_1,
+                    fontSize: 16,
                   ),
-                )),
-            const SizedBox(height: 7),
+                ),
+                const SizedBox(height: 2),
+                Obx(() => Text(
+                      state.version.value,
+                      style: const TextStyle(
+                        color: DunColors.gray_subtitle,
+                        fontSize: 11,
+                      ),
+                    )),
+                const SizedBox(height: 7),
+              ],
+            ),
+            const Spacer(),
+            if (UpdateLogic.to != null)
+              GetBuilder(
+                init: UpdateLogic.to,
+                id: UpdateLogic.to!.state.checkGID,
+                builder: (updateLogic) => updateLogic.state.checking
+                    ? Container(
+                        margin: const EdgeInsets.only(right: 8),
+                        height: 20,
+                        width: 20,
+                        child: const CircularProgressIndicator(
+                          strokeWidth: 3,
+                          color: DunColors.DunColor,
+                        ),
+                      )
+                    : const SizedBox(),
+              ),
           ],
         ),
       ),

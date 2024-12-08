@@ -31,7 +31,17 @@ class UpdateLogic extends GetxController {
     _deleteLocalApkFile(state.nowVersion);
   }
 
-  Future<bool> checkLatestVersion({bool autoCheck = false}) async {
+  void checkLatestVersion({bool autoCheck = false}) async {
+    if (state.checking) return;
+    state.checking = true;
+    update([state.checkGID]);
+
+    await _checkLatestVersion(autoCheck: autoCheck);
+    state.checking = false;
+    update([state.checkGID]);
+  }
+
+  Future<bool> _checkLatestVersion({bool autoCheck = false}) async {
     final resp = await CeobeApi.getAppVersionInfo(version: state.nowVersion);
     final latestApp = resp.data;
     if (resp.error || latestApp == null) return false;
