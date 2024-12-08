@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:dun_cookie_flutter/common/data_status.dart';
 import 'package:dun_cookie_flutter/widget/progress.dart';
 
@@ -9,6 +10,7 @@ class UpdateState {
   final List<DownloadUrlModel> downloadableUrlModels = [];
   final List<DownloadUrlModel> manualUrlModels = [];
   DownloadUrlModel? curDownloadUrlModel;
+  CancelToken? appCancelToken;
   final ProgressController downloadProgressController = ProgressController();
   DataStatus? downloadStatus;
   String? downloadSavePath;

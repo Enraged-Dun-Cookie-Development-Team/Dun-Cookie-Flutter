@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:app_installer/app_installer.dart';
+import 'package:dio/dio.dart';
 import 'package:dun_cookie_flutter/common/data_status.dart';
 import 'package:dun_cookie_flutter/common/dun_dialog.dart';
 import 'package:dun_cookie_flutter/common/package_info.dart';
@@ -103,8 +104,19 @@ class UpdateLogic extends GetxController {
     state.downloadStatus = DataStatus.loading;
     update([state.downloadGID]);
     final isSuccess = await _downloadApp();
-    state.downloadStatus = isSuccess ? DataStatus.success : DataStatus.error;
+    if (state.appCancelToken == null) {
+      state.downloadStatus = null;
+    } else {
+      state.downloadStatus = isSuccess ? DataStatus.success : DataStatus.error;
+    }
     update([state.downloadGID]);
+  }
+
+  void cancelDownload() {
+    state.appCancelToken?.cancel();
+    state.appCancelToken = null;
+    state.downloadProgressController.total = 0;
+    state.downloadProgressController.count = 0;
   }
 
   Future<bool> _downloadApp() async {
@@ -128,9 +140,11 @@ class UpdateLogic extends GetxController {
       state.curDownloadUrlModel = urlModel;
       update([state.downloadGID]);
 
+      state.appCancelToken = CancelToken();
       final resp = await HttpClass.download(
         savePath: state.downloadSavePath!,
         urlPath: urlModel.url,
+        cancelToken: state.appCancelToken,
         onReceiveProgress: (count, total) {
           state.downloadProgressController.total = total;
           state.downloadProgressController.count = count;
@@ -139,6 +153,9 @@ class UpdateLogic extends GetxController {
       if (resp.rawData == true) {
         installApp();
         return true;
+      }
+      if (state.appCancelToken == null) {
+        return false;
       }
       print('下载错误，尝试下一个');
     }

@@ -125,8 +125,10 @@ class UpdatePage extends StatelessWidget {
               _buildPrimaryButton(text: '应用商店', onPressed: logic.jumpAppStore),
             if (Platform.isAndroid && state.downloadStatus == null)
               _buildPrimaryButton(text: '下载', onPressed: logic.onTapDownload),
-            if (DataStatus.loading == state.downloadStatus)
+            if (DataStatus.loading == state.downloadStatus) ...[
               _buildDownloadProgress(),
+              _buildTextButton(text: '取消', onPressed: logic.cancelDownload),
+            ],
             if (state.downloadStatus == DataStatus.success) ...[
               _buildPrimaryButton(text: '安装', onPressed: logic.installApp),
               _buildTextButton(text: '重新下载', onPressed: logic.onTapDownload),
