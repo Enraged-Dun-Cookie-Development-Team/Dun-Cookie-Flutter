@@ -1,12 +1,7 @@
-import 'dart:io';
 
-import 'package:dun_cookie_flutter/common/dun_dialog.dart';
-import 'package:dun_cookie_flutter/common/package_info.dart';
 import 'package:dun_cookie_flutter/manager/dunPreference.dart';
-import 'package:dun_cookie_flutter/manager/settingManager.dart';
-import 'package:dun_cookie_flutter/model/ceobe/version/dun_app.dart';
 import 'package:dun_cookie_flutter/page/root/state.dart';
-import 'package:dun_cookie_flutter/request/ceobe/ceobe_request.dart';
+import 'package:dun_cookie_flutter/page/update/logic.dart';
 import 'package:get/get.dart';
 
 class RootLogic extends GetxController {
@@ -18,7 +13,8 @@ class RootLogic extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    _checkVersion();
+    _increaseLaunchCount();
+    UpdateLogic.to?.checkLatestVersion();
   }
 
   @override
@@ -27,36 +23,8 @@ class RootLogic extends GetxController {
     state.scrollHideController.dispose();
   }
 
-  // 判断版本号，强制更新&更新日志
-  void _checkVersion() async {
-    String nowVersion = SettingManager.getInstance().version;
-    var responseData = await CeobeApi.getAppVersionInfo();
-    DunAppInfoModel? newApp = responseData.data;
-    String? lastShowedVersion = getLastShowVersion();
-    if (Platform.isIOS) {
-      int openNumber = getLaunchCount() ?? 0;
-      if (openNumber >= 0) {
-        saveLaunchCount(openNumber + 1);
-      }
-      if (openNumber == 10) {
-        showTapStarDialog();
-        // 先不用重置 统计一下吧
-        // sp.setInt("number_of_openings",-1);
-      }
-    }
-    if (lastShowedVersion != null && nowVersion != lastShowedVersion) {
-      responseData = await CeobeApi.getAppVersionInfo(version: nowVersion);
-      DunAppInfoModel? nowApp = responseData.data;
-      if (!responseData.error && nowApp != null) {
-        showUpdateInfoDialog(nowApp);
-      }
-    }
-    if (newApp != null) {
-      if (PackageInfoPlus.isVersionHigher(newApp.version, nowVersion)) {
-        showUpdateDialog(
-            nowAppVersion: nowVersion, newApp: newApp, isFocus: newApp.force);
-      }
-    }
+  void _increaseLaunchCount() {
+    saveLaunchCount((getLaunchCount() ?? 0) + 1);
   }
 
   void onTapBottomItem(int index) {

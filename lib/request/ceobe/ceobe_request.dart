@@ -12,14 +12,14 @@ class CeobeApi {
   /// APP版本
   static Future<ResponseData<DunAppInfoModel>> getAppVersionInfo(
       {String? version}) async {
-    Map<String, dynamic> params = {};
+    Map<String, dynamic> params = {'platform': 'pocket'};
     if (version != null) {
       params["version"] = version;
     }
     ResponseData<DunAppInfoModel> response =
         await HttpClass.get<DunAppInfoModel>(UrlString.appVersionUrl,
             params: params,
-            type: RequestType.server,
+            type: RequestType.cdn,
             fromJson: DunAppInfoModel.fromJson);
     return response;
   }

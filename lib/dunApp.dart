@@ -1,3 +1,4 @@
+import 'package:dun_cookie_flutter/common/dun_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -17,9 +18,8 @@ class DunApp extends StatelessWidget {
       child: GetMaterialApp(
         title: '小刻食堂',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
           colorScheme: ColorScheme.fromSeed(
-            seedColor: Colors.blue,
+            seedColor: DunColors.DunColor,
             surfaceTint: Colors.transparent,
           ),
         ),

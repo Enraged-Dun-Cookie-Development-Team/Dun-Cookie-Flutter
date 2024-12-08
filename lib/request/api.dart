@@ -38,7 +38,7 @@ class UrlString {
       "/canteen/bakery/mansion/recentPredict";
 
   // 用户信息
-  static String get appVersionUrl => "/canteen/operate/version/app";
+  static String get appVersionUrl => "/cdn/operate/version/fetch";
 
   static String get createUserUrl => "/canteen/user/createUser";
 

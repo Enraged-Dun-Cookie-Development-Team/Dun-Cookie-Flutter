@@ -33,13 +33,13 @@ showUpdateInfoDialog(DunAppInfoModel nowApp) {
 showUpdateDialog(
     {required String nowAppVersion,
     required DunAppInfoModel newApp,
-    required bool isFocus}) {
+    required bool isForce}) {
   Get.dialog(
-      barrierDismissible: isFocus,
+      barrierDismissible: isForce,
       UpdateDialog(
         oldVersion: nowAppVersion,
         newApp: newApp,
-        isFocus: isFocus,
+        isFocus: isForce,
       ));
 }
 

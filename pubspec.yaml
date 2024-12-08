@@ -54,6 +54,7 @@ dependencies:
   url_launcher: ^6.3.0
   timelines:
   flutter_html: 3.0.0-alpha.2
+  path: ^1.8.0
 
 dev_dependencies:
   flutter_test:

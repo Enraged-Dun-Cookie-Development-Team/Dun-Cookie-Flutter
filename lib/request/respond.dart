@@ -29,7 +29,12 @@ class ResponseData<T> {
     return null;
   }
 
+  T? get rawData => _data;
+
   String get code => _data['code'] ?? '';
+
+  static failure({String? msg}) => ResponseData(
+      data: false, fromJson: (_) => false, error: true, msg: msg ?? '');
 }
 
 MapToModel<List<T>> getListHandle<T, E>({ValueToModel<T, E>? fromJson}) {

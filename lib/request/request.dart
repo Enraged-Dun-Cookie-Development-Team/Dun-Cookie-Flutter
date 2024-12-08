@@ -93,4 +93,30 @@ class HttpClass {
         type: type,
         fromJson: fromJson);
   }
+
+  static Future<ResponseData<bool>> download({
+    required String urlPath,
+    required String savePath,
+    void Function(int count, int total)? onReceiveProgress,
+    CancelToken? cancelToken,
+  }) async {
+    Response response;
+
+    try {
+      response = await dio.download(
+        urlPath,
+        savePath,
+        onReceiveProgress: onReceiveProgress,
+        cancelToken: cancelToken,
+      );
+    } catch (_) {
+      return ResponseData.failure(msg: '下载异常');
+    }
+
+    if (response.statusCode == 200) {
+      return ResponseData(data: true, fromJson: (_) => true);
+    } else {
+      return ResponseData.failure(msg: '响应错误，下载失败');
+    }
+  }
 }

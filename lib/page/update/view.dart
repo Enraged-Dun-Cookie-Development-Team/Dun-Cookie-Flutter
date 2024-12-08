@@ -1,5 +1,8 @@
 import 'dart:io';
 
+import 'package:dun_cookie_flutter/common/data_status.dart';
+import 'package:dun_cookie_flutter/common/file_util.dart';
+import 'package:dun_cookie_flutter/widget/progress.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -8,7 +11,7 @@ import '../../common/dun_color.dart';
 import 'logic.dart';
 
 class UpdatePage extends StatelessWidget {
-  UpdatePage({Key? key}) : super(key: key);
+  UpdatePage({super.key});
 
   final logic = Get.put(UpdateLogic());
   final state = Get.find<UpdateLogic>().state;
@@ -16,7 +19,8 @@ class UpdatePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MediaQuery(
-        data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+        data: MediaQuery.of(context)
+            .copyWith(textScaler: const TextScaler.linear(1.0)),
         child: GetBuilder<UpdateLogic>(
           id: state.rootGID,
           builder: (UpdateLogic controller) {
@@ -70,21 +74,14 @@ class UpdatePage extends StatelessWidget {
                             ),
                           ],
                         ),
-                        _content("新版本", state.version),
-                        _content("更新模式", state.isFocus ? "强制" : "非强制",
-                            color: state.isFocus ? Colors.red : Colors.black),
+                        _content("新版本", state.newVersion),
+                        _content("更新模式", state.isForce ? "强制" : "非强制",
+                            color: state.isForce ? Colors.red : Colors.black),
                         _content("更新内容", state.description),
                         const SizedBox(
                           height: 30,
                         ),
-                        const Text(
-                          "更新地址",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        _downloadRes(),
+                        _buildDownloadView(),
                       ],
                     ),
                   ),
@@ -115,57 +112,101 @@ class UpdatePage extends StatelessWidget {
     );
   }
 
-  _downloadRes() {
-    if (Platform.isAndroid) {
-      return Container(
-        padding: REdgeInsets.only(left: 20, right: 20),
-        child: Column(
+  _buildDownloadView() {
+    return Container(
+      padding: REdgeInsets.only(left: 20, right: 20),
+      child: GetBuilder<UpdateLogic>(
+        id: state.downloadGID,
+        builder: (_) => Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _downloadButton("github", state.dunAppInfo.apk),
-            _downloadButton("kgithub", state.dunAppInfo.spareApk),
-            _downloadButton("百度云", state.dunAppInfo.baidu),
+            if (Platform.isIOS)
+              _buildPrimaryButton(text: '应用商店', onPressed: logic.jumpAppStore),
+            if (Platform.isAndroid && state.downloadStatus == null)
+              _buildPrimaryButton(text: '下载', onPressed: logic.onTapDownload),
+            if (DataStatus.loading == state.downloadStatus)
+              _buildDownloadProgress(),
+            if (state.downloadStatus == DataStatus.success) ...[
+              _buildPrimaryButton(text: '安装', onPressed: logic.installApp),
+              _buildTextButton(text: '重新下载', onPressed: logic.onTapDownload),
+            ],
+            if (state.downloadStatus == DataStatus.error)
+              ...List.generate(
+                state.manualUrlModels.length,
+                (index) {
+                  final urlModel = state.manualUrlModels[index];
+                  String text = urlModel.name;
+                  if (text.isEmpty) text = '手动下载方式 ${index + 1}';
+                  return _buildPrimaryButton(
+                    text: text,
+                    onPressed: () => logic.jumpWebPage(urlModel),
+                  );
+                },
+              )
           ],
         ),
-      );
-    } else if (Platform.isIOS) {
-      return Container(
-        padding: REdgeInsets.only(left: 20, right: 20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+      ),
+    );
+  }
+
+  ProgressBuilder _buildDownloadProgress() {
+    return ProgressBuilder(
+      controller: state.downloadProgressController,
+      builder: (context, count, total, percent) {
+        final countStr = FileUtil.getReadableFileSize(count, fractionDigits: 1),
+            totalStr = FileUtil.getReadableFileSize(total, fractionDigits: 1);
+        return Column(
           children: [
-            ElevatedButton(
-              style: ButtonStyle(
-                shape: MaterialStateProperty.all(const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(4)))),
-                backgroundColor: MaterialStateProperty.all(DunColors.DunColor),
-              ),
-              onPressed: () => logic.onTapDownload(
-                  'https://apps.apple.com/cn/app/id1629917304', true),
-              child: const Text(
-                "应用商店",
+            LinearProgressIndicator(
+              value: percent,
+              backgroundColor: DunColors.DunColor.withOpacity(0.2),
+              color: DunColors.DunColor,
+              minHeight: 8,
+              borderRadius: BorderRadius.circular(99),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(4),
+              child: Row(
+                children: [
+                  Expanded(child: Text(state.curDownloadUrlModel?.name ?? '')),
+                  const SizedBox(width: 4),
+                  Text('$countStr / $totalStr')
+                ],
               ),
             )
           ],
-        ),
-      );
-    }
+        );
+      },
+    );
   }
 
-  _downloadButton(address, url) {
+  ElevatedButton _buildPrimaryButton({
+    required String text,
+    required void Function()? onPressed,
+  }) {
     return ElevatedButton(
       style: ButtonStyle(
         shape: MaterialStateProperty.all(const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(4)))),
         backgroundColor: MaterialStateProperty.all(DunColors.DunColor),
       ),
-      onPressed: () => logic.onTapDownload(url, false),
-      child: Text(
-        address,
-        style: const TextStyle(color: Colors.white),
+      onPressed: onPressed,
+      child: Text(text, style: const TextStyle(color: Colors.white)),
+    );
+  }
+
+  TextButton _buildTextButton({
+    required String text,
+    required void Function()? onPressed,
+  }) {
+    return TextButton(
+      style: ButtonStyle(
+        shape: MaterialStateProperty.all(const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(4)))),
       ),
+      onPressed: onPressed,
+      child: Text(text, style: const TextStyle(color: DunColors.DunColor)),
     );
   }
 }
