@@ -135,10 +135,8 @@ class UpdateLogic extends GetxController {
       DunToast.showInfo('获取下载路径失败');
       return DataStatus.error;
     }
-    print('下载路径：${state.downloadSavePath}');
 
     for (final urlModel in state.downloadableUrlModels) {
-      print('下载 ${urlModel.url}');
       state.downloadProgressController.total = 0;
       state.downloadProgressController.count = 0;
 
@@ -162,7 +160,6 @@ class UpdateLogic extends GetxController {
       if (state.appCancelToken == null) {
         return null;
       }
-      print('下载错误，尝试下一个');
     }
     DunToast.showInfo('下载失败，请手动下载');
     return DataStatus.error;
