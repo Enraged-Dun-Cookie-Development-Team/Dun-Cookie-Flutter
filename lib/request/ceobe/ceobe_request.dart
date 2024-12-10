@@ -19,7 +19,7 @@ class CeobeApi {
     ResponseData<DunAppInfoModel> response =
         await HttpClass.get<DunAppInfoModel>(UrlString.appVersionUrl,
             params: params,
-            type: RequestType.cdn,
+            type: RequestType.serveCdn,
             fromJson: DunAppInfoModel.fromJson);
     return response;
   }
