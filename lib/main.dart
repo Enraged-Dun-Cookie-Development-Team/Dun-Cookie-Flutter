@@ -1,14 +1,14 @@
 import 'dart:io';
 
-import 'package:dun_cookie_flutter/page/update/logic.dart';
 import 'package:fk_user_agent/fk_user_agent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
-import 'dunApp.dart';
-import 'manager/dunPreference.dart';
-import 'manager/settingManager.dart';
+import 'dun_app.dart';
+import 'manager/dun_preference.dart';
+import 'manager/setting_manager.dart';
+import 'page/update/logic.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,5 +27,6 @@ Future<void> earlyInit() async {
   await DunPreferences.getInstance().init();
   await SettingManager.getInstance().init();
   await FkUserAgent.init();
+  //todo 分割逻辑
   Get.put(UpdateLogic());
 }

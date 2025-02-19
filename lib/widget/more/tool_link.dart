@@ -5,10 +5,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../model/ceobe/tool/tool.dart';
 
 class ToolLinkCard extends StatelessWidget {
-  ToolModel linkInfo;
-  void Function(ToolModel quickJump)? onTap;
+  final ToolModel linkInfo;
+  final void Function(ToolModel quickJump)? onTap;
 
-  ToolLinkCard(this.linkInfo, {super.key, this.onTap});
+  const ToolLinkCard(this.linkInfo, {super.key, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class ToolLinkCard extends StatelessWidget {
           ],
         ),
       ),
-      onTap: () => onTap != null?onTap!(linkInfo):null,
+      onTap: () => onTap != null ? onTap!(linkInfo) : null,
     );
   }
 }

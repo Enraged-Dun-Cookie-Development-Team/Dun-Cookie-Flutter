@@ -35,11 +35,11 @@ class UpdatePage extends StatelessWidget {
                     onPressed: logic.onTapBack,
                   ),
                   iconTheme: const IconThemeData(
-                    color: DunColors.DunColor,
+                    color: DunColors.dunColor,
                   ),
                   centerTitle: true,
                   titleTextStyle:
-                      const TextStyle(color: DunColors.DunColor, fontSize: 20),
+                      const TextStyle(color: DunColors.dunColor, fontSize: 20),
                   title: const Text("检查更新"),
                   elevation: 0,
                 ),
@@ -92,7 +92,7 @@ class UpdatePage extends StatelessWidget {
         ));
   }
 
-  _content(title, content, {Color? color}) {
+  Widget _content(title, content, {Color? color}) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -112,7 +112,7 @@ class UpdatePage extends StatelessWidget {
     );
   }
 
-  _buildDownloadView() {
+  Widget _buildDownloadView() {
     return Container(
       padding: REdgeInsets.only(left: 20, right: 20),
       child: GetBuilder<UpdateLogic>(
@@ -152,7 +152,7 @@ class UpdatePage extends StatelessWidget {
     );
   }
 
-  ProgressBuilder _buildDownloadProgress() {
+  Widget _buildDownloadProgress() {
     return ProgressBuilder(
       controller: state.downloadProgressController,
       builder: (context, count, total, percent) {
@@ -162,8 +162,8 @@ class UpdatePage extends StatelessWidget {
           children: [
             LinearProgressIndicator(
               value: percent,
-              backgroundColor: DunColors.DunColor.withOpacity(0.2),
-              color: DunColors.DunColor,
+              backgroundColor: DunColors.dunColor.withOpacity(0.2),
+              color: DunColors.dunColor,
               minHeight: 8,
               borderRadius: BorderRadius.circular(99),
             ),
@@ -183,7 +183,7 @@ class UpdatePage extends StatelessWidget {
     );
   }
 
-  ElevatedButton _buildPrimaryButton({
+  Widget _buildPrimaryButton({
     required String text,
     required void Function()? onPressed,
   }) {
@@ -191,14 +191,14 @@ class UpdatePage extends StatelessWidget {
       style: ButtonStyle(
         shape: MaterialStateProperty.all(const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(4)))),
-        backgroundColor: MaterialStateProperty.all(DunColors.DunColor),
+        backgroundColor: MaterialStateProperty.all(DunColors.dunColor),
       ),
       onPressed: onPressed,
       child: Text(text, style: const TextStyle(color: Colors.white)),
     );
   }
 
-  TextButton _buildTextButton({
+  Widget _buildTextButton({
     required String text,
     required void Function()? onPressed,
   }) {
@@ -208,7 +208,7 @@ class UpdatePage extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(4)))),
       ),
       onPressed: onPressed,
-      child: Text(text, style: const TextStyle(color: DunColors.DunColor)),
+      child: Text(text, style: const TextStyle(color: DunColors.dunColor)),
     );
   }
 }

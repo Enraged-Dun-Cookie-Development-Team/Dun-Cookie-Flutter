@@ -2,13 +2,14 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui';
 
-import 'package:dun_cookie_flutter/common/dun_dialog.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share/share.dart';
 
+import '../../common/dun_dialog.dart';
 import '../../common/dun_toast.dart';
 import '../../model/cookie/cookie_main_list.dart';
 import '../../widget/cookie/cookie_content.dart';
@@ -87,7 +88,8 @@ class CookieShareLogic extends GetxController {
     //根据Globalkey获取RenderObject对象
     final boundary = state.boundaryKey.currentContext?.findRenderObject();
     if (boundary != null && boundary is RenderRepaintBoundary) {
-      double dpr = window.devicePixelRatio;
+      double dpr = WidgetsBinding
+          .instance.platformDispatcher.views.first.devicePixelRatio;
       final image = await boundary.toImage(pixelRatio: dpr);
       ByteData? byteData = await image.toByteData(format: ImageByteFormat.png);
       if (byteData != null) {

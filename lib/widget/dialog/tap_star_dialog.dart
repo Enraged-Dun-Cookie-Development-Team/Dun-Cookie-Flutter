@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:in_app_review/in_app_review.dart';
@@ -6,7 +5,7 @@ import 'package:in_app_review/in_app_review.dart';
 import '../../common/dun_color.dart';
 
 class TapStartDialog extends Dialog {
-  const TapStartDialog({Key? key}) : super(key: key);
+  const TapStartDialog({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +33,7 @@ class TapStartDialog extends Dialog {
             child: Text(
               "支持小刻食堂",
               style: TextStyle(
-                color: DunColors.DunColor,
+                color: DunColors.dunColor,
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
               ),
@@ -105,7 +104,7 @@ class TapStartDialog extends Dialog {
                               child: const Text("给个好评",
                                   style: TextStyle(
                                       fontSize: 17,
-                                      color: DunColors.DunColor))),
+                                      color: DunColors.dunColor))),
                         ],
                       ),
                     )

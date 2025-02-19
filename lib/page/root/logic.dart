@@ -1,8 +1,8 @@
-
-import 'package:dun_cookie_flutter/manager/dunPreference.dart';
-import 'package:dun_cookie_flutter/page/root/state.dart';
-import 'package:dun_cookie_flutter/page/update/logic.dart';
 import 'package:get/get.dart';
+
+import '../../manager/dun_preference.dart';
+import '../update/logic.dart';
+import 'state.dart';
 
 class RootLogic extends GetxController {
   static RootLogic? get to =>

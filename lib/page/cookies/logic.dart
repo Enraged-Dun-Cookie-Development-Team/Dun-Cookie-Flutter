@@ -1,6 +1,3 @@
-import 'package:dun_cookie_flutter/model/cookie/newest_cookie_id.dart';
-import 'package:dun_cookie_flutter/page/root/logic.dart';
-import 'package:dun_cookie_flutter/route.dart';
 import 'package:flutter/animation.dart';
 import 'package:get/get.dart';
 
@@ -8,10 +5,13 @@ import '../../../common/debounce_throttle.dart';
 import '../../../common/dun_dialog.dart';
 import '../../common/dun_jump.dart';
 import '../../common/dun_toast.dart';
-import '../../manager/settingManager.dart';
+import '../../manager/setting_manager.dart';
 import '../../model/cookie/cookie_main_list.dart';
+import '../../model/cookie/newest_cookie_id.dart';
 import '../../model/info/user_settings.dart';
 import '../../request/cookie/cookie_request.dart';
+import '../../route.dart';
+import '../root/logic.dart';
 import 'state.dart';
 
 class CookiesLogic extends GetxController {

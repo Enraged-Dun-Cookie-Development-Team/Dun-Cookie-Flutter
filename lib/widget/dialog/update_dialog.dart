@@ -46,7 +46,7 @@ class UpdateDialog extends Dialog {
             child: Text(
               "发现新版本",
               style: TextStyle(
-                color: DunColors.DunColor,
+                color: DunColors.dunColor,
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
               ),
@@ -125,7 +125,7 @@ class UpdateDialog extends Dialog {
                             child: const Text(
                               '前往更新',
                               style: TextStyle(
-                                  fontSize: 17, color: DunColors.DunColor),
+                                  fontSize: 17, color: DunColors.dunColor),
                             ),
                           ),
                           const VerticalDivider(
@@ -152,7 +152,7 @@ class UpdateDialog extends Dialog {
   }
 
   Future<void> _confirmCallBack() async {
-    Get.offAndToNamed(DunRouter.update,arguments: newApp);
+    Get.offAndToNamed(DunRouter.update, arguments: newApp);
     DunToast.showSuccess("正在跳转到更新页面");
   }
 

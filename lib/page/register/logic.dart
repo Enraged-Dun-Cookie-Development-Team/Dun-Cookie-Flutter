@@ -1,17 +1,17 @@
 import 'dart:io';
 
-import 'package:dun_cookie_flutter/common/dun_dialog.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:mobpush_plugin/mobpush_plugin.dart';
 
+import '../../common/dun_dialog.dart';
 import '../../common/dun_toast.dart';
-import '../../manager/settingManager.dart';
+import '../../manager/setting_manager.dart';
 import '../../model/info/user_settings.dart';
 import '../../request/info/info_request.dart';
 import '../../route.dart';
-import '../../widget/dialog/InfoDialog.dart';
-import '../../widget/dialog/ToSettingDialog.dart';
+import '../../widget/dialog/info_dialog.dart';
+import '../../widget/dialog/to_setting_dialog.dart';
 import 'state.dart';
 
 class RegisterLogic extends GetxController {

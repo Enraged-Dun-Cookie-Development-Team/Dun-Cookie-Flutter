@@ -1,8 +1,8 @@
-import 'package:dun_cookie_flutter/common/dun_dialog.dart';
 import 'package:get/get.dart';
 
+import '../../common/dun_dialog.dart';
 import '../../common/dun_toast.dart';
-import '../../manager/settingManager.dart';
+import '../../manager/setting_manager.dart';
 import '../../model/config/config_datasource.dart';
 import '../../model/info/user_settings.dart';
 import '../../request/config/config_request.dart';

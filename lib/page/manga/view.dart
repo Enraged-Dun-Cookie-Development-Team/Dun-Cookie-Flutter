@@ -26,10 +26,10 @@ class MangaPage extends StatelessWidget {
                 onPressed: logic.onTapBack),
             leadingWidth: 50,
             iconTheme: const IconThemeData(
-              color: DunColors.DunColor,
+              color: DunColors.dunColor,
             ),
             titleTextStyle:
-                const TextStyle(color: DunColors.DunColor, fontSize: 20),
+                const TextStyle(color: DunColors.dunColor, fontSize: 20),
             titleSpacing: 0,
             title: const Text("官方漫画"),
           ),

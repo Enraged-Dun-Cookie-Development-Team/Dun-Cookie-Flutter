@@ -1,4 +1,3 @@
-import 'package:dun_cookie_flutter/page/root/logic.dart';
 import 'package:get/get.dart';
 
 import '../../common/dun_jump.dart';
@@ -8,6 +7,7 @@ import '../../request/bakery/bakery_request.dart';
 import '../../request/ceobe/ceobe_request.dart';
 import '../../request/manga/manga_request.dart';
 import '../../route.dart';
+import '../root/logic.dart';
 import 'state.dart';
 
 class MoreLogic extends GetxController {

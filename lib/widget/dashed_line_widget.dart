@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../common/dun_color.dart';
@@ -45,8 +44,7 @@ class DashedLineVerticalWidget extends StatelessWidget {
   final double itemPadding;
 
   const DashedLineVerticalWidget(
-      {Key? key, this.height, this.itemLength = 1.5, this.itemPadding = 1.5})
-      : super(key: key);
+      {super.key, this.height, this.itemLength = 1.5, this.itemPadding = 1.5});
 
   @override
   Widget build(BuildContext context) => LayoutBuilder(

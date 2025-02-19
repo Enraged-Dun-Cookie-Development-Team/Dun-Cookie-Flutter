@@ -1,7 +1,7 @@
-import 'package:dun_cookie_flutter/page/cookie_share/view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'page/cookie_share/view.dart';
 import 'page/datasource/view.dart';
 import 'page/honey_cake_workshop/view.dart';
 import 'page/manga/view.dart';
@@ -22,7 +22,6 @@ class DunObserver extends RouteObserver<PageRoute> {
       loadingDialogRoute = null;
     }
     super.didPop(route, previousRoute);
-    print('page:${route.settings.name} is pop');
   }
 
   @override
@@ -31,7 +30,6 @@ class DunObserver extends RouteObserver<PageRoute> {
       loadingDialogRoute = route;
     }
     super.didPush(route, previousRoute);
-    print('page:${route.settings.name} is push');
   }
 
   @override
@@ -40,7 +38,6 @@ class DunObserver extends RouteObserver<PageRoute> {
       loadingDialogRoute = null;
     }
     super.didRemove(route, previousRoute);
-    print('page:${route.settings.name} is remove');
   }
 }
 

@@ -33,7 +33,7 @@ class ContentTimeLine extends StatelessWidget {
           } else {
             return const OutlinedDotIndicator(
               borderWidth: 1.5,
-              color: DunColors.DunColor,
+              color: DunColors.dunColor,
             );
           }
         },

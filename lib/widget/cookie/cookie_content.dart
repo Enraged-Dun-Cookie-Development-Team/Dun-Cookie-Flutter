@@ -31,12 +31,12 @@ class CookieContent extends StatelessWidget {
   double get avatarBorderRadius => type == CookieContentType.normal ? 0 : 8;
 
   const CookieContent({
-    Key? key,
+    super.key,
     required this.cookie,
     this.type = CookieContentType.normal,
     this.onTapImage,
     this.onSelectImage,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +56,7 @@ class CookieContent extends StatelessWidget {
   _buildRetweeted(Retweeted? retweeted) {
     return retweeted != null
         ? Container(
-        padding: REdgeInsets.all(5),
+            padding: REdgeInsets.all(5),
             decoration: BoxDecoration(
                 color: DunColors.gray_4,
                 borderRadius: BorderRadius.circular(avatarBorderRadius)),

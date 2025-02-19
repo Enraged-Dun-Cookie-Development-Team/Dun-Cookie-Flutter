@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:dun_cookie_flutter/manager/settingManager.dart';
 import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../common/dun_jump.dart';
 import '../../common/dun_tool.dart';
+import '../../manager/setting_manager.dart';
 import 'state.dart';
 
 class WebLogic extends GetxController {

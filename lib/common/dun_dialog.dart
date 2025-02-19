@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../manager/dunPreference.dart';
+import '../manager/dun_preference.dart';
 import '../model/ceobe/version/dun_app.dart';
 import '../route.dart';
-import '../widget/dialog/TapStarDialog.dart';
-import '../widget/dialog/UpdateDialog.dart';
-import '../widget/dialog/UpdateInfoDialog.dart';
+import '../widget/dialog/tap_star_dialog.dart';
+import '../widget/dialog/update_dialog.dart';
+import '../widget/dialog/update_info_dialog.dart';
 import '../widget/dialog/loading_dialog.dart';
 import '../widget/view_image.dart';
 

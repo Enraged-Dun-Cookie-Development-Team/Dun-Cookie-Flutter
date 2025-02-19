@@ -1,9 +1,9 @@
-import 'package:dun_cookie_flutter/page/update/logic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../common/dun_color.dart';
+import '../update/logic.dart';
 import 'logic.dart';
 
 class SettingPage extends StatelessWidget {
@@ -28,10 +28,10 @@ class SettingPage extends StatelessWidget {
                   onPressed: logic.onTapBack),
               leadingWidth: 50,
               iconTheme: const IconThemeData(
-                color: DunColors.DunColor,
+                color: DunColors.dunColor,
               ),
               titleTextStyle:
-                  const TextStyle(color: DunColors.DunColor, fontSize: 20),
+                  const TextStyle(color: DunColors.dunColor, fontSize: 20),
               titleSpacing: 0,
               title: const Text("设置&其他")),
           body: Padding(
@@ -130,7 +130,7 @@ class SettingPage extends StatelessWidget {
                 Text(
                   "选择勾选来源，最少选择一个",
                   style: TextStyle(
-                    color: DunColors.gray_subtitle,
+                    color: DunColors.graySubtitle,
                     fontSize: 11,
                   ),
                 ),
@@ -151,7 +151,7 @@ class SettingPage extends StatelessWidget {
       title: '省流模式',
       subtitle: '列表使用缩略图',
       trailing: Obx(() => Switch(
-            activeColor: DunColors.DunColor,
+            activeColor: DunColors.dunColor,
             inactiveThumbColor: Colors.grey,
             inactiveTrackColor: Colors.white,
             value: state.isPreview.value,
@@ -165,7 +165,7 @@ class SettingPage extends StatelessWidget {
       title: '向下滚动时隐藏底栏',
       subtitle: '向上滚动显示',
       trailing: Obx(() => Switch(
-            activeColor: DunColors.DunColor,
+            activeColor: DunColors.dunColor,
             inactiveThumbColor: Colors.grey,
             inactiveTrackColor: Colors.white,
             value: state.isHideBottomOnScroll.value,
@@ -197,7 +197,7 @@ class SettingPage extends StatelessWidget {
               Text(
                 subtitle ?? '',
                 style: const TextStyle(
-                  color: DunColors.gray_subtitle,
+                  color: DunColors.graySubtitle,
                   fontSize: 11,
                 ),
               ),
@@ -231,7 +231,7 @@ class SettingPage extends StatelessWidget {
             Text(
               "建议反馈 BUG提交 吹水扯淡",
               style: TextStyle(
-                color: DunColors.gray_subtitle,
+                color: DunColors.graySubtitle,
                 fontSize: 11,
               ),
             ),
@@ -263,7 +263,7 @@ class SettingPage extends StatelessWidget {
             Text(
               "欢迎关注我们",
               style: TextStyle(
-                color: DunColors.gray_subtitle,
+                color: DunColors.graySubtitle,
                 fontSize: 11,
               ),
             ),
@@ -297,7 +297,7 @@ class SettingPage extends StatelessWidget {
                 Obx(() => Text(
                       state.version.value,
                       style: const TextStyle(
-                        color: DunColors.gray_subtitle,
+                        color: DunColors.graySubtitle,
                         fontSize: 11,
                       ),
                     )),
@@ -316,7 +316,7 @@ class SettingPage extends StatelessWidget {
                         width: 20,
                         child: const CircularProgressIndicator(
                           strokeWidth: 3,
-                          color: DunColors.DunColor,
+                          color: DunColors.dunColor,
                         ),
                       )
                     : const SizedBox(),
@@ -348,7 +348,7 @@ class SettingPage extends StatelessWidget {
             Text(
               "捐赠渠道",
               style: TextStyle(
-                color: DunColors.gray_subtitle,
+                color: DunColors.graySubtitle,
                 fontSize: 11,
               ),
             ),
@@ -380,7 +380,7 @@ class SettingPage extends StatelessWidget {
             const Text(
               "推送ID，收不到推送请点击复制ID联系我们，没有ID也联系我们",
               style: TextStyle(
-                color: DunColors.gray_subtitle,
+                color: DunColors.graySubtitle,
                 fontSize: 11,
               ),
             ),

@@ -37,7 +37,7 @@ class _CheckWidgetState extends State<CheckWidget> {
           ? const Icon(
               Icons.check_box_outlined,
               size: 30,
-              color: DunColors.DunColor,
+              color: DunColors.dunColor,
             )
           : const Icon(
               Icons.check_box_outline_blank,

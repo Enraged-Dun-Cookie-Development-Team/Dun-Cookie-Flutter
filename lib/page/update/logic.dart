@@ -2,21 +2,21 @@ import 'dart:io';
 
 import 'package:app_installer/app_installer.dart';
 import 'package:dio/dio.dart';
-import 'package:dun_cookie_flutter/common/data_status.dart';
-import 'package:dun_cookie_flutter/common/dun_dialog.dart';
-import 'package:dun_cookie_flutter/common/package_info.dart';
-import 'package:dun_cookie_flutter/manager/dunPreference.dart';
-import 'package:dun_cookie_flutter/manager/settingManager.dart';
-import 'package:dun_cookie_flutter/model/ceobe/version/dun_app.dart';
-import 'package:dun_cookie_flutter/request/ceobe/ceobe_request.dart';
-import 'package:dun_cookie_flutter/request/request.dart';
-import 'package:dun_cookie_flutter/route.dart';
 import 'package:get/get.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 
+import '../../common/data_status.dart';
+import '../../common/dun_dialog.dart';
 import '../../common/dun_jump.dart';
 import '../../common/dun_toast.dart';
+import '../../common/package_info.dart';
+import '../../manager/dun_preference.dart';
+import '../../manager/setting_manager.dart';
+import '../../model/ceobe/version/dun_app.dart';
+import '../../request/ceobe/ceobe_request.dart';
+import '../../request/request.dart';
+import '../../route.dart';
 import 'state.dart';
 
 class UpdateLogic extends GetxController {

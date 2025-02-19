@@ -57,7 +57,7 @@ class _CookiesPageState extends State<CookiesPage> {
                     child: TextField(
                       controller: state.searchController,
                       focusNode: state.searchFocusNode,
-                      cursorColor: DunColors.DunColor,
+                      cursorColor: DunColors.dunColor,
                       decoration: const InputDecoration(
                         isDense: true,
                         border: InputBorder.none,
@@ -120,7 +120,7 @@ class _CookiesPageState extends State<CookiesPage> {
   Widget _buildList() {
     return Expanded(
       child: RefreshIndicator(
-        color: DunColors.DunColor,
+        color: DunColors.dunColor,
         onRefresh: logic.onRefresh,
         child: GetBuilder<CookiesLogic>(
           id: state.listGID,

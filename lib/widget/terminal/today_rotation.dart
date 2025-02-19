@@ -5,7 +5,7 @@ import '../../common/time_unit.dart';
 import '../../model/ceobe/resource/resource_info.dart';
 
 class TodayResource extends StatelessWidget {
-  const TodayResource(this.resources, {Key? key}) : super(key: key);
+  const TodayResource(this.resources, {super.key});
 
   final Resources resources;
   static List<Map<String, dynamic>> resourceInfo = [

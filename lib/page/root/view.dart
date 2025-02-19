@@ -1,11 +1,12 @@
-import 'package:dun_cookie_flutter/common/dun_color.dart';
-import 'package:dun_cookie_flutter/manager/settingManager.dart';
-import 'package:dun_cookie_flutter/page/root/logic.dart';
-import 'package:dun_cookie_flutter/widget/scroll_hide.dart';
-import 'package:dun_cookie_flutter/widget/lazy_indexed_stack.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+
+import '../../common/dun_color.dart';
+import '../../manager/setting_manager.dart';
+import '../../widget/lazy_indexed_stack.dart';
+import '../../widget/scroll_hide.dart';
+import 'logic.dart';
 
 class RootPage extends StatelessWidget {
   RootPage({super.key});

@@ -1,9 +1,9 @@
-import 'package:dun_cookie_flutter/common/dun_jump.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:timelines/timelines.dart';
 
 import '../../common/dun_color.dart';
+import '../../common/dun_jump.dart';
 import '../../model/bakery/bakery_data.dart';
 import 'content_time_line.dart';
 
@@ -49,7 +49,7 @@ class HoneyCakeWorkshopCard extends StatelessWidget {
                         const Text(
                           "Bilibili专栏",
                           style: TextStyle(
-                            color: DunColors.DunColorBlue,
+                            color: DunColors.dunColorBlue,
                             fontSize: 16,
                           ),
                         ),
@@ -103,7 +103,7 @@ class HoneyCakeWorkshopCard extends StatelessWidget {
                                 ? Container()
                                 : const Divider(
                                     height: 8,
-                                    color: DunColors.DunColor,
+                                    color: DunColors.dunColor,
                                   ),
                             indexDay.content.isEmpty
                                 ? Container()
@@ -122,12 +122,12 @@ class HoneyCakeWorkshopCard extends StatelessWidget {
                     return const OutlinedDotIndicator(
                       size: 20.0, // 圆圈的大小
                       borderWidth: 2.5, // 圆圈的宽度
-                      color: DunColors.BakeryColor, // 圆圈的颜色
+                      color: DunColors.bakeryColor, // 圆圈的颜色
                     );
                   },
                   connectorBuilder: (_, index, ___) => const SolidLineConnector(
                     thickness: 2.5, // 线的粗细
-                    color: DunColors.BakeryColor, // 线的颜色
+                    color: DunColors.bakeryColor, // 线的颜色
                   ),
                 ),
               ),

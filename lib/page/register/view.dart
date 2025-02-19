@@ -11,7 +11,7 @@ import '../../common/dun_toast.dart';
 import 'logic.dart';
 
 class RegisterPage extends StatelessWidget {
-  RegisterPage({Key? key}) : super(key: key);
+  RegisterPage({super.key});
 
   final logic = Get.put(RegisterLogic());
   final state = Get.find<RegisterLogic>().state;
@@ -19,7 +19,8 @@ class RegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MediaQuery(
-      data: MediaQuery.of(context).copyWith(textScaler: const TextScaler.linear(1.0)),
+      data: MediaQuery.of(context)
+          .copyWith(textScaler: const TextScaler.linear(1.0)),
       child: WillPopScope(
         onWillPop: () async {
           DunToast.showError("必须同意或不同意哦");
@@ -31,7 +32,7 @@ class RegisterPage extends StatelessWidget {
               "产品声明与用户协议提示",
               style: TextStyle(color: Colors.white),
             ),
-            backgroundColor: DunColors.DunColor,
+            backgroundColor: DunColors.dunColor,
             systemOverlayStyle: SystemUiOverlayStyle.light,
           ),
           body: Container(
@@ -64,21 +65,21 @@ class RegisterPage extends StatelessWidget {
                       style: const TextStyle(
                           fontSize: 14,
                           // fontWeight: FontWeight.w200,
-                          color: DunColors.DunColorGrey),
+                          color: DunColors.dunColorGrey),
                       children: [
                         const TextSpan(
                             text:
                                 "为了您的体验，请您务必审慎阅读、充分理解我们的“产品声明”与“用户守则”条款。您可阅读"),
                         TextSpan(
                           text: "《产品声明》",
-                          style: const TextStyle(color: DunColors.DunColor),
+                          style: const TextStyle(color: DunColors.dunColor),
                           recognizer: TapGestureRecognizer()
                             ..onTap = logic.onTapProductDeclarations,
                         ),
                         const TextSpan(text: "和"),
                         TextSpan(
                           text: "《用户守则》",
-                          style: const TextStyle(color: DunColors.DunColor),
+                          style: const TextStyle(color: DunColors.dunColor),
                           recognizer: TapGestureRecognizer()
                             ..onTap = logic.onTapGuidelines,
                         ),
@@ -105,7 +106,7 @@ class RegisterPage extends StatelessWidget {
                 ElevatedButton(
                   style: ButtonStyle(
                     backgroundColor:
-                        MaterialStateProperty.all(DunColors.DunColor),
+                        MaterialStateProperty.all(DunColors.dunColor),
                     shape: MaterialStateProperty.all(
                         const RoundedRectangleBorder(
                             borderRadius:

@@ -16,7 +16,7 @@ class HoneyCakeWorkshopPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MediaQuery(
-      data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(1.0)),
+      data: MediaQuery.of(context).copyWith(textScaler: TextScaler.noScaling),
       child: Scaffold(
         backgroundColor: DunColors.gray_3,
         appBar: AppBar(
@@ -27,10 +27,10 @@ class HoneyCakeWorkshopPage extends StatelessWidget {
               onPressed: logic.onTapBack),
           leadingWidth: 50,
           iconTheme: const IconThemeData(
-            color: DunColors.DunColor,
+            color: DunColors.dunColor,
           ),
           titleTextStyle:
-              const TextStyle(color: DunColors.DunColor, fontSize: 20),
+              const TextStyle(color: DunColors.dunColor, fontSize: 20),
           titleSpacing: 0,
           title: const Text("罗德岛蜜饼工坊"),
           actions: [
@@ -46,10 +46,10 @@ class HoneyCakeWorkshopPage extends StatelessWidget {
                           decoration: const InputDecoration(
                             enabledBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
-                                    color: DunColors.DunColor, width: 1.5)),
+                                    color: DunColors.dunColor, width: 1.5)),
                             focusedBorder: UnderlineInputBorder(
                                 borderSide: BorderSide(
-                                    color: DunColors.DunColor, width: 1.5)),
+                                    color: DunColors.dunColor, width: 1.5)),
                           ),
                           value: state.bakeryMansionIdList.last,
                           // 选择回调
@@ -102,7 +102,7 @@ class HoneyCakeWorkshopPage extends StatelessWidget {
         height: 40,
         margin: REdgeInsets.symmetric(vertical: 8, horizontal: 16),
         decoration: BoxDecoration(
-          color: DunColors.DunColor,
+          color: DunColors.dunColor,
           borderRadius: BorderRadius.circular(4),
         ),
         child: Row(

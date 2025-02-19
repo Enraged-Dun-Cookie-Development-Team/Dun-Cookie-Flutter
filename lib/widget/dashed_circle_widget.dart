@@ -9,8 +9,8 @@ class DashedCircleBorder extends StatelessWidget {
   const DashedCircleBorder({
     required this.borderWidth,
     required this.borderColor,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

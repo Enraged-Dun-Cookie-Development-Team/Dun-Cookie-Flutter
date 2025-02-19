@@ -1,5 +1,6 @@
-import 'package:dun_cookie_flutter/common/dun_color.dart';
 import 'package:flutter/material.dart';
+
+import '../../common/dun_color.dart';
 
 class LoadingDialog extends Dialog {
   const LoadingDialog({super.key});
@@ -24,8 +25,8 @@ class LoadingDialog extends Dialog {
               child: SizedBox.square(
                 dimension: dialogSize - borderSize,
                 child: CircularProgressIndicator(
-                  color: DunColors.DunColor,
-                  backgroundColor: DunColors.DunColor.withOpacity(0.4),
+                  color: DunColors.dunColor,
+                  backgroundColor: DunColors.dunColor.withOpacity(0.4),
                   strokeWidth: borderSize,
                 ),
               ),

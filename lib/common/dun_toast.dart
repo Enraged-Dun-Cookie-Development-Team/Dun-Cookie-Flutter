@@ -1,10 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'dun_color.dart';
-
-
 
 class DunToast {
   static const double _fontsize = 16.0;
@@ -13,7 +10,7 @@ class DunToast {
     Fluttertoast.showToast(
         msg: text,
         textColor: Colors.white,
-        backgroundColor: DunColors.DunColor,
+        backgroundColor: DunColors.dunColor,
         fontSize: _fontsize);
   }
 
@@ -22,7 +19,7 @@ class DunToast {
         msg: text,
         toastLength: Toast.LENGTH_LONG,
         textColor: Colors.white,
-        backgroundColor: DunColors.DunColor,
+        backgroundColor: DunColors.dunColor,
         fontSize: _fontsize);
   }
 
@@ -32,7 +29,7 @@ class DunToast {
     Fluttertoast.showToast(
         msg: text,
         textColor: Colors.white,
-        backgroundColor: DunColors.DunColor,
+        backgroundColor: DunColors.dunColor,
         fontSize: _fontsize);
   }
 

@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 
 import 'item_leading_widget.dart';
@@ -9,11 +8,10 @@ class ItemCard extends StatelessWidget {
   final double height;
 
   const ItemCard(
-      {Key? key,
+      {super.key,
       required this.leading,
       required this.content,
-      this.height = 97})
-      : super(key: key);
+      this.height = 97});
 
   @override
   Widget build(BuildContext context) {

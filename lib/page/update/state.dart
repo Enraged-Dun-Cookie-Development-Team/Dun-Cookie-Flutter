@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:dun_cookie_flutter/common/data_status.dart';
-import 'package:dun_cookie_flutter/widget/progress.dart';
 
+import '../../common/data_status.dart';
 import '../../model/ceobe/version/dun_app.dart';
+import '../../widget/progress.dart';
 
 class UpdateState {
   String nowVersion = '0.0.0';

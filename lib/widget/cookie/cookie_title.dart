@@ -12,12 +12,12 @@ class CookieTitle extends StatelessWidget {
   final double avatarRadius;
 
   const CookieTitle({
-    Key? key,
+    super.key,
     required this.cookie,
     this.titleStyle,
     this.timeStyle,
     this.avatarRadius = 0.0,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -79,5 +79,4 @@ class CookieTitle extends StatelessWidget {
             ),
     );
   }
-
 }

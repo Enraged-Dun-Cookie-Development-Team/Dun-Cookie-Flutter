@@ -1,7 +1,7 @@
-import 'package:dun_cookie_flutter/request/request.dart';
-
 import '../model/json.dart';
+import 'request.dart';
 
+// ignore: constant_identifier_names
 const String USER_HAS_CREATE = "C0018";
 
 class ResponseData<T> {

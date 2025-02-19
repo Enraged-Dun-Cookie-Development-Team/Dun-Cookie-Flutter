@@ -1,9 +1,9 @@
-import 'package:dun_cookie_flutter/page/root/logic.dart';
 import 'package:get/get.dart';
 
 import '../../request/ceobe/ceobe_request.dart';
 import '../../request/cookie/cookie_request.dart';
 import '../../route.dart';
+import '../root/logic.dart';
 import 'state.dart';
 
 class TerminalLogic extends GetxController {

@@ -1,4 +1,3 @@
-import 'package:dun_cookie_flutter/widget/cookie/cookie_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -6,11 +5,12 @@ import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../common/dun_color.dart';
 import '../../model/cookie/cookie_main_list.dart';
+import '../../widget/cookie/cookie_content.dart';
 import '../../widget/cookie/cookie_title.dart';
 import 'logic.dart';
 
 class CookieSharePage extends StatelessWidget {
-  CookieSharePage({Key? key}) : super(key: key);
+  CookieSharePage({super.key});
 
   final logic = Get.put(CookieShareLogic());
   final state = Get.find<CookieShareLogic>().state;
@@ -110,7 +110,7 @@ class CookieSharePage extends StatelessWidget {
                   height: 3,
                   decoration: const BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [DunColors.DunColor, Colors.white],
+                      colors: [DunColors.dunColor, Colors.white],
                     ),
                   ),
                 ),
@@ -138,10 +138,10 @@ class CookieSharePage extends StatelessWidget {
             version: QrVersions.auto,
             gapless: false,
             eyeStyle: const QrEyeStyle(
-                eyeShape: QrEyeShape.square, color: DunColors.DunColor),
+                eyeShape: QrEyeShape.square, color: DunColors.dunColor),
             dataModuleStyle: const QrDataModuleStyle(
                 dataModuleShape: QrDataModuleShape.square,
-                color: DunColors.DunColor),
+                color: DunColors.dunColor),
           )
         : Container();
   }

@@ -1,8 +1,9 @@
-import 'package:dun_cookie_flutter/page/cookies/view.dart';
-import 'package:dun_cookie_flutter/page/more/view.dart';
-import 'package:dun_cookie_flutter/page/terminal/view.dart';
-import 'package:dun_cookie_flutter/widget/scroll_hide.dart';
 import 'package:flutter/widgets.dart';
+
+import '../../widget/scroll_hide.dart';
+import '../cookies/view.dart';
+import '../more/view.dart';
+import '../terminal/view.dart';
 
 class RootState {
   int currentPageIndex = 0;

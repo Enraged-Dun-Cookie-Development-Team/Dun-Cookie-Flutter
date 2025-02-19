@@ -6,10 +6,10 @@ import '../../common/dun_color.dart';
 import '../../model/ceobe/video/video.dart';
 
 class VideoLinkCard extends StatelessWidget {
-  VideoModel linkInfo;
-  void Function(VideoModel videoModel)? onTap;
+  final VideoModel linkInfo;
+  final void Function(VideoModel videoModel)? onTap;
 
-  VideoLinkCard(this.linkInfo, {super.key, this.onTap});
+  const VideoLinkCard(this.linkInfo, {super.key, this.onTap});
 
   @override
   Widget build(BuildContext context) {

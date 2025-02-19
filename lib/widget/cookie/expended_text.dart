@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class ExpendText extends StatefulWidget {
@@ -12,7 +11,7 @@ class ExpendText extends StatefulWidget {
   final Function? onExpand;
 
   const ExpendText(
-      {Key? key,
+      {super.key,
       this.text = '',
       this.maxLines = 4,
       this.minLines = 1,
@@ -20,11 +19,10 @@ class ExpendText extends StatefulWidget {
       this.shrinkText = '展开',
       this.expandText = '收起',
       this.onShrink,
-      this.onExpand})
-      : super(key: key);
+      this.onExpand});
 
   @override
-  _ExpendTextState createState() => _ExpendTextState();
+  State<ExpendText> createState() => _ExpendTextState();
 }
 
 class _ExpendTextState extends State<ExpendText> {
@@ -49,7 +47,7 @@ class _ExpendTextState extends State<ExpendText> {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
-      TextPainter _textPainter = TextPainter(
+      TextPainter textPainter = TextPainter(
           maxLines: widget.maxLines,
           textScaler: MediaQuery.textScalerOf(context),
           locale: Localizations.localeOf(context),
@@ -62,14 +60,14 @@ class _ExpendTextState extends State<ExpendText> {
         ..layout(
             minWidth: constraints.minWidth, maxWidth: constraints.maxWidth);
       // 判断是否已经超过最大行数
-      if (_textPainter.didExceedMaxLines) {
-        final textSize = _textPainter.size;
-        final position = _textPainter.getPositionForOffset(Offset(
-          textSize.width - _textPainter.width,
+      if (textPainter.didExceedMaxLines) {
+        final textSize = textPainter.size;
+        final position = textPainter.getPositionForOffset(Offset(
+          textSize.width - textPainter.width,
           textSize.height,
         ));
         // 默认endOffset = position.offset -1;但是这样导致展开两字有时会换行，故再减了1
-        final endOffset = _textPainter.getOffsetBefore(position.offset - 1);
+        final endOffset = textPainter.getOffsetBefore(position.offset - 1);
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -93,8 +91,7 @@ class _ExpendTextState extends State<ExpendText> {
           ],
         );
       } else {
-        return Text.rich(
-            TextSpan(text: widget.text, style: widget.textStyle));
+        return Text.rich(TextSpan(text: widget.text, style: widget.textStyle));
       }
     });
   }

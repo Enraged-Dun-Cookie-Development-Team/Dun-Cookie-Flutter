@@ -1,8 +1,8 @@
-import 'package:dun_cookie_flutter/common/dun_jump.dart';
-import 'package:dun_cookie_flutter/model/bakery/bakery_data.dart';
-import 'package:dun_cookie_flutter/request/bakery/bakery_request.dart';
 import 'package:get/get.dart';
 
+import '../../common/dun_jump.dart';
+import '../../model/bakery/bakery_data.dart';
+import '../../request/bakery/bakery_request.dart';
 import 'state.dart';
 
 class HoneyCakeWorkshopLogic extends GetxController {

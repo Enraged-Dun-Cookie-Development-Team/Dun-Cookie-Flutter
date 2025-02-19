@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -14,11 +13,11 @@ class DunTag extends StatelessWidget {
     return Container(
       padding: REdgeInsets.symmetric(vertical: 2, horizontal: 8),
       decoration: BoxDecoration(
-          border: Border.all(color: DunColors.DunColorBlue),
+          border: Border.all(color: DunColors.dunColorBlue),
           borderRadius: BorderRadius.circular(50)),
       child: Text(
         text,
-        style: const TextStyle(fontSize: 14, color: DunColors.DunColorBlue),
+        style: const TextStyle(fontSize: 14, color: DunColors.dunColorBlue),
       ),
     );
   }

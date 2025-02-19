@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import '../manager/settingManager.dart';
+import '../manager/setting_manager.dart';
 import '../model/json.dart';
 import 'config.dart';
 import 'respond.dart';

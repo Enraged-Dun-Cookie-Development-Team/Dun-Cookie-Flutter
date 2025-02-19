@@ -8,23 +8,15 @@ import 'package:permission_handler/permission_handler.dart';
 import '../../common/dun_color.dart';
 
 class ToSettingDialog extends Dialog {
-  int currentTimer = 5;
-  String content = "我知道了(5)";
-  bool disable = true;
-  late Timer _timer;
-
-  StateSetter? aState;
+  final RxInt currentTimer = 5.obs;
+  late final Timer _timer;
 
   ToSettingDialog({super.key}) {
     _timer = Timer.periodic(const Duration(milliseconds: 1000), (timer) {
-      currentTimer--;
-      content = "我知道了($currentTimer)";
-      if (currentTimer == 0) {
-        content = "我知道了";
+      currentTimer.value = currentTimer.value - 1;
+      if (currentTimer.value == 0) {
         _timer.cancel();
-        disable = false;
       }
-      aState!(() {});
     });
   }
 
@@ -94,7 +86,7 @@ class ToSettingDialog extends Dialog {
                             child: const Text(
                               '前往设置',
                               style: TextStyle(
-                                  fontSize: 17, color: DunColors.DunColor),
+                                  fontSize: 17, color: DunColors.dunColor),
                             ),
                           )),
                           const VerticalDivider(
@@ -102,25 +94,31 @@ class ToSettingDialog extends Dialog {
                             width: 1,
                             thickness: 1,
                           ),
-                          Expanded(child: StatefulBuilder(
-                            builder:
-                                (BuildContext context, StateSetter setState) {
-                              aState = setState;
-                              return TextButton(
+                          Expanded(
+                            child: Obx(
+                              () {
+                                bool disable = currentTimer.value > 0;
+                                return TextButton(
                                   onPressed: disable
                                       ? null
                                       : () {
-                                    Get.back();
+                                          Get.back();
                                         },
-                                  child: Text(content,
-                                      style: TextStyle(
-                                        fontSize: 17,
-                                        color: disable
-                                            ? Colors.grey
-                                            : DunColors.DunColor,
-                                      )));
-                            },
-                          )),
+                                  child: Text(
+                                    disable
+                                        ? "我知道了(${currentTimer.value})"
+                                        : "我知道了",
+                                    style: TextStyle(
+                                      fontSize: 17,
+                                      color: disable
+                                          ? Colors.grey
+                                          : DunColors.dunColor,
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
                         ],
                       ),
                     )

@@ -5,7 +5,7 @@ import 'package:get/get_rx/get_rx.dart';
 
 import '../common/package_info.dart';
 import '../model/info/user_settings.dart';
-import 'dunPreference.dart';
+import 'dun_preference.dart';
 
 class SettingManager {
   static final _instance = SettingManager._();

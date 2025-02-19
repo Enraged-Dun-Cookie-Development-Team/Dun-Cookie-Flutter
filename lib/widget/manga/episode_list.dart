@@ -1,9 +1,9 @@
-import 'package:dun_cookie_flutter/common/dun_tool.dart';
-import 'package:dun_cookie_flutter/model/manga/terra_comic_episode.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../common/dun_color.dart';
+import '../../common/dun_tool.dart';
+import '../../model/manga/terra_comic_episode.dart';
 
 class EpisodeList extends StatelessWidget {
   final List<TerraComicEpisodeModel> episodes;
@@ -37,8 +37,8 @@ class EpisodeList extends StatelessWidget {
           padding: REdgeInsets.symmetric(vertical: 2, horizontal: 8),
           margin: REdgeInsets.only(bottom: 10, right: 10),
           decoration: BoxDecoration(
-              color: episodeId == lastView ? DunColors.DunColor : null,
-              border: Border.all(color: DunColors.DunColor),
+              color: episodeId == lastView ? DunColors.dunColor : null,
+              border: Border.all(color: DunColors.dunColor),
               borderRadius: BorderRadius.circular(5)),
           child: Text(
             model.shortTitle,

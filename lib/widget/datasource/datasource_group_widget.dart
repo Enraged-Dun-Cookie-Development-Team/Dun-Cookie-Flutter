@@ -12,11 +12,10 @@ class DataSourceGroupWidget extends StatelessWidget {
       onTapDatasource;
 
   const DataSourceGroupWidget(
-      {Key? key,
+      {super.key,
       required this.platform,
       required this.datasourceList,
-      required this.onTapDatasource})
-      : super(key: key);
+      required this.onTapDatasource});
 
   @override
   Widget build(BuildContext context) {

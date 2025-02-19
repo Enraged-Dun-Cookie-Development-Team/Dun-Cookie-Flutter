@@ -1,4 +1,3 @@
-import 'package:dun_cookie_flutter/manager/settingManager.dart';
 import 'package:dun_cookie_flutter/widget/manga/episode_list.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +6,7 @@ import 'package:get/get.dart';
 
 import '../../common/dun_color.dart';
 import '../../common/time_unit.dart';
+import '../../manager/setting_manager.dart';
 import '../../model/manga/terra_comic.dart';
 import '../../model/manga/terra_comic_episode.dart';
 import '../../request/manga/manga_request.dart';
@@ -14,10 +14,10 @@ import '../dun_tag.dart';
 
 class MangaListCard extends StatefulWidget {
   const MangaListCard({
-    Key? key,
+    super.key,
     required this.comicModel,
     required this.onTapEpisode,
-  }) : super(key: key);
+  });
 
   final TerraComicModel comicModel;
   final Function(TerraComicEpisodeModel url) onTapEpisode;

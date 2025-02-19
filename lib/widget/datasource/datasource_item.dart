@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../common/dun_color.dart';
-import '../../manager/settingManager.dart';
+import '../../manager/setting_manager.dart';
 import '../../model/config/config_datasource.dart';
 
 class DatasourceItem extends StatelessWidget {
@@ -14,14 +14,13 @@ class DatasourceItem extends StatelessWidget {
       onTapDatasource;
 
   DatasourceItem(
-      {Key? key, required this.datasourceModel, required this.onTapDatasource})
+      {super.key, required this.datasourceModel, required this.onTapDatasource})
       : isSelected = SettingManager.getInstance()
             .datasourceSetting
             .value
             .datasourceList
             .contains(datasourceModel.uniqueId)
-            .obs,
-        super(key: key);
+            .obs;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +41,7 @@ class DatasourceItem extends StatelessWidget {
           const Spacer(),
           Obx(() => Checkbox(
                 //数据源页复选框
-                activeColor: DunColors.DunColor,
+                activeColor: DunColors.dunColor,
                 value: isSelected.value,
                 onChanged: (bool? value) {
                   if (value != null) {

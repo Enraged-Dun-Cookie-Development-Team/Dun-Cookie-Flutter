@@ -20,10 +20,10 @@ class TimeUnit {
 // 时间范围判定
   static bool isTimeRange(time, starTime, endTime) {
     time ??= DateTime.now();
-    var _time = changeLocalTime(stringOrDateTimeToDateTime(time));
-    var _starTime = stringOrDateTimeToDateTime(starTime);
-    var _endTime = stringOrDateTimeToDateTime(endTime);
-    if (_time.isAfter(_starTime) && _time.isBefore(_endTime)) {
+    var time0 = changeLocalTime(stringOrDateTimeToDateTime(time));
+    var starTime0 = stringOrDateTimeToDateTime(starTime);
+    var endTime0 = stringOrDateTimeToDateTime(endTime);
+    if (time0.isAfter(starTime0) && time0.isBefore(endTime0)) {
       return true;
     }
     return false;
@@ -31,10 +31,10 @@ class TimeUnit {
 
 //  时间大小比较  endTime是否比stearTime大？
   static bool isTimeAfter(starTime, endTime) {
-    DateTime _starTime = stringOrDateTimeToDateTime(starTime);
-    DateTime _endTime = stringOrDateTimeToDateTime(endTime);
+    DateTime starTime0 = stringOrDateTimeToDateTime(starTime);
+    DateTime endTime0 = stringOrDateTimeToDateTime(endTime);
 
-    if (_endTime.isAfter(_starTime)) {
+    if (endTime0.isAfter(starTime0)) {
       return true;
     }
     return false;
@@ -42,13 +42,13 @@ class TimeUnit {
 
   // 时间转时间类型
   static DateTime stringOrDateTimeToDateTime(time) {
-    late DateTime _time;
+    late DateTime time0;
     if (time is DateTime) {
-      _time = time;
+      time0 = time;
     } else {
-      _time = DateTime.parse(time);
+      time0 = DateTime.parse(time);
     }
-    return _time;
+    return time0;
   }
 
   static numberToWeek(x) {
@@ -103,9 +103,11 @@ class TimeUnit {
   static timestampFormatYMD(int timestamp) {
     return formatDate(timestampToDate(timestamp), [yyyy, '-', mm, '-', dd]);
   }
+
   // 时间戳转时间格式YYYY-mm-dd hh:nn:ss
   static timestampFormatYMDHNS(int timestamp) {
-    return formatDate(timestampToDate(timestamp), [yyyy, '-', mm, '-', dd, " ", HH, ":", nn, ":", ss]);
+    return formatDate(timestampToDate(timestamp),
+        [yyyy, '-', mm, '-', dd, " ", HH, ":", nn, ":", ss]);
   }
 
   static TimeDiffModel timeDiffUnit(String endTime) {

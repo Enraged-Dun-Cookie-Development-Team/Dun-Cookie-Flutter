@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 
 import '../../common/dun_jump.dart';
 import '../../common/dun_toast.dart';
-import '../../manager/settingManager.dart';
+import '../../manager/setting_manager.dart';
 import '../../route.dart';
 import 'state.dart';
 

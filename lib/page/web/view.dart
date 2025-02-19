@@ -7,7 +7,7 @@ import '../../common/dun_color.dart';
 import 'logic.dart';
 
 class WebPage extends StatelessWidget {
-  WebPage({Key? key}) : super(key: key);
+  WebPage({super.key});
 
   final logic = Get.put(WebLogic());
   final state = Get.find<WebLogic>().state;
@@ -27,11 +27,11 @@ class WebPage extends StatelessWidget {
         leadingWidth: 50,
         //按钮样式
         iconTheme: const IconThemeData(
-          color: DunColors.DunColor,
+          color: DunColors.dunColor,
         ),
         //文字样式
         titleTextStyle:
-            const TextStyle(color: DunColors.DunColor, fontSize: 20),
+            const TextStyle(color: DunColors.dunColor, fontSize: 20),
         //文字和按钮间距
         titleSpacing: 0,
         title: Obx(() => Text(state.title.value)),

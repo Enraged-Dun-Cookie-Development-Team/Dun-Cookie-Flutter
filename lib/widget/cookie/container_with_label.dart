@@ -1,10 +1,7 @@
-
-
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../common/dun_color.dart';
-
 
 class ContainerWithLabel extends StatelessWidget {
   final double containerWidth;
@@ -14,13 +11,12 @@ class ContainerWithLabel extends StatelessWidget {
   final Color labelColor;
 
   const ContainerWithLabel(
-      {Key? key,
+      {super.key,
       required this.containerWidth,
       required this.text,
       this.textColor = DunColors.white,
       this.containerBgColor = DunColors.gray_1,
-      this.labelColor = DunColors.gray_3})
-      : super(key: key);
+      this.labelColor = DunColors.gray_3});
 
   @override
   Widget build(BuildContext context) {

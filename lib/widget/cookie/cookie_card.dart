@@ -14,11 +14,11 @@ class CookieCard extends StatelessWidget {
   final Function(List<String> imageURLList, int currentIndex)? onTapImage;
 
   const CookieCard(
-      {Key? key,
+      {super.key,
       required this.data,
       required this.onTapCard,
-      required this.onTapShare, this.onTapImage})
-      : super(key: key);
+      required this.onTapShare,
+      this.onTapImage});
 
   @override
   Widget build(BuildContext context) {
