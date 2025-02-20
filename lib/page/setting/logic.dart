@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:dun_cookie_flutter/page/update/logic.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
@@ -8,6 +7,7 @@ import '../../common/dun_jump.dart';
 import '../../common/dun_toast.dart';
 import '../../manager/setting_manager.dart';
 import '../../route.dart';
+import '../update/logic.dart';
 import 'state.dart';
 
 class SettingLogic extends GetxController {

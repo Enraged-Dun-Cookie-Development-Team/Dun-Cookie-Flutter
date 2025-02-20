@@ -1,13 +1,13 @@
 import 'dart:io';
 
-import 'package:dun_cookie_flutter/common/data_status.dart';
-import 'package:dun_cookie_flutter/common/file_util.dart';
-import 'package:dun_cookie_flutter/widget/progress.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../common/data_status.dart';
 import '../../common/dun_color.dart';
+import '../../common/file_util.dart';
+import '../../widget/progress.dart';
 import 'logic.dart';
 
 class UpdatePage extends StatelessWidget {

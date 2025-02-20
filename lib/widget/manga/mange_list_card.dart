@@ -1,4 +1,3 @@
-import 'package:dun_cookie_flutter/widget/manga/episode_list.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,6 +10,7 @@ import '../../model/manga/terra_comic.dart';
 import '../../model/manga/terra_comic_episode.dart';
 import '../../request/manga/manga_request.dart';
 import '../dun_tag.dart';
+import 'episode_list.dart';
 
 class MangaListCard extends StatefulWidget {
   const MangaListCard({
