@@ -7,7 +7,20 @@ part of 'tool.dart';
 // **************************************************************************
 
 ToolModel _$ToolModelFromJson(Map<String, dynamic> json) => ToolModel(
-      nickname: json['nickname'] as String,
-      avatar: json['avatar'] as String,
-      url: json['jump_url'] as String,
+      nameSet: _fromJsonToToolNameSet(json['localized_name']),
+      icon: json['icon_url'] as String? ?? '',
+      links: (json['links'] as List<dynamic>?)
+              ?.map((e) => ToolLink.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+    );
+
+ToolNameSet _$ToolNameSetFromJson(Map<String, dynamic> json) => ToolNameSet(
+      json['zh_CN'] as String? ?? '',
+      json['en_US'] as String? ?? '',
+    );
+
+ToolLink _$ToolLinkFromJson(Map<String, dynamic> json) => ToolLink(
+      primary: json['primary'] as bool? ?? false,
+      url: json['url'] as String? ?? '',
     );

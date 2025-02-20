@@ -28,7 +28,7 @@ class ToolLinkCard extends StatelessWidget {
                 ClipRRect(
                     borderRadius: BorderRadius.circular(4),
                     child: ExtendedImage.network(
-                      linkInfo.avatar,
+                      linkInfo.icon,
                       width: 30,
                       height: 30,
                     )),
@@ -37,7 +37,7 @@ class ToolLinkCard extends StatelessWidget {
                 ),
                 Expanded(
                     child: Text(
-                  linkInfo.nickname,
+                  linkInfo.nameSet.localName,
                   maxLines: 1,
                 ))
               ],
