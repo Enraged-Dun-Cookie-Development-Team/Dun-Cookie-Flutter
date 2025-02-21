@@ -29,13 +29,13 @@ class UrlString {
   static String get testBakeryInfoUrl =>
       "/canteen/workshop?${Random().nextInt(100000).toString()}";
 
-  static String get bakeryMansionIdListUrl => "/canteen/bakery/mansionId";
+  static String get bakeryMansionIdListUrl => "/cdn/bakery/mansionId";
 
   static String bakeryMansionInfoUrl(String id) =>
-      "/canteen/bakery/mansionInfo?mansion_id=$id";
+      "/cdn/bakery/mansionInfo?mansion_id=$id";
 
   static String get bakeryRecentPredictUrl =>
-      "/canteen/bakery/mansion/recentPredict";
+      "/cdn/bakery/mansion/recentPredict";
 
   // 用户信息
   static String get appVersionUrl => "/cdn/operate/version/fetch";
