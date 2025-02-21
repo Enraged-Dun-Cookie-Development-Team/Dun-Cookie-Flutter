@@ -46,9 +46,9 @@ class UrlString {
       "/canteen/user/datasourceConfig";
 
   // 工具相关
-  static String get videoRecommendUrl => "/canteen/operate/video/list";
+  static String get videoRecommendUrl => "/cdn/operate/video/list";
 
-  static String get resourceInfoUrl => "/canteen/operate/resource/get";
+  static String get resourceInfoUrl => "/cdn/operate/resource/get";
 
-  static String get toolLinkInfoUrl => "/canteen/operate/toolLink/list";
+  static String get toolLinkInfoUrl => "/cdn/operate/toolLink/list";
 }
