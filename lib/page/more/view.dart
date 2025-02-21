@@ -29,10 +29,12 @@ class _MorePageState extends State<MorePage> {
       builder: (logic) {
         return ListView(
           controller: state.pageScrollController,
-          padding: REdgeInsets.fromLTRB(12, 0, 12, 12),
+          padding: REdgeInsets.fromLTRB(12, 0, 12, 0),
           children: [
             _buildTitle(),
+            SizedBox(height: 16.h),
             _buildOfficialManga(),
+            SizedBox(height: 16.h),
             _buildHoneyCakeWorkshop(),
             _buildToolLinks(),
             _buildVideoRecommend(),
@@ -52,31 +54,225 @@ class _MorePageState extends State<MorePage> {
   }
 
   Widget _buildTitle() {
-    return SizedBox(
-      height: 42,
+    return ColoredBox(
+      color: DunColors.gray_1,
       child: Stack(
+        clipBehavior: Clip.none,
         children: [
-          Container(
-            width: double.infinity,
-            margin: REdgeInsets.only(right: 7),
-            padding: REdgeInsets.fromLTRB(12, 11, 0, 11),
-            color: DunColors.gray_1,
-            child: const Text(
+          Padding(
+            padding: REdgeInsets.only(top: 11, left: 11, bottom: 10),
+            child: Text(
               "常用工具&推荐",
               textAlign: TextAlign.left,
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 16.sp,
                 color: DunColors.white,
               ),
             ),
           ),
-          Align(
-            alignment: Alignment.bottomRight,
+          Positioned(
+            right: -5.w,
+            bottom: 7.h,
             child: Container(
               margin: REdgeInsets.only(bottom: 6),
               width: 17,
               height: 10,
               color: DunColors.yellow,
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _buildOfficialManga() {
+    return GestureDetector(
+      // 处理没有漫画的情况，不能跳转
+      onTap: logic.onTapManga,
+      child: Container(
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.only(
+              topRight: Radius.circular(5), bottomRight: Radius.circular(5)),
+          color: DunColors.white,
+          boxShadow: [DunTheme.cardShadow],
+        ),
+        child: Row(
+          children: [
+            _buildMangaTitle(),
+            Expanded(
+              child: Obx(() => Visibility(
+                    replacement: const Center(child: Text("暂时还没有漫画更新")),
+                    visible: state.terraRecentEpisode.value.updatedTime != 0,
+                    child: Stack(
+                      children: [
+                        Row(
+                          children: [
+                            SizedBox(width: 13.w),
+                            _buildMangaImage(),
+                            SizedBox(width: 12.w),
+                            Padding(
+                              padding: REdgeInsets.only(top: 14, bottom: 9),
+                              child: DashedLineVerticalWidget(height: 117.h),
+                            ),
+                            SizedBox(width: 13.w),
+                            Expanded(
+                              child: _buildMangaInfo(),
+                            )
+                          ],
+                        ),
+                        Positioned(
+                          bottom: 12.h,
+                          right: 0,
+                          child: SizedBox(
+                            width: 14.sp,
+                            height: 14.sp,
+                            child: Transform.rotate(
+                              angle: math.pi / 4,
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  border: Border(
+                                      top: BorderSide(
+                                          width: 5, color: DunColors.gray_1),
+                                      right: BorderSide(
+                                          width: 5, color: DunColors.gray_1)),
+                                ),
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  )),
+            ),
+            SizedBox(width: 16.w),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMangaTitle() {
+    String columnText = "官方漫画";
+    List<Widget> titleTextList = [];
+    for (int i = 0; i < columnText.length; i++) {
+      titleTextList.add(
+        Text(
+          columnText[i],
+          style: TextStyle(color: DunColors.white, fontSize: 11.sp),
+        ),
+      );
+    }
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        Container(
+          padding: REdgeInsets.only(left: 5, right: 4, top: 40, bottom: 40),
+          color: DunColors.gray_1,
+          child: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: titleTextList,
+            ),
+          ),
+        ),
+        Positioned(
+          top: 6.h,
+          right: -8.w,
+          child: const SizedBox(
+            width: 13,
+            height: 8,
+            child: ColoredBox(
+              color: DunColors.blue,
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget _buildMangaImage() {
+    return Padding(
+      padding: REdgeInsets.only(top: 14, bottom: 10),
+      child: Obx(
+        () => state.terraRecentEpisode.value.coverUrl != null
+            ? ExtendedImage.network(
+                state.terraRecentEpisode.value.coverUrl!,
+                fit: BoxFit.cover,
+                handleLoadingProgress: true,
+                clearMemoryCacheIfFailed: true,
+                clearMemoryCacheWhenDispose: false,
+                mode: ExtendedImageMode.gesture,
+                cache: true,
+                height: 116.h,
+                width: 179.w,
+                loadStateChanged: (ExtendedImageState state) {
+                  if (state.extendedImageLoadState != LoadState.completed) {
+                    return Image(
+                      height: 116.h,
+                      width: 179.w,
+                      fit: BoxFit.cover,
+                      image: const AssetImage("assets/image/load/loading.gif"),
+                    );
+                  }
+                  return null;
+                },
+              )
+            : Image(
+                height: 116.h,
+                width: 179.w,
+                fit: BoxFit.cover,
+                image: const AssetImage("assets/image/load/loading.gif"),
+              ),
+      ),
+    );
+  }
+
+  Widget _buildMangaInfo() {
+    return Padding(
+      padding: REdgeInsets.symmetric(vertical: 26),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              _buildBlueSquare(),
+              SizedBox(width: 6.w),
+              Text(
+                "最近更新",
+                style: TextStyle(fontSize: 12.sp),
+              ),
+            ],
+          ),
+          SizedBox(height: 8.h),
+          Padding(
+            padding: REdgeInsets.only(left: 15),
+            child: Text(
+              "${state.terraRecentEpisode.value.title}:${state.terraRecentEpisode.value.episodeShortTitle}",
+              style: TextStyle(fontSize: 12.sp),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          SizedBox(height: 8.h),
+          Row(
+            children: [
+              _buildBlueSquare(),
+              SizedBox(width: 6.w),
+              Text(
+                "更新日期",
+                style: TextStyle(fontSize: 12.sp),
+              ),
+            ],
+          ),
+          SizedBox(height: 8.h),
+          Padding(
+            padding: REdgeInsets.only(left: 15),
+            child: Text(
+              TimeUnit.timestampFormatYMD(
+                  state.terraRecentEpisode.value.updatedTime),
+              style: const TextStyle(fontSize: 12),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
             ),
           ),
         ],
@@ -84,309 +280,125 @@ class _MorePageState extends State<MorePage> {
     );
   }
 
-  Widget _buildOfficialManga() {
-    return Obx(() {
-      String columnText = "官方漫画";
-      List<Widget> titleTextList = [];
-      for (int i = 0; i < columnText.length; i++) {
-        titleTextList.add(Text(columnText[i],
-            style: const TextStyle(color: DunColors.white, fontSize: 11)));
-      }
-      return GestureDetector(
-        // 处理没有漫画的情况，不能跳转
-        onTap: logic.onTapManga,
-        child: Container(
-          margin: REdgeInsets.only(top: 14),
-          height: 140,
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.only(
-                topRight: Radius.circular(5), bottomRight: Radius.circular(5)),
-            color: DunColors.white,
-          ),
-          child: Stack(
-            children: [
-              Row(
-                children: [
-                  Container(
-                    width: 20,
-                    color: DunColors.gray_1,
-                    child: Center(
-                        child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: titleTextList)),
-                  ),
-                  Expanded(
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(5),
-                            bottomRight: Radius.circular(5)),
-                        color: DunColors.white,
-                      ),
-                      child: state.terraRecentEpisode.value.updatedTime != 0
-                          ? Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const SizedBox(width: 13),
-                                // TODO: 这边一些参数意思不是很懂，要怎么搞
-                                state.terraRecentEpisode.value.coverUrl != null
-                                    ? ExtendedImage.network(
-                                        state
-                                            .terraRecentEpisode.value.coverUrl!,
-                                        fit: BoxFit.cover,
-                                        handleLoadingProgress: true,
-                                        clearMemoryCacheIfFailed: true,
-                                        clearMemoryCacheWhenDispose: false,
-                                        mode: ExtendedImageMode.gesture,
-                                        cache: true,
-                                        height: 100,
-                                        width: 180,
-                                        loadStateChanged:
-                                            (ExtendedImageState state) {
-                                          if (state.extendedImageLoadState ==
-                                              LoadState.loading) {
-                                            return const Center(
-                                                child: Image(
-                                                    height: 220,
-                                                    image: AssetImage(
-                                                        "assets/image/load/loading.gif")));
-                                          }
-                                          return null;
-                                        },
-                                      )
-                                    : const Image(
-                                        height: 220,
-                                        image: AssetImage(
-                                            "assets/image/load/loading.gif")),
-                                const SizedBox(width: 13),
-                                const DashedLineVerticalWidget(height: 100),
-                                const SizedBox(width: 13),
-                                Expanded(
-                                  child: Column(
-                                    children: [
-                                      const SizedBox(height: 26),
-                                      Row(children: [
-                                        _buildBlueSquare(),
-                                        const Text("最近更新",
-                                            style: TextStyle(fontSize: 12)),
-                                      ]),
-                                      const SizedBox(height: 8),
-                                      Container(
-                                        margin:
-                                            REdgeInsets.fromLTRB(11, 0, 0, 0),
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          "${state.terraRecentEpisode.value.title}:${state.terraRecentEpisode.value.episodeShortTitle}",
-                                          style: const TextStyle(fontSize: 12),
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 8),
-                                      Row(children: [
-                                        _buildBlueSquare(),
-                                        const Text("更新日期",
-                                            style: TextStyle(fontSize: 12)),
-                                      ]),
-                                      const SizedBox(height: 8),
-                                      Container(
-                                        margin:
-                                            REdgeInsets.fromLTRB(11, 0, 0, 0),
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                            TimeUnit.timestampFormatYMD(state
-                                                .terraRecentEpisode
-                                                .value
-                                                .updatedTime),
-                                            style:
-                                                const TextStyle(fontSize: 12)),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              ],
-                            )
-                          : const Center(child: Text("暂时还没有漫画更新")),
-                    ),
-                  ),
-                ],
-              ),
-              Container(
-                margin: REdgeInsets.fromLTRB(15, 6, 0, 0),
-                width: 13,
-                height: 8,
-                color: DunColors.blue,
-              ),
-              state.terraRecentEpisode.value.updatedTime != 0
-                  ? Container(
-                      alignment: Alignment.bottomRight,
-                      padding: REdgeInsets.fromLTRB(0, 0, 12, 10),
-                      child: SizedBox(
-                          width: 16,
-                          height: 16,
-                          child: Transform.rotate(
-                            angle: math.pi / 4,
-                            child: Container(
-                              decoration: const BoxDecoration(
-                                border: Border(
-                                    top: BorderSide(
-                                        width: 5, color: DunColors.gray_1),
-                                    right: BorderSide(
-                                        width: 5, color: DunColors.gray_1)),
-                              ),
-                            ),
-                          )),
-                    )
-                  : const SizedBox.shrink()
-            ],
-          ),
-        ),
-      );
-    });
-  }
-
   Widget _buildBlueSquare() {
-    return Container(
-      margin: REdgeInsets.fromLTRB(0, 0, 3, 0),
-      width: 9,
-      height: 9,
-      color: DunColors.blue,
+    return SizedBox(
+      width: 9.sp,
+      height: 9.sp,
+      child: const ColoredBox(
+        color: DunColors.blue,
+      ),
     );
   }
 
   Widget _buildHoneyCakeWorkshop() {
-    return Obx(() => GestureDetector(
-          onTap: logic.onTapHoneyCakeWorkshop,
-          child: Container(
-            margin: REdgeInsets.only(top: 14),
-            height: 90,
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(9),
-                  bottomRight: Radius.circular(9)),
-              color: DunColors.white,
+    return GestureDetector(
+      onTap: logic.onTapHoneyCakeWorkshop,
+      child: Container(
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(9), bottomRight: Radius.circular(9)),
+          color: DunColors.white,
+          boxShadow: [DunTheme.cardShadow],
+        ),
+        child: Column(
+          children: [
+            _buildHoneyCakeWorkshopTitle(),
+            SizedBox(height: 10.h),
+            Obx(
+              () => state.bakeryRecentPredict.value.id != ''
+                  ? _buildHoneyCakeWorkshopContent()
+                  : const Center(child: Text("饼学大厦还未有预测")),
             ),
-            child: Column(
-              children: [
-                Container(
-                  height: 21,
-                  padding: REdgeInsets.fromLTRB(10, 2, 8, 2),
-                  color: DunColors.gray_1,
-                  child: Row(
-                    children: [
-                      const Text(
-                        "第三方工具 · 罗德岛密饼工坊",
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: DunColors.white,
-                        ),
-                      ),
-                      const Expanded(child: SizedBox()),
-                      Container(
-                        width: 10,
-                        height: 10,
-                        color: DunColors.yellow,
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(9),
-                          bottomRight: Radius.circular(9)),
-                      color: DunColors.white,
-                    ),
-                    child: state.bakeryRecentPredict.value.id != ''
-                        ? Row(
-                            children: [
-                              const SizedBox(
-                                width: 13,
-                              ),
-                              ClipOval(
-                                  child: Image.asset(
-                                "assets/image/bilibili_up_mbgf.webp",
-                                width: 40,
-                              )),
-                              const SizedBox(
-                                width: 18,
-                              ),
-                              Text(
-                                  state
-                                      .bakeryRecentPredict.value.daily.datetime,
-                                  style: const TextStyle(
-                                      color: DunColors.gray_2, fontSize: 18)),
-                              const SizedBox(
-                                width: 11,
-                              ),
-                              Expanded(
-                                  child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
-                                  Text(
-                                    "饼学大厦：${state.bakeryRecentPredict.value.id}",
-                                    style: const TextStyle(
-                                        color: DunColors.gray_2, fontSize: 14),
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  Container(
-                                    padding: REdgeInsets.fromLTRB(0, 0, 17, 0),
-                                    child: const DashedLineHorizontalWidget(
-                                      width: 10000,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    state.bakeryRecentPredict.value.daily.info
-                                            .isNotEmpty
-                                        ? state.bakeryRecentPredict.value.daily
-                                            .info[0].forecast
-                                        : "今日无预测内容",
-                                    style: (() {
-                                      if (state.bakeryRecentPredict.value.daily
-                                              .info.isNotEmpty &&
-                                          state.bakeryRecentPredict.value.daily
-                                                  .info[0].forecastStatus ==
-                                              "true") {
-                                        return const TextStyle(
-                                            color: DunColors.yellow,
-                                            fontSize: 14);
-                                      } else if (state.bakeryRecentPredict.value
-                                              .daily.info.isNotEmpty &&
-                                          state.bakeryRecentPredict.value.daily
-                                                  .info[0].forecastStatus ==
-                                              "false") {
-                                        return const TextStyle(
-                                            color: Color(0xFF620703),
-                                            fontSize: 14);
-                                      } else {
-                                        return const TextStyle(
-                                            color: DunColors.gray_2,
-                                            fontSize: 14);
-                                      }
-                                    }()),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ],
-                              ))
-                            ],
-                          )
-                        : const Center(child: Text("饼学大厦还未有预测")),
-                  ),
-                ),
-              ],
+            SizedBox(height: 8.h),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHoneyCakeWorkshopTitle() {
+    return ColoredBox(
+      color: DunColors.gray_1,
+      child: Row(
+        children: [
+          Padding(
+            padding: REdgeInsets.only(left: 10, bottom: 3, top: 2),
+            child: Text(
+              "第三方工具 · 罗德岛密饼工坊",
+              style: TextStyle(
+                fontSize: 12.sp,
+                color: DunColors.white,
+              ),
             ),
           ),
-        ));
+          const Spacer(),
+          Padding(
+            padding: REdgeInsets.only(right: 8, bottom: 6, top: 7),
+            child: SizedBox(
+              width: 10.sp,
+              height: 10.sp,
+              child: const ColoredBox(color: DunColors.yellow),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _buildHoneyCakeWorkshopContent() {
+    return Row(
+      children: [
+        SizedBox(width: 13.w),
+        ClipOval(
+          child: Image.asset(
+            "assets/image/bilibili_up_mbgf.webp",
+            width: 41.sp,
+          ),
+        ),
+        SizedBox(width: 9.w),
+        Text(state.bakeryRecentPredict.value.daily.datetime,
+            style: TextStyle(color: DunColors.gray_2, fontSize: 14.sp)),
+        SizedBox(width: 11.w),
+        Expanded(
+            child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "饼学大厦：${state.bakeryRecentPredict.value.id}",
+              style: TextStyle(color: DunColors.gray_2, fontSize: 14.sp),
+            ),
+            SizedBox(height: 5.h),
+            DashedLineHorizontalWidget(width: 225.w),
+            SizedBox(height: 5.h),
+            Text(
+              state.bakeryRecentPredict.value.daily.info.isNotEmpty
+                  ? state.bakeryRecentPredict.value.daily.info[0].forecast
+                  : "今日无预测内容",
+              style: () {
+                if (state.bakeryRecentPredict.value.daily.info.isNotEmpty &&
+                    state.bakeryRecentPredict.value.daily.info[0]
+                            .forecastStatus ==
+                        "true") {
+                  return TextStyle(color: DunColors.yellow, fontSize: 14.sp);
+                } else if (state
+                        .bakeryRecentPredict.value.daily.info.isNotEmpty &&
+                    state.bakeryRecentPredict.value.daily.info[0]
+                            .forecastStatus ==
+                        "false") {
+                  return TextStyle(
+                      color: const Color(0xFF620703), fontSize: 14.sp);
+                } else {
+                  return TextStyle(color: DunColors.gray_2, fontSize: 14.sp);
+                }
+              }(),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        )),
+        SizedBox(width: 17.w),
+      ],
+    );
   }
 
   Widget _buildToolLinks() {
