@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DashedCircleBorder extends StatelessWidget {
   final double borderWidth;
@@ -39,7 +40,7 @@ class DashedCirclePainter extends CustomPainter {
     Paint borderPaint = Paint()
       ..color = borderColor
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 5;
+      ..strokeWidth = 5.sp;
 
     double step = radians(dashSpace);
     Path dashPath = Path();

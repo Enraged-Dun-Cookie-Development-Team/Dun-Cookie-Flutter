@@ -83,33 +83,38 @@ class TodayResource extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      padding: REdgeInsets.symmetric(vertical: 3.5),
-      child: Wrap(
-        spacing: 2,
-        runSpacing: 2,
-        children: resourceInfo.map((element) {
-          List<int> dayList = element["day"] as List<int>;
-          String weekList = dayList.map((element) {
-            return TimeUnit.numberToWeek(element);
-          }).join(",");
-          return Tooltip(
-              message: "${element["name"]}:$weekList",
-              child: resourcesNotToday(dayList)
-                  ? Image.asset(
-                      element["src"],
-                      width: 46,
-                      height: 46,
-                    )
-                  : Image.asset(
-                      element["src"],
-                      color: Colors.white24,
-                      colorBlendMode: BlendMode.modulate,
-                      width: 46,
-                      height: 46,
-                    ));
-        }).toList(),
+    return SizedBox(
+      height: double.infinity,
+      child: ColoredBox(
+        color: Colors.white,
+        child: Padding(
+          padding: REdgeInsets.symmetric(vertical: 3.5),
+          child: Wrap(
+            alignment: WrapAlignment.spaceEvenly,
+            runAlignment: WrapAlignment.spaceEvenly,
+            children: resourceInfo.map((element) {
+              List<int> dayList = element["day"] as List<int>;
+              String weekList = dayList.map((element) {
+                return TimeUnit.numberToWeek(element);
+              }).join(",");
+              return Tooltip(
+                  message: "${element["name"]}:$weekList",
+                  child: resourcesNotToday(dayList)
+                      ? Image.asset(
+                          element["src"],
+                          width: 43.w,
+                          height: 43.w,
+                        )
+                      : Image.asset(
+                          element["src"],
+                          color: Colors.white24,
+                          colorBlendMode: BlendMode.modulate,
+                          width: 43.w,
+                          height: 43.w,
+                        ));
+            }).toList(),
+          ),
+        ),
       ),
     );
   }
