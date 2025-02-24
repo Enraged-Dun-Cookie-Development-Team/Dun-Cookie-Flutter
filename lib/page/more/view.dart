@@ -36,6 +36,7 @@ class _MorePageState extends State<MorePage> {
             _buildOfficialManga(),
             SizedBox(height: 16.h),
             _buildHoneyCakeWorkshop(),
+            SizedBox(height: 12.h),
             _buildToolLinks(),
             _buildVideoRecommend(),
             const Center(
@@ -404,26 +405,37 @@ class _MorePageState extends State<MorePage> {
   Widget _buildToolLinks() {
     return Obx(() {
       if (state.quickJumpList.isEmpty) return const SizedBox.shrink();
-      return Padding(
-        padding: REdgeInsets.only(top: 14),
-        child: GridView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: state.quickJumpList.length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisSpacing: 2,
-            crossAxisSpacing: 2,
-            childAspectRatio: 3,
+      List<Widget> list = state.quickJumpList
+          .map<Widget>((element) => ToolLinkCard(
+                element,
+                onTap: logic.onTapToolLink,
+              ))
+          .toList();
+      if (list.length % 2 != 0) {
+        list.add(const Spacer());
+      }
+      List<Row> rowList = [];
+      for (var i = 0; i < list.length; i += 2) {
+        var o1 = list[i];
+        var o2 = list[i + 1];
+        rowList.add(
+          Row(
+            children: [
+              Flexible(child: o1),
+              SizedBox(width: 8.w),
+              Flexible(child: o2),
+            ],
           ),
-          itemBuilder: (ctx, index) {
-            return Card(
-                child: ToolLinkCard(
-              state.quickJumpList[index],
-              onTap: logic.onTapToolLink,
-            ));
-          },
-          padding: EdgeInsets.zero,
+        );
+      }
+      return Padding(
+        padding: REdgeInsets.only(bottom: 18.h),
+        child: Column(
+          children: List.generate(
+            2 * rowList.length - 1,
+            (index) =>
+                index.isEven ? rowList[index ~/ 2] : SizedBox(height: 8.h),
+          ),
         ),
       );
     });
@@ -433,40 +445,42 @@ class _MorePageState extends State<MorePage> {
     return Obx(() {
       if (state.videoList.isEmpty) return const SizedBox.shrink();
       return Padding(
-        padding: REdgeInsets.only(top: 14),
+        padding: REdgeInsets.only(bottom: 14.h),
         child: Column(
           children: [
             Container(
-              height: 21,
-              padding: REdgeInsets.fromLTRB(10, 2, 8, 2),
               color: DunColors.gray_1,
               child: Row(
                 children: [
-                  const Text(
-                    "视频推荐",
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: DunColors.white,
+                  Padding(
+                    padding: REdgeInsets.only(left: 10, bottom: 3, top: 2),
+                    child: Text(
+                      "视频推荐",
+                      style: TextStyle(fontSize: 12.sp, color: DunColors.white),
                     ),
                   ),
-                  const Expanded(child: SizedBox()),
-                  Container(
-                    width: 10,
-                    height: 10,
-                    color: DunColors.yellow,
-                  ),
+                  const Spacer(),
+                  Padding(
+                    padding: REdgeInsets.only(right: 8, bottom: 6, top: 7),
+                    child: SizedBox(
+                      width: 10.sp,
+                      height: 10.sp,
+                      child: const ColoredBox(color: DunColors.yellow),
+                    ),
+                  )
                 ],
               ),
             ),
-            const SizedBox(height: 14),
+            SizedBox(height: 11.h),
             GridView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: state.videoList.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
-                mainAxisSpacing: 10,
+                mainAxisSpacing: 9,
                 crossAxisSpacing: 10,
+                childAspectRatio: 171 / 160,
               ),
               itemBuilder: (ctx, index) {
                 return VideoLinkCard(

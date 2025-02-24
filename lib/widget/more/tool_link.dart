@@ -2,6 +2,7 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../common/dun_color.dart';
 import '../../model/ceobe/tool/tool.dart';
 
 class ToolLinkCard extends StatelessWidget {
@@ -15,37 +16,41 @@ class ToolLinkCard extends StatelessWidget {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       child: Container(
-        width: double.infinity,
-        padding: REdgeInsets.only(
-          left: 10,
+        padding: REdgeInsets.symmetric(horizontal: 10, vertical: 7),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10.sp),
+          boxShadow: const [
+            BoxShadow(
+                blurRadius: 2,
+                spreadRadius: 1,
+                offset: Offset(0, 3),
+                color: DunColors.cardShadow)
+          ],
         ),
-        child: Stack(
-          alignment: Alignment.centerLeft,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ClipRRect(
-                    borderRadius: BorderRadius.circular(4),
-                    child: ExtendedImage.network(
-                      linkInfo.icon,
-                      width: 30,
-                      height: 30,
-                    )),
-                const SizedBox(
-                  width: 10,
-                ),
-                Expanded(
-                    child: Text(
-                  linkInfo.nameSet.localName,
-                  maxLines: 1,
-                ))
-              ],
+            ClipRRect(
+              borderRadius: BorderRadius.circular(4.sp),
+              child: ExtendedImage.network(
+                linkInfo.icon,
+                width: 30.sp,
+                height: 30.sp,
+              ),
+            ),
+            SizedBox(width: 10.w),
+            Expanded(
+              child: Text(
+                linkInfo.nameSet.localName,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           ],
         ),
       ),
-      onTap: () => onTap != null ? onTap!(linkInfo) : null,
+      onTap: () => onTap?.call(linkInfo),
     );
   }
 }
