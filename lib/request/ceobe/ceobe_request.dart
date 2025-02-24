@@ -28,7 +28,7 @@ class CeobeApi {
   static Future<ResponseData<List<VideoModel>>> getVideoInfo() async {
     ResponseData<List<VideoModel>> response =
         await HttpClass.get<List<VideoModel>>(UrlString.videoRecommendUrl,
-            type: RequestType.server,
+            type: RequestType.serveCdn,
             fromJson: getListHandle(fromJson: VideoModel.fromJson));
     return response;
   }
@@ -37,7 +37,7 @@ class CeobeApi {
   static Future<ResponseData<ResourceInfoModel>> getResourceInfo() async {
     ResponseData<ResourceInfoModel> response =
         await HttpClass.get<ResourceInfoModel>(UrlString.resourceInfoUrl,
-            type: RequestType.server, fromJson: ResourceInfoModel.fromJson);
+            type: RequestType.serveCdn, fromJson: ResourceInfoModel.fromJson);
     return response;
   }
 
@@ -45,7 +45,7 @@ class CeobeApi {
   static Future<ResponseData<List<ToolModel>>> getQuickJumpInfo() async {
     ResponseData<List<ToolModel>> response =
         await HttpClass.get<List<ToolModel>>(UrlString.toolLinkInfoUrl,
-            type: RequestType.server,
+            type: RequestType.serveCdn,
             fromJson: getListHandle(fromJson: ToolModel.fromJson));
     return response;
   }

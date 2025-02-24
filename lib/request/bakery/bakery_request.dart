@@ -18,7 +18,7 @@ class BakeryApi {
     //print("请求饼组ID列表");
     ResponseData<List<String>> response = await HttpClass.get<List<String>>(
       UrlString.bakeryMansionIdListUrl,
-      type: RequestType.server,
+      type: RequestType.serveCdn,
       fromJson: getListHandle(fromJson: (jsonSrc) => jsonSrc.toString()),
     );
     return response;
@@ -29,7 +29,7 @@ class BakeryApi {
     //print("根据ID请求饼组数据");
     ResponseData<BakeryDataModel> response =
         await HttpClass.get<BakeryDataModel>(UrlString.bakeryMansionInfoUrl(id),
-            type: RequestType.server, fromJson: BakeryDataModel.fromJson);
+            type: RequestType.serveCdn, fromJson: BakeryDataModel.fromJson);
     return response;
   }
 
@@ -40,7 +40,7 @@ class BakeryApi {
     ResponseData<BakeryRecentPredictModel> response =
         await HttpClass.get<BakeryRecentPredictModel>(
             UrlString.bakeryRecentPredictUrl,
-            type: RequestType.server,
+            type: RequestType.serveCdn,
             fromJson: BakeryRecentPredictModel.fromJson);
     return response;
   }
