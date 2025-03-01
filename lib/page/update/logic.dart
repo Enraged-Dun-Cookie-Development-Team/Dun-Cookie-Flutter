@@ -17,6 +17,7 @@ import '../../model/ceobe/version/dun_app.dart';
 import '../../request/ceobe/ceobe_request.dart';
 import '../../request/request.dart';
 import '../../route.dart';
+import '../root/logic.dart';
 import 'state.dart';
 
 class UpdateLogic extends GetxController {
@@ -50,7 +51,7 @@ class UpdateLogic extends GetxController {
         latestVersion = latestApp.version,
         nowVersion = state.nowVersion;
     // 非首次启动，且当前版本为最新版本，并且没有弹出过当前版本的更新内容
-    final isNotFirstLaunch = (getLaunchCount() ?? 0) > 0;
+    final isNotFirstLaunch = RootLogic.to?.isNotFirstLaunch ?? false;
     if (isNotFirstLaunch &&
         nowVersion == latestVersion &&
         nowVersion != lastShowedVersion) {
