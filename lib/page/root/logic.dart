@@ -9,11 +9,14 @@ class RootLogic extends GetxController {
       Get.isRegistered<RootLogic>() ? Get.find<RootLogic>() : null;
 
   final state = RootState();
+  bool get isFirstLaunch => state.launchCount == 1;
+  bool get isNotFirstLaunch => !isFirstLaunch;
 
   @override
   void onInit() {
     super.onInit();
-    _increaseLaunchCount();
+    state.launchCount = (getLaunchCount() ?? 0) + 1;
+    saveLaunchCount(state.launchCount);
     UpdateLogic.to?.checkLatestVersion(autoCheck: true);
   }
 
@@ -21,10 +24,6 @@ class RootLogic extends GetxController {
   void onClose() {
     super.onClose();
     state.scrollHideController.dispose();
-  }
-
-  void _increaseLaunchCount() {
-    saveLaunchCount((getLaunchCount() ?? 0) + 1);
   }
 
   void onTapBottomItem(int index) {

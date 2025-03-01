@@ -7,6 +7,7 @@ import '../terminal/view.dart';
 
 class RootState {
   int currentPageIndex = 0;
+  int launchCount = 0;
 
   List<Widget> pageList = [
     const CookiesPage(),
