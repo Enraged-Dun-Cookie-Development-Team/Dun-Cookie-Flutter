@@ -24,7 +24,7 @@ Future<void> earlyInit() async {
     );
     SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
   }
-  await DunPreferences.getInstance().init();
+  await DunPreferences.instance.init();
   await SettingManager.getInstance().init();
   await FkUserAgent.init();
   //todo 分割逻辑

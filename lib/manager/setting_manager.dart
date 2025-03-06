@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dun_cookie_flutter/model/info/setting_data.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
 
@@ -33,6 +34,10 @@ class SettingManager {
       _readDatasourceSetting(),
       _readMangaHistory(),
     ]);
+    var setting = await readAppSetting();
+    if (setting != null) {
+      changeSave(setting);
+    }
   }
 
   bool get notOnce => _notOnce;
@@ -123,5 +128,13 @@ class SettingManager {
     var data = getMangaHistory();
     mangaHistory.value =
         data.map((key, value) => MapEntry(key, value.toString()));
+  }
+
+  changeSave(SettingData setting) {
+    isPreview = setting.isPreview ?? _isPreview;
+    notOnce = setting.notOnce ?? _notOnce;
+    rid = setting.rid ?? _rid;
+    updateDataSource(setting.datasourceSetting ?? datasourceSetting.value);
+    removeAppSetting();
   }
 }
