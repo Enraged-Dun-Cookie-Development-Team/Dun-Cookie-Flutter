@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'dun_app.dart';
 import 'manager/dun_preference.dart';
 import 'manager/setting_manager.dart';
-import 'page/update/logic.dart';
+import 'services/update_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,6 +27,6 @@ Future<void> earlyInit() async {
   await DunPreferences.getInstance().init();
   await SettingManager.getInstance().init();
   await FkUserAgent.init();
-  //todo 分割逻辑
-  Get.put(UpdateLogic());
+
+  Get.put(UpdateService(), permanent: true);
 }
