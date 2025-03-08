@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import '../../common/data_status.dart';
 import '../../common/dun_color.dart';
 import '../../common/file_util.dart';
+import '../../services/update_service.dart';
 import '../../widget/progress.dart';
 import 'logic.dart';
 
@@ -15,6 +16,7 @@ class UpdatePage extends StatelessWidget {
 
   final logic = Get.put(UpdateLogic());
   final state = Get.find<UpdateLogic>().state;
+  final updateService = UpdateService.to;
 
   @override
   Widget build(BuildContext context) {
@@ -113,11 +115,13 @@ class UpdatePage extends StatelessWidget {
   }
 
   Widget _buildDownloadView() {
+    if (UpdateService.to == null) return const SizedBox();
+
     return Container(
       padding: REdgeInsets.only(left: 20, right: 20),
-      child: GetBuilder<UpdateLogic>(
-        id: state.downloadGID,
-        builder: (_) => Column(
+      child: ListenableBuilder(
+        listenable: UpdateService.to!.downloadStatus,
+        builder: (_, __) => Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -153,8 +157,10 @@ class UpdatePage extends StatelessWidget {
   }
 
   Widget _buildDownloadProgress() {
+    if (state.downloadProgressController == null) return const SizedBox();
+
     return ProgressBuilder(
-      controller: state.downloadProgressController,
+      controller: state.downloadProgressController!,
       builder: (context, count, total, percent) {
         final countStr = FileUtil.getReadableFileSize(count, fractionDigits: 1),
             totalStr = FileUtil.getReadableFileSize(total, fractionDigits: 1);

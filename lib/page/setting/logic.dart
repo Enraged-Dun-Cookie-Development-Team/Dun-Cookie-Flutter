@@ -7,7 +7,7 @@ import '../../common/dun_jump.dart';
 import '../../common/dun_toast.dart';
 import '../../manager/setting_manager.dart';
 import '../../route.dart';
-import '../update/logic.dart';
+import '../../services/update_service.dart';
 import 'state.dart';
 
 class SettingLogic extends GetxController {
@@ -50,7 +50,7 @@ class SettingLogic extends GetxController {
   }
 
   Future<void> onTapCheckUpgrade() async {
-    UpdateLogic.to?.checkLatestVersion();
+    UpdateService.to?.checkLatestVersion();
   }
 
   Future<void> onTapDonation() async {

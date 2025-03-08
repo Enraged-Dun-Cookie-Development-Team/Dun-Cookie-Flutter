@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../common/dun_color.dart';
-import '../update/logic.dart';
+import '../../services/update_service.dart';
 import 'logic.dart';
 
 class SettingPage extends StatelessWidget {
@@ -305,11 +305,10 @@ class SettingPage extends StatelessWidget {
               ],
             ),
             const Spacer(),
-            if (UpdateLogic.to != null)
-              GetBuilder(
-                init: UpdateLogic.to,
-                id: UpdateLogic.to!.state.checkGID,
-                builder: (updateLogic) => updateLogic.state.checking
+            if (UpdateService.to != null)
+              ListenableBuilder(
+                listenable: UpdateService.to!.checking,
+                builder: (context, child) => UpdateService.to!.checking.value
                     ? Container(
                         margin: const EdgeInsets.only(right: 8),
                         height: 20,
@@ -320,7 +319,7 @@ class SettingPage extends StatelessWidget {
                         ),
                       )
                     : const SizedBox(),
-              ),
+              )
           ],
         ),
       ),
