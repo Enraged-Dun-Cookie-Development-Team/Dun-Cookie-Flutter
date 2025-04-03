@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -23,82 +22,98 @@ class ItemLeadingWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> titleTextList = [];
     for (int i = 0; i < columnText.length; i++) {
-      titleTextList.add(Text(columnText[i],
-          style: const TextStyle(
+      titleTextList.add(
+        Text(
+          columnText[i],
+          style: TextStyle(
             color: DunColors.white,
-            fontSize: 8,
-          )));
+            fontSize: 8.sp,
+          ),
+        ),
+      );
     }
     return Stack(
       children: [
         Row(
           children: [
             Expanded(
-              flex: 2,
-              child: Container(
+              flex: 18,
+              child: ColoredBox(
                 color: DunColors.gray_1,
-                padding: REdgeInsets.only(top: 22),
-                child: Column(
-                  children: titleTextList,
+                child: Padding(
+                  padding: REdgeInsets.only(top: 22, left: 6, right: 6),
+                  child: Column(
+                    children: titleTextList,
+                  ),
                 ),
               ),
             ),
             Expanded(
-              flex: 12,
-              child: Container(
+              flex: 113,
+              child: ColoredBox(
                 color: DunColors.white,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: REdgeInsets.only(left: 14, top: 4),
-                      child: Text(
-                        titleText,
-                        style: const TextStyle(
-                          color: DunColors.gray_1,
-                          fontSize: 18,
+                child: Padding(
+                  padding: REdgeInsets.only(top: 5, bottom: 11, left: 14),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Text(
+                              titleText,
+                              style: TextStyle(
+                                color: DunColors.gray_1,
+                                fontSize: 18.sp,
+                                height: 1,
+                              ),
+                            ),
+                            const Spacer(),
+                            Text(
+                              centerText,
+                              textAlign: TextAlign.right,
+                              style: TextStyle(
+                                color: DunColors.gray_1,
+                                fontSize: 36.sp,
+                                height: 1,
+                              ),
+                            ),
+                            SizedBox(height: 20.h),
+                          ],
                         ),
                       ),
-                    ),
-                    Expanded(
-                      child: Center(
-                        child: Text(
-                          centerText,
-                          style: const TextStyle(
-                            color: DunColors.gray_1,
-                            fontSize: 36,
+                      SizedBox(
+                        width: 35.w,
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Text(
+                            bottomText ?? '',
+                            style: TextStyle(
+                              color: DunColors.gray_1,
+                              fontSize: 16.sp,
+                              height: 1,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 20,)
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
           ],
         ),
-        Align(
-          alignment: Alignment.bottomRight,
-          child: Padding(
-            padding: REdgeInsets.only(right: 10, bottom: 8),
-            child: Text(
-              bottomText ?? '',
-              style: const TextStyle(
-                color: DunColors.gray_1,
-                fontSize: 16,
-              ),
+        Positioned(
+          top: 9.h,
+          left: 9.w,
+          child: SizedBox(
+            width: 18.sp,
+            height: 10.sp,
+            child: ColoredBox(
+              color: labelColor,
             ),
           ),
-        ),
-        Positioned(
-            top: 9,
-            left: 9,
-            child: Container(
-              color: labelColor,
-              width: 18,
-              height: 10,
-            ))
+        )
       ],
     );
   }
