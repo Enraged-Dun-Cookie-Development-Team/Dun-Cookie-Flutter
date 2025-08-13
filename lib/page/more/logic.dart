@@ -37,7 +37,16 @@ class MoreLogic extends GetxController {
     });
     CeobeApi.getVideoInfo().then((value) {
       if (!value.error) {
-        state.videoList.addAll(value.data ?? []);
+        // 只展示时间范围内的视频
+        final now = DateTime.now();
+        state.videoList.addAll((value.data ?? []).where((video) {
+          final startTime = DateTime.tryParse(video.startTime);
+          final overTime = DateTime.tryParse(video.overTime);
+          return startTime != null &&
+              overTime != null &&
+              startTime.isBefore(now) &&
+              overTime.isAfter(now);
+        }));
       }
     });
     CeobeApi.getQuickJumpInfo().then((value) {
