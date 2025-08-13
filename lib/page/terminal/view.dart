@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import '../../common/dun_color.dart';
 import '../../common/time_unit.dart';
 import '../../model/ceobe/resource/resource_info.dart';
-import '../../model/cookie/cookie_count.dart';
 import '../../widget/dashed_circle_widget.dart';
 import '../../widget/dashed_line_widget.dart';
 import '../../widget/terminal/item_card.dart';
@@ -31,15 +30,15 @@ class _TerminalPageState extends State<TerminalPage> {
       builder: (logic) {
         return ListView(
           controller: state.pageScrollController,
-          padding: REdgeInsets.fromLTRB(12, 0, 12, 12),
+          padding: REdgeInsets.fromLTRB(10, 0, 9, 12),
           children: [
             _buildTitleBar(),
-            Obx(() => _buildCakeWarehouse(state.cookieInfoCount.value)),
+            SizedBox(height: 15.h),
+            _buildCakeWarehouse(),
+            SizedBox(height: 15.h),
             Obx(() => _buildResourceWidget(state.resourceInfo.value.resources)),
             Obx(() => _buildActivityWidget(state.resourceInfo.value.countdown)),
-            const SizedBox(
-              height: 60,
-            )
+            SizedBox(height: 60.h)
           ],
         );
       },
@@ -48,295 +47,260 @@ class _TerminalPageState extends State<TerminalPage> {
 
   _buildTitleBar() {
     return SizedBox(
-      height: 42,
+      height: 42.h,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
-            child: SizedBox(
-              child: Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  Container(
-                    height: double.infinity,
-                    padding: REdgeInsets.only(
-                        top: 10, bottom: 10, left: 15, right: 25),
-                    color: DunColors.gray_1,
-                    child: const Row(
-                      children: [
-                        Text(
-                          "P R T S",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        Spacer(),
-                        Text(
-                          "欢迎回来，博士！",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ],
-                    ),
+            child: Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Container(
+                  padding: REdgeInsets.only(
+                      top: 10, bottom: 11, left: 15, right: 23),
+                  color: DunColors.gray_1,
+                  child: Row(
+                    children: [
+                      Text(
+                        "P R T S",
+                        style: TextStyle(color: Colors.white, fontSize: 16.sp),
+                      ),
+                      const Spacer(),
+                      Text(
+                        "欢迎回来，博士！",
+                        style: TextStyle(color: Colors.white, fontSize: 16.sp),
+                      ),
+                    ],
                   ),
-                  Positioned(
-                    right: -10,
-                    bottom: 10,
-                    child: Container(
-                      width: 17.w,
-                      height: 10,
-                      color: DunColors.yellow,
-                    ),
+                ),
+                Positioned(
+                  right: -7.w,
+                  bottom: 6.h,
+                  child: SizedBox(
+                    width: 17.w,
+                    height: 10.h,
+                    child: const ColoredBox(color: DunColors.yellow),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
           SizedBox(
             width: 15.w,
           ),
-          Container(
+          SizedBox(
             width: 14.w,
-            color: DunColors.gray_1,
+            child: const ColoredBox(
+              color: DunColors.gray_1,
+            ),
           ),
           GestureDetector(
             onTap: logic.onTapSetting,
-            child: Container(
-                color: Colors.white,
-                child: Container(
-                  padding: REdgeInsets.all(5),
-                  child: Image.asset(
-                    "assets/icon/settings.png",
-                  ),
-                )),
+            child: ColoredBox(
+              color: Colors.white,
+              child: Padding(
+                padding: REdgeInsets.all(5),
+                child: Image.asset(
+                  "assets/icon/settings.png",
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
           ),
-          Container(
+          SizedBox(
             width: 14.w,
-            color: DunColors.gray_1,
+            child: const ColoredBox(
+              color: DunColors.gray_1,
+            ),
           ),
         ],
       ),
     );
   }
 
-  _buildCakeWarehouse(CookieInfoCountModel cookieInfoCount) {
-    return Padding(
-      padding: REdgeInsets.symmetric(vertical: 15),
-      child: SizedBox(
-        height: 240,
-        child: Column(
-          children: [
-            Container(
-              height: 23,
-              padding: REdgeInsets.symmetric(vertical: 4, horizontal: 8),
-              color: DunColors.gray_1,
-              child: Row(
-                children: [
-                  const Text(
-                    "CAKE WAREHOUSE",
-                    style: TextStyle(
-                      fontSize: 11,
-                      color: DunColors.white,
-                    ),
-                  ),
-                  const Expanded(child: SizedBox()),
-                  Container(
-                    width: 10,
-                    height: 10,
-                    color: DunColors.yellow,
-                  ),
-                ],
+  Widget _buildCakeWarehouse() {
+    return Column(
+      children: [
+        _cakeWarehouseTitle(),
+        _cakeWarehouseContent(),
+      ],
+    );
+  }
+
+  Widget _cakeWarehouseTitle() {
+    return ColoredBox(
+      color: DunColors.gray_1,
+      child: Row(
+        children: [
+          SizedBox(width: 8.w),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 4.sp),
+            child: Text(
+              "CAKE WAREHOUSE",
+              style: TextStyle(
+                fontSize: 11.sp,
+                color: DunColors.white,
               ),
             ),
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: DunColors.white,
-                  border: Border.all(
-                    color: DunColors.yellow,
-                    width: 1,
-                  ),
-                ),
-                child: Stack(
-                  children: [
-                    /// 已发现的饼的数量
-                    Positioned(
-                      left: 10,
-                      top: 9,
-                      child: Container(
-                          width: 11, height: 22, color: DunColors.yellow),
-                    ),
-                    const Positioned(
-                      left: 24,
-                      top: 7,
-                      child: Column(
-                        children: [
-                          Text(
-                            "已发现饼的数量",
-                            style: TextStyle(
-                              color: DunColors.gray_1,
-                              fontSize: 16,
-                            ),
-                          ),
-                          SizedBox(height: 3),
-                          DashedLineHorizontalWidget(width: 112),
-                        ],
-                      ),
-                    ),
-
-                    /// itemList
-                    Positioned(
-                      left: 17,
-                      top: 42,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              const Text(
-                                "皮肤",
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: DunColors.gray_1,
-                                ),
-                              ),
-                              const SizedBox(width: 6),
-                              const DashedLineHorizontalWidget(width: 50),
-                              const SizedBox(width: 6),
-                              Text(
-                                cookieInfoCount.skinCount.toString(),
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                  color: DunColors.gray_1,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 6),
-                          Row(
-                            children: [
-                              const Text(
-                                "角色",
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: DunColors.gray_1,
-                                ),
-                              ),
-                              const SizedBox(width: 6),
-                              const DashedLineHorizontalWidget(width: 50),
-                              const SizedBox(width: 6),
-                              Text(
-                                cookieInfoCount.operatorCount.toString(),
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                  color: DunColors.gray_1,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 6),
-                          Row(
-                            children: [
-                              const Text(
-                                "活动",
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: DunColors.gray_1,
-                                ),
-                              ),
-                              const SizedBox(width: 6),
-                              const DashedLineHorizontalWidget(width: 50),
-                              const SizedBox(width: 6),
-                              Text(
-                                cookieInfoCount.activityCount.toString(),
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                  color: DunColors.gray_1,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 6),
-                          Row(
-                            children: [
-                              const Text(
-                                "EP",
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: DunColors.gray_1,
-                                ),
-                              ),
-                              const SizedBox(width: 6),
-                              const DashedLineHorizontalWidget(width: 59),
-                              const SizedBox(width: 6),
-                              Text(
-                                cookieInfoCount.epCount.toString(),
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                  color: DunColors.gray_1,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-
-                    /// 右侧圆圈以及饼的总数
-                    Positioned(
-                      right: 24,
-                      top: 20,
-                      child: SizedBox(
-                        width: 154,
-                        height: 154,
-                        child: Stack(
-                          children: [
-                            const DashedCircleBorder(
-                              borderWidth: 154,
-                              borderColor: DunColors.yellow,
-                            ),
-                            const Center(
-                              child: Column(
-                                children: [
-                                  SizedBox(height: 33),
-                                  Text(
-                                    "HAVE FOUND",
-                                    style: TextStyle(
-                                      fontSize: 11,
-                                      color: DunColors.gray_1,
-                                    ),
-                                  ),
-                                  SizedBox(height: 60),
-                                  DashedLineHorizontalWidget(width: 68),
-                                  Text(
-                                    "CAKE",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: DunColors.yellow,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Center(
-                              child: Text(
-                                cookieInfoCount.totalCount == 0
-                                    ? "-----"
-                                    : cookieInfoCount.totalCount.toString(),
-                                style: const TextStyle(
-                                  fontSize: 44,
-                                  color: DunColors.gray_1,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+          ),
+          const Spacer(),
+          SizedBox(
+            width: 10.sp,
+            height: 10.sp,
+            child: const ColoredBox(
+              color: DunColors.yellow,
             ),
-          ],
+          ),
+          SizedBox(width: 7.w),
+        ],
+      ),
+    );
+  }
+
+  Widget _cakeWarehouseContent() {
+    return Container(
+      decoration: const BoxDecoration(
+        color: DunColors.white,
+        border: Border(
+          left: BorderSide(color: DunColors.yellow, width: 1),
+          right: BorderSide(color: DunColors.yellow, width: 1),
+          bottom: BorderSide(color: DunColors.yellow, width: 1),
         ),
       ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(width: 10.w),
+          _cookieCountInfo(),
+          const Spacer(),
+          Padding(
+            padding: REdgeInsets.only(top: 20, bottom: 43),
+            child: _cakeInfoRing(),
+          ),
+          SizedBox(width: 24.w),
+        ],
+      ),
+    );
+  }
+
+  Widget _cookieCountInfo() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: 7.h),
+        Row(
+          children: [
+            Padding(
+              padding: REdgeInsets.only(top: 2),
+              child: SizedBox(
+                width: 11.w,
+                height: 22.h,
+                child: const ColoredBox(
+                  color: DunColors.yellow,
+                ),
+              ),
+            ),
+            SizedBox(width: 3.w),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "已发现饼的数量",
+                  style: TextStyle(
+                    color: DunColors.gray_1,
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 3.h),
+                Padding(
+                  padding: REdgeInsets.only(left: 2),
+                  child: DashedLineHorizontalWidget(width: 112.w),
+                ),
+              ],
+            )
+          ],
+        ),
+        SizedBox(height: 11.h),
+        SizedBox(
+          width: 140.w,
+          child: Padding(
+            padding: REdgeInsets.only(left: 7, right: 40),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _cookieCountInfoItem("皮肤",
+                    () => state.cookieInfoCount.value.skinCount.toString()),
+                SizedBox(height: 6.h),
+                _cookieCountInfoItem("角色",
+                    () => state.cookieInfoCount.value.operatorCount.toString()),
+                SizedBox(height: 6.h),
+                _cookieCountInfoItem("活动",
+                    () => state.cookieInfoCount.value.activityCount.toString()),
+                SizedBox(height: 6.h),
+                _cookieCountInfoItem(
+                    "EP", () => state.cookieInfoCount.value.epCount.toString())
+              ],
+            ),
+          ),
+        )
+      ],
+    );
+  }
+
+  Widget _cookieCountInfoItem(String label, String Function() count) {
+    return Row(
+      children: [
+        Text(
+          label,
+          style: TextStyle(fontSize: 12.sp, color: DunColors.gray_1),
+        ),
+        SizedBox(width: 6.w),
+        const Expanded(child: DashedLineHorizontalWidget()),
+        SizedBox(width: 6.w),
+        Obx(
+          () => Text(
+            count.call(),
+            style: TextStyle(fontSize: 12.sp, color: DunColors.gray_1),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _cakeInfoRing() {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        CustomPaint(
+          size: Size(154.sp, 154.sp),
+          painter: DashedCirclePainter(borderColor: DunColors.yellow),
+        ),
+        Column(
+          children: [
+            SizedBox(height: 33.h),
+            Text(
+              "HAVE FOUND",
+              style: TextStyle(fontSize: 11.sp, color: DunColors.gray_1),
+            ),
+            Obx(
+              () => Text(
+                state.cookieInfoCount.value.totalCount == 0
+                    ? "-----"
+                    : state.cookieInfoCount.value.totalCount.toString(),
+                style: TextStyle(fontSize: 44.sp, color: DunColors.gray_1),
+              ),
+            ),
+            DashedLineHorizontalWidget(width: 68.w),
+            SizedBox(height: 3.h),
+            Text(
+              "CAKE",
+              style: TextStyle(fontSize: 16.sp, color: DunColors.yellow),
+            ),
+            SizedBox(height: 24.h),
+          ],
+        ),
+      ],
     );
   }
 
@@ -347,12 +311,14 @@ class _TerminalPageState extends State<TerminalPage> {
     return Padding(
       padding: REdgeInsets.only(bottom: 15),
       child: ItemCard(
-          leading: ItemLeadingWidget(
-            columnText: "WEEK",
-            titleText: "星期",
-            centerText: TimeUnit.numberToWeek(weekDay),
-          ),
-          content: TodayResource(resources)),
+        leading: ItemLeadingWidget(
+          columnText: "WEEK",
+          titleText: "星期",
+          centerText: TimeUnit.numberToWeek(weekDay),
+        ),
+        content: TodayResource(resources),
+        height: 97.h,
+      ),
     );
   }
 
@@ -368,7 +334,7 @@ class _TerminalPageState extends State<TerminalPage> {
           Padding(
             padding: REdgeInsets.only(bottom: 15),
             child: ItemCard(
-              height: countdown.countdownType == "activity" ? 120 : 97,
+              height: countdown.countdownType == "activity" ? 120.h : 97.h,
               leading: ItemLeadingWidget(
                 columnText: (() {
                   if (countdown.countdownType == "banner") {

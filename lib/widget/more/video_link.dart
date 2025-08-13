@@ -13,38 +13,49 @@ class VideoLinkCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.zero,
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(9.sp),
+        boxShadow: const [
+          BoxShadow(
+              blurRadius: 2,
+              spreadRadius: 1,
+              offset: Offset(0, 3),
+              color: DunColors.cardShadow)
+        ],
+      ),
+      clipBehavior: Clip.hardEdge,
       child: InkWell(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(4),
-                child: ExtendedImage.network(
-                  linkInfo.coverImg,
-                  fit: BoxFit.fill,
-                  width: 300,
-                  height: 300,
-                ),
+              child: ExtendedImage.network(
+                linkInfo.coverImg,
+                fit: BoxFit.cover,
+                width: double.infinity,
               ),
             ),
             Padding(
-              padding: REdgeInsets.all(8.0),
+              padding: REdgeInsets.all(8),
               child: Text(
                 linkInfo.title,
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
-                style: DunStyles.text12,
+                style: TextStyle(fontSize: 12.sp),
               ),
             ),
-            Container(
+            Align(
               alignment: Alignment.bottomRight,
-              padding: REdgeInsets.only(right: 8, bottom: 3),
-              child: Text(
-                linkInfo.author,
-                maxLines: 1,
-                style: DunStyles.text12,
+              child: Padding(
+                padding: REdgeInsets.only(bottom: 3, right: 8),
+                child: Text(
+                  linkInfo.author,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  style: TextStyle(fontSize: 12.sp),
+                ),
               ),
             )
           ],

@@ -73,7 +73,7 @@ class TimeUnit {
   }
 
   // 获取现在时间转为utc时区的中国时间
-  static utcChinaNow() {
+  static DateTime utcChinaNow() {
     return DateTime.now().toUtc().add(const Duration(hours: 8));
   }
 

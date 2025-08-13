@@ -25,6 +25,8 @@ class DunColors {
   static const Color bakeryColorComplementary =
       Color.fromARGB(255, 22, 191, 255);
   static const Color blackBackground = Color(0xFF333333);
+
+  static const Color cardShadow = Color(0x29000000);
 }
 
 class DunStyles {
@@ -47,4 +49,13 @@ class DunStyles {
   static const text14B45 = TextStyle(fontSize: 14, color: Colors.black45);
   static const text16B45 = TextStyle(fontSize: 16, color: Colors.black45);
   static const text12G2 = TextStyle(fontSize: 12, color: DunColors.gray_2);
+}
+
+class DunTheme {
+  static const BoxShadow cardShadow = BoxShadow(
+    offset: Offset(0, 3),
+    blurRadius: 2,
+    spreadRadius: 1,
+    color: DunColors.cardShadow,
+  );
 }
