@@ -47,3 +47,7 @@ app.*.map.json
 /lib/request/config.dart
 pubspec.lock
 /lib/version_2.0/request/config.dart
+
+# FVM Version Cache
+.fvm/
+/.fvmrc
