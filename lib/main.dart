@@ -26,7 +26,9 @@ Future<void> earlyInit() async {
   }
   await DunPreferences.instance.init();
   await SettingManager.getInstance().init();
-  await FkUserAgent.init();
+  if(!Platform.isOhos){
+    await FkUserAgent.init();
+  }
   //todo 分割逻辑
   Get.put(UpdateLogic());
 }

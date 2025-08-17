@@ -1,6 +1,5 @@
 import 'dart:math' as math;
 
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -8,6 +7,7 @@ import 'package:get/get.dart';
 import '../../common/dun_color.dart';
 import '../../common/time_unit.dart';
 import '../../widget/dashed_line_widget.dart';
+import '../../widget/image/dun_image.dart';
 import '../../widget/more/tool_link.dart';
 import '../../widget/more/video_link.dart';
 import 'logic.dart';
@@ -195,27 +195,11 @@ class _MorePageState extends State<MorePage> {
       padding: REdgeInsets.only(top: 14, bottom: 10),
       child: Obx(
         () => state.terraRecentEpisode.value.coverUrl != null
-            ? ExtendedImage.network(
+            ? DunImage.network(
                 state.terraRecentEpisode.value.coverUrl!,
                 fit: BoxFit.cover,
-                handleLoadingProgress: true,
-                clearMemoryCacheIfFailed: true,
-                clearMemoryCacheWhenDispose: false,
-                mode: ExtendedImageMode.gesture,
-                cache: true,
                 height: 116.h,
                 width: 179.w,
-                loadStateChanged: (ExtendedImageState state) {
-                  if (state.extendedImageLoadState != LoadState.completed) {
-                    return Image(
-                      height: 116.h,
-                      width: 179.w,
-                      fit: BoxFit.cover,
-                      image: const AssetImage("assets/image/load/loading.gif"),
-                    );
-                  }
-                  return null;
-                },
               )
             : Image(
                 height: 116.h,

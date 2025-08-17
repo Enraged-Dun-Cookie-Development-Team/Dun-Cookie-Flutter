@@ -1,4 +1,3 @@
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -6,6 +5,7 @@ import 'package:get/get.dart';
 import '../../common/dun_color.dart';
 import '../../manager/setting_manager.dart';
 import '../../model/config/config_datasource.dart';
+import '../image/dun_image.dart';
 
 class DatasourceItem extends StatelessWidget {
   final ConfigDatasourceModel datasourceModel;
@@ -30,12 +30,13 @@ class DatasourceItem extends StatelessWidget {
       child: Row(
         children: [
           ClipRRect(
-              borderRadius: BorderRadius.circular(4),
-              child: ExtendedImage.network(
-                datasourceModel.avatar,
-                width: 30,
-                cache: true,
-              )),
+            borderRadius: BorderRadius.circular(4),
+            child: DunImage.network(
+              datasourceModel.avatar,
+              width: 30,
+              height: 30,
+            ),
+          ),
           const SizedBox(width: 8),
           Text(datasourceModel.nickname),
           const Spacer(),

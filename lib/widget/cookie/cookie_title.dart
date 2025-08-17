@@ -1,9 +1,10 @@
-import 'package:extended_image/extended_image.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../common/time_unit.dart';
 import '../../model/cookie/cookie_main_list.dart';
+import '../image/dun_image.dart';
 
 class CookieTitle extends StatelessWidget {
   final Cookie cookie;
@@ -58,24 +59,17 @@ class CookieTitle extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(avatarRadius),
       child: icon != null
-          ? ExtendedImage.network(
+          ? DunImage.network(
               icon,
               width: 40,
               height: 40,
               fit: BoxFit.cover,
-              alignment: Alignment.topLeft,
-              handleLoadingProgress: true,
-              clearMemoryCacheIfFailed: true,
-              clearMemoryCacheWhenDispose: false,
-              mode: ExtendedImageMode.gesture,
-              cache: true,
             )
           : Image.asset(
               "assets/image/load/load.png",
               width: size.width,
               height: size.height,
               fit: BoxFit.cover,
-              alignment: Alignment.topLeft,
             ),
     );
   }

@@ -1,0 +1,41 @@
+{
+  "app": {
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "C:\\Users\\Left_leaf\\.ohos\\config\\default_ohos_9PKkvx3wk5WgIit5fvELBYXaVRwcq93YZm0UdIrv6ss=.cer",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001B22C027167F69F2D0CF123C3F64E5CF701EE1B1B22213BF5CD4FCF80E52BAA2F6CE77F44E64F8E1",
+          "profile": "C:\\Users\\Left_leaf\\.ohos\\config\\default_ohos_9PKkvx3wk5WgIit5fvELBYXaVRwcq93YZm0UdIrv6ss=.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "C:\\Users\\Left_leaf\\.ohos\\config\\default_ohos_9PKkvx3wk5WgIit5fvELBYXaVRwcq93YZm0UdIrv6ss=.p12",
+          "storePassword": "0000001BDC5B5A4C33B0F57CDFE492DAF609C41BDA07C5CFCD7B35ECD5AAD05D25B7D9E37D0DE360182801"
+        }
+      }
+    ],
+    "products": [
+      {
+        "name": "default",
+        "signingConfig": "default",
+        "compatibleSdkVersion": "5.0.0(12)",
+        "runtimeOS": "HarmonyOS"
+      }
+    ]
+  },
+  "modules": [
+    {
+      "name": "entry",
+      "srcPath": "./entry",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
+    }
+  ]
+}

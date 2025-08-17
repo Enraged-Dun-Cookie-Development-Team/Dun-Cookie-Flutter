@@ -1,9 +1,10 @@
-import 'package:extended_image/extended_image.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../common/dun_color.dart';
 import '../../model/ceobe/video/video.dart';
+import '../image/dun_image.dart';
 
 class VideoLinkCard extends StatelessWidget {
   final VideoModel linkInfo;
@@ -31,7 +32,7 @@ class VideoLinkCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              child: ExtendedImage.network(
+              child: DunImage.network(
                 linkInfo.coverImg,
                 fit: BoxFit.cover,
                 width: double.infinity,

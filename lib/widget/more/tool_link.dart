@@ -1,9 +1,9 @@
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../common/dun_color.dart';
 import '../../model/ceobe/tool/tool.dart';
+import '../image/dun_image.dart';
 
 class ToolLinkCard extends StatelessWidget {
   final ToolModel linkInfo;
@@ -33,7 +33,7 @@ class ToolLinkCard extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(4.sp),
-              child: ExtendedImage.network(
+              child: DunImage.network(
                 linkInfo.icon,
                 width: 30.sp,
                 height: 30.sp,

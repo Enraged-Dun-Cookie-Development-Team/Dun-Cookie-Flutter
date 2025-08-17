@@ -1,14 +1,15 @@
 import 'dart:io';
 
-import 'package:extended_image/extended_image.dart';
 import 'package:fk_user_agent/fk_user_agent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:photo_view/photo_view.dart';
 
 import '../../common/dun_color.dart';
 import '../../manager/setting_manager.dart';
 import '../../model/cookie/cookie_main_list.dart';
 import '../check_widget.dart';
+import '../image/dun_image.dart';
 
 class ImageWidget extends StatelessWidget {
   final List<CookieImage> cookieImageList;
@@ -132,100 +133,59 @@ class ImageWidget extends StatelessWidget {
   /// index 当前图片如果是多图的话 就是被那个图片的index 如果是单图 就是0
   /// 注意在network_image_io文件下的Future<HttpClientResponse> _getResponse(Uri resolved)函数开头添加 httpClient.userAgent = null;
   ///
-  _kazeFadeImage(
-      {required String url,
-      required bool isSingle,
-      required void Function() onTap,
-      required void Function(bool value) onSelect}) {
+  _kazeFadeImage({
+    required String url,
+    required bool isSingle,
+    required void Function() onTap,
+    required void Function(bool value) onSelect,
+  }) {
     return Stack(
       children: [
-        ExtendedImage.network(
-          url,
-          handleLoadingProgress: true,
-          clearMemoryCacheIfFailed: true,
-          clearMemoryCacheWhenDispose: false,
-          mode: ExtendedImageMode.gesture,
-          cache: true,
-          headers: {
-            HttpHeaders.userAgentHeader: FkUserAgent.userAgent!,
-          },
-          loadStateChanged: (ExtendedImageState state) {
-            switch (state.extendedImageLoadState) {
-              case LoadState.loading:
-                final loadingProgress = state.loadingProgress;
-                int cumulativeBytesLoaded =
-                    loadingProgress?.cumulativeBytesLoaded ?? 0;
-                int expectedTotalBytes =
-                    loadingProgress?.expectedTotalBytes ?? 0;
-                double progress = expectedTotalBytes != 0
-                    ? cumulativeBytesLoaded / expectedTotalBytes
-                    : 0.0;
-                return Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(isSingle ? 60 : 10),
-                      child: const Image(
-                          image: AssetImage("assets/image/load/loading.gif")),
-                    ),
-                    Positioned(
-                      right: 0,
-                      bottom: 0,
-                      child: Container(
-                        padding: REdgeInsets.all(4),
-                        color: Colors.white,
-                        child: Text(
-                          "${((progress) * 100).toInt()}%",
-                          style: DunStyles.text14C,
-                        ),
-                      ),
-                    )
-                  ],
-                );
-              case LoadState.completed:
-                if (isSingle) {
-                  return GestureDetector(
-                    onTap: onTap,
+        Positioned.fill(
+          child: DunImage.network(
+            url,
+            headers: {
+              HttpHeaders.userAgentHeader: Platform.isOhos
+                  ? 'Mozilla/5.0 (Phone; OpenHarmony 5.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 ArkWeb/4.1.6.1 Mobile'
+                  : FkUserAgent.userAgent!,
+            },
+            loadingBuilder: (context, event) {
+              int cumulativeBytesLoaded = event?.cumulativeBytesLoaded ?? 0;
+              int expectedTotalBytes = event?.expectedTotalBytes ?? 0;
+              double progress = expectedTotalBytes != 0
+                  ? cumulativeBytesLoaded / expectedTotalBytes
+                  : 0.0;
+              return Stack(
+                alignment: Alignment.center,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(isSingle ? 60 : 10),
+                    child: const Image(
+                        image: AssetImage("assets/image/load/loading.gif")),
+                  ),
+                  Positioned(
+                    right: 0,
+                    bottom: 0,
                     child: Container(
-                      clipBehavior: Clip.hardEdge,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      constraints: BoxConstraints(
-                        maxHeight: imageFill ? double.infinity : 400,
-                      ),
-                      child: ExtendedRawImage(
-                        width: double.infinity,
-                        alignment: Alignment.topCenter,
-                        fit: BoxFit.cover,
-                        image: state.extendedImageInfo?.image,
+                      padding: REdgeInsets.all(4),
+                      color: Colors.white,
+                      child: Text(
+                        "${((progress) * 100).toInt()}%",
+                        style: DunStyles.text14C,
                       ),
                     ),
-                  );
-                } else {
-                  return GestureDetector(
-                    onTap: onTap,
-                    child: Container(
-                      clipBehavior: Clip.hardEdge,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: ExtendedRawImage(
-                        width: double.infinity,
-                        height: double.infinity,
-                        alignment: Alignment.topCenter,
-                        fit: BoxFit.cover,
-                        image: state.extendedImageInfo?.image,
-                      ),
-                    ),
-                  );
-                }
-              case LoadState.failed:
-                print('图片加载失败:$url');
-                return const Image(
-                    image: AssetImage("assets/image/load/error.png"));
-            }
-          },
+                  )
+                ],
+              );
+            },
+            onTapUp: (
+              BuildContext context,
+              TapUpDetails details,
+              PhotoViewControllerValue controllerValue,
+            ) {
+              onTap.call();
+            },
+          ),
         ),
         Align(
           alignment: Alignment.bottomRight,

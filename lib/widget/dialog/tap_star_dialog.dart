@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:in_app_review/in_app_review.dart';
 
 import '../../common/dun_color.dart';
 
@@ -118,10 +117,10 @@ class TapStartDialog extends Dialog {
 
   Future<void> _confirmCallBack(BuildContext context) async {
     Navigator.of(context).pop();
-    final InAppReview inAppReview = InAppReview.instance;
-    if (await inAppReview.isAvailable()) {
-      inAppReview.requestReview();
-    }
+    // final InAppReview inAppReview = InAppReview.instance;
+    // if (await inAppReview.isAvailable()) {
+    //   inAppReview.requestReview();
+    // }
   }
 
   void _cancelCallBack(BuildContext context) {

@@ -1,4 +1,3 @@
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -10,6 +9,7 @@ import '../../model/manga/terra_comic.dart';
 import '../../model/manga/terra_comic_episode.dart';
 import '../../request/manga/manga_request.dart';
 import '../dun_tag.dart';
+import '../image/dun_image.dart';
 import 'episode_list.dart';
 
 class MangaListCard extends StatefulWidget {
@@ -54,24 +54,11 @@ class _MangaListCardState extends State<MangaListCard> {
         },
         child: Column(
           children: [
-            ExtendedImage.network(
+            DunImage.network(
               widget.comicModel.cover,
-              fit: BoxFit.cover,
-              handleLoadingProgress: true,
-              clearMemoryCacheIfFailed: true,
-              clearMemoryCacheWhenDispose: false,
-              mode: ExtendedImageMode.gesture,
-              cache: true,
-              loadStateChanged: (ExtendedImageState state) {
-                if (state.extendedImageLoadState == LoadState.loading) {
-                  return Center(
-                      child: Image(
-                          height: 220.h,
-                          image: const AssetImage(
-                              "assets/image/load/loading.gif")));
-                }
-                return null;
-              },
+              fit: BoxFit.fill,
+              height: 367,
+              width: 367,
             ),
             ExpansionPanelList(
               elevation: 0,
