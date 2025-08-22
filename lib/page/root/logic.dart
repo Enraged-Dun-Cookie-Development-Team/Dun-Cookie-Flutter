@@ -1,7 +1,7 @@
+import 'package:dun_cookie_flutter/manager/update_manager.dart';
 import 'package:get/get.dart';
 
 import '../../manager/dun_preference.dart';
-import '../update/logic.dart';
 import 'state.dart';
 
 class RootLogic extends GetxController {
@@ -17,7 +17,7 @@ class RootLogic extends GetxController {
     super.onInit();
     state.launchCount = (getLaunchCount() ?? 0) + 1;
     saveLaunchCount(state.launchCount);
-    UpdateLogic.to?.checkLatestVersion(autoCheck: true);
+    UpdateManager.getInstance().checkLatestVersion(autoCheck: true);
   }
 
   @override

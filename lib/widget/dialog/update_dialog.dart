@@ -12,20 +12,23 @@ import '../../route.dart';
 class UpdateDialog extends Dialog {
   final String oldVersion; //旧版本
   final DunAppInfoModel newApp; //新版本
-  final bool isFocus; //强制更新
+  final bool isForce; //强制更新
 
   const UpdateDialog(
       {super.key,
       required this.oldVersion,
       required this.newApp,
-      required this.isFocus});
+      required this.isForce});
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      type: MaterialType.transparency,
-      child: Center(
-        child: _buildVersionUpdateDialog(context),
+    return PopScope(
+      canPop: !isForce,
+      child: Material(
+        type: MaterialType.transparency,
+        child: Center(
+          child: _buildVersionUpdateDialog(context),
+        ),
       ),
     );
   }
@@ -66,11 +69,11 @@ class UpdateDialog extends Dialog {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Text(
-                        isFocus ? "强制更新" : "非强制更新",
+                        isForce ? "强制更新" : "非强制更新",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 14,
-                          color: isFocus ? Colors.red : Colors.black,
+                          color: isForce ? Colors.red : Colors.black,
                         ),
                       ),
                       const SizedBox(height: 3),
@@ -137,7 +140,7 @@ class UpdateDialog extends Dialog {
                               onPressed: () {
                                 _cancelCallBack(context);
                               },
-                              child: Text(isFocus ? "退出" : "暂不更新",
+                              child: Text(isForce ? "退出" : "暂不更新",
                                   style: const TextStyle(
                                       fontSize: 17, color: DunColors.gray_1))),
                         ],
@@ -157,7 +160,7 @@ class UpdateDialog extends Dialog {
   }
 
   void _cancelCallBack(BuildContext context) {
-    if (isFocus) {
+    if (isForce) {
       exit(0);
     } else {
       Get.back();

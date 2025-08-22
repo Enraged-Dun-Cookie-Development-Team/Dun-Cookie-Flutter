@@ -1,9 +1,9 @@
+import 'package:dun_cookie_flutter/manager/update_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../common/dun_color.dart';
-import '../update/logic.dart';
 import 'logic.dart';
 
 class SettingPage extends StatelessWidget {
@@ -305,22 +305,17 @@ class SettingPage extends StatelessWidget {
               ],
             ),
             const Spacer(),
-            if (UpdateLogic.to != null)
-              GetBuilder(
-                init: UpdateLogic.to,
-                id: UpdateLogic.to!.state.checkGID,
-                builder: (updateLogic) => updateLogic.state.checking
-                    ? Container(
-                        margin: const EdgeInsets.only(right: 8),
-                        height: 20,
-                        width: 20,
-                        child: const CircularProgressIndicator(
-                          strokeWidth: 3,
-                          color: DunColors.dunColor,
-                        ),
-                      )
-                    : const SizedBox(),
-              ),
+            Obx(() => UpdateManager.getInstance().checking.value
+                ? Container(
+                    margin: const EdgeInsets.only(right: 8),
+                    height: 20,
+                    width: 20,
+                    child: const CircularProgressIndicator(
+                      strokeWidth: 3,
+                      color: DunColors.dunColor,
+                    ),
+                  )
+                : const SizedBox()),
           ],
         ),
       ),

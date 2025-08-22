@@ -20,7 +20,7 @@ class ResponseData<T> {
   final RequestType type;
 
   T? get data {
-    final innerData = type == RequestType.cdn ? _data : _data['data'];
+    final innerData = type == RequestType.cdn ? _data : _data?['data'];
     if (innerData is Map<String, dynamic>) {
       return fromJson(innerData);
     } else if (innerData is List<dynamic>) {
