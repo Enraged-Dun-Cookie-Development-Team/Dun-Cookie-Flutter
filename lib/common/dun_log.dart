@@ -4,8 +4,8 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:share/share.dart';
 import 'package:path/path.dart' as p;
+import 'package:share_plus/share_plus.dart';
 
 class DunLog {
   // flutter build apk --dart-define logging=true
@@ -37,7 +37,7 @@ class DunLog {
     final file = await File(p.join(dir.path, 'dunapp', fileName))
         .create(recursive: true);
     await file.writeAsString(_logOutPut.records.join('\n'));
-    Share.shareFiles([file.path]).then((_) => file.delete());
+    Share.shareXFiles([XFile(file.path)]).then((_) => file.delete());
   }
 }
 

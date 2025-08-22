@@ -41,7 +41,7 @@ dependencies:
   webview_flutter:
   mobpush_plugin:
   qr_flutter:
-  share:
+  share_plus: 10.0.0
   animate_do:
   json_serializable:
   json_annotation:
