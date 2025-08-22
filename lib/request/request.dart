@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:dun_cookie_flutter/common/dun_log.dart';
 
 import '../manager/setting_manager.dart';
 import '../model/json.dart';
@@ -48,7 +49,7 @@ class HttpClass {
       dio.options.headers.addAll({
         "mob-id": SettingManager.getInstance().rid,
       });
-      print("请求 ${dio.options.baseUrl}$url");
+      DunLog.info("请求 ${dio.options.baseUrl}$url");
       Response response = await dio.request(
         url,
         queryParameters: params,
@@ -61,7 +62,8 @@ class HttpClass {
           msg: "",
           fromJson: fromJson,
           type: type);
-    } on DioException catch (e) {
+    } on DioException catch (e, stack) {
+      DunLog.error("请求异常", e, stack);
       return ResponseData<T>(
           error: true,
           data: e.response?.data,
@@ -109,7 +111,8 @@ class HttpClass {
         onReceiveProgress: onReceiveProgress,
         cancelToken: cancelToken,
       );
-    } catch (_) {
+    } catch (err, stack) {
+      DunLog.error("下载$urlPath异常", err, stack);
       return ResponseData.failure(msg: '下载异常');
     }
 

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dun_cookie_flutter/common/dun_log.dart';
 import 'package:dun_cookie_flutter/manager/update_manager.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -57,7 +58,7 @@ class SettingLogic extends GetxController {
     //网页跳转
     if (Platform.isIOS) {
       String nowVersion = SettingManager.getInstance().version;
-      print(
+      DunLog.info(
           "https://www.ceobecanteen.top/?version=$nowVersion&position=mo-sponsor");
       DunJump.openWebPage(
         "https://www.ceobecanteen.top/?version=$nowVersion&position=mo-sponsor",

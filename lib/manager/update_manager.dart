@@ -5,6 +5,7 @@ import 'package:app_installer/app_installer.dart';
 import 'package:dio/dio.dart';
 import 'package:dun_cookie_flutter/common/data_status.dart';
 import 'package:dun_cookie_flutter/common/dun_dialog.dart';
+import 'package:dun_cookie_flutter/common/dun_log.dart';
 import 'package:dun_cookie_flutter/common/dun_toast.dart';
 import 'package:dun_cookie_flutter/common/package_info.dart';
 import 'package:dun_cookie_flutter/manager/dun_preference.dart';
@@ -212,7 +213,8 @@ class UpdateManager {
     try {
       await File(path).delete();
       return true;
-    } catch (e) {
+    } catch (err, stack) {
+      DunLog.error("删除安装包失败", err, stack);
       return false;
     }
   }

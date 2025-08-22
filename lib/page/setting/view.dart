@@ -1,3 +1,4 @@
+import 'package:dun_cookie_flutter/common/dun_log.dart';
 import 'package:dun_cookie_flutter/manager/update_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -89,6 +90,14 @@ class SettingPage extends StatelessWidget {
                             _buildDonation(),
                             _buildLine(),
                             _buildMobId(),
+                            if (DunLog.enableLogging) ...[
+                              _buildLine(),
+                              const _SettingTile(
+                                title: 'BUG反馈 (lwt专属)',
+                                subtitle: '分享日志',
+                                onTap: DunLog.share,
+                              )
+                            ]
                           ],
                         ),
                       ),
@@ -406,6 +415,45 @@ class SettingPage extends StatelessWidget {
               ),
             ))
       ],
+    );
+  }
+}
+
+class _SettingTile extends StatelessWidget {
+  const _SettingTile({
+    required this.onTap,
+    required this.title,
+    required this.subtitle,
+  });
+  final VoidCallback onTap;
+  final String title;
+  final String subtitle;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      highlightColor: Colors.blue,
+      child: SizedBox(
+        width: double.infinity,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 7),
+            Text(
+              title,
+              style: const TextStyle(color: DunColors.gray_1, fontSize: 16),
+            ),
+            const SizedBox(height: 2),
+            Text(
+              subtitle,
+              style:
+                  const TextStyle(color: DunColors.graySubtitle, fontSize: 11),
+            ),
+            const SizedBox(height: 7),
+          ],
+        ),
+      ),
     );
   }
 }

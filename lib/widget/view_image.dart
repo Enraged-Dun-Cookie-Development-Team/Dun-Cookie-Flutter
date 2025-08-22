@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:dun_cookie_flutter/common/dun_log.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -110,8 +111,8 @@ class _ViewImageExtendedImageState extends State<ViewImageExtendedImage>
                         doubleTapPosition: state.pointerDownPosition);
                   });
                   _animationController.forward();
-                } catch (e) {
-                  print('放大错误');
+                } catch (err, stack) {
+                  DunLog.error('放大错误', err, stack);
                 }
               },
             ),

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dun_cookie_flutter/common/dun_log.dart';
 import 'package:fk_user_agent/fk_user_agent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,8 +9,11 @@ import 'manager/dun_preference.dart';
 import 'manager/setting_manager.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  earlyInit().then((_) => runApp(const DunApp()));
+  runZonedGuardedWithLog(() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    await earlyInit();
+    runApp(const DunApp());
+  });
 }
 
 Future<void> earlyInit() async {
