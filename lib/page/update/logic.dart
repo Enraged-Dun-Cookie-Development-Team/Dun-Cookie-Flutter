@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:app_installer/app_installer.dart';
@@ -137,6 +138,7 @@ class UpdateLogic extends GetxController {
       return DataStatus.error;
     }
 
+    Timer? timer;
     for (final urlModel in state.downloadableUrlModels) {
       state.downloadProgressController.total = 0;
       state.downloadProgressController.count = 0;
@@ -145,6 +147,12 @@ class UpdateLogic extends GetxController {
       update([state.downloadGID]);
 
       state.appCancelToken = CancelToken();
+      timer = Timer(const Duration(seconds: 10), () {
+        if (state.appCancelToken != null &&
+            state.downloadProgressController.count == 0) {
+          cancelDownload();
+        }
+      });
       final resp = await HttpClass.download(
         savePath: state.downloadSavePath!,
         urlPath: urlModel.url,
@@ -154,6 +162,9 @@ class UpdateLogic extends GetxController {
           state.downloadProgressController.count = count;
         },
       );
+      if (!timer.isActive) continue;
+
+      timer.cancel();
       if (resp.rawData == true) {
         installApp();
         return DataStatus.success;

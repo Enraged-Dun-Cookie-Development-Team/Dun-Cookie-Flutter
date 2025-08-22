@@ -120,33 +120,40 @@ class UpdatePage extends StatelessWidget {
         builder: (_) => Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            if (Platform.isIOS)
-              _buildPrimaryButton(text: '应用商店', onPressed: logic.jumpAppStore),
-            if (Platform.isAndroid && state.downloadStatus == null)
-              _buildPrimaryButton(text: '下载', onPressed: logic.onTapDownload),
-            if (DataStatus.loading == state.downloadStatus) ...[
-              _buildDownloadProgress(),
-              _buildTextButton(text: '取消', onPressed: logic.cancelDownload),
-            ],
-            if (state.downloadStatus == DataStatus.success) ...[
-              _buildPrimaryButton(text: '安装', onPressed: logic.installApp),
-              _buildTextButton(text: '重新下载', onPressed: logic.onTapDownload),
-            ],
-            if (state.downloadStatus == DataStatus.error)
-              ...List.generate(
-                state.manualUrlModels.length,
-                (index) {
-                  final urlModel = state.manualUrlModels[index];
-                  String text = urlModel.name;
-                  if (text.isEmpty) text = '手动下载方式 ${index + 1}';
-                  return _buildPrimaryButton(
-                    text: text,
-                    onPressed: () => logic.jumpExternalWeb(urlModel.url),
-                  );
-                },
-              )
-          ],
+          children: Platform.isIOS
+              ? [
+                  _buildPrimaryButton(
+                      text: '应用商店', onPressed: logic.jumpAppStore),
+                ]
+              : [
+                  if (state.downloadStatus != DataStatus.loading)
+                    _buildPrimaryButton(
+                        text: '下载', onPressed: logic.onTapDownload),
+                  if (DataStatus.loading == state.downloadStatus) ...[
+                    _buildDownloadProgress(),
+                    _buildTextButton(
+                        text: '取消', onPressed: logic.cancelDownload),
+                  ],
+                  if (state.downloadStatus == DataStatus.success) ...[
+                    _buildPrimaryButton(
+                        text: '安装', onPressed: logic.installApp),
+                    _buildTextButton(
+                        text: '重新下载', onPressed: logic.onTapDownload),
+                  ],
+                  if (state.downloadStatus != DataStatus.loading)
+                    ...List.generate(
+                      state.manualUrlModels.length,
+                      (index) {
+                        final urlModel = state.manualUrlModels[index];
+                        String text = urlModel.name;
+                        if (text.isEmpty) text = '手动下载方式 ${index + 1}';
+                        return _buildPrimaryButton(
+                          text: text,
+                          onPressed: () => logic.jumpExternalWeb(urlModel.url),
+                        );
+                      },
+                    )
+                ],
         ),
       ),
     );
