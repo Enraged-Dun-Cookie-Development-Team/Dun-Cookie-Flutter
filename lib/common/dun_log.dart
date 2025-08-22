@@ -16,7 +16,9 @@ class DunLog {
 
   static final _logger = Logger(
     printer: PrettyPrinter(),
+    filter: ProductionFilter(),
     output: _logOutPut,
+    level: kDebugMode ? Level.trace : Level.info,
   );
 
   static void info(dynamic message) {
@@ -33,9 +35,9 @@ class DunLog {
 
   static void share() async {
     final dir = await getTemporaryDirectory();
-    final fileName = 'dunapp_log_${DateTime.now().millisecondsSinceEpoch}.txt';
-    final file = await File(p.join(dir.path, 'dunapp', fileName))
-        .create(recursive: true);
+    final file = await File(p.join(dir.path,
+            'dunapp_log_${DateTime.now().millisecondsSinceEpoch}.txt'))
+        .create();
     await file.writeAsString(_logOutPut.records.join('\n'));
     Share.shareXFiles([XFile(file.path)]).then((_) => file.delete());
   }
