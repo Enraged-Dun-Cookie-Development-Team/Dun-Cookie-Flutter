@@ -45,9 +45,10 @@ class RootPage extends StatelessWidget {
             builder: (context, child, isHidden) => AnimatedPositioned(
               bottom:
                   SettingManager.getInstance().isHideBottomOnScroll && isHidden
-                      ? -100
+                      ? -(MediaQuery.of(context).padding.bottom + 100)
                       : 0,
-              duration: const Duration(milliseconds: 200),
+              duration: Durations.medium2,
+              curve: Curves.easeInOutSine,
               child: child,
             ),
           ),
