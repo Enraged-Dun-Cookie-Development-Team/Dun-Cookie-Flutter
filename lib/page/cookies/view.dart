@@ -105,6 +105,7 @@ class _CookiesPageState extends State<CookiesPage> {
                       child: Image.asset(
                         "assets/icon/search.png",
                         color: DunColors.yellow,
+                        isAntiAlias: true,
                       ),
                     ),
                   ),

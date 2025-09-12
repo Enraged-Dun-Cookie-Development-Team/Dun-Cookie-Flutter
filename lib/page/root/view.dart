@@ -119,6 +119,7 @@ class RootPage extends StatelessWidget {
           width: 30,
           height: 30,
           color: isSelected ? DunColors.yellow : DunColors.gray_2,
+          isAntiAlias: true,
         ),
       ),
     );
@@ -146,6 +147,7 @@ class RootPage extends StatelessWidget {
             width: 57,
             height: 48,
             color: isSelected ? DunColors.white : DunColors.gray_2,
+            isAntiAlias: true,
           ),
         ),
       ),
