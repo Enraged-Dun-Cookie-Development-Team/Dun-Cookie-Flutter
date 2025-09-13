@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:dun_cookie_flutter/model/info/setting_data.dart';
+import 'package:duncookie/model/info/setting_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../model/info/user_settings.dart';

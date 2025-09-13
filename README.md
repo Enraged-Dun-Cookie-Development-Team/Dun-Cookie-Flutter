@@ -1,4 +1,4 @@
-# dun_cookie_flutter
+# duncookie
 
 A new Flutter project.
 
