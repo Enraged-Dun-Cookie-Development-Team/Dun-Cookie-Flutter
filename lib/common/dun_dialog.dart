@@ -5,7 +5,6 @@ import '../manager/dun_preference.dart';
 import '../model/ceobe/version/dun_app.dart';
 import '../route.dart';
 import '../widget/dialog/tap_star_dialog.dart';
-import '../widget/dialog/update_dialog.dart';
 import '../widget/dialog/update_info_dialog.dart';
 import '../widget/dialog/loading_dialog.dart';
 import '../widget/view_image.dart';
@@ -28,19 +27,6 @@ showUpdateInfoDialog(DunAppInfoModel nowApp) {
     description: nowApp.description,
   ));
   saveLastShowVersion(nowApp.version);
-}
-
-showUpdateDialog(
-    {required String nowAppVersion,
-    required DunAppInfoModel newApp,
-    required bool isForce}) {
-  Get.dialog(
-      barrierDismissible: isForce,
-      UpdateDialog(
-        oldVersion: nowAppVersion,
-        newApp: newApp,
-        isFocus: isForce,
-      ));
 }
 
 showLoadingDialog() {

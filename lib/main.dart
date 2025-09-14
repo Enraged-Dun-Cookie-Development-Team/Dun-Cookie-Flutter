@@ -3,12 +3,10 @@ import 'dart:io';
 import 'package:fk_user_agent/fk_user_agent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 
 import 'dun_app.dart';
 import 'manager/dun_preference.dart';
 import 'manager/setting_manager.dart';
-import 'page/update/logic.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,6 +27,4 @@ Future<void> earlyInit() async {
   if(!Platform.isOhos){
     await FkUserAgent.init();
   }
-  //todo 分割逻辑
-  Get.put(UpdateLogic());
 }

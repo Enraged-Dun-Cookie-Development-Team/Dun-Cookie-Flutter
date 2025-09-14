@@ -8,7 +8,6 @@ import 'page/manga/view.dart';
 import 'page/register/view.dart';
 import 'page/root/view.dart';
 import 'page/setting/view.dart';
-import 'page/update/view.dart';
 import 'page/web/view.dart';
 
 DunObserver routeObserver = DunObserver();
@@ -64,7 +63,6 @@ class DunRouter {
     GetPage(name: honeyCake, page: () => HoneyCakeWorkshopPage()),
     GetPage(name: setting, page: () => SettingPage()),
     GetPage(name: datasourceSetting, page: () => DatasourcePage()),
-    GetPage(name: update, page: () => UpdatePage()),
     GetPage(name: share, page: () => CookieSharePage()),
     GetPage(name: web, page: () => WebPage())
   ];

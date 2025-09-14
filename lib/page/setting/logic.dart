@@ -7,7 +7,6 @@ import '../../common/dun_jump.dart';
 import '../../common/dun_toast.dart';
 import '../../manager/setting_manager.dart';
 import '../../route.dart';
-import '../update/logic.dart';
 import 'state.dart';
 
 class SettingLogic extends GetxController {
@@ -47,10 +46,6 @@ class SettingLogic extends GetxController {
 
   void onTapFollowOnBilibili() {
     DunJump.followInBilibili();
-  }
-
-  Future<void> onTapCheckUpgrade() async {
-    UpdateLogic.to?.checkLatestVersion();
   }
 
   Future<void> onTapDonation() async {

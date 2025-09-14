@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../common/dun_color.dart';
-import '../update/logic.dart';
 import 'logic.dart';
 
 class SettingPage extends StatelessWidget {
@@ -83,8 +82,6 @@ class SettingPage extends StatelessWidget {
                             _buildAboutUs(),
                             _buildLine(),
                             _buildFollowOnBilibili(),
-                            _buildLine(),
-                            _buildCheckUpgrade(),
                             _buildLine(),
                             _buildDonation(),
                             _buildLine(),
@@ -268,59 +265,6 @@ class SettingPage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 7),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildCheckUpgrade() {
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onTap: logic.onTapCheckUpgrade,
-      child: SizedBox(
-        width: double.infinity,
-        child: Row(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 7),
-                const Text(
-                  "检查更新",
-                  style: TextStyle(
-                    color: DunColors.gray_1,
-                    fontSize: 16,
-                  ),
-                ),
-                const SizedBox(height: 2),
-                Obx(() => Text(
-                      state.version.value,
-                      style: const TextStyle(
-                        color: DunColors.graySubtitle,
-                        fontSize: 11,
-                      ),
-                    )),
-                const SizedBox(height: 7),
-              ],
-            ),
-            const Spacer(),
-            if (UpdateLogic.to != null)
-              GetBuilder(
-                init: UpdateLogic.to,
-                id: UpdateLogic.to!.state.checkGID,
-                builder: (updateLogic) => updateLogic.state.checking
-                    ? Container(
-                        margin: const EdgeInsets.only(right: 8),
-                        height: 20,
-                        width: 20,
-                        child: const CircularProgressIndicator(
-                          strokeWidth: 3,
-                          color: DunColors.dunColor,
-                        ),
-                      )
-                    : const SizedBox(),
-              ),
           ],
         ),
       ),
