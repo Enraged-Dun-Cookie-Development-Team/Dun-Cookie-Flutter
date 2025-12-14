@@ -49,7 +49,7 @@ class DatasourceLogic extends GetxController {
   Future<void> onTapSave() async {
     showLoadingDialog();
     bool saveSucceed =
-        (await InfoRequest.updateDataSource(state.userDatasourceList)).error;
+        !(await InfoRequest.updateDataSource(state.userDatasourceList)).error;
     clearLoadingDialog();
     if (saveSucceed) {
       DunToast.showInfo("保存成功");
