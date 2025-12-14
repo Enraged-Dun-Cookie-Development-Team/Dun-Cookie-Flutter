@@ -34,7 +34,7 @@ class CookiesLogic extends GetxController {
         .addScrollController(state.scrollController);
     state.searchController.addListener(() {
       var debounce = EventFilter.debounce("list_search_word", () {
-        state.offstage.value = state.searchController.text.isNotEmpty;
+        state.clearButtonVisible.value = state.searchController.text.isNotEmpty;
         if (state.searchController.text.isEmpty && state.searchStatue.value) {
           cancelSearch();
         }

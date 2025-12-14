@@ -17,7 +17,7 @@ class CookiesState {
 
   RxBool searchStatue = false.obs; // 搜索状态
   String lastSearchContent = '';
-  RxBool offstage = true.obs; // 隐藏搜索清空
+  RxBool clearButtonVisible = false.obs; // 隐藏搜索清空
   ///监听TextField内容变化
   final TextEditingController searchController = TextEditingController();
 
