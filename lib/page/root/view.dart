@@ -21,6 +21,7 @@ class RootPage extends StatelessWidget {
       data: MediaQuery.of(context)
           .copyWith(textScaler: const TextScaler.linear(1.0)),
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Container(
           color: DunColors.gray_3,
           padding: EdgeInsets.only(top: paddingTop),

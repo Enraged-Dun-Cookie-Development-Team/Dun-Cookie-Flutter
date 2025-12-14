@@ -52,6 +52,7 @@ class _CookiesPageState extends State<CookiesPage> {
                 Expanded(
                   child: Container(
                     height: 42,
+                    alignment: Alignment.center,
                     color: DunColors.white,
                     padding: REdgeInsets.fromLTRB(10, 0, 10, 0),
                     child: TextField(
@@ -76,7 +77,7 @@ class _CookiesPageState extends State<CookiesPage> {
                 ),
                 Obx(
                   () => Offstage(
-                    offstage: state.offstage.value,
+                    offstage: !state.clearButtonVisible.value,
                     child: GestureDetector(
                         onTap: () => {state.searchController.clear()},
                         child: Container(
