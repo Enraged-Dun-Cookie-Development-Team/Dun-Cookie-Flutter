@@ -23,6 +23,7 @@ class DunApp extends StatelessWidget {
             surfaceTint: Colors.transparent,
           ),
           cardTheme: const CardTheme(color: Colors.white),
+          scaffoldBackgroundColor: Colors.white,
         ),
         initialRoute: SettingManager.getInstance().notOnce
             ? DunRouter.register
