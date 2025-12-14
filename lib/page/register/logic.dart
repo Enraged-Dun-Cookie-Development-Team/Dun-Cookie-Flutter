@@ -1,8 +1,9 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:mobpush_plugin/mobpush_plugin.dart';
+import 'package:mobpush_plugin_ohos/mobpush_plugin.dart';
 
 import '../../common/dun_dialog.dart';
 import '../../common/dun_toast.dart';
@@ -19,14 +20,9 @@ class RegisterLogic extends GetxController {
 
   onAgree() async {
     showLoadingDialog();
-    String rid;
-    if(Platform.isOhos){
-      rid = '65l2tnhd8cdsmyy';
-    }else{
-      rid = await _initMobPush();
-      if (Platform.isAndroid) {
-        await Get.dialog(ToSettingDialog(), barrierDismissible: false);
-      }
+    String rid = await _initMobPush();
+    if (Platform.isAndroid) {
+      await Get.dialog(ToSettingDialog(), barrierDismissible: false);
     }
     DunToast.showInfo("与土豆服务器连接中……");
     bool result = await _registerMobPush(rid);
@@ -42,7 +38,16 @@ class RegisterLogic extends GetxController {
 
   /// 注册mobid，并且与后端注册
   Future<String> _initMobPush() async {
-    await MobpushPlugin.updatePrivacyPermissionStatus(true);
+    if (Platform.isOhos) {
+      MobpushPlugin.init('359ea68d9b658', '6652363189e64cf91ef668da35d01267');
+      // 鸿蒙原生更新协议状态后并不会返回结果，因此避免使用await
+      MobpushPlugin.updatePrivacyPermissionStatus(true);
+      // 短暂等待1s避免后续获取的rid为空字符串
+      await Future.delayed(const Duration(seconds: 1));
+    } else {
+      await MobpushPlugin.updatePrivacyPermissionStatus(true);
+    }
+
     if (Platform.isIOS) {
       MobpushPlugin.setCustomNotification();
       // 开发环境 false, 线上环境 true

@@ -7,7 +7,7 @@ import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:share/share.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../../common/dun_dialog.dart';
 import '../../common/dun_toast.dart';
@@ -72,7 +72,7 @@ class CookieShareLogic extends GetxController {
         final imageFile = File(dir.path);
         await imageFile.writeAsBytes(pngBytes);
         clearLoadingDialog();
-        Share.shareFiles([imageFile.path]);
+        Share.shareXFiles([XFile(imageFile.path)]);
         Future.delayed(const Duration(seconds: 1)).then((value) => Get.back());
       } else {
         clearLoadingDialog();

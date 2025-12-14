@@ -1,9 +1,11 @@
 import { FlutterEngine, Log } from '@ohos/flutter_ohos';
 import FluttertoastPlugin from 'fluttertoast';
 import ImageGallerySaverPlugin from 'image_gallery_saver';
+import MobpushPlugin from 'mobpush_plugin_ohos';
 import PackageInfoPlugin from 'package_info_plus';
 import PathProviderPlugin from 'path_provider_ohos';
 import PermissionHandlerPlugin from 'permission_handler_ohos';
+import SharePlusOhosPlugin from 'share_plus';
 import SharedPreferencesPlugin from 'shared_preferences_ohos';
 import UrlLauncherPlugin from 'url_launcher_ohos';
 import WebViewFlutterPlugin from 'webview_flutter_ohos';
@@ -22,9 +24,11 @@ export class GeneratedPluginRegistrant {
     try {
       flutterEngine.getPlugins()?.add(new FluttertoastPlugin());
       flutterEngine.getPlugins()?.add(new ImageGallerySaverPlugin());
+      flutterEngine.getPlugins()?.add(new MobpushPlugin());
       flutterEngine.getPlugins()?.add(new PackageInfoPlugin());
       flutterEngine.getPlugins()?.add(new PathProviderPlugin());
       flutterEngine.getPlugins()?.add(new PermissionHandlerPlugin());
+      flutterEngine.getPlugins()?.add(new SharePlusOhosPlugin());
       flutterEngine.getPlugins()?.add(new SharedPreferencesPlugin());
       flutterEngine.getPlugins()?.add(new UrlLauncherPlugin());
       flutterEngine.getPlugins()?.add(new WebViewFlutterPlugin());

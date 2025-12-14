@@ -22,6 +22,9 @@
     "webview_flutter_ohos": "file:./har/webview_flutter_ohos.har",
     "permission_handler_ohos": "file:./har/permission_handler_ohos.har",
     "package_info_plus": "file:./har/package_info_plus.har",
-    "@ohos/flutter_module": "file:./entry"
+    "@ohos/flutter_module": "file:./entry",
+    "mobpush_plugin_ohos": "file:./har/mobpush_plugin_ohos.har",
+    "mobcommonlib_ohos": "file:./har/mobcommonlib_ohos.har",
+    "share_plus": "file:./har/share_plus.har"
   }
 }
