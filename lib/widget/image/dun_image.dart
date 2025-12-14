@@ -1,5 +1,5 @@
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:photo_view/photo_view.dart';
 
 class DunImage {
   static Widget network(
@@ -7,39 +7,57 @@ class DunImage {
     BoxFit fit = BoxFit.contain,
     double? height,
     double? width,
+    BoxConstraints? constraints,
     Map<String, String> headers = const {},
-    LoadingBuilder? loadingBuilder,
-    PhotoViewImageTapUpCallback? onTapUp,
-  }) =>
-      SizedBox(
-        height: height,
-        width: width,
-        child: PhotoView(
-          imageProvider: NetworkImage(url, headers: headers),
-          // 加载状态处理（对应原loadStateChanged）
-          loadingBuilder: loadingBuilder ??
-                  (context, event) {
-                // 加载中显示GIF占位图
-                return Image(
+    Widget Function(ImageChunkEvent? event)? loadingBuilder,
+    GestureTapCallback? onTap,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: ExtendedImage.network(
+        url,
+        handleLoadingProgress: true,
+        clearMemoryCacheIfFailed: true,
+        clearMemoryCacheWhenDispose: false,
+        mode: ExtendedImageMode.gesture,
+        cache: true,
+        headers: headers,
+        loadStateChanged: (ExtendedImageState state) {
+          switch (state.extendedImageLoadState) {
+            case LoadState.loading:
+              if (loadingBuilder != null) {
+                return loadingBuilder(state.loadingProgress);
+              }
+              return Image(
+                height: height,
+                width: width,
+                fit: fit,
+                image: const AssetImage("assets/image/load/loading.gif"),
+              );
+            case LoadState.completed:
+              return Container(
+                clipBehavior: Clip.hardEdge,
+                constraints: constraints,
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(4)),
+                child: ExtendedRawImage(
                   height: height,
                   width: width,
                   fit: fit,
-                  image: const AssetImage("assets/image/load/loading.gif"),
-                );
-              },
-          // 错误处理
-          errorBuilder: (context, error, stackTrace) {
-            return Image(
-              height: height,
-              width: width,
-              fit: fit,
-              image: const AssetImage("assets/image/load/error.png"),
-            );
-          },
-          minScale: PhotoViewComputedScale.contained,
-          maxScale: PhotoViewComputedScale.covered * 2.0,
-          wantKeepAlive: true,
-          onTapUp: onTapUp,
-        ),
-      );
+                  alignment: Alignment.topCenter,
+                  image: state.extendedImageInfo?.image,
+                ),
+              );
+            case LoadState.failed:
+              return Image(
+                height: height,
+                width: width,
+                fit: fit,
+                image: const AssetImage("assets/image/load/error.png"),
+              );
+          }
+        },
+      ),
+    );
+  }
 }

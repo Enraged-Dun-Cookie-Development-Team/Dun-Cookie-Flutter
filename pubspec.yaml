@@ -45,7 +45,8 @@ dependencies:
   qr_flutter: ^4.1.0
   date_format: ^2.0.9
   path: ^1.9.0
-  photo_view: 0.15.0
+  extended_image: ^9.1.0
+  path_provider: ^2.1.5
 
   #Harmony支持
   mobpush_plugin_ohos: ^1.4.1
@@ -82,10 +83,6 @@ dependencies:
   fluttertoast:
     git:
       url: https://gitcode.com/openharmony-sig/flutter_fluttertoast.git
-  path_provider:
-    git:
-      url: https://gitcode.com/openharmony-tpc/flutter_packages.git
-      path: packages/path_provider/path_provider
   fk_user_agent:
     git:
       url: https://gitcode.com/openharmony-sig/fluttertpc_fk_user_agent.git

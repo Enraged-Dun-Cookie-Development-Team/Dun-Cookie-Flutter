@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:fk_user_agent/fk_user_agent.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:photo_view/photo_view.dart';
 
 import '../../common/dun_color.dart';
 import '../../manager/setting_manager.dart';
@@ -35,7 +34,7 @@ class ImageWidget extends StatelessWidget {
       return const SizedBox.shrink();
     }
     return Container(
-      alignment: Alignment.center,
+      // alignment: Alignment.center,
       child: cookieImageList.length > 1
           ? _multiImage(context)
           : _oneImage(context),
@@ -139,17 +138,29 @@ class ImageWidget extends StatelessWidget {
     required void Function() onTap,
     required void Function(bool value) onSelect,
   }) {
-    return Stack(
-      children: [
-        Positioned.fill(
-          child: DunImage.network(
+    return Container(
+      decoration: const BoxDecoration(),
+      clipBehavior: Clip.hardEdge,
+      child: Stack(
+        children: [
+          DunImage.network(
             url,
+            fit: BoxFit.cover,
+            constraints: isSingle
+                // 单图浏览时限制最大高度为400，分享时不限制高度
+                ? BoxConstraints(
+                    maxHeight: showCheck || imageFill ? double.infinity : 400,
+                    minWidth: double.infinity,
+                    maxWidth: double.infinity,
+                  )
+                // 保证网格填充
+                : const BoxConstraints.expand(),
             headers: {
               HttpHeaders.userAgentHeader: Platform.isOhos
                   ? 'Mozilla/5.0 (Phone; OpenHarmony 5.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 ArkWeb/4.1.6.1 Mobile'
                   : FkUserAgent.userAgent!,
             },
-            loadingBuilder: (context, event) {
+            loadingBuilder: (event) {
               int cumulativeBytesLoaded = event?.cumulativeBytesLoaded ?? 0;
               int expectedTotalBytes = event?.expectedTotalBytes ?? 0;
               double progress = expectedTotalBytes != 0
@@ -178,26 +189,20 @@ class ImageWidget extends StatelessWidget {
                 ],
               );
             },
-            onTapUp: (
-              BuildContext context,
-              TapUpDetails details,
-              PhotoViewControllerValue controllerValue,
-            ) {
-              onTap.call();
-            },
+            onTap: onTap,
           ),
-        ),
-        Align(
-          alignment: Alignment.bottomRight,
-          child: Visibility(
-            visible: showCheck,
-            child: CheckWidget(
-              initialValue: true,
-              callBack: onSelect,
+          Align(
+            alignment: Alignment.bottomRight,
+            child: Visibility(
+              visible: showCheck,
+              child: CheckWidget(
+                initialValue: true,
+                callBack: onSelect,
+              ),
             ),
-          ),
-        )
-      ],
+          )
+        ],
+      ),
     );
   }
 }

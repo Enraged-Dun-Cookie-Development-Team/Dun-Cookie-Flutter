@@ -1,8 +1,12 @@
+import 'dart:typed_data';
+
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:photo_view/photo_view.dart';
-import 'package:photo_view/photo_view_gallery.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
+
+import '../common/dun_toast.dart';
 
 class ViewImageExtendedImage extends StatefulWidget {
   const ViewImageExtendedImage({
@@ -21,18 +25,27 @@ class ViewImageExtendedImage extends StatefulWidget {
   State<ViewImageExtendedImage> createState() => _ViewImageExtendedImageState();
 }
 
-class _ViewImageExtendedImageState extends State<ViewImageExtendedImage> {
+class _ViewImageExtendedImageState extends State<ViewImageExtendedImage>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<double> _animation;
+  late ExtendedPageController _extendedPageController;
   final RxInt _currentIndex = 0.obs;
-  final PageController _pageController = PageController();
 
   @override
   void initState() {
     super.initState();
+    _animationController = AnimationController(
+        duration: const Duration(milliseconds: 100), vsync: this);
+    _extendedPageController =
+        ExtendedPageController(initialPage: widget.initialIndex);
     _currentIndex.value = widget.initialIndex;
   }
 
   @override
   void dispose() {
+    _animationController.dispose();
+    _extendedPageController.dispose();
     super.dispose();
   }
 
@@ -54,28 +67,63 @@ class _ViewImageExtendedImageState extends State<ViewImageExtendedImage> {
   }
 
   _buildImageView() {
-    return PhotoViewGallery.builder(
-      // 替代 PageView，内置分页逻辑
-      pageController: _pageController,
-      itemCount: widget.imageList.length,
-      // 构建每个页面的图片
-      builder: (context, index) {
-        return PhotoViewGalleryPageOptions(
-          imageProvider: NetworkImage(widget.imageList[index]),
-          // 图片配置
-          minScale: PhotoViewComputedScale.contained * 0.8, // 最小缩放
-          maxScale: PhotoViewComputedScale.covered * 5.0, // 最大缩放
-          initialScale: PhotoViewComputedScale.contained, // 初始缩放
+    return ExtendedImageGesturePageView.builder(
+      itemBuilder: (BuildContext context, int index) {
+        var item = widget.imageList[index];
+        return GestureDetector(
+          onLongPress: () async {
+            Uint8List? bytes = await getNetworkImageData(item, useCache: true);
+            final result = await ImageGallerySaver.saveImage(bytes!,
+                name: DateTime.now().toString());
+            if (result["isSuccess"]) {
+              DunToast.showSuccess("保存完成");
+            }
+          },
+          child: Container(
+            padding: REdgeInsets.all(5.0),
+            child: ExtendedImage.network(
+              item,
+              fit: BoxFit.contain,
+              mode: ExtendedImageMode.gesture,
+              initGestureConfigHandler: (state) {
+                return GestureConfig(
+                  inPageView: true,
+                );
+              },
+              onDoubleTap: (state) {
+                double? begin = 0.0;
+                double end = 0.0;
+                if (state.gestureDetails?.totalScale == 1.0) {
+                  begin = 1.0;
+                  end = 2.0;
+                } else {
+                  begin = state.gestureDetails?.totalScale;
+                  end = 1.0;
+                }
+                try {
+                  _animationController.reset();
+                  _animation = Tween<double>(begin: begin, end: end)
+                      .animate(_animationController);
+                  _animation.addListener(() {
+                    state.handleDoubleTap(
+                        scale: _animation.value,
+                        doubleTapPosition: state.pointerDownPosition);
+                  });
+                  _animationController.forward();
+                } catch (e) {
+                  print('放大错误');
+                }
+              },
+            ),
+          ),
         );
       },
-      // 监听页码变化
-      onPageChanged: (index) {
-        setState(() {
-          _currentIndex.value = index;
-        });
-      },
-      // 滚动方向（水平/垂直）
+      itemCount: widget.imageList.length,
       scrollDirection: Axis.horizontal,
+      onPageChanged: (index) {
+        _currentIndex.value = index;
+      },
+      controller: _extendedPageController,
     );
   }
 
