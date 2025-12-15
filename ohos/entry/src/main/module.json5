@@ -46,6 +46,7 @@
         ]
       }
     ],
+    "querySchemes": [ "bilibili", "mqqapi", "sinaweibo", "orpheus" ],
     "requestPermissions": [
       {
         "name": "ohos.permission.INTERNET",
