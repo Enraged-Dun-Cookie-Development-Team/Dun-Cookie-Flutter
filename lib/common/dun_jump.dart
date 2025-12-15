@@ -6,15 +6,12 @@ import 'dun_toast.dart';
 
 //如果要添加新的 去搜索 app名称+UrlScheme
 class DunJump {
-  // QQ群【蹲饼组】key
-  static String qqGroupKey = "7J0JXjKHm4zs3lL09if3Ffy3ZK0otF1P";
-
   static openQQGroup() {
     DunJump.openAppOrWebPage(
         url:
-            "https://qm.qq.com/cgi-bin/qm/qr?k=$qqGroupKey&jump_from=webapi&authKey=LW9kTeL9JU9pKJtyqgiexX/bNdvZQNhKqv2fVElymXVnxG4um2zJ6Iri7FRzqGyG",
+            "https://qun.qq.com/universal-share/share?ac=1&authKey=lkbR6Q0cu87iULXXsW5KnRMei%2FsIIcLVZIzh1jlhySWT0JEfurmAyw91Nvh21E%2BK&busi_data=eyJncm91cENvZGUiOiI5MTc2MjU1NTkiLCJ0b2tlbiI6IlJkNTJsTjJnUU9EQTBuVWRmN01meHZjNWN6WU9LYmk2TlZUZ3RyYmYvb0RuNVlpR0pwMFhSZTFKakg0cjNBQXAiLCJ1aW4iOiIxMTU4MDI5MjcxIn0%3D&data=SRhF4r8f36JvHPE2PqTK5VV6rePM9a_jq-YYS15CFJSSv3BjT-HUpQp_eDv_h6VkopL7rwJrrwE5GTjjMx6Rkg&svctype=4&tempid=h5_group_info",
         appUrlScheme:
-            "mqqopensdkapi://bizAgent/qm/qr?url=http%3A%2F%2Fqm.qq.com%2Fcgi-bin%2Fqm%2Fqr%3Ffrom%3Dapp%26p%3Dandroid%26jump_from%3Dwebapi%26k%3D$qqGroupKey");
+            "mqqapi://card/show_pslcard?src_type=internal&version=1&uin=917625559&card_type=group&source=sharecard");
   }
 
   // b站账号【小刻食堂】uid
