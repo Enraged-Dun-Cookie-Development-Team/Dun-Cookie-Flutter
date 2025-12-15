@@ -56,9 +56,11 @@ class _MangaListCardState extends State<MangaListCard> {
           children: [
             DunImage.network(
               widget.comicModel.cover,
-              fit: BoxFit.fill,
-              height: 367,
-              width: 367,
+              fit: BoxFit.cover,
+              width: double.infinity,
+              height: 200,
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(12)),
             ),
             ExpansionPanelList(
               elevation: 0,
@@ -76,6 +78,7 @@ class _MangaListCardState extends State<MangaListCard> {
               },
               children: <ExpansionPanel>[
                 ExpansionPanel(
+                  backgroundColor: Colors.transparent,
                   headerBuilder: (context, isExpanded) {
                     return Container(
                       alignment: Alignment.centerLeft,

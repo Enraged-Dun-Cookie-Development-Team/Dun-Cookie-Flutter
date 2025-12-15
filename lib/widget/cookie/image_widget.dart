@@ -169,10 +169,14 @@ class ImageWidget extends StatelessWidget {
               return Stack(
                 alignment: Alignment.center,
                 children: [
-                  Padding(
-                    padding: EdgeInsets.all(isSingle ? 60 : 10),
-                    child: const Image(
-                        image: AssetImage("assets/image/load/loading.gif")),
+                  const Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Image(
+                      height: 200,
+                      width: double.infinity,
+                      fit: BoxFit.contain,
+                      image: AssetImage("assets/image/load/loading.gif"),
+                    ),
                   ),
                   Positioned(
                     right: 0,

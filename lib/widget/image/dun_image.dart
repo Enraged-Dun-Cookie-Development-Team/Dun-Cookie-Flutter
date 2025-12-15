@@ -11,6 +11,7 @@ class DunImage {
     Map<String, String> headers = const {},
     Widget Function(ImageChunkEvent? event)? loadingBuilder,
     GestureTapCallback? onTap,
+    BorderRadiusGeometry? borderRadius,
   }) {
     return GestureDetector(
       onTap: onTap,
@@ -31,15 +32,15 @@ class DunImage {
               return Image(
                 height: height,
                 width: width,
-                fit: fit,
+                fit: BoxFit.contain,
                 image: const AssetImage("assets/image/load/loading.gif"),
               );
             case LoadState.completed:
               return Container(
                 clipBehavior: Clip.hardEdge,
                 constraints: constraints,
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(4)),
+                decoration: BoxDecoration(
+                    borderRadius: borderRadius ?? BorderRadius.circular(4)),
                 child: ExtendedRawImage(
                   height: height,
                   width: width,
@@ -52,7 +53,7 @@ class DunImage {
               return Image(
                 height: height,
                 width: width,
-                fit: fit,
+                fit: BoxFit.contain,
                 image: const AssetImage("assets/image/load/error.png"),
               );
           }
