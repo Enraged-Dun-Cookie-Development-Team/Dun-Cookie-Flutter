@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:get/get.dart';
 
 import '../../common/dun_jump.dart';
@@ -52,6 +54,14 @@ class MoreLogic extends GetxController {
     CeobeApi.getQuickJumpInfo().then((value) {
       if (!value.error) {
         state.quickJumpList.addAll(value.data ?? []);
+
+        // 鸿蒙审核不允许应用内容存在点击跳转至第三方应用市场下载渠道
+        // 以及引导用户下载安卓版/iOS版的模块或内容，因此隐藏小刻食堂、罗德岛助理
+        if (Platform.isOhos) {
+          state.quickJumpList.value = state.quickJumpList
+              .where((e) => !const ['小刻食堂', '罗德岛助理'].contains(e.nameSet.zh))
+              .toList();
+        }
       }
     });
     BakeryApi.getBakeryRecentPredict().then((value) {

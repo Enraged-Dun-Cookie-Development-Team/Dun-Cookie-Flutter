@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -83,7 +85,8 @@ class SettingPage extends StatelessWidget {
                             _buildLine(),
                             _buildFollowOnBilibili(),
                             _buildLine(),
-                            _buildDonation(),
+                            // 鸿蒙审核要求应用不允许存在引导用户下载安卓版/iOS版的模块或内容，因此隐藏捐赠渠道
+                            if (!Platform.isOhos) _buildDonation(),
                             _buildLine(),
                             _buildMobId(),
                           ],

@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -32,8 +33,11 @@ class _MorePageState extends State<MorePage> {
           padding: REdgeInsets.fromLTRB(12, 0, 12, 0),
           children: [
             _buildTitle(),
-            SizedBox(height: 16.h),
-            _buildOfficialManga(),
+            // 鸿蒙审核需动漫模块的资质证明文件，因此隐藏漫画
+            if (!Platform.isOhos) ...[
+              SizedBox(height: 16.h),
+              _buildOfficialManga(),
+            ],
             SizedBox(height: 16.h),
             _buildHoneyCakeWorkshop(),
             SizedBox(height: 12.h),
