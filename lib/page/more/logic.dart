@@ -15,6 +15,19 @@ import 'state.dart';
 class MoreLogic extends GetxController {
   final MoreState state = MoreState();
 
+  final _flowerDiary = ToolModel(
+    nameSet: ToolNameSet('心花日记', '心花日记'),
+    icon:
+        'https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/c5/3a/64/c53a6436-7752-7a4a-00b6-641a9978898a/AppIcon-0-0-1x_U007emarketing-0-8-0-85-220.png/400x400ia-75.webp',
+    links: [
+      ToolLink(
+        primary: true,
+        url:
+            'store://appgallery.huawei.com/app/detail?id=top.idealclover.flowerdiary',
+      )
+    ],
+  );
+
   @override
   void onInit() {
     super.onInit();
@@ -55,12 +68,14 @@ class MoreLogic extends GetxController {
       if (!value.error) {
         state.quickJumpList.addAll(value.data ?? []);
 
-        // 鸿蒙审核不允许应用内容存在点击跳转至第三方应用市场下载渠道
-        // 以及引导用户下载安卓版/iOS版的模块或内容，因此隐藏小刻食堂、罗德岛助理
         if (Platform.isOhos) {
+          // 鸿蒙审核不允许应用内容存在点击跳转至第三方应用市场下载渠道
+          // 以及引导用户下载安卓版/iOS版的模块或内容，因此隐藏小刻食堂、罗德岛助理
           state.quickJumpList.value = state.quickJumpList
               .where((e) => !const ['小刻食堂', '罗德岛助理'].contains(e.nameSet.zh))
               .toList();
+
+          state.quickJumpList.insert(0, _flowerDiary);
         }
       }
     });
@@ -80,7 +95,10 @@ class MoreLogic extends GetxController {
   }
 
   void onTapToolLink(ToolModel quickJump) {
-    DunJump.openWebPage(quickJump.url);
+    DunJump.openAppOrWebPage(
+      url: quickJump.url,
+      appUrlScheme: quickJump.url.startsWith('http') ? '' : quickJump.url,
+    );
   }
 
   void onTapVideoLink(VideoModel video) {
