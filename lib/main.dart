@@ -15,7 +15,7 @@ void main() async {
 
 Future<void> earlyInit() async {
   //沉浸式状态栏
-  if (Platform.isAndroid) {
+  if (Platform.isAndroid || Platform.isOhos) {
     SystemUiOverlayStyle systemUiOverlayStyle = const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent, // 状态栏颜色设置为透明
       statusBarIconBrightness: Brightness.dark, // 状态栏图标文字颜色设置为黑色
