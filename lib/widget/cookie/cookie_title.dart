@@ -1,3 +1,4 @@
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -31,6 +32,12 @@ class CookieTitle extends StatelessWidget {
     } else {
       timestamp = TimeUnit.timestampFormatYMD(cookie.timestamp.platform);
     }
+
+    String sourceName = cookie.datasource;
+    if (sourceName.endsWith('-安卓') && Platform.isOhos) {
+      sourceName = cookie.datasource.replaceFirst('-安卓', '-安卓(鸿蒙4)');
+    }
+
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -42,7 +49,7 @@ class CookieTitle extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              cookie.datasource,
+              sourceName,
               style: titleStyle,
             ),
             Text(

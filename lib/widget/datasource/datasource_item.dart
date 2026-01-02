@@ -1,3 +1,4 @@
+import 'dart:io' as io;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -24,6 +25,11 @@ class DatasourceItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String sourceName = datasourceModel.nickname;
+    if (sourceName.endsWith('-安卓') && io.Platform.isOhos) {
+      sourceName = datasourceModel.nickname.replaceFirst('-安卓', '-安卓(鸿蒙4)');
+    }
+
     return Container(
       padding: REdgeInsets.fromLTRB(16, 8, 8, 8),
       color: DunColors.white,
@@ -38,7 +44,7 @@ class DatasourceItem extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 8),
-          Text(datasourceModel.nickname),
+          Text(sourceName),
           const Spacer(),
           Obx(() => Checkbox(
                 //数据源页复选框
