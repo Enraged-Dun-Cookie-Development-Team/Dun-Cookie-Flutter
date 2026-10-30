@@ -23,20 +23,26 @@ class PackageInfoPlus {
         nowVersion == '') {
       return false;
     }
-    final List<int> newVersionList =
-        newVersion.split(".").map((a) => int.parse(a)).toList();
-    final List<int> versionList =
-        nowVersion.split(".").map((a) => int.parse(a)).toList();
+    final newParts = newVersion.split('.').map(int.tryParse).toList();
+    final oldParts = nowVersion.split('.').map(int.tryParse).toList();
+    if (newParts.any((part) => part == null || part < 0) ||
+        oldParts.any((part) => part == null || part < 0)) {
+      return false;
+    }
+    final newVersionList = newParts.cast<int>();
+    final versionList = oldParts.cast<int>();
     // 判断lastForceVersion
     for (var i = 0;
         i <
-            (versionList.length < newVersionList.length
+            (versionList.length > newVersionList.length
                 ? versionList.length
                 : newVersionList.length);
         i++) {
-      if (newVersionList[i] > versionList[i]) {
+      final next = i < newVersionList.length ? newVersionList[i] : 0;
+      final previous = i < versionList.length ? versionList[i] : 0;
+      if (next > previous) {
         return true;
-      } else if (newVersionList[i] < versionList[i]) {
+      } else if (next < previous) {
         return false;
       }
     }

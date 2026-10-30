@@ -32,8 +32,8 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace "com.ceobecanteen.duncookie"
-    ndkVersion flutter.ndkVersion
-    compileSdkVersion flutter.compileSdkVersion
+    ndkVersion "27.0.12077973"
+    compileSdkVersion 35
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -71,7 +71,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 // 混淆文件
             ndk {
-                abiFilters "armeabi", "arm64-v8a", "armeabi-v7a"
+                abiFilters "arm64-v8a", "armeabi-v7a", "x86_64"
             }
         }
         debug {

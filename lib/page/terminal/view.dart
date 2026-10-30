@@ -327,6 +327,7 @@ class _TerminalPageState extends State<TerminalPage> {
     List<Widget> activityWidgetList = [];
     for (int index = 0; index < countdowns.length; index++) {
       Countdown countdown = countdowns[index];
+      if (TimeUnit.tryParseDateTime(countdown.time) == null) continue;
       var timeDiff = TimeUnit.timeDiffUnit(countdown.time);
       if ((TimeUnit.isTimeRange(
           TimeUnit.utcChinaNow(), countdown.startTime, countdown.overTime))) {

@@ -37,8 +37,10 @@ class _LazyIndexedStackState extends State<LazyIndexedStack> {
   }
 
   _loadView(int? index) {
-    final viewIndex = index ?? 0;
-    if (0 <= viewIndex && viewIndex <= widget.children.length) {
+    final viewIndex = index;
+    if (viewIndex != null &&
+        0 <= viewIndex &&
+        viewIndex < widget.children.length) {
       views[viewIndex] = widget.children[viewIndex];
     }
   }
@@ -60,7 +62,11 @@ class _LazyIndexedStackState extends State<LazyIndexedStack> {
       textDirection: widget.textDirection,
       clipBehavior: widget.clipBehavior,
       sizing: widget.sizing,
-      index: widget.index,
+      index: widget.index != null &&
+              widget.index! >= 0 &&
+              widget.index! < views.length
+          ? widget.index
+          : null,
       children: views,
     );
   }

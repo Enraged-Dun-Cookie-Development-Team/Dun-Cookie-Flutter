@@ -15,9 +15,10 @@ class MangaLogic extends GetxController {
   }
 
   //  获取数据
-  loadData() async {
+  Future<void> loadData() async {
     state.loadDataType.value = 1;
     var responseData = await MangaApi.getTerraComicList();
+    if (isClosed) return;
     if (!responseData.error) {
       state.comicsList = responseData.data ?? [];
       if (state.comicsList.isNotEmpty) {
@@ -25,6 +26,8 @@ class MangaLogic extends GetxController {
       } else {
         state.loadDataType.value = 2;
       }
+    } else {
+      state.loadDataType.value = 2;
     }
   }
 

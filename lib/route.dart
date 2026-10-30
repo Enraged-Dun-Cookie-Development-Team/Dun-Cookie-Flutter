@@ -64,7 +64,7 @@ class DunRouter {
     GetPage(name: honeyCake, page: () => HoneyCakeWorkshopPage()),
     GetPage(name: setting, page: () => SettingPage()),
     GetPage(name: datasourceSetting, page: () => DatasourcePage()),
-    GetPage(name: update, page: () => UpdatePage()),
+    GetPage(name: update, page: () => const UpdatePage()),
     GetPage(name: share, page: () => CookieSharePage()),
     GetPage(name: web, page: () => WebPage())
   ];

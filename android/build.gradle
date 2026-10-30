@@ -1,8 +1,7 @@
 buildscript {
-    ext.kotlin_version = "1.8.0"
+    ext.kotlin_version = "2.1.0"
     repositories {
         maven { url 'https://maven.aliyun.com/repository/public' }
-        maven { url 'https://maven.aliyun.com/repository/jcenter' }
         maven { url 'https://maven.aliyun.com/repository/google' }
         maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
         maven { url "https://mvn.mob.com/android" }
@@ -10,7 +9,7 @@ buildscript {
 //        mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.4.2'
+        classpath 'com.android.tools.build:gradle:8.7.3'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // 集成MobPush
         classpath "com.mob.sdk:MobSDK2:+"
@@ -20,7 +19,6 @@ buildscript {
 allprojects {
     repositories {
         maven { url 'https://maven.aliyun.com/repository/public' }
-        maven { url 'https://maven.aliyun.com/repository/jcenter' }
         maven { url 'https://maven.aliyun.com/repository/google' }
         maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
         maven { url "https://mvn.mob.com/android" }
@@ -32,6 +30,52 @@ rootProject.buildDir = '../build'
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
+
+// These older plugins still declare their namespace in AndroidManifest.xml.
+// Adapt a build-local copy for AGP 8 without modifying the shared Pub cache.
+subprojects { legacyProject ->
+    def legacyNamespaces = [
+        fk_user_agent: 'io.flutterfastkit.fk_user_agent',
+        image_gallery_saver: 'com.example.imagegallerysaver',
+    ]
+    if (legacyNamespaces.containsKey(legacyProject.name)) {
+        legacyProject.plugins.withId('com.android.library') {
+            legacyProject.android.namespace = legacyNamespaces[legacyProject.name]
+            def sourceManifest = legacyProject.file('src/main/AndroidManifest.xml')
+            def generatedManifest = legacyProject.layout.buildDirectory.file('generated/legacyManifest/AndroidManifest.xml')
+            def prepareManifest = legacyProject.tasks.register('prepareLegacyManifest') {
+                inputs.file(sourceManifest)
+                outputs.file(generatedManifest)
+                doLast {
+                    def manifest = new XmlParser().parse(sourceManifest)
+                    manifest.attributes().remove('package')
+                    def output = generatedManifest.get().asFile
+                    output.parentFile.mkdirs()
+                    output.text = groovy.xml.XmlUtil.serialize(manifest)
+                }
+            }
+            legacyProject.android.sourceSets.main.manifest.srcFile(generatedManifest)
+            legacyProject.tasks.configureEach {
+                if (name.startsWith('process') && name.endsWith('Manifest')) {
+                    dependsOn(prepareManifest)
+                }
+            }
+        }
+        legacyProject.plugins.withId('kotlin-android') {
+            legacyProject.android.kotlinOptions.jvmTarget = '1.8'
+        }
+    }
+}
+
+// in_app_review uses the toUri extension but does not declare Core KTX.
+subprojects { pluginProject ->
+    if (pluginProject.name == 'in_app_review') {
+        pluginProject.plugins.withId('com.android.library') {
+            pluginProject.dependencies.add('implementation', 'androidx.core:core-ktx:1.13.1')
+        }
+    }
+}
+
 subprojects {
     project.evaluationDependsOn(':app')
 }

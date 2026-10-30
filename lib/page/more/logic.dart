@@ -18,9 +18,7 @@ class MoreLogic extends GetxController {
     super.onInit();
     RootLogic.to?.state.scrollHideController
         .addScrollController(state.pageScrollController);
-    loadData().then((value) {
-      update();
-    });
+    loadData();
   }
 
   @override
@@ -30,35 +28,37 @@ class MoreLogic extends GetxController {
   }
 
   Future<void> loadData() async {
-    MangaApi.getTerraNewestEpisode().then((value) {
-      if (!value.error && value.data != null) {
-        state.terraRecentEpisode.value = value.data!;
-      }
-    });
-    CeobeApi.getVideoInfo().then((value) {
-      if (!value.error) {
-        // 只展示时间范围内的视频
-        final now = DateTime.now();
-        state.videoList.addAll((value.data ?? []).where((video) {
-          final startTime = DateTime.tryParse(video.startTime);
-          final overTime = DateTime.tryParse(video.overTime);
-          return startTime != null &&
-              overTime != null &&
-              startTime.isBefore(now) &&
-              overTime.isAfter(now);
-        }));
-      }
-    });
-    CeobeApi.getQuickJumpInfo().then((value) {
-      if (!value.error) {
-        state.quickJumpList.addAll(value.data ?? []);
-      }
-    });
-    BakeryApi.getBakeryRecentPredict().then((value) {
-      if (!value.error && value.data != null) {
-        state.bakeryRecentPredict.value = value.data!;
-      }
-    });
+    await Future.wait([
+      MangaApi.getTerraNewestEpisode().then((value) {
+        if (!isClosed && !value.error && value.data != null) {
+          state.terraRecentEpisode.value = value.data!;
+        }
+      }),
+      CeobeApi.getVideoInfo().then((value) {
+        if (!isClosed && !value.error) {
+          // 只展示时间范围内的视频
+          final now = DateTime.now();
+          state.videoList.assignAll((value.data ?? []).where((video) {
+            final startTime = DateTime.tryParse(video.startTime);
+            final overTime = DateTime.tryParse(video.overTime);
+            return startTime != null &&
+                overTime != null &&
+                startTime.isBefore(now) &&
+                overTime.isAfter(now);
+          }));
+        }
+      }),
+      CeobeApi.getQuickJumpInfo().then((value) {
+        if (!isClosed && !value.error) {
+          state.quickJumpList.assignAll(value.data ?? []);
+        }
+      }),
+      BakeryApi.getBakeryRecentPredict().then((value) {
+        if (!isClosed && !value.error && value.data != null) {
+          state.bakeryRecentPredict.value = value.data!;
+        }
+      }),
+    ]);
   }
 
   void onTapManga() {

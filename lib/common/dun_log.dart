@@ -53,7 +53,7 @@ class _LogOutPut extends LogOutput {
 
   @override
   void output(OutputEvent event) {
-    if (!DunLog.enableLogging) return;
+    if (!DunLog.enableLogging && event.level.index < Level.error.index) return;
 
     for (final line in event.lines) {
       debugPrint(line);

@@ -21,10 +21,10 @@ class RegisterPage extends StatelessWidget {
     return MediaQuery(
       data: MediaQuery.of(context)
           .copyWith(textScaler: const TextScaler.linear(1.0)),
-      child: WillPopScope(
-        onWillPop: () async {
-          DunToast.showError("必须同意或不同意哦");
-          return false;
+      child: PopScope(
+        canPop: false,
+        onPopInvoked: (didPop) {
+          if (!didPop) DunToast.showError("必须同意或不同意哦");
         },
         child: Scaffold(
           appBar: AppBar(

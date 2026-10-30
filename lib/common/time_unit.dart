@@ -20,13 +20,22 @@ class TimeUnit {
 // 时间范围判定
   static bool isTimeRange(time, starTime, endTime) {
     time ??= DateTime.now();
-    var time0 = changeLocalTime(stringOrDateTimeToDateTime(time));
-    var starTime0 = stringOrDateTimeToDateTime(starTime);
-    var endTime0 = stringOrDateTimeToDateTime(endTime);
+    final parsedTime = tryParseDateTime(time);
+    final starTime0 = tryParseDateTime(starTime);
+    final endTime0 = tryParseDateTime(endTime);
+    if (parsedTime == null || starTime0 == null || endTime0 == null) {
+      return false;
+    }
+    final time0 = changeLocalTime(parsedTime);
     if (time0.isAfter(starTime0) && time0.isBefore(endTime0)) {
       return true;
     }
     return false;
+  }
+
+  static DateTime? tryParseDateTime(dynamic value) {
+    if (value is DateTime) return value;
+    return value is String ? DateTime.tryParse(value) : null;
   }
 
 //  时间大小比较  endTime是否比stearTime大？
@@ -101,7 +110,11 @@ class TimeUnit {
 
   // 时间戳转时间格式YYYY-mm-dd
   static timestampFormatYMD(int timestamp) {
-    return formatDate(timestampToDate(timestamp), [yyyy, '-', mm, '-', dd]);
+    try {
+      return formatDate(timestampToDate(timestamp), [yyyy, '-', mm, '-', dd]);
+    } on ArgumentError {
+      return '未知日期';
+    }
   }
 
   // 时间戳转时间格式YYYY-mm-dd hh:nn:ss

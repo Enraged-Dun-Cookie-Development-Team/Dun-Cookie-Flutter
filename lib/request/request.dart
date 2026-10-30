@@ -16,6 +16,7 @@ enum RequestType {
 class HttpClass {
   static final BaseOptions _baseOptions = BaseOptions(
     connectTimeout: HttpConfig.timeout,
+    receiveTimeout: HttpConfig.timeout,
     contentType: Headers.jsonContentType,
     responseType: ResponseType.json,
   );
@@ -68,7 +69,8 @@ class HttpClass {
           error: true,
           data: e.response?.data,
           msg: e.message ?? '',
-          fromJson: fromJson);
+          fromJson: fromJson,
+          type: type);
     }
   }
 

@@ -47,6 +47,8 @@ class CookiesLogic extends GetxController {
   void onClose() {
     state.searchController.dispose();
     state.scrollController.dispose();
+    state.searchFocusNode.dispose();
+    super.onClose();
   }
 
   Future<bool> updateNewestCookieId() async {
@@ -56,7 +58,7 @@ class CookiesLogic extends GetxController {
       NewestCookieIdModel? data = responseData.data;
       if (data != null) {
         if (data.cookieId == state.newestCookieId.cookieId &&
-            data.updateCookieId == state.newestCookieId.cookieId) {
+            data.updateCookieId == state.newestCookieId.updateCookieId) {
           update([state.listGID]);
         } else {
           state.newestCookieId = data;
@@ -155,7 +157,7 @@ class CookiesLogic extends GetxController {
   Future<void> onRefresh() async {
     if (state.isAllowRefresh) {
       state.isAllowRefresh = false;
-      refreshData();
+      await refreshData();
       Future.delayed(const Duration(seconds: 10), () {
         state.isAllowRefresh = true;
       });
